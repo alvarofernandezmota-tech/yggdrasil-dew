@@ -6,27 +6,51 @@
 
 ---
 
-## Arquitectura completa
+## Decisión de arquitectura (fijada 12 jun 2026)
+
+**Madre es el cerebro. Acer es el soporte.**
+
+| Principio | Detalle |
+|---|---|
+| **Todo corre en Madre** | Trabajo, código, IAs, escritorio, GPU |
+| **Acer quita peso a Madre** | Absorbe los servicios que no necesitan GPU ni intervención manual |
+| **Acer = siempre encendido** | Servicios que no pueden parar: THDORA, PostgreSQL, Pi-hole |
+| **Madre = siempre ágil** | Sin servicios pesados en segundo plano que roben RAM/CPU |
+
+### Qué corre dónde
+
+| Servicio | Máquina | Por qué |
+|---|---|---|
+| Trabajo diario, código, IDE | **Madre** | Es la workstation |
+| Ollama + Open WebUI (LLM) | **Madre** | Necesita GTX 1060 |
+| Input Leap (servidor) | **Madre** | Emite teclado+ratón |
+| Input Leap (cliente) | **Acer + MacBook** | Reciben entrada |
+| THDORA (bot Telegram) | **Acer** | 24/7, no necesita GPU |
+| PostgreSQL | **Acer** | 24/7, sin intervención |
+| Pi-hole (DNS) | **Acer** | 24/7, crecítico |
+| Tailscale | **Madre + Acer + Mac** | IPs fijas en toda la red |
+| fail2ban + logs | **Acer** | Seguridad siempre activa |
+
+---
+
+## Arquitectura visual
 
 ```mermaid
 graph TD
-    subgraph "LAN 10.176.119.0/24"
-        Madre["🖥️ Ordenador Madre\ni5-8400 · 16GB · GTX1060\nOMARCHY / Arch + Hyprland"]
-        Acer["🗄️ Acer Aspire\nRyzen 5 5500U · 8GB\nServidor 24/7"]
-        Mac["💻 MacBook\nmacOS · Cliente"]
-        HP["🖥️ HP TouchSmart\nMonitor secundario"]
+    subgraph "LAN + Tailscale"
+        Madre["\ud83d\udda5\ufe0f MADRE\n[CEREBRO]\ni5-8400 · 16GB · GTX1060\nOmarchy · trabajo + GPU"]
+        Acer["\ud83d\uddc4\ufe0f ACER\n[SOPORTE 24/7]\nRyzen 5500U · 8GB\nServicios permanentes"]
+        Mac["\ud83d\udcbb MacBook\ncliente"]
 
-        Madre -- "GPU GTX1060" --> Ollama["🤖 Ollama + Open WebUI\npuerto 3000 / 11434"]
-        Madre -- "Servidor puerto 24800" --> InputLeap(("⌨️ Input Leap"))
-        InputLeap --> Acer
-        InputLeap --> Mac
+        Madre -- "Ollama LLM (GPU)" --> OW["Open WebUI"]
+        Madre -- "Input Leap server" --> Acer
+        Madre -- "Input Leap server" --> Mac
+        Madre -- "SSH" --> Acer
 
-        Acer --> Docker["🐳 Docker Containers\nPostgreSQL · THDORA\nNextcloud · Pi-hole"]
+        Acer --> THDORA["THDORA\nTelegram bot"]
+        Acer --> PG["PostgreSQL"]
+        Acer --> PH["Pi-hole DNS"]
     end
-
-    style InputLeap fill:#f9f,stroke:#333,stroke-width:2px
-    style Docker fill:#0db7ed,stroke:#333
-    style Ollama fill:#2d2,stroke:#333
 ```
 
 ---
@@ -35,68 +59,63 @@ graph TD
 
 | Servicio | Máquina | Estado | Archivo |
 |---|---|---|---|
-| **Input Leap** | Madre → Acer + Mac | ⏳ Fase 1 | `barrier.md` |
+| **Tailscale** | Madre + Acer + Mac | ⏳ Instalar (Fase 1) | `tailscale.md` |
+| **SSH Madre → Acer** | Acer | ⏳ Instalar (Fase 1) | — |
+| **Input Leap** | Madre → Acer + Mac | ⏳ Instalar (Fase 1) | `barrier.md` |
 | **Ollama + Open WebUI** | Madre (GTX 1060) | ⏳ Fase 3 | `ollama.md` |
-| **PostgreSQL** | Acer | 🔄 Migrando | `../servicios.md` |
+| **PostgreSQL** | Acer | 🔄 Migrando | — |
 | **THDORA** | Acer | 🔄 Migrando | `../../proyectos/thdora.md` |
-| **Pi-hole** | Por decidir | ⏳ Fase 3 | — |
-| **Nextcloud** | Acer | ⏳ Fase 3 | — |
-| **WireGuard VPN** | Acer | ⏳ Futuro | — |
+| **Pi-hole** | Acer | ⏳ Fase 3 | — |
 
 ---
 
-## Roadmap — Fases de construcción
+## Roadmap
 
 ```
 FASE 1 — Conectividad (AHORA)
-  ├── IPs fijas en router (Madre + Acer)
-  ├── SSH entre Madre y Acer
-  └── Input Leap funcionando con systemd + UFW
+  ├── Tailscale en Madre + Acer + Mac → IPs fijas 100.x.x.x
+  ├── SSH Madre → Acer funcionando
+  └── Input Leap: server en Madre, client en Acer+Mac, UFW Zero Trust
 
 FASE 2 — Seguridad
-  ├── TLS en Input Leap (openssl)
-  ├── fail2ban instalado
-  └── Auditoría semanal de logs (journalctl)
+  ├── TLS en Input Leap
+  ├── fail2ban en Acer
+  └── Headscale self-hosted (sustituye Tailscale cloud)
 
 FASE 3 — Servicios
   ├── Ollama + Open WebUI en Madre
   ├── PostgreSQL consolidado en Acer
   ├── THDORA migrado a Acer
-  └── Pi-hole en LAN
+  └── Pi-hole en Acer
 ```
-
----
-
-## Auditoría de logs
-
-```bash
-# Input Leap — logs en tiempo real
-journalctl -u input-leap -f
-
-# Intentos de conexión bloqueados por UFW
-sudo journalctl -k | grep UFW
-
-# Todos los servicios activos
-systemctl list-units --type=service --state=running
-```
-
-> Filosofía: si no está en los logs, no sucedió. Si no está en Git, no existe.
 
 ---
 
 ## Red LAN
 
-| Máquina | IP | Rol |
-|---|---|---|
-| Ordenador Madre | pendiente IP fija | Workstation + servidor Input Leap + Ollama |
-| Acer Aspire | 10.176.119.171 | Servidor 24/7 |
-| MacBook | 10.176.119.229 | Cliente |
-| HP TouchSmart | — | Monitor secundario |
+| Máquina | IP LAN | IP Tailscale | Rol |
+|---|---|---|---|
+| Ordenador Madre | pendiente fijar | pendiente | Cerebro |
+| Acer Aspire | 10.176.119.171 | pendiente | Soporte 24/7 |
+| MacBook | 10.176.119.229 | pendiente | Cliente |
 
-**Próximo paso crítico:** asignar IP fija a Ordenador Madre en el router.
+**Primer paso crítico:** instalar Tailscale en Madre y Acer para tener IPs 100.x.x.x estables.
 
 ---
 
-## Filosofía
+## Logs y auditoría
 
-Ver [`/filosofia.md`](../../filosofia.md) — 100% open source, Zero Trust, todo bajo Git.
+```bash
+# Ver servicios activos
+systemctl list-units --type=service --state=running
+
+# Input Leap en tiempo real
+journalctl -u input-leap -f
+
+# Intentos bloqueados por UFW
+sudo journalctl -k | grep UFW
+```
+
+---
+
+_Frecuencia de actualización: al cambiar configuración o estado de cualquier servicio._
