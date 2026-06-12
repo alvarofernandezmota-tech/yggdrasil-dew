@@ -1,122 +1,182 @@
-# Input Leap — Servidor (Systemd + UFW)
+# Input Leap — Teclado/Ratón Compartido
 
-> Configuración completa de Input Leap como servicio de producción.
-> Diseñado por Gemini · Integrado por Perplexity · 12 junio 2026
+> Teclado y ratón de Madre controlando Acer (y MacBook) sin hardware extra.
+> Protocolo: Input Leap sobre Tailscale (canal cifrado).
+> **Frecuencia de actualización: al cambiar IPs o añadir nodos.**
+> Última actualización: 12 junio 2026
 
 ---
 
 ## Arquitectura
 
 ```
-Ordenador Madre (servidor Input Leap, puerto 24800)
-  ├── Acer Aspire  (cliente — IP: 10.176.119.171)
-  └── MacBook      (cliente — IP: 10.176.119.229)
+Madre (100.91.112.32) ── Input Leap SERVER ──► Acer (100.86.119.102)
+    teclado + ratón físicos                      recibe control
+    pantalla izquierda                            pantalla derecha
 ```
+
+Mover el ratón a la derecha de Madre → el cursor aparece en Acer.
 
 ---
 
-## 1. Archivo systemd
+## PARTE 1 — MADRE (servidor)
 
-Crea `/etc/systemd/system/input-leap.service`:
+### 1. Archivo de configuración de pantallas
+
+```bash
+mkdir -p ~/.config/input-leap
+nano ~/.config/input-leap/input-leap.conf
+```
+
+Contenido:
+
+```
+section: screens
+    madre:
+    acer:
+end
+
+section: links
+    madre:
+        right = acer
+    acer:
+        left = madre
+end
+
+section: options
+    screenCorners = false
+    halfDuplexCapsLock = false
+    halfDuplexNumLock = false
+    halfDuplexScrollLock = false
+    xtestIsSynchronous = false
+    switchCorners = none
+    switchCornerSize = 0
+end
+```
+
+### 2. Servicio systemd (usuario)
+
+```bash
+mkdir -p ~/.config/systemd/user
+nano ~/.config/systemd/user/input-leaps.service
+```
+
+Contenido:
 
 ```ini
 [Unit]
-Description=Input Leap Server Service
-After=network.target
+Description=Input Leap Server Daemon
+After=graphical-session.target
 
 [Service]
-# Ejecutar como usuario sin privilegios por seguridad
-User=tu_usuario
-Group=tu_usuario
-ExecStart=/usr/bin/input-leap-server --no-tray --address :24800 --config /home/tu_usuario/.config/input-leap.conf
-Restart=always
-RestartSec=5
+Type=simple
+Environment=QT_QPA_PLATFORM=wayland
+ExecStart=/usr/bin/input-leaps -c %h/.config/input-leap/input-leap.conf --address 0.0.0.0:24800 -f -n madre
+Restart=on-failure
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=graphical-session.target
 ```
 
-> ⚠️ Sustituir `tu_usuario` por tu usuario real de Arch.
-
-### Activar el servicio
+### 3. Activar
 
 ```bash
-# Recargar systemd
-sudo systemctl daemon-reload
+systemctl --user daemon-reload
+systemctl --user enable --now input-leaps.service
+```
 
-# Habilitar al arranque
-sudo systemctl enable input-leap
+### Verificar
 
-# Arrancar ahora
-sudo systemctl start input-leap
-
-# Verificar estado
-sudo systemctl status input-leap
+```bash
+systemctl --user status input-leaps.service
+journalctl --user -u input-leaps.service -f
 ```
 
 ---
 
-## 2. Reglas UFW — Zero Trust
+## PARTE 2 — ACER (cliente)
 
-**Filosofía:** bloquear todo, permitir solo las IPs conocidas.
+Acceder por SSH desde Madre:
+```bash
+ssh varo@100.86.119.102
+```
+
+### 1. Servicio systemd (usuario)
 
 ```bash
-# Permitir solo desde nodos conocidos
-sudo ufw allow in from 10.176.119.171 to any port 24800 proto tcp   # Acer
-sudo ufw allow in from 10.176.119.229 to any port 24800 proto tcp   # MacBook
+mkdir -p ~/.config/systemd/user
+nano ~/.config/systemd/user/input-leapc.service
+```
 
-# Bloquear resto de tráfico al puerto
-sudo ufw deny 24800/tcp
+Contenido:
 
-# Activar UFW si no está activo
+```ini
+[Unit]
+Description=Input Leap Client Daemon
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/input-leapc -f -n acer 100.91.112.32:24800
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target
+```
+
+### 2. Activar
+
+```bash
+systemctl --user daemon-reload
+systemctl --user enable --now input-leapc.service
+```
+
+### Verificar
+
+```bash
+systemctl --user status input-leapc.service
+journalctl --user -u input-leapc.service -f
+```
+
+---
+
+## PARTE 3 — UFW en ACER (Zero Trust)
+
+```bash
+# Política por defecto: bloquear todo lo entrante
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# SSH solo desde Madre (IP Tailscale)
+sudo ufw allow from 100.91.112.32 to any port 22 proto tcp comment 'SSH seguro desde Madre'
+
+# Input Leap solo desde Madre
+sudo ufw allow from 100.91.112.32 to any port 24800 proto tcp comment 'Input Leap desde Madre'
+
+# Activar UFW
+sudo systemctl enable --now ufw.service
 sudo ufw enable
 
-# Verificar reglas aplicadas
+# Verificar
 sudo ufw status verbose
 ```
-
-> ⚠️ Cuando el Ordenador Madre tenga IP fija, añadir también su IP como origen permitido.
-
----
-
-## 3. Auditoría — Logs en tiempo real
-
-```bash
-# Ver logs del servicio en tiempo real
-journalctl -u input-leap -f
-
-# Ver logs de las últimas 24h
-journalctl -u input-leap --since "24 hours ago"
-
-# Ver intentos de conexión fallidos (UFW)
-sudo journalctl -k | grep UFW
-```
-
-> En una entrevista: *"Uso listas blancas de IPs en lugar de dejar puertos abiertos al mundo, y audito conexiones con journalctl. Eso es Zero Trust aplicado en LAN."*
-
----
-
-## 4. Próximo paso — TLS
-
-Pendiente: cifrar la comunicación con certificados TLS (openssl) para que nadie en la red pueda interceptar las pulsaciones de teclado.
-
-```bash
-# Generar certificados (pendiente implementar)
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-  -keyout ~/.config/input-leap/server.key \
-  -out ~/.config/input-leap/server.crt
-```
-
-Estado: ⏳ Pendiente — implementar en Fase 2 (Seguridad)
 
 ---
 
 ## Estado
 
-| Tarea | Estado |
+| Componente | Estado |
 |---|---|
-| Archivo .service creado | ⏳ Pendiente aplicar |
-| Reglas UFW configuradas | ⏳ Pendiente aplicar |
-| IP fija Madre en router | ⏳ Pendiente |
-| TLS habilitado | ⏳ Fase 2 |
-| Logs auditados con journalctl | ⏳ Tras activar servicio |
+| Input Leap server en Madre | ✅ Activo |
+| Input Leap client en Acer | ✅ Activo |
+| UFW Zero Trust en Acer | ✅ Activo |
+
+---
+
+## Fase 2 — TLS
+
+En Fase 2 se añade TLS con certificado self-signed (openssl) para cifrar el tráfico de Input Leap además del túmel Tailscale.
+
+---
+
+_Open source: Input Leap (GPL-2.0)_

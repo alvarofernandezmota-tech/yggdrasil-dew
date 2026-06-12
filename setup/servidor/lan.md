@@ -1,71 +1,51 @@
-# LAN — Arquitectura de Red
+# Red LAN — Mapa de red y puertos
 
+> Mapa completo de la red doméstica: IPs, puertos, servicios.
+> **Frecuencia de actualización: al cambiar IPs o añadir servicios.**
 > Última actualización: 12 junio 2026
 
 ---
 
-## Mapa de red
+## IPs Tailscale (permanentes)
 
-```
-Internet
-   │
- Router ISP
-   │  Red: TODO (ej: 192.168.1.0/24)
-   │
-   ├── Ordenador Madre    IP fija: TODO  (workstation + servidor)
-   ├── Acer Aspire        IP fija: 10.176.119.171  (servidor 24/7)
-   ├── MacBook            IP: 10.176.119.229  (cliente)
-   └── HP TouchSmart      IP: TODO  (monitor/dashboard)
-```
+| Máquina | IP Tailscale | Rol |
+|---|---|---|
+| **Madre** | `100.91.112.32` | Workstation + Input Leap server |
+| **Acer** | `100.86.119.102` | Soporte 24/7 + puerta exterior |
+| **MacBook** | pendiente | Cliente opcional |
+
+## IPs LAN (DHCP — pueden cambiar)
+
+| Máquina | IP LAN | Nota |
+|---|---|---|
+| Acer | `10.176.119.171` | Fijar por MAC en router (pendiente) |
+| MacBook | `10.176.119.229` | DHCP |
+| Madre | pendiente | DHCP |
+
+> **Usar siempre IPs Tailscale** para servicios — son estables.
+> IPs LAN solo para diagnóstico local.
 
 ---
 
-## IPs del sistema
+## Puertos abiertos en Acer (UFW)
 
-| Equipo | IP actual | IP fija asignada | Notas |
+| Puerto | Protocolo | Servicio | Desde |
 |---|---|---|---|
-| Ordenador Madre | TODO | TODO | Configurar IP fija en router |
-| Acer Aspire | 10.176.119.171 | TODO | Servidor 24/7 |
-| MacBook | 10.176.119.229 | — | Portátil, puede cambiar |
-| HP TouchSmart | TODO | — | Dashboard |
-
-> ⚠️ **Pendiente:** asignar IPs fijas en el router para Madre y Acer. Sin IP fija los servicios se rompen al reiniciar.
+| `22` | TCP | SSH | Solo `100.91.112.32` (Madre) |
+| `24800` | TCP | Input Leap | Solo `100.91.112.32` (Madre) |
+| Todo lo demás | — | BLOQUEADO | — |
 
 ---
 
-## DNS local (futuro)
+## Servicios planificados (Fase 3)
 
-Con Pi-hole o AdGuard Home se puede tener DNS local:
-
-```
-madre.local    → IP del Ordenador Madre
-acer.local     → IP del Acer
-ollama.local   → servicio Ollama en Madre
-```
-
----
-
-## Puertos usados
-
-| Puerto | Servicio | Máquina | Protocolo |
-|---|---|---|---|
-| 24800 | Input Leap / Barrier | Acer (servidor) | TCP |
-| 11434 | Ollama API | Madre | HTTP |
-| 8080 | Open WebUI | Madre | HTTP |
-| 5432 | PostgreSQL | Acer | TCP |
-| 53 | Pi-hole DNS | TODO | UDP/TCP |
-| 51820 | WireGuard VPN | TODO | UDP |
+| Puerto | Servicio | Máquina |
+|---|---|---|
+| `5432` | PostgreSQL | Acer |
+| `53` | Pi-hole DNS | Acer |
+| `3000` | Open WebUI | Madre |
+| `11434` | Ollama API | Madre |
 
 ---
 
-## Seguridad básica
-
-- [ ] IPs fijas para servidores
-- [ ] Firewall (nftables/ufw) en Madre y Acer
-- [ ] Barrier/Input Leap con TLS activado
-- [ ] PostgreSQL solo accesible en red local
-- [ ] WireGuard para acceso externo (no exponer puertos al exterior sin VPN)
-
----
-
-_Ver también: `setup/servidor/README.md` | `setup/servidor/barrier.md`_
+_Regla: ningún puerto abierto al mundo. Todo vía Tailscale._
