@@ -1,6 +1,6 @@
 # Plan Maestro — Torre Madre + Portátil Acer
 
-> Última actualización: 12 junio 2026, 21:16 CEST
+> Última actualización: 12 junio 2026, 21:29 CEST
 
 ---
 
@@ -8,68 +8,45 @@
 
 | Dato | Valor |
 |---|---|
-| OS / WM | Arch Linux / Hyprland (Wayland) — ambos equipos |
-| VPN mesh | Tailscale (`100.91.112.32` Madre, `100.86.119.102` Acer) ✅ |
-| Pantallas Madre | 2 monitores externos |
-| Pantalla Acer | 1 pantalla integrada |
-| Gestor AUR | `yay` ✅ |
+| OS / WM | Arch Linux / Hyprland (Wayland) — ambos |
+| VPN | Tailscale ✅ (`100.91.112.32` Madre, `100.86.119.102` Acer) |
+| KVM / Escritorio remoto | **wayvnc + tigervnc** ✅ operativo |
 
 ---
 
-## Fase 1 — Limpieza ✅ COMPLETADA
-## Fase 2 — Instalación input-leap-git ✅ COMPLETADA
-## Fase 3 — Input Leap ❌ BLOQUEADO DEFINITIVAMENTE
+## Fases KVM
 
-Input Leap no es compatible con Hyprland en su estado actual.
-Ver diagnóstico completo: `setup/servidor/README_CONNECT.md`
-
----
-
-## Fase 4 — Alternativas KVM ⚡ SIGUIENTE
-
-### Opción A — lan-mouse ⭐ PROBAR PRIMERO
-
-```bash
-yay -S lan-mouse
-```
-
-- Nativo libei, sin dependencias de portal D-Bus
-- Diseñado para Wayland / Hyprland
-- Más ligero que Input Leap
-
-### Opción B — barrier-git
-
-```bash
-yay -S barrier-git
-```
-
-### Opción C — X11 forzado (parche temporal)
-
-Ver `README_CONNECT.md` para comandos.
+| Fase | Descripción | Estado |
+|---|---|---|
+| 1 | Limpieza sistema | ✅ |
+| 2 | Input Leap instalado y configurado | ✅ |
+| 3 | Input Leap — bloqueo definitivo | ❌ Abandonado |
+| 4 | **VNC sobre Tailscale (wayvnc + tigervnc)** | ✅ **OPERATIVO** |
+| 5 | Automatizar wayvnc con systemd | ⏳ Opcional |
 
 ---
 
-## Fases siguientes (después de resolver KVM)
+## Fases siguientes
 
-### Fase 5 — SSH seguro
+### Fase 6 — SSH seguro
 - [ ] Claves Ed25519 Madre ↔ Acer
 - [ ] Deshabilitar auth por password
 
-### Fase 6 — Servicios
-- [ ] Docker Acer auditado
+### Fase 7 — Servicios
+- [ ] Auditoría Docker Acer
 - [ ] PostgreSQL + THDORA + Ollama + Pi-hole
 
-### Fase 7 — Sincronización
+### Fase 8 — Sincronización
 - [ ] dotfiles / omarchy
-- [ ] Headscale
+- [ ] Headscale self-hosted
 - [ ] MacBook tercer nodo
 
 ---
 
 ## Regla de oro
 
-> No improvisar. Si algo falla → documentar y buscar alternativa. No seguir golpeando la misma pared.
+> No improvisar. Si algo falla → documentar, pivotar, buscar alternativa.
 
 ---
 
-_Detalles técnicos: `setup/servidor/README_CONNECT.md`_
+_VNC: `setup/servidor/vnc.md` · Historial: `setup/servidor/README_CONNECT.md`_
