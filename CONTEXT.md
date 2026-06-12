@@ -1,49 +1,52 @@
 # CONTEXT.md — Estado Actual
 
-> Snapshot vivo del sistema. Se actualiza cada semana (domingo).
-> **Última actualización: 12 junio 2026**
+> Snapshot vivo del sistema. **Actualizar cada domingo** (o cuando cambie algo importante).
+> Última actualización: 12 junio 2026 — viernes tarde
 
 ---
 
 ## 📍 Ahora mismo
 
-- Acabo de instalar Omarchy/Arch Linux en Ordenador Madre y Acer
-- Configurando el Acer como Home Server 24/7
-- Montando Input Leap para compartir teclado/ratón MacBook↔Acer
-- Creando este repo `personal-v2` como base de conocimiento v2
-- THDORA pendiente de migrar al Acer
+- `personal-v2` creado, estructurado y funcionando como base de datos personal en Markdown
+- Arquitectura del home server diseñada y documentada por completo
+- Flujo Gemini ↔ Perplexity operativo
+- Filosofía técnica escrita y fijada como ley del sistema
+- Roadmap del servidor definido en 3 fases
+- **Pendiente ejecutar:** instalar Tailscale en Madre y Acer (Fase 1)
 
 ---
 
-## 🎯 Objetivos activos este mes (junio 2026)
+## 🎯 Objetivos activos — junio 2026
 
-- [ ] Home Server operativo — THDORA + PostgreSQL en Acer
-- [ ] Input Leap funcionando MacBook↔Acer
-- [ ] Nextcloud instalado en Acer
-- [ ] WireGuard VPN configurada
-- [ ] `personal-v2` creado y poblado con contexto base
-- [ ] Drive sync configurado (GitHub Actions → rclone)
+- [ ] **Fase 1 servidor:** Tailscale instalado + SSH entre máquinas + Input Leap con systemd
+- [ ] **Fase 2 servidor:** TLS + fail2ban + Headscale self-hosted
+- [ ] **Fase 3 servicios:** Ollama + PostgreSQL + THDORA migrado + Pi-hole
+- [ ] `personal-v2` poblado con todo el contexto base (en progreso ✅)
+- [ ] `yo/perfil.md` y `yo/objetivos-2026.md` revisados y completos
 
 ---
 
 ## 🛠️ Proyectos activos
 
-| Proyecto | Estado | Archivo |
-|---|---|---|
-| THDORA | 🔄 Migrando al Acer | `proyectos/thdora.md` |
-| Home Server | 🔄 En configuración | `setup/servicios.md` |
-| Impresión 3D | ⏳ Pausado | `proyectos/impresion-3d.md` |
-| Portfolio web | ⏳ Pendiente | `proyectos/portfolio-web.md` |
+| Proyecto | Estado | Próximo paso | Archivo |
+|---|---|---|---|
+| **Home Server** | 🔄 Construyendo | Instalar Tailscale en Madre + Acer | `setup/servidor/tailscale.md` |
+| **THDORA** | ⏳ Pendiente migrar | Esperar a que servidor esté en Fase 3 | `proyectos/thdora.md` |
+| **personal-v2** | 🔄 Activo | Poblar `yo/` y actualizar diarios | — |
+| **Impresión 3D** | ⏸️ Pausado | — | `proyectos/impresion-3d.md` |
+| **Portfolio web** | ⏸️ Pausado | — | `proyectos/portfolio-web.md` |
 
 ---
 
 ## 📚 Formación activa
 
-| Área | Estado | Archivo |
+| Área | Estado | Notas |
 |---|---|---|
-| Linux / Omarchy | 🔄 Activo — instalando y configurando | `formacion/linux.md` |
-| SQL / PostgreSQL | 🔄 Activo — migración DB | `formacion/sql.md` |
-| IA local / Ollama | ⏳ Próximo | `formacion/ia-local.md` |
+| **Linux / Arch / Omarchy** | 🔄 Activo | systemd, Wayland, Hyprland |
+| **Infraestructura** | 🔄 Activo | Docker, UFW, Zero Trust, Tailscale |
+| **SQL / PostgreSQL** | 🔄 Activo | Migración DB, optimización |
+| **Python** | 🔄 Activo | Scripts, bots, automatización |
+| **IA local / Ollama** | ⏳ Próximo | Cuando servidor esté en Fase 3 |
 
 ---
 
@@ -51,30 +54,35 @@
 
 | Máquina | Rol | Estado |
 |---|---|---|
-| Ordenador Madre (i5-8400, 16GB, GTX1060) | Workstation principal | ✅ Omarchy activo |
-| Acer (Ryzen 5 5500U, 8GB) | Home Server 24/7 | ✅ Omarchy activo |
-| MacBook | Portátil temporal | ✅ Input Leap cliente |
-| HP TouchSmart 23" | Monitor secundario | ⏳ Pendiente Linux Mint |
+| **Madre** (i5-8400, 16GB, GTX 1060) | Workstation principal | ✅ Omarchy activo |
+| **Acer** (Ryzen 5 5500U, 8GB) | Servidor 24/7 | ✅ Arch activo · IP: 10.176.119.171 |
+| **MacBook** | Portátil cliente | ✅ IP: 10.176.119.229 |
+| **HP TouchSmart** | Monitor secundario | ⏳ Pendiente OS |
 
-→ Detalle completo: `setup/equipos.md`
-
----
-
-## 🤖 Agente activo
-
-- **Perplexity** vía MCP GitHub — lee este repo en tiempo real
-- Próximo: Ollama local en Ordenador Madre
-
-→ Ver roadmap: `agentes/prompts.md`
+→ Detalle completo: `setup/README.md` + `setup/servidor/README.md`
 
 ---
 
-## 📅 Semana actual (semana 24 — 9-15 junio 2026)
+## 🤖 Ecosistema IA
 
-- Foco principal: setup Linux completo + Home Server
-- Secundario: estructura personal-v2
-- Personal: —
+| Agente | Rol | Estado |
+|---|---|---|
+| **Perplexity** | MCP GitHub — documenta, sube, audita | ✅ Activo |
+| **Gemini** | Diseño técnico, voz, visual | ✅ Activo |
+| **Ollama** (local) | LLM privado en Madre (GTX 1060) | ⏳ Fase 3 |
+
+→ Ver roles completos: `agentes/`
 
 ---
 
-_Prompt para actualizar este archivo → `agentes/prompts.md` sección "Actualizar CONTEXT"_
+## 📅 Semana 24 — 9–15 junio 2026
+
+- **Hoy (viernes 12):** diseño completo del servidor + estructura personal-v2 + filosofía fijada
+- **Fin de semana:** instalar Tailscale + probar SSH entre máquinas
+- **Objetivo semana que viene:** Input Leap con systemd funcionando
+
+→ Ver historial completo: `diarios/2026/2026-06-12.md`
+
+---
+
+_Frecuencia de actualización: semanal (domingo) · o cuando cambie el estado de un proyecto importante_
