@@ -1,7 +1,5 @@
 # Red LAN — Mapa de red y puertos
 
-> Mapa completo de la red doméstica: IPs, puertos, servicios.
-> **Frecuencia de actualización: al cambiar IPs o añadir servicios.**
 > Última actualización: 12 junio 2026
 
 ---
@@ -10,7 +8,7 @@
 
 | Máquina | IP Tailscale | Rol |
 |---|---|---|
-| **Madre** | `100.91.112.32` | Workstation + Input Leap server |
+| **Madre** | `100.91.112.32` | Workstation + wayvnc server |
 | **Acer** | `100.86.119.102` | Soporte 24/7 + puerta exterior |
 | **MacBook** | pendiente | Cliente opcional |
 
@@ -18,12 +16,12 @@
 
 | Máquina | IP LAN | Nota |
 |---|---|---|
-| Acer | `10.176.119.171` | Fijar por MAC en router (pendiente) |
+| Acer | `10.176.119.171` | ⏳ Fijar por MAC en router |
 | MacBook | `10.176.119.229` | DHCP |
-| Madre | pendiente | DHCP |
+| Madre | pendiente | ⏳ Fijar por MAC en router |
 
-> **Usar siempre IPs Tailscale** para servicios — son estables.
-> IPs LAN solo para diagnóstico local.
+> ⚠️ **VNC usa IP LAN**, no Tailscale. Hay que fijar la IP de Madre en el router.
+> Para VNC remoto (fuera de casa): tunelizar sobre SSH+Tailscale.
 
 ---
 
@@ -32,12 +30,21 @@
 | Puerto | Protocolo | Servicio | Desde |
 |---|---|---|---|
 | `22` | TCP | SSH | Solo `100.91.112.32` (Madre) |
-| `24800` | TCP | Input Leap | Solo `100.91.112.32` (Madre) |
+| `5900` | TCP | VNC | LAN local |
 | Todo lo demás | — | BLOQUEADO | — |
+
+> Puerto 24800 (Input Leap) — ya no necesario, se puede eliminar.
 
 ---
 
-## Servicios planificados (Fase 3)
+## Servicios activos
+
+| Puerto | Servicio | Máquina | Estado |
+|---|---|---|---|
+| `5900` | wayvnc (VNC) | Madre | ✅ Activo |
+| `22` | SSH | Acer | ✅ Activo |
+
+## Servicios planificados
 
 | Puerto | Servicio | Máquina |
 |---|---|---|
@@ -48,4 +55,4 @@
 
 ---
 
-_Regla: ningún puerto abierto al mundo. Todo vía Tailscale._
+_Regla: ningún puerto abierto al mundo. Todo vía Tailscale o LAN._

@@ -1,18 +1,20 @@
-# VNC sobre Tailscale — Madre → Acer
+# VNC sobre LAN — Madre → Acer
 
 > Solución activa de escritorio remoto tras abandonar Input Leap.
 > Última actualización: 12 junio 2026
 
 ---
 
-## Arquitectura
+## Arquitectura real
 
-| Rol | Máquina | Software | IP Tailscale |
+| Rol | Máquina | Software | Transporte |
 |---|---|---|---|
-| **Servidor** | Madre | `wayvnc` (nativo Wayland) | `100.91.112.32` |
-| **Cliente** | Acer | `tigervnc` | `100.86.119.102` |
+| **Servidor** | Madre | `wayvnc` (nativo Wayland) | LAN local (router) |
+| **Cliente** | Acer | `tigervnc` | LAN local (router) |
 
-> Transporte: Tailscale ✅ — cifrado extremo a extremo, sin abrir puertos.
+> ⚠️ **IMPORTANTE:** La conexión VNC funciona a través de la **red local (LAN/router)**, NO sobre Tailscale.
+> Tailscale está activo en ambos equipos pero **no es el transporte** de esta conexión.
+> Usar IP LAN de Madre para conectar (ver `lan.md` para la IP actual).
 
 ---
 
@@ -31,8 +33,22 @@ wayvnc --address=0.0.0.0 --port=5900 --cursor-face=hidden --format=hevc
 ### En Acer (cliente)
 
 ```bash
-vncviewer -shared 100.91.112.32:5900
+# Conectar por IP LAN de Madre (no por Tailscale)
+vncviewer -shared <IP_LAN_MADRE>:5900
 ```
+
+> Obtener IP LAN de Madre: `ip a` o ver en router.
+> Pendiente: fijar IP LAN de Madre por MAC en el router para que no cambie.
+
+---
+
+## Victoria vs Fallo del día
+
+| | Resultado | Detalle |
+|---|---|---|
+| 🏆 **Victoria** | VNC funciona | `wayvnc` + `tigervnc` sobre LAN operativo |
+| ❌ **Fallo documentado** | Tailscale NO es el transporte | Asumimos que iba por Tailscale, pero va por LAN |
+| ⚠️ **Pendiente** | VNC fuera de casa | Para acceso externo hay que tunelizar VNC sobre Tailscale |
 
 ---
 
@@ -42,23 +58,33 @@ vncviewer -shared 100.91.112.32:5900
 |---|---|---|
 | Compatibilidad Hyprland | ❌ Bloqueos D-Bus | ✅ Nativo Wayland |
 | Portales requeridos | `InputCapture` / `RemoteDesktop` | Ninguno |
-| Uso | Compartir perificos | Escritorio completo |
-| Latencia con Tailscale | N/A (no funcionó) | Baja con `--format=hevc` |
+| Uso | Compartir periféricos | Escritorio completo |
+| Red | N/A (no funcionó) | LAN local ✅ |
 
 ---
 
 ## Lessons Learned
 
-- **Wayland/Hyprland** — los protocolos tipo input-leap fallan por la seguridad estricta de los `RemoteDesktop Portals`
-- **`--format=hevc`** — reduce drásticamente la latencia sobre Tailscale
-- **`--cursor-face=hidden`** — evita el cursor duplicado/transparente en el cliente
-- **`-shared`** en vncviewer — permite múltiples conexiones simultáneas
+- **wayvnc** — nativo Wayland, sin dependencias de portal D-Bus
+- **`--format=hevc`** — reduce latencia
+- **`--cursor-face=hidden`** — evita cursor duplicado en el cliente
+- **El transporte es LAN**, no Tailscale — no funcionará desde fuera de casa sin tunelizar
 
 ---
 
-## Automatización (opcional — Fase siguiente)
+## Siguiente paso — VNC desde fuera de casa
 
-Si se quiere arranque automático en Madre:
+Para usar VNC remotamente (fuera de la LAN):
+
+```bash
+# Opción: tunel SSH sobre Tailscale
+ssh -L 5900:localhost:5900 varo@100.91.112.32
+# Luego conectar a localhost:5900 desde Acer
+```
+
+---
+
+## Automatización (opcional)
 
 ```ini
 # ~/.config/systemd/user/wayvnc.service
@@ -74,12 +100,8 @@ Restart=on-failure
 WantedBy=default.target
 ```
 
-```bash
-systemctl --user enable --now wayvnc.service
-```
-
-> Pendiente: probar estabilidad antes de habilitar el arranque automático.
+> Pendiente: probar estabilidad antes de habilitar arranque automático.
 
 ---
 
-_Ver historial completo: `setup/servidor/README_CONNECT.md`_
+_Historial Input Leap: `setup/servidor/README_CONNECT.md`_
