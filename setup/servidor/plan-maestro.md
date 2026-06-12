@@ -1,7 +1,7 @@
 # Plan Maestro — Torre Madre + Portátil Acer
 
 > Documento de referencia inviolable. Cualquier IA o sesión nueva debe leer esto primero.
-> Última actualización: 12 junio 2026
+> Última actualización: 12 junio 2026, 18:46 CEST
 
 ---
 
@@ -14,6 +14,7 @@
 | VPN mesh | Tailscale (`100.91.112.32` Madre, `100.86.119.102` Acer) |
 | Pantallas Madre | 2 monitores externos |
 | Pantalla Acer | 1 pantalla integrada |
+| Gestor AUR | `yay` ✅ confirmado en `/usr/bin/yay` |
 
 ---
 
@@ -29,31 +30,37 @@ El servicio `input-leaps` (versión estable) intenta acceder a `org.freedesktop.
 
 | Componente | Estado |
 |---|---|
-| `input-leaps` estable | Desinstalado / detenido |
-| Systemd service | Deshabilitado |
-| `/tmp` | Purgado |
-| `input-leap.conf` | Validado y limpio |
+| `input-leaps` estable | Detenido y deshabilitado |
+| Systemd service | `daemon-reload` + `reset-failed` ejecutados ✅ |
+| `/tmp/InputLeap.*` | Purgado ✅ |
+| Procesos residuales | Ninguno (`killall` confirmó no process found) ✅ |
+| `input-leap.conf` | Validado y limpio ✅ |
+| `yay` | ✅ disponible en `/usr/bin/yay` |
 
-### Plan de parcheo (Opción A)
+### Plan de parcheo — Opción A
 
 ```
-Paso 1 — Confirmar gestor AUR en Madre
-  which yay || which paru
-  → Pendiente respuesta del usuario
+Paso 1 — Confirmar gestor AUR     ✅ COMPLETADO
+  which yay  →  /usr/bin/yay
 
-Paso 2 — Instalar input-leap-git
-  yay -S input-leap-git   # o paru
-  # si no hay gestor AUR → instalar yay desde cero (~5 min)
+Paso 2 — Instalar input-leap-git  ⏳ SIGUIENTE
+  yay -S input-leap-git
+  # compilar desde AUR, incluye parches libei/InputCapture
 
-Paso 3 — Verificación manual (sin systemd)
+Paso 3 — Verificar conexión Acer (antes de continuar)
+  ping 100.86.119.102
+  ssh varo@100.86.119.102 'systemctl --user status input-leapc.service'
+  # confirmar que el cliente de Acer sigue activo
+
+Paso 4 — Verificación manual en Madre (sin systemd)
   input-leaps -c ~/.config/input-leap/input-leap.conf \
     --address 0.0.0.0:24800 -f -n madre
-  # capturar errores D-Bus en bruto antes de activar systemd
+  # capturar errores D-Bus en bruto
 
-Paso 4 — Despliegue (si paso 3 OK)
-  # Reconstruir .service con variables de entorno necesarias:
+Paso 5 — Despliegue (si Paso 4 OK)
+  # Reconstruir .service con variables:
   Environment=QT_QPA_PLATFORM=wayland
-  Environment=WAYLAND_DISPLAY=wayland-1   # ajustar si difiere
+  Environment=WAYLAND_DISPLAY=wayland-1
   systemctl --user enable --now input-leaps.service
 ```
 
@@ -76,9 +83,7 @@ Paso 4 — Despliegue (si paso 3 OK)
 
 ## Fase 3 — Documentación y Mantenimiento ⏳ Pendiente
 
-**Objetivo:** Todo auditable y replicable desde Git.
-
-- [ ] Configs systemd bajo `setup/servidor/`
+- [ ] Configs systemd finales bajo `setup/servidor/`
 - [ ] `.gitignore` con claves privadas y datos sensibles
 - [ ] `setup/servidor/barrier.md` con unit files finales
 - [ ] Sincronización dotfiles / omarchy Madre ↔ Acer
