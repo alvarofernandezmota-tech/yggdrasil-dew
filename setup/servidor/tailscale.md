@@ -1,48 +1,46 @@
-# Tailscale — Red Privada Zero Trust
+# Tailscale — VPN mesh
 
-> Red mesh entre Madre y Acer con IPs estables 100.x.x.x.
-> **Frecuencia de actualización: al cambiar nodos o IPs.**
 > Última actualización: 12 junio 2026
 
 ---
 
-## IPs reales (fijadas 12 jun 2026)
+## Qué es y para qué sirve
 
-| Nodo | IP Tailscale | Rol |
-|---|---|---|
-| **Madre** | `100.91.112.32` | Workstation + Input Leap server |
-| **Acer** | `100.86.119.102` | Soporte 24/7 + Input Leap client |
+Tailscale crea una red privada virtual entre todos tus equipos.
+Cada máquina recibe una IP fija `100.x.x.x` que funciona desde cualquier red.
 
----
-
-## Instalación (Arch Linux)
-
-```bash
-sudo pacman -Syu tailscale --noconfirm
-sudo systemctl enable --now tailscaled.service
-sudo tailscale up
-```
-
-### Fix: NeedsLogin
-```bash
-sudo tailscale up --force-reauth
-tailscale ip -4
-```
-
-### Verificar interconexión
-```bash
-tailscale status
-ping -c 3 100.86.119.102  # desde Madre
-```
+> ⚠️ Tailscale es la **VPN**. No es el escritorio remoto. No es SSH. Es la capa de red que los hace posibles desde fuera de casa.
 
 ---
 
-## Fase 2 — Headscale (self-hosted)
+## IPs permanentes
 
-Tailscale usa servidores de coordinación propietarios.
-En Fase 2 se sustituye por **Headscale** (open source, self-hosted en Acer).
-Los clientes Tailscale siguen funcionando — solo cambia el servidor de coordinación.
+| Máquina | IP Tailscale |
+|---|---|
+| **Madre** | `100.91.112.32` |
+| **Acer** | `100.86.119.102` |
+| **MacBook** | pendiente |
 
 ---
 
-_Open source: Tailscale cliente (BSD) · Headscale servidor (MIT)_
+## Estado
+
+| Máquina | Estado |
+|---|---|
+| Madre | ✅ Activo |
+| Acer | ✅ Activo |
+
+---
+
+## Comandos útiles
+
+```bash
+tailscale status          # ver nodos conectados
+tailscale ping 100.91.112.32   # comprobar conectividad
+sudo tailscale up         # activar
+sudo tailscale down       # desactivar
+```
+
+---
+
+_Volver al índice: [README.md](README.md)_
