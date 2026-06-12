@@ -1,68 +1,51 @@
 # CONTEXT — Estado actual del sistema
 
-> **Última actualización:** 12 junio 2026, 20:31 CEST
-> **Actualizar:** al inicio y cierre de cada sesión de trabajo.
+> **Última actualización:** 12 junio 2026, 21:16 CEST
 
 ---
 
 ## 📍 Dónde estamos ahora
 
-**`input-leap-git` instalado y configurado. Ambos equipos reiniciados limpio.**
-Verificación remota en curso (SSH desde exterior). Test físico pendiente al volver.
+**Input Leap bloqueado definitivamente.** No es compatible con Hyprland sin portales que aún no existen de forma estable.
+**Siguiente:** probar `lan-mouse` (nativo libei, sin portales D-Bus).
 
 ---
 
-## ✅ Completado hoy (12 jun 2026)
+## ✅ Completado hoy
 
 | Bloque | Estado |
 |---|---|
-| Repo `personal-v2` estructurado al completo | ✅ |
-| Sistema de agentes Perplexity + Gemini | ✅ |
-| Tailscale Madre (`100.91.112.32`) + Acer (`100.86.119.102`) | ✅ |
-| SSH Madre → Acer operativo | ✅ |
-| UFW Zero Trust en Acer | ✅ |
-| Diagnóstico error `InputCapture` versión estable | ✅ |
-| `input-leap-git` instalado desde AUR | ✅ |
-| `input-leap.conf` creado en Madre | ✅ |
-| Servicio `systemd` habilitado en Madre | ✅ |
-| `xdg-desktop-portal-hyprland` en `hyprland.conf` | ✅ |
-| Reinicio limpio ambos equipos | ✅ |
-| Verificación SSH remota | ⚡ En curso |
-| Test físico ratón saltando | ⏳ Al volver |
+| `personal-v2` estructurado al completo | ✅ |
+| Tailscale Madre + Acer | ✅ |
+| SSH Madre → Acer | ✅ |
+| UFW Zero Trust Acer | ✅ |
+| `input-leap-git` instalado y configurado | ✅ |
+| Diagnóstico definitivo Input Leap | ✅ |
+| Alternativas documentadas | ✅ |
 
 ---
 
 ## 🚧 Pendiente — próxima sesión
 
 ### KVM (prioridad 1)
-- [ ] Confirmar `systemctl --user status input-leap.service` activo
-- [ ] Confirmar `busctl | grep InputCapture` devuelve la interfaz
-- [ ] Test físico: ratón saltando Madre ↔ Acer
-- [ ] Si OK → Fase 5 (SSH Ed25519)
+- [ ] Probar `lan-mouse`: `yay -S lan-mouse`
+- [ ] Si falla → probar `barrier-git`
+- [ ] Si falla → modo X11 forzado (parche temporal)
 
 ### Repo
-- [ ] Migrar contenido `personal` → `yo/`, `formacion/`, `proyectos/`
-- [ ] `.gitignore` con datos sensibles
-- [ ] Crear `tracking/` con TRACKING-MAESTRO.md
+- [ ] Migrar `yo/`, `formacion/`, `proyectos/`
+- [ ] Crear `tracking/`
+- [ ] `.gitignore` datos sensibles
 
 ---
 
-## 🖥️ Infraestructura actual
+## 🖥️ Infraestructura
 
 | Máquina | IP Tailscale | Estado |
 |---|---|---|
-| **Madre** | `100.91.112.32` | ✅ reiniciada — input-leap-git activo |
-| **Acer** | `100.86.119.102` | ✅ reiniciado — cliente listo |
-| **MacBook** | pendiente | ⏳ Fase 7 |
-
----
-
-## 🤖 Agentes activos
-
-| Agente | Rol |
-|---|---|
-| **Perplexity** | Acción sobre GitHub, estructurar, documentar, subir |
-| **Gemini** | Entrada: voz, visual, docs largos, troubleshooting técnico |
+| **Madre** | `100.91.112.32` | ✅ Tailscale + SSH |
+| **Acer** | `100.86.119.102` | ✅ Tailscale + UFW |
+| KVM | — | ❌ bloqueado — evaluando alternativas |
 
 ---
 
@@ -72,24 +55,4 @@ Verificación remota en curso (SSH desde exterior). Test físico pendiente al vo
 
 ---
 
-## 📁 Estado del repo
-
-```
-personal-v2/
-├── README.md              ✅
-├── AGENT.md               ✅
-├── CONTEXT.md             ✅ (este archivo)
-├── CHANGELOG.md           ✅
-├── filosofia.md           ✅
-├── agentes/               ✅ perplexity + gemini + prompts
-├── diarios/2026/          ✅ 2026-06-12.md completo
-├── setup/servidor/        ✅ plan-maestro + README + configs
-├── yo/                    ⏳ pendiente migrar
-├── formacion/             ⏳ pendiente migrar
-├── proyectos/             ⏳ pendiente migrar
-└── tracking/              ❌ no creada aún
-```
-
----
-
-_Diario de hoy: `diarios/2026/2026-06-12.md`_
+_Diario: `diarios/2026/2026-06-12.md` · Plan: `setup/servidor/plan-maestro.md`_

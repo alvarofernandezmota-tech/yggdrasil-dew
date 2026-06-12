@@ -1,94 +1,94 @@
-# Procedimiento de Conexión Input-Leap (Wayland/Hyprland)
+# Conexión KVM — Madre + Acer (Wayland/Hyprland)
 
-> Última actualización: 12 junio 2026
-> Estado: investigando solución al bloqueo de portales Wayland
-
----
-
-## Entorno
-
-| Dato | Valor |
-|---|---|
-| Red | Tailscale ✅ funciona correctamente |
-| Madre IP | `100.91.112.32` |
-| Acer IP | `100.86.119.102` |
-| WM | Hyprland (Wayland) en ambos |
-| Software | `input-leap-git` (AUR) |
+> Última actualización: 12 junio 2026, 21:16 CEST
+> **Estado: Input Leap BLOQUEADO. Evaluando alternativas.**
 
 ---
 
-## Diagnóstico — 3 bloqueos identificados
+## Diagnóstico definitivo
 
-| # | Máquina | Problema | Causa |
-|---|---|---|---|
-| 1 | **Madre** | El wrapper GUI genera configs volátiles en `/tmp/` | `input-leap` (GUI) sobreescribe `input-leap.conf` estático |
-| 2 | **Acer** | `input-leapc` se autotermina | Dependencia estricta de `org.freedesktop.portal.RemoteDesktop` no activo |
-| 3 | Ambos | Portal Wayland no expuesto | `xdg-desktop-portal-hyprland` no negocia `InputCapture` en esta versión |
+| Capa | Estado | Notas |
+|---|---|---|
+| **Red / Tailscale** | ✅ Funcional | `100.91.112.32` estable |
+| **Input Leap** | ❌ Bloqueado | Protocolo incompatible con Hyprland |
+| **Ratón saltando** | ❌ Sin resultado | Ni GUI ni CLI han funcionado |
 
-> **Nota clave:** El problema es de protocolo de sesión, NO de conectividad. Tailscale funciona perfectamente.
+### Por qué falla Input Leap en Hyprland
+
+1. **Binario servidor** (`input-leaps`): busca `org.freedesktop.portal.InputCapture` — no disponible en Hyprland
+2. **Wrapper GUI** (`input-leap`): ignora la config estática, genera `/tmp/InputLeap.*` volátiles en bucle
+3. **Binario cliente** (`input-leapc`): depende de `org.freedesktop.portal.RemoteDesktop` — tampoco disponible
+4. **Truco `env -u`**: elimina las variables de sesión Wayland, pero el servidor sigue sin exponer el servicio correctamente
+
+> **Conclusión:** Input Leap en su estado actual no es compatible con Hyprland sin un portal `xdg-desktop-portal-hyprland` que implemente `InputCapture` de forma completa. Eso no existe todavía de forma estable.
 
 ---
 
-## Procedimiento de arranque (en orden estricto)
+## Alternativas a evaluar
 
-### Paso 1 — Servidor en Madre (usar GUI, no CLI)
-
-La GUI gestiona la negociación con los portales mejor que el binario directo en este caso:
-
-1. Abrir `input-leap` (GUI)
-2. Configurar pantallas: `madre` (izquierda/centro) → `acer` (derecha)
-3. Dar a **Apply** / **Start Server**
-4. Dejar la ventana minimizada — **no cerrarla**
-5. Esperar hasta que indique: *"Server is running"*
-
-### Paso 2 — Cliente en Acer (modo sin portales Wayland)
-
-Una vez el servidor confirme *"running"*, lanzar en Acer:
+### Opción A — `lan-mouse` ⭐ RECOMENDADA
 
 ```bash
-# Limpiar variables de sesión Wayland antes de lanzar el cliente
+yay -S lan-mouse
+```
+
+- Implementación nativa de **libei** — no depende de portales D-Bus
+- Diseñada específicamente para Wayland moderno
+- Compatible con Hyprland sin configuración extra de portales
+- Más liviana que Input Leap
+
+### Opción B — `barrier-git`
+
+```bash
+yay -S barrier-git
+```
+
+- Fork de Synergy, antecesor de Input Leap
+- Más maduro en soporte Wayland que Input Leap en algunos entornos
+- Misma arquitectura servidor/cliente
+
+### Opción C — Forzar modo X11 (temporal)
+
+```bash
+# En Madre: lanzar servidor en modo XWayland
+QT_QPA_PLATFORM=xcb DISPLAY=:0 input-leaps \
+  -c ~/.config/input-leap/input-leap.conf \
+  --address 0.0.0.0:24800 -f -n madre
+
+# En Acer: cliente sin portales
+env -u XDG_SESSION_TYPE -u XDG_CURRENT_DESKTOP -u WAYLAND_DISPLAY \
+  DISPLAY=:0 /usr/bin/input-leapc -f -n acer 100.91.112.32:24800
+```
+
+> No es la solución limpia pero puede funcionar como puente mientras se consolida `lan-mouse`.
+
+---
+
+## Script rápido para Acer (guardar como `conectar.sh`)
+
+```bash
+#!/bin/bash
+echo "Lanzando cliente KVM sin portales Wayland..."
 env -u XDG_SESSION_TYPE -u XDG_CURRENT_DESKTOP -u WAYLAND_DISPLAY \
     /usr/bin/input-leapc -f -n acer 100.91.112.32:24800
 ```
 
-> Esto evita que `input-leapc` intente negociar con el portal `RemoteDesktop` y falle.
-
-### Paso 3 — Verificación
-
-- Si el comando se queda “colgado” sin error → **mover el ratón hacia el borde derecho de Madre**
-- Si el ratón salta a la pantalla de Acer → ✅ Éxito
-- Si hay error → copiar el mensaje exacto y documentar aquí
-
----
-
-## Troubleshooting
-
-### Error: `QList(...)` en bucle
-Estas lanzando el wrapper GUI (`input-leap`) en vez del binario servidor (`input-leaps`). Son binarios distintos.
-- Wrapper GUI: `input-leap` — para configurar
-- Servidor real: `input-leaps` — para ejecutar
-- Cliente real: `input-leapc` — para conectar
-
-### Error: portal `InputCapture` no encontrado
 ```bash
-# Relanzar portal manualmente
-WAYLAND_DISPLAY=wayland-1 /usr/lib/xdg-desktop-portal-hyprland &
-systemctl --user restart input-leap.service
+chmod +x conectar.sh
+./conectar.sh
 ```
 
-### Error: `RemoteDesktop` portal no disponible en Acer
-Usar el comando `env -u` del Paso 2 para saltarse la negociación del portal.
+---
+
+## Historial de intentos
+
+| Intento | Resultado |
+|---|---|
+| `input-leaps` CLI + `QT_QPA_PLATFORM=xcb` | Error: `InputCapture` no disponible |
+| `input-leap` wrapper GUI | Bucle infinito `/tmp/InputLeap.*` |
+| GUI servidor + `env -u` cliente | Sin error, sin resultado — ratón no salta |
+| GUI servidor + GUI cliente | No aplicable |
 
 ---
 
-## Estado de pruebas
-
-| Intento | Comando | Resultado |
-|---|---|---|
-| CLI directo `input-leaps` | `QT_QPA_PLATFORM=xcb input-leaps ...` | Error: `InputCapture` no disponible |
-| Wrapper `input-leap` | `input-leap ...` | Bucle infinito de procesos `/tmp/` |
-| GUI + `env -u` cliente | *pendiente* | ⏳ Por probar |
-
----
-
-_Ver plan completo: `setup/servidor/plan-maestro.md`_
+_Siguiente paso: probar `lan-mouse` (Opción A)_
