@@ -1,79 +1,72 @@
 # CONTEXT — Estado actual del sistema
 
-> **Última actualización:** 12 junio 2026, 18:42 CEST
+> **Última actualización:** 12 junio 2026, 19:23 CEST
 > **Actualizar:** al inicio y cierre de cada sesión de trabajo.
 
 ---
 
 ## 📍 Dónde estamos ahora
 
-**Bloqueo activo:** Input Leap en Madre no funciona por incompatibilidad con el portal InputCapture de Wayland/Hyprland.
-**Plan listo:** instalar `input-leap-git` (AUR) que incluye parches libei/InputCapture.
-**Pendiente confirmar:** si Madre tiene `yay` o `paru` instalado.
+**`input-leap-git` instalado. Ambos equipos reiniciados limpio.**
+Test de verificación remota pendiente desde el parque (SSH).
+Al volver: test físico del ratón saltando entre pantallas.
 
 ---
 
-## ✅ Última sesión (12 jun 2026)
+## ✅ Completado hoy (12 jun 2026)
 
 | Bloque | Estado |
 |---|---|
-| Auditoría `personal` (repo madre) | ✅ |
-| Estructura definitiva `personal-v2` | ✅ |
+| Repo `personal-v2` estructurado al completo | ✅ |
 | Sistema de agentes documentado | ✅ |
 | Tailscale Madre + Acer operativos | ✅ |
-| Input Leap CLIENT en Acer | ✅ |
-| UFW Zero Trust en Acer | ✅ |
-| Input Leap SERVER en Madre | ⚠️ Bloqueado — portal Wayland |
-| Diagnóstico + plan de ruta documentado | ✅ |
+| Diagnóstico bloqueo `InputCapture` | ✅ |
+| `input-leap-git` instalado desde AUR | ✅ |
+| Portal Hyprland configurado en `hyprland.conf` | ✅ |
+| Servicio systemd habilitado en Madre | ✅ |
+| Reinicio limpio ambos equipos | ✅ |
+| Test físico KVM | ⏳ al volver del parque |
 
 ---
 
 ## 🚧 Pendiente — próxima sesión
 
-### Input Leap en Madre (prioridad 1)
-- [ ] `which yay || which paru` — confirmar gestor AUR
-- [ ] `yay -S input-leap-git` (o paru / manual)
-- [ ] Verificar lanzando binario manualmente (sin systemd)
-- [ ] Reconstruir `.service` con variables portal si funciona
-
-### Servidor — Fase 2
-- [ ] TLS en Input Leap
-- [ ] fail2ban en Acer
-- [ ] Auditoría Docker en Acer
-- [ ] Headscale self-hosted
-- [ ] dotfiles / omarchy sync Madre ↔ Acer
-- [ ] MacBook como tercer nodo
+### KVM (prioridad 1 — al volver)
+- [ ] SSH a Madre: `ssh varo@100.91.112.32`
+- [ ] `systemctl --user status input-leap.service`
+- [ ] `busctl --user introspect ... | grep InputCapture`
+- [ ] Test físico: ratón saltando Madre ↔ Acer
+- [ ] Si OK → Fase 5 (SSH Ed25519)
 
 ### Repo
-- [ ] Migrar contenido de `personal` → `yo/`, `formacion/`, `proyectos/`
-- [ ] `.gitignore` con datos sensibles
-- [ ] Crear `tracking/` con TRACKING-MAESTRO.md
+- [ ] Migrar contenido `personal` → `yo/`, `formacion/`, `proyectos/`
+- [ ] `.gitignore` datos sensibles
+- [ ] Crear `tracking/`
 
 ---
 
 ## 🖥️ Infraestructura actual
 
-| Máquina | IP Tailscale | Rol | Estado |
-|---|---|---|---|
-| **Madre** | `100.91.112.32` | Workstation + Input Leap server | ⚠️ Input Leap bloqueado |
-| **Acer** | `100.86.119.102` | Soporte 24/7 + Input Leap client | ✅ |
-| **MacBook** | pendiente | Cliente | ⏳ Fase 2 |
+| Máquina | IP Tailscale | Estado |
+|---|---|---|
+| **Madre** | `100.91.112.32` | ✅ reiniciada — input-leap-git activo |
+| **Acer** | `100.86.119.102` | ✅ reiniciado — cliente listo |
+| **MacBook** | pendiente | ⏳ Fase 7 |
 
 ---
 
 ## 🤖 Agentes activos
 
-| Agente | Rol | Doc |
-|---|---|---|
-| **Perplexity** | Acción sobre GitHub, estructurar, subir | `agentes/perplexity.md` |
-| **Gemini** | Entrada: voz, visual, docs largos, diseño | `agentes/gemini.md` |
+| Agente | Rol |
+|---|---|
+| **Perplexity** | Acción sobre GitHub, estructurar, subir |
+| **Gemini** | Entrada: voz, visual, docs largos, troubleshooting |
 
 ---
 
 ## 🎯 Objetivo 2026
 
 **Conseguir trabajo antes de que acabe el año.**
-Eje principal: empleabilidad. Todo lo demás (servidor, proyectos, formación) sirve a este objetivo.
 
 ---
 
@@ -86,15 +79,13 @@ personal-v2/
 ├── CONTEXT.md       ✅ (este archivo)
 ├── CHANGELOG.md     ✅
 ├── filosofia.md     ✅
-├── agentes/         ✅ perplexity + gemini + prompts
+├── agentes/         ✅
 ├── diarios/2026/    ✅ 2026-06-12.md completo
-├── setup/servidor/  ✅ Fase 1 documentada
-├── yo/              ⏳ pendiente migrar
-├── formacion/       ⏳ pendiente migrar
-—── proyectos/       ⏳ pendiente migrar
-└── tracking/        ❌ no creada aún
+├── setup/servidor/  ✅ plan-maestro + Fase 1-2 documentadas
+├── yo/              ⏳
+├── formacion/       ⏳
+├── proyectos/       ⏳
+└── tracking/        ❌
 ```
-
----
 
 _Diario de hoy: `diarios/2026/2026-06-12.md`_
