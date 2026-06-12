@@ -12,8 +12,25 @@ Stack actual: Python, SQL, Linux (Arch/Omarchy), PostgreSQL, Docker.
 Estoy en transición hacia roles de datos/IA con foco en construir mi propio ecosistema técnico.
 
 **Setup de máquinas:**
-- 🖥️ **Ordenador Madre** — máquina principal, Omarchy (Arch + Hyprland + Wayland)
-- 🗄️ **Servidor casa** — en construcción, Arch Linux, para servicios propios (Barrier/Input Leap, Ollama, etc.)
+- 🖥️ **Ordenador Madre** — workstation principal + servidor, Omarchy (Arch + Hyprland + Wayland), i5-8400, 16GB, GTX 1060 6GB
+- 🗄️ **Acer Aspire** — servidor 24/7, Arch Linux, Ryzen 5 5500U, 8GB
+- 💻 **MacBook** — portátil cliente, macOS
+- 🖥️ **HP TouchSmart** — monitor secundario / dashboards (pendiente OS)
+
+**Red:** todos en la misma LAN. IPs: Acer = 10.176.119.171 · MacBook = 10.176.119.229 · Madre = pendiente IP fija.
+
+---
+
+## ⚡ Filosofía técnica
+
+**Todo el software del ecosistema debe ser open source. Sin excepciones.**
+
+Ver `filosofia.md` para el detalle completo y el razonamiento.
+
+Al proponer herramientas, soluciones o servicios, el agente debe:
+- Priorizar siempre la alternativa open source.
+- Nunca sugerir software propietario sin indicar que existe alternativa libre.
+- Si no hay alternativa open source, indicarlo explícitamente antes de proponer algo propietario.
 
 ---
 
@@ -23,11 +40,12 @@ Estoy en transición hacia roles de datos/IA con foco en construir mi propio eco
 1. CONTEXT.md          → estado actual HOY — empieza siempre aquí
 2. yo/perfil.md        → quién soy, cómo pienso, cómo trabajo
 3. yo/objetivos-2026.md → qué quiero conseguir este año
-4. proyectos/          → proyectos activos con su ficha
-5. formacion/          → qué estoy aprendiendo ahora
-6. setup/              → hardware, servicios, infraestructura
-7. agentes/            → cómo funciona la capa IA, prompts, roles
-8. diarios/            → memoria episódica — entradas diarias/semanales
+4. filosofia.md        → principios técnicos — open source, control de datos
+5. proyectos/          → proyectos activos con su ficha
+6. formacion/          → qué estoy aprendiendo ahora
+7. setup/              → hardware, servicios, infraestructura
+8. agentes/            → cómo funciona la capa IA, prompts, roles
+9. diarios/            → memoria episódica — entradas diarias/semanales
 ```
 
 ---
@@ -40,12 +58,14 @@ Estoy en transición hacia roles de datos/IA con foco en construir mi propio eco
 - Confirmar antes de modificar cualquier archivo
 - Indicar qué archivo hay que actualizar si algo cambia
 - Priorizar lo que dice `CONTEXT.md` sobre cualquier otro archivo
+- **Proponer solo herramientas open source** — ver `filosofia.md`
 
 ### Nunca
 - Asumir que un archivo no actualizado en >4 semanas está vigente
 - Mezclar proyectos activos con proyectos archivados
 - Inventar datos — si no están en el repo, preguntar
 - Actualizar `CONTEXT.md` sin confirmación explícita
+- **Sugerir software propietario sin advertirlo explícitamente**
 
 ### Fechas
 - Si la fecha actual no está disponible, preguntar antes de registrar nada
@@ -110,6 +130,29 @@ Si el output es voz, visual o documento Google → pasa por Gemini.
 
 ---
 
+## Roadmap servidor casa (junio 2026)
+
+```
+FASE 1 — Conectividad y control (PRIORIDAD AHORA)
+  ├── IPs fijas en router (Madre + Acer)
+  ├── SSH entre máquinas (trabajar en Acer desde Madre)
+  └── Input Leap funcionando: Madre → Acer + MacBook
+
+FASE 2 — Seguridad y protección
+  ├── Firewall ufw/nftables (Zero Trust)
+  ├── TLS en Input Leap (openssl)
+  ├── Detección intrusos (fail2ban)
+  └── Auditoría logs (journald + journalctl)
+
+FASE 3 — Servicios (cuando Fase 1+2 estén OK)
+  ├── Ollama + Open WebUI (GTX 1060 en Madre)
+  ├── PostgreSQL en Acer
+  ├── THDORA migrado a Acer
+  └── Pi-hole (DNS + privacidad)
+```
+
+---
+
 ## Mapa de archivos por intención
 
 | Pregunta | Archivo |
@@ -117,6 +160,7 @@ Si el output es voz, visual o documento Google → pasa por Gemini.
 | ¿Qué está pasando ahora? | `CONTEXT.md` |
 | ¿Quién es Álvaro? | `yo/perfil.md` |
 | ¿Qué quiere este año? | `yo/objetivos-2026.md` |
+| ¿Cuál es su filosofía técnica? | `filosofia.md` |
 | ¿En qué proyectos trabaja? | `proyectos/` |
 | ¿Qué está aprendiendo? | `formacion/` |
 | ¿Cómo está montado el setup técnico? | `setup/equipos.md` + `setup/servicios.md` |
@@ -138,8 +182,8 @@ HOY:
 
 PRÓXIMO (verano 2026):
   Servidor casa operativo con:
-  → Barrier/Input Leap (teclado+ratón compartido entre máquinas)
-  → Ollama local (Ordenador Madre) + Open WebUI
+  → Input Leap (teclado+ratón compartido entre máquinas)
+  → Ollama local (Ordenador Madre, GTX 1060) + Open WebUI
   → AGENT.md + CONTEXT.md como system prompt del LLM local
   → diarios/ como memoria RAG
 
