@@ -1,7 +1,7 @@
 # Plan Maestro — Torre Madre + Portátil Acer
 
 > Documento de referencia inviolable. Cualquier IA o sesión nueva debe leer esto primero.
-> Última actualización: 12 junio 2026, 19:23 CEST
+> Última actualización: 12 junio 2026, 20:31 CEST
 
 ---
 
@@ -20,35 +20,29 @@
 
 ## Fase 1 — Limpieza ✅ COMPLETADA
 
-- Sistema limpio: servicio detenido, /tmp purgado, procesos residuales eliminados
-- Error confirmado con versión estable: `No such interface org.freedesktop.portal.InputCapture`
+- Sistema limpio: servicio detenido, `/tmp` purgado, procesos residuales eliminados
+- Error documentado con versión estable: `No such interface org.freedesktop.portal.InputCapture`
 
 ---
 
-## Fase 2 — Instalación ✅ COMPLETADA
+## Fase 2 — Instalación y configuración ✅ COMPLETADA
 
-- `input-leap-git` compilado e instalado desde AUR con `yay -S input-leap-git`
-- `input-leap.conf` creado en `~/.config/input-leap/` en Madre
-- Servicio `systemd` creado y habilitado en Madre (arranque automático)
-- `xdg-desktop-portal-hyprland` configurado en `hyprland.conf` para exponer `InputCapture`
-- **Ambos equipos reiniciados** para aplicar cambios limpios
+- `input-leap-git` compilado e instalado desde AUR (`yay -S input-leap-git`)
+- `~/.config/input-leap/input-leap.conf` creado en Madre — topología: madre izquierda, acer derecha
+- `~/.config/systemd/user/input-leap.service` creado y habilitado en Madre
+- `~/.config/hypr/hyprland.conf` modificado: `exec-once = /usr/lib/xdg-desktop-portal-hyprland`
+- Ambos equipos reiniciados limpio
 
 ---
 
-## Fase 3 — Verificación remota ⚡ EN CURSO (desde el parque)
+## Fase 3 — Verificación remota ⚡ EN CURSO
 
-**Objetivo:** confirmar que el servidor funciona de forma autónoma vía SSH.
-
-### Pasos desde el parque (MacBook / móvil)
+**Objetivo:** confirmar servicio activo y portal expuesto vía SSH.
 
 ```bash
-# 1. Conectar a Madre por SSH
+# Desde exterior (parque / móvil)
 ssh varo@100.91.112.32
-
-# 2. Verificar que el servidor Input Leap está vivo
 systemctl --user status input-leap.service
-
-# 3. Comprobar si el portal InputCapture está expuesto tras el reinicio
 busctl --user introspect org.freedesktop.portal.Desktop \
   /org/freedesktop/portal/desktop | grep InputCapture
 ```
@@ -56,33 +50,31 @@ busctl --user introspect org.freedesktop.portal.Desktop \
 ### Si el portal NO aparece en busctl
 
 ```bash
-# Relanzar el portal manualmente desde SSH
 WAYLAND_DISPLAY=wayland-1 /usr/lib/xdg-desktop-portal-hyprland &
-
-# Reiniciar el servicio Input Leap
 systemctl --user restart input-leap.service
-
-# Ver logs en directo
 journalctl --user -u input-leap.service -f
 ```
 
-### Si el ratón no salta al llegar a casa
+### Si hay error InvalidArgs en D-Bus
 
 ```bash
-systemctl --user restart input-leap.service
-journalctl --user -u input-leap.service -f
+# Diagnosticar con hyprctl
+hyprctl dispatch -- inputcapture
+busctl --user call org.freedesktop.portal.Desktop \
+  /org/freedesktop/portal/desktop \
+  org.freedesktop.portal.InputCapture CreateSession '{}'
 ```
 
 ---
 
-## Fase 4 — Validación física ⏳ Pendiente (al volver del parque)
+## Fase 4 — Validación física ⏳ Pendiente (al volver)
 
 **Criterio de éxito:**
 > El ratón salta limpiamente entre los 2 monitores de Madre y la pantalla de Acer, sin errores en los logs.
 
 ---
 
-## Fases siguientes (después de validar KVM)
+## Fases siguientes
 
 ### Fase 5 — SSH seguro
 - [ ] Claves Ed25519 Madre ↔ Acer
@@ -106,7 +98,6 @@ journalctl --user -u input-leap.service -f
 ## Regla de oro
 
 > **No improvisar.** Si algo falla → documentar el error exacto y no saltar pasos.
-> No saltarse fases.
 
 ---
 
