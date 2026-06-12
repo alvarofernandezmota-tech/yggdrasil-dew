@@ -1,45 +1,52 @@
 # CONTEXT — Estado actual del sistema
 
-> **Última actualización:** 12 junio 2026, 18:25 CEST
+> **Última actualización:** 12 junio 2026, 18:42 CEST
 > **Actualizar:** al inicio y cierre de cada sesión de trabajo.
 
 ---
 
 ## 📍 Dónde estamos ahora
 
-**`personal-v2` operativo.** Repo creado, estructura fijada, sistema de agentes documentado, Fase 1 del servidor completada.
+**Bloqueo activo:** Input Leap en Madre no funciona por incompatibilidad con el portal InputCapture de Wayland/Hyprland.
+**Plan listo:** instalar `input-leap-git` (AUR) que incluye parches libei/InputCapture.
+**Pendiente confirmar:** si Madre tiene `yay` o `paru` instalado.
 
 ---
 
 ## ✅ Última sesión (12 jun 2026)
 
-| Bloque | Completado |
+| Bloque | Estado |
 |---|---|
-| Auditoría completa de `personal` (repo madre) | ✅ |
-| Estructura definitiva `personal-v2` fijada | ✅ |
-| Sistema de agentes (Perplexity + Gemini + prompts) | ✅ |
-| Ecosistema Google documentado (Colab + NotebookLM) | ✅ |
-| Tailscale Madre `100.91.112.32` + Acer `100.86.119.102` | ✅ |
-| Input Leap server (Madre / Hyprland) + client (Acer) | ✅ |
+| Auditoría `personal` (repo madre) | ✅ |
+| Estructura definitiva `personal-v2` | ✅ |
+| Sistema de agentes documentado | ✅ |
+| Tailscale Madre + Acer operativos | ✅ |
+| Input Leap CLIENT en Acer | ✅ |
 | UFW Zero Trust en Acer | ✅ |
-| Diario de sesión con timeline completo | ✅ |
+| Input Leap SERVER en Madre | ⚠️ Bloqueado — portal Wayland |
+| Diagnóstico + plan de ruta documentado | ✅ |
 
 ---
 
 ## 🚧 Pendiente — próxima sesión
 
-### Servidor — Fase 2 (fin de semana)
-- [ ] TLS en Input Leap (openssl self-signed)
+### Input Leap en Madre (prioridad 1)
+- [ ] `which yay || which paru` — confirmar gestor AUR
+- [ ] `yay -S input-leap-git` (o paru / manual)
+- [ ] Verificar lanzando binario manualmente (sin systemd)
+- [ ] Reconstruir `.service` con variables portal si funciona
+
+### Servidor — Fase 2
+- [ ] TLS en Input Leap
 - [ ] fail2ban en Acer
-- [ ] Auditoría Docker preexistente en Acer
-- [ ] Headscale self-hosted (quitar dependencia Tailscale cloud)
-- [ ] Sincronización dotfiles / omarchy Madre ↔ Acer
-- [ ] MacBook como tercer nodo Input Leap
+- [ ] Auditoría Docker en Acer
+- [ ] Headscale self-hosted
+- [ ] dotfiles / omarchy sync Madre ↔ Acer
+- [ ] MacBook como tercer nodo
 
 ### Repo
-- [ ] Migrar contenido de `personal` (madre) a `personal-v2`
-- [ ] Poblar `yo/`, `formacion/`, `proyectos/`
-- [ ] `.gitignore` con `reflexiones/`, `begona.md`, datos sensibles
+- [ ] Migrar contenido de `personal` → `yo/`, `formacion/`, `proyectos/`
+- [ ] `.gitignore` con datos sensibles
 - [ ] Crear `tracking/` con TRACKING-MAESTRO.md
 
 ---
@@ -48,7 +55,7 @@
 
 | Máquina | IP Tailscale | Rol | Estado |
 |---|---|---|---|
-| **Madre** | `100.91.112.32` | Workstation + Input Leap server | ✅ |
+| **Madre** | `100.91.112.32` | Workstation + Input Leap server | ⚠️ Input Leap bloqueado |
 | **Acer** | `100.86.119.102` | Soporte 24/7 + Input Leap client | ✅ |
 | **MacBook** | pendiente | Cliente | ⏳ Fase 2 |
 
@@ -66,7 +73,6 @@
 ## 🎯 Objetivo 2026
 
 **Conseguir trabajo antes de que acabe el año.**
-
 Eje principal: empleabilidad. Todo lo demás (servidor, proyectos, formación) sirve a este objetivo.
 
 ---
@@ -85,7 +91,7 @@ personal-v2/
 ├── setup/servidor/  ✅ Fase 1 documentada
 ├── yo/              ⏳ pendiente migrar
 ├── formacion/       ⏳ pendiente migrar
-├── proyectos/       ⏳ pendiente migrar
+—── proyectos/       ⏳ pendiente migrar
 └── tracking/        ❌ no creada aún
 ```
 
