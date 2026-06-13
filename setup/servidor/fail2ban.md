@@ -9,29 +9,48 @@
 
 | Item | Estado |
 |---|---|
-| fail2ban en Madre | ⏳ Pendiente (incluido en bootstrap) |
+| fail2ban en Madre | ✅ Instalado y activo |
+| jail sshd | ✅ Vigilando SSH |
+| Configuración jail.local | ✅ Aplicada |
 
 ---
 
-## Instalar
+## Instalación (desde Acer vía SSH)
 
 ```bash
-sudo pacman -S fail2ban
-sudo systemctl enable --now fail2ban
+ssh -t madre "sudo pacman -S --noconfirm fail2ban && sudo systemctl enable --now fail2ban"
 ```
 
-## Configurar para SSH
+## Configuración jail.local
 
 ```bash
-sudo tee /etc/fail2ban/jail.local > /dev/null <<EOF
+# En Madre
+sudo bash -c 'cat > /etc/fail2ban/jail.local << EOF
+[DEFAULT]
+bantime  = 1h
+findtime = 10m
+maxretry = 5
+
 [sshd]
 enabled = true
-port = ssh
-maxretry = 5
-bantime = 3600
-findtime = 600
-EOF
+port    = ssh
+EOF'
 sudo systemctl restart fail2ban
+```
+
+> Parámetros:
+> - `bantime 1h` — ban de 1 hora tras superar intentos
+> - `findtime 10m` — ventana de tiempo para contar fallos
+> - `maxretry 5` — máximo 5 intentos fallidos antes de banear
+
+## Verificar que funciona
+
+```bash
+sudo fail2ban-client status sshd
+# Debe mostrar:
+# Currently failed: 0
+# Currently banned: 0
+# Journal matches: _SYSTEMD_UNIT=sshd.service
 ```
 
 ## Comandos útiles
@@ -43,11 +62,14 @@ sudo fail2ban-client status sshd
 # Desbanear una IP
 sudo fail2ban-client set sshd unbanip <IP>
 
-# Ver logs
+# Ver logs en tiempo real
 sudo journalctl -u fail2ban -f
+
+# Estado del servicio
+sudo systemctl status fail2ban
 ```
 
 ---
 
-_Ver también: [ufw.md](ufw.md) · [rescate.md](rescate.md)_
+_Ver también: [ufw.md](ufw.md) · [ssh.md](ssh.md) · [rescate.md](rescate.md)_
 _Volver al índice: [README.md](README.md)_
