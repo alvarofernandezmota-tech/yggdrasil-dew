@@ -1,7 +1,7 @@
 # fail2ban — Protección contra intrusiones
 
 > Última actualización: 13 junio 2026
-> Host: Madre
+> Host: Madre | Estado: ✅ Activo
 
 ---
 
@@ -9,9 +9,10 @@
 
 | Item | Estado |
 |---|---|
-| fail2ban en Madre | ✅ Instalado y activo |
-| jail sshd | ✅ Vigilando SSH |
-| Configuración jail.local | ✅ Aplicada |
+| fail2ban instalado | ✅ |
+| systemd enable --now | ✅ |
+| jail.local creado | ✅ `/etc/fail2ban/jail.local` |
+| jail sshd activo | ✅ `Currently banned: 0` |
 
 ---
 
@@ -24,7 +25,6 @@ ssh -t madre "sudo pacman -S --noconfirm fail2ban && sudo systemctl enable --now
 ## Configuración jail.local
 
 ```bash
-# En Madre
 sudo bash -c 'cat > /etc/fail2ban/jail.local << EOF
 [DEFAULT]
 bantime  = 1h
@@ -39,19 +39,33 @@ sudo systemctl restart fail2ban
 ```
 
 > Parámetros:
-> - `bantime 1h` — ban de 1 hora tras superar intentos
-> - `findtime 10m` — ventana de tiempo para contar fallos
-> - `maxretry 5` — máximo 5 intentos fallidos antes de banear
+> - `bantime 1h` — ban de 1 hora
+> - `findtime 10m` — ventana de tiempo
+> - `maxretry 5` — máximo 5 intentos fallidos
 
-## Verificar que funciona
+## Verificar estado
 
 ```bash
-sudo fail2ban-client status sshd
-# Debe mostrar:
-# Currently failed: 0
-# Currently banned: 0
-# Journal matches: _SYSTEMD_UNIT=sshd.service
+# Esperar 3s tras restart antes de consultar (timing del socket)
+sleep 3 && sudo fail2ban-client status sshd
 ```
+
+Salida esperada:
+```
+Status for the jail: sshd
+|- Currently failed: 0
+|- Currently banned: 0
+`- Journal matches: _SYSTEMD_UNIT=sshd.service + _COMM=sshd
+```
+
+## ⚠️ Problema conocido: socket error tras restart
+
+```
+ERROR Failed to access socket path: /var/run/fail2ban/fail2ban.sock. Is fail2ban running?
+```
+
+**Causa**: `fail2ban-client` ejecutado demasiado rápido tras `systemctl restart` — el socket aún no existe.
+**Solución**: `sleep 3 && sudo fail2ban-client status sshd`
 
 ## Comandos útiles
 
@@ -72,4 +86,3 @@ sudo systemctl status fail2ban
 ---
 
 _Ver también: [ufw.md](ufw.md) · [ssh.md](ssh.md) · [rescate.md](rescate.md)_
-_Volver al índice: [README.md](README.md)_
