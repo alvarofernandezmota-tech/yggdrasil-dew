@@ -46,11 +46,12 @@
 
 | Archivo | Contenido |
 |---|---|
-| [README.md](README.md) | Índice general |
+| [README.md](README.md) | Índice general por categorías |
 | [arquitectura.md](arquitectura.md) | Este archivo — mapa vivo |
 | [plan-maestro.md](plan-maestro.md) | Tareas P1/P2/P3 por estado |
 | [rescate.md](rescate.md) | Protocolo de recuperación de acceso |
 | [herramientas.md](herramientas.md) | Comparativa open source |
+| [incidencia-acceso-madre.md](incidencia-acceso-madre.md) | Post-mortem: sin SSH — causa raíz + resolución |
 
 ### Acceso y red
 
@@ -88,13 +89,14 @@
 
 | Archivo | App | Motivo |
 |---|---|---|
-| [input-leap.md](input-leap.md) | Input Leap | Bloqueo Wayland |
+| [input-leap.md](input-leap.md) | Input Leap | Bloqueo Wayland — 12 jun 2026 |
 | [barrier.md](barrier.md) | Barrier | Alternativa descartada |
 
 ### Scripts
 
 | Archivo | Qué hace |
 |---|---|
+| [scripts/README.md](scripts/README.md) | Índice de scripts |
 | [scripts/bootstrap-madre.sh](scripts/bootstrap-madre.sh) | Instalación completa Madre (6 fases) |
 
 ---
@@ -102,10 +104,12 @@
 ## Regla de mantenimiento
 
 > Cada vez que se crea un archivo nuevo en `setup/servidor/`:
-> 1. Añadir fila en la tabla correspondiente de este archivo
+> 1. Añadir fila en la tabla de este archivo
 > 2. Añadir fila en `setup/servidor/README.md`
 > 3. Entrada en `CHANGELOG.md`
+> 4. Si afecta al estado del sistema, actualizar `CONTEXT.md`
 
 ---
 
 _Ver también: [plan-maestro.md](plan-maestro.md) · [README.md](README.md)_
+_Volver al índice raíz: [README.md](../../README.md)_
