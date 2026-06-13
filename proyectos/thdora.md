@@ -1,46 +1,104 @@
-# THDORA — Bot Telegram Personal
+# thdora — Bot Telegram + FastAPI
+
+> Repo: [github.com/alvarofernandezmota-tech/thdora](https://github.com/alvarofernandezmota-tech/thdora)
+> Última revisión: 13 junio 2026
 
 ---
 
-## Resumen
+## Qué es
 
-**Qué es:** Bot de Telegram personal que actúa como asistente + tracker de vida
-**Por qué existe:** Automatizar registro diario, hábitos, recordatorios y consultas personales
-**Estado actual:** 🔄 Activo en Ordenador Madre — migrando al Acer (Home Server)
-**Repo GitHub:** github.com/alvarofernandezmota-tech/thdora (privado)
+Bot de Telegram con backend FastAPI. Parte del ecosistema THEA IA.
 
----
-
-## Objetivo final
-
-THDORA corre 24/7 en el Acer, tiene acceso a PostgreSQL, puede responder preguntas sobre mis datos, registrar entradas del diario desde Telegram y eventualmente llamar al LLM local (Ollama) para razonar.
-
----
-
-## Stack
-
-- Python 3
-- python-telegram-bot
-- PostgreSQL (migración pendiente desde SQLite)
-- Docker (pendiente containerizar)
-- Acer como servidor host
-
----
-
-## Estado y próximos pasos
-
-| Tarea | Estado |
+| Stack | Detalle |
 |---|---|
-| Bot funcional en Ordenador Madre | ✅ |
-| Migrar a Acer | 🔄 En curso |
-| Migrar DB a PostgreSQL | 🔄 En curso |
-| Containerizar con Docker | ⏳ Pendiente |
-| Integrar con Ollama local | ⏳ Futuro |
-
-**Próximo paso:** Completar migración al Acer y confirmar que corre 24/7
+| Bot | python-telegram-bot |
+| API | FastAPI, puerto 8001 |
+| DB | SQLite (volumen Docker persistente) |
+| LLM | Groq API (llama3-8b-8192) — Ollama local pendiente |
+| Deploy | Docker Compose (2 contenedores: api + bot) |
 
 ---
 
-## Log
+## Estado
 
-- `2026-06-12` — Proyecto documentado en personal-v2
+| Item | Estado |
+|---|---|
+| Repo estructurado | ✅ |
+| Dockerfile + docker-compose.yml | ✅ |
+| .env.example documentado | ✅ |
+| Keys en repo | ❌ NO (bien protegido, .gitignore) |
+| Desplegado en Madre | ⏳ Pendiente |
+| Ollama local integrado | ⏳ Pendiente |
+
+---
+
+## Variables de entorno necesarias
+
+```bash
+TELEGRAM_BOT_TOKEN=   # recuperar desde @BotFather en Telegram → /mybots
+GROQ_API_KEY=         # generar nueva en console.groq.com (la anterior caducada/perdida)
+THDORA_API_URL=http://api:8000   # no cambiar en Docker
+```
+
+> ⚠️ Las keys antiguas se perdieron al borrar Windows. Hay que regenerar ambas.
+> - **GROQ**: [console.groq.com](https://console.groq.com) → API Keys → Create API Key
+> - **TELEGRAM**: Telegram → @BotFather → `/mybots` → seleccionar bot → API Token
+
+---
+
+## Despliegue en Madre
+
+```bash
+# Desde Acer
+ssh madre
+
+# Clonar repo
+git clone https://github.com/alvarofernandezmota-tech/thdora.git ~/proyectos/thdora
+cd ~/proyectos/thdora
+
+# Configurar .env
+cp .env.example .env
+nano .env   # pegar TELEGRAM_BOT_TOKEN y GROQ_API_KEY
+
+# Arrancar
+docker compose up -d
+
+# Verificar
+docker compose ps
+docker compose logs -f
+```
+
+---
+
+## Comandos útiles
+
+```bash
+# Ver estado
+docker compose ps
+
+# Ver logs en tiempo real
+docker compose logs -f
+
+# Reiniciar
+docker compose restart
+
+# Parar
+docker compose down
+
+# Consola SQLite
+docker compose exec api sqlite3 /app/data/thdora.db
+```
+
+---
+
+## Pendiente
+- [ ] Regenerar GROQ_API_KEY en console.groq.com
+- [ ] Recuperar TELEGRAM_BOT_TOKEN desde @BotFather
+- [ ] Instalar Docker en Madre (verificar si está instalado)
+- [ ] Desplegar con `docker compose up -d`
+- [ ] Integrar Ollama local (sustituir Groq por modelo local en Madre)
+- [ ] Crear `proyectos/thdora.md` en personal-v2 con estado actualizado post-deploy
+
+---
+
+_Ver también: [arquitectura.md](../arquitectura.md) · [setup/servidor/README.md](../setup/servidor/README.md)_
