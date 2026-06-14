@@ -1,14 +1,21 @@
-# Python — Índice
+# Python — Escuela Musk
 
-> Formación Python centralizada. Fuente principal: **Escuela Musk** (curso activo).  
-> Repo pública de proyectos: [python-snippets](https://github.com/alvarofernandezmota-tech/python-snippets)
+> Formación pagada completa. Primer curso terminado.
+> Última actualización: 14 junio 2026
 
 ---
 
-## Qué estoy aprendiendo
+## Estructura
 
-Curso Python Escuela Musk — ~75% completado (jun 2026).  
-M1–M5 completados. Siguiente: Clases Extra (SQL, Lambda, PCA, Testing) → M6 Git → M7 Proyecto Final.
+```
+formacion/python/
+├── curso/        ← módulos Escuela Musk tal cual — para estudiar y repasar
+└── referencia/   ← diccionario técnico vivo — para consultar en el trabajo
+```
+
+**Dos capas, dos propósitos distintos.**
+- `curso/` sigue la estructura del curso — no se toca, solo se añade
+- `referencia/` se construye y mantiene activamente — es la herramienta de trabajo real
 
 ---
 
@@ -16,62 +23,27 @@ M1–M5 completados. Siguiente: Clases Extra (SQL, Lambda, PCA, Testing) → M6 
 
 | Módulo | Contenido | Estado |
 |---|---|---|
-| M1 | Introducción | ✅ 100% |
-| M2 | Fundamentos | ✅ 100% |
-| M3 | POO Básica | ✅ 100% |
-| M4 | POO Avanzada | ✅ 100% |
-| M5 | Pandas, NumPy, archivos | ✅ 100% — 26/26 tests |
-| CE | SQL, Lambda, PCA, Testing | 🔥 Siguiente |
-| M6 | Git & GitHub | ⏳ Pendiente |
-| M7 | Proyecto Final | ⏳ Pendiente |
+| M1 Introducción | Variables, tipos, entorno | ✅ Completado |
+| M2 Fundamentos | Números, strings, bucles, funciones, módulos | ✅ Completado |
+| M3 POO Básica | Clases, objetos, constructores, decoradores | ✅ Completado |
+| M4 POO Avanzada | Herencia, ABC, generadores, excepciones, testing | ✅ Completado |
+| M5 Datos | Archivos, JSON, Pandas, NumPy, Matplotlib, patrones | ✅ Completado |
+| CE Clases Extra | SQL, lambda, PCA, testing | 🔄 En curso |
+| M7 Proyecto Final | Proyecto integrador | ⏳ Pendiente |
 
 ---
 
-## Recursos
+## Referencia técnica
 
-- Apuntes M1–M4: en personal (v1) → pendiente migrar
-- Tests M5 (pytest): en personal (v1) → pendiente migrar
-- Proyectos prácticos: [python-snippets](https://github.com/alvarofernandezmota-tech/python-snippets)
-- Setup entorno: [`setup/python.md`](../../setup/python.md)
+Ver `referencia/` — diccionario por concepto, no por módulo.
+Se construye a medida que se consolida el aprendizaje.
 
 ---
 
-## Contenido (pendiente poblar)
+## Historial
 
-```
-formacion/python/
-├── README.md                  ← este archivo
-├── m1-introduccion/           ← pendiente migrar desde personal (v1)
-├── m2-fundamentos/            ← pendiente migrar
-├── m3-poo/                    ← pendiente migrar
-├── m4-poo-avanzado/           ← pendiente migrar
-├── m5-datos/                  ← pendiente migrar (Pandas, NumPy, archivos)
-├── clases-extra/              ← pendiente — activo
-│   ├── 01-sql.md
-│   ├── 02-lambda-comprehension.md
-│   ├── 03-pca-parte1.md
-│   ├── 04-pca-parte2.md
-│   ├── 05-intro-testing.md
-│   └── 06-testing-parte2.md
-├── m6-git-github/             ← pendiente
-└── m7-proyecto-final/         ← pendiente
-```
-
----
-
-## Notas clave
-
-- M5 cerrado 29 abril 2026 con 26/26 tests pytest pasando
-- CE (Clases Extra) no tiene temario provisto — se construye progresivamente
-- El proyecto final (M7) es el objetivo de cierre del curso
-
----
-
-## Dudas abiertas
-
-- ¿Qué formato exacto tienen las clases extra? (ver videos pendientes)
-- ¿El M6 Git es evaluado o solo teórico?
-
----
-
-_Actualizado: 14 jun 2026_
+| Fecha | Evento |
+|---|---|
+| 14 jun 2026 | Migración completa desde `personal` v1 a `personal-v2` |
+| 14 jun 2026 | Estructura `curso/` + `referencia/` establecida |
+| Feb–Jun 2026 | Cursado M1–M5 en Escuela Musk |
