@@ -1,115 +1,169 @@
-# Setup Servidor — Índice completo
+# 🖥️ Servidor Madre — Setup & Estado
 
-> Cada aplicación tiene su propio archivo. Lee este README primero.
-> Última actualización: 13 junio 2026
-
----
-
-## Arquitectura del sistema
-
-```
-Madre (Servidor)  ─────────────────────  Acer (Cliente)
-100.91.112.32                            100.86.119.102
-
-  [sshd]        ←── SSH (Tailscale) ──←  [ssh / VSCode Remote]
-  [wayvnc]      ←── VNC (LAN/T.scale)─←  [vncviewer]
-  [Ollama]      ←── API :11434 ─────←  [Open WebUI]
-  [PostgreSQL]  ←── :5432 ─────────←  [DBeaver]
-  [Tailscale]   ←── VPN mesh P2P ───←  [Tailscale]
-```
+> Documentación técnica del servidor de producción.
+> Parte del ecosistema: [yggdrasil-dew](https://github.com/alvarofernandezmota-tech/yggdrasil-dew)
+> Última actualización: **17 junio 2026**
 
 ---
 
-## 🚨 Pendiente mañana — ir físicamente a Madre
+## Datos del servidor
 
-```bash
-sudo systemctl enable --now sshd
-```
-
-Después seguir checklist completo: [rescate.md](rescate.md)
-
----
-
-## Aplicaciones — Índice completo
-
-### Acceso y red
-
-| App | Host | Estado | Doc |
-|---|---|---|---|
-| **Tailscale** | Madre + Acer | ✅ Activo | [tailscale.md](tailscale.md) |
-| **sshd** | Madre | 🔴 Pendiente activar | [ssh.md](ssh.md) |
-| **wayvnc** | Madre | ⚠️ Instalado, sin autostart | [vnc.md](vnc.md) |
-| **tigervnc** | Acer | ✅ Instalado | [vnc.md](vnc.md) |
-
-### Seguridad
-
-| App | Host | Estado | Doc |
-|---|---|---|---|
-| **UFW** | Acer ✅ / Madre 🔴 | Acer activo, Madre pendiente | [ufw.md](ufw.md) |
-| **fail2ban** | Madre | ⏳ Pendiente (bootstrap) | [fail2ban.md](fail2ban.md) |
-
-### Servicios (Docker)
-
-| App | Host | Estado | Doc |
-|---|---|---|---|
-| **Docker** | Madre | ⏳ Pendiente instalar | [bootstrap-madre.sh](bootstrap-madre.sh) |
-| **Ollama** | Madre | ⏳ Pendiente | [ollama.md](ollama.md) |
-| **Open WebUI** | Madre | ⏳ Pendiente | [ollama.md](ollama.md) |
-| **PostgreSQL** | Madre | ⏳ Pendiente | — |
-| **Pi-hole** | Madre | ⏳ Pendiente | — |
-| **Uptime Kuma** | Madre | ⏳ Pendiente | [uptime-kuma.md](uptime-kuma.md) |
-| **THDORA** | Madre | ⏳ Migrar desde Acer | — |
-
-### Monitorización y auditoría
-
-| App | Host | Estado | Doc |
-|---|---|---|---|
-| **btop** | Acer + Madre | ✅ Acer / Madre pendiente | — |
-| **lynis** | Madre | ⏳ Pendiente (bootstrap) | — |
-| **rkhunter** | Madre | ⏳ Pendiente (bootstrap) | — |
-
-### Desarrollo
-
-| App | Host | Estado | Doc |
-|---|---|---|---|
-| **VSCode** | Acer → Madre (Remote SSH) | ⏳ Pendiente configurar | [vscode.md](vscode.md) |
-| **DBeaver** | Acer → Madre | ⏳ Pendiente instalar | [dbeaver.md](dbeaver.md) |
-| **GitHub SSH** | Madre | ⏳ Pendiente configurar | [github-setup.md](github-setup.md) |
-| **Google Colab** | Cloud | ⏳ Por configurar | [colab-aistudio.md](colab-aistudio.md) |
-| **AI Studio** | Cloud | ⏳ Por configurar | [colab-aistudio.md](colab-aistudio.md) |
-
-### Descartadas
-
-| App | Motivo |
+| Campo | Valor |
 |---|---|
-| Input Leap | Bloqueo sesión Wayland — 12 jun 2026 |
-| WireGuard | Sustituido por Tailscale |
-
----
-
-## Instalación automatizada
-
-Una vez dentro de Madre por SSH:
+| Nombre | Madre |
+| Tipo | Torre fija (producción) |
+| OS | Linux |
+| IP Tailscale | `100.91.112.32` |
+| IP local | `10.134.31.228` |
+| Acceso | SSH via Tailscale |
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/alvarofernandezmota-tech/personal-v2/main/setup/servidor/bootstrap-madre.sh)
+# Conectar al servidor
+ssh usuario@100.91.112.32
 ```
 
-Ver: [bootstrap-madre.sh](bootstrap-madre.sh) · [herramientas.md](herramientas.md)
-
 ---
 
-## Capas de red
+## Estado de servicios
 
-| Capa | Tecnología | Para qué |
+### ✅ Activos
+
+| Servicio | Puerto | Notas |
 |---|---|---|
-| VPN mesh | Tailscale | Conectar equipos desde cualquier red |
-| LAN local | Router | Red en casa (`10.176.x.x`) |
-| VNC en casa | wayvnc + LAN | Escritorio remoto dentro de casa |
-| VNC fuera | wayvnc + Tailscale | Escritorio remoto desde exterior |
+| sshd | 22 | Acceso principal |
+| Tailscale | — | Red P2P, siempre activo |
+| Docker | — | Motor de contenedores |
+| THDORA (bot) | — | v0.17.0, contenedor Docker |
+| Ollama | 11434 | llama3.2:3b (CPU) |
+
+### ⏳ Pendientes (por orden de prioridad)
+
+| Servicio | Prioridad | Notas |
+|---|---|---|
+| **UFW** | 🔴 Alta | Firewall — instalar antes de exponer puertos |
+| **fail2ban** | 🔴 Alta | Protección SSH brute force |
+| **PostgreSQL** | 🟡 Media | Base de datos producción para thdora |
+| **wayvnc autostart** | 🟡 Media | Acceso gráfico remoto |
+| **Uptime Kuma** | 🟡 Media | Monitorización servicios |
+| **Open WebUI** | 🟢 Planificado | RAG sobre yggdrasil-dew con Ollama |
+| **Pi-hole** | 🟢 Planificado | DNS + bloqueo anuncios |
+| **n8n** | 🟢 Planificado | Automatizaciones (diario nocturno) |
 
 ---
 
-_Plan maestro y tareas: [plan-maestro.md](plan-maestro.md)_
-_Protocolo de rescate: [rescate.md](rescate.md)_
-_Volver al índice: [README.md](../../README.md)_
+## Pirámide de Resiliencia
+
+```
+┌─────────────────────────────────┐
+│  3 — AISLAMIENTO                │  Docker ✅
+│  contenedores separados         │
+├─────────────────────────────────┤
+│  2 — AUDITORÍA                  │  ⏳ lynis · journald · btop
+│  visibilidad del sistema        │
+├─────────────────────────────────┤
+│  1 — BLINDAJE                   │  ⏳ UFW · fail2ban
+│  protección activa              │
+├─────────────────────────────────┤
+│  0 — ACCESO                     │  ✅ SSH · Tailscale
+│  puerta de entrada              │
+└─────────────────────────────────┘
+```
+
+---
+
+## THDORA en Docker
+
+> Repo: https://github.com/alvarofernandezmota-tech/thdora
+
+```bash
+# Ver estado del contenedor
+docker ps | grep thdora
+
+# Ver logs en tiempo real
+docker logs -f thdora
+
+# Reiniciar bot
+docker restart thdora
+
+# Deploy desde CI/CD (GitHub Actions)
+# Ver: thdora/.github/workflows/deploy.yml
+```
+
+### Variables de entorno necesarias (secrets GitHub Actions)
+
+| Secret | Descripción |
+|---|---|
+| `SERVER_HOST` | IP Tailscale del Madre |
+| `SERVER_USER` | Usuario SSH |
+| `SSH_PRIVATE_KEY` | Clave SSH privada |
+| `BOT_TOKEN` | Token bot Telegram |
+| `OWNER_CHAT_ID` | Chat ID del owner |
+
+### Pendiente antes de merge v0.17.0
+- [ ] Añadir todos los secrets en GitHub Actions
+- [ ] `alembic upgrade head` en Madre
+- [ ] `pytest tests/unit/bot/ -v` localmente
+- [ ] Eliminar `tests.yml` (redundante con `deploy.yml`)
+
+---
+
+## CI/CD — GitHub Actions
+
+Flujo automático al hacer push a `main` en thdora:
+
+```
+push main → tests → SSH deploy → health check → Telegram notify
+```
+
+Config: `thdora/.github/workflows/deploy.yml`
+Acceso: `appleboy/ssh-action` via secrets
+
+---
+
+## Próximos pasos (orden recomendado)
+
+```bash
+# 1. Instalar UFW
+sudo apt install ufw
+sudo ufw allow 22/tcp    # SSH
+sudo ufw allow 22/udp    # Tailscale
+sudo ufw enable
+
+# 2. Instalar fail2ban
+sudo apt install fail2ban
+sudo systemctl enable --now fail2ban
+
+# 3. PostgreSQL (cuando thdora esté en v0.17.0 mergeado)
+sudo apt install postgresql
+# + configurar en docker-compose.yml de thdora
+
+# 4. Uptime Kuma
+docker run -d --restart=always -p 3001:3001 \
+  -v uptime-kuma:/app/data \
+  --name uptime-kuma louislam/uptime-kuma:1
+
+# 5. Open WebUI (RAG sobre yggdrasil-dew)
+docker run -d -p 3000:8080 \
+  -e OLLAMA_BASE_URL=http://localhost:11434 \
+  -v open-webui:/app/backend/data \
+  --name open-webui ghcr.io/open-webui/open-webui:main
+```
+
+---
+
+## Relación con el ecosistema
+
+```
+yggdrasil-dew (cerebro)
+    └── setup/servidor/README.md  ← estás aquí
+    └── diarios/                  ← thdora escribe aquí via /diario
+
+thdora (bot)
+    └── corre en Docker en Madre
+    └── lee contexto de yggdrasil-dew (RAG planificado)
+    └── escribe diarios via GitHub Contents API
+```
+
+---
+
+_Parte de [yggdrasil-dew](https://github.com/alvarofernandezmota-tech/yggdrasil-dew) · el cerebro del ecosistema_

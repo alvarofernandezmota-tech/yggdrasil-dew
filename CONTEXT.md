@@ -1,7 +1,20 @@
 # CONTEXT.md — Estado actual del sistema
 
 > Actualizar al inicio de cada sesión con una IA.
-> Última actualización: **16 junio 2026 · 19:36 CEST**
+> Última actualización: **17 junio 2026 · 15:29 CEST**
+
+---
+
+## 🧠 Repos del ecosistema
+
+| Repo | Rol | URL |
+|---|---|---|
+| **yggdrasil-dew** | Cerebro / second brain — fuente de verdad | https://github.com/alvarofernandezmota-tech/yggdrasil-dew |
+| **thdora** | Bot Telegram (TOKI) — producto principal | https://github.com/alvarofernandezmota-tech/thdora |
+| **ai-toolkit** | Stack herramientas dev IA | https://github.com/alvarofernandezmota-tech/ai-toolkit |
+
+> 📖 Ecosistema completo: [ECOSISTEMA.md](ECOSISTEMA.md)
+> 🖥️ Setup servidor Madre: [setup/servidor/README.md](setup/servidor/README.md)
 
 ---
 
@@ -25,7 +38,7 @@ Requiere acceso al panel de configuración del router.
 
 ---
 
-## Estado del servidor — Pirámide de Resiliencia
+## Estado del servidor Madre — Pirámide de Resiliencia
 
 | Capa | Objetivo | Estado |
 |---|---|---|
@@ -33,6 +46,8 @@ Requiere acceso al panel de configuración del router.
 | 1 — Blindaje | UFW + fail2ban | ⚠️ UFW Acer ✅ · Madre ⏳ pendiente |
 | 2 — Auditoría | lynis + journald + btop | ⏳ Pendiente |
 | 3 — Aislamiento | Docker + contenedores | ✅ Docker Madre operativo |
+
+> 📋 Plan detallado del servidor: [setup/servidor/README.md](setup/servidor/README.md)
 
 ---
 
@@ -48,14 +63,16 @@ Requiere acceso al panel de configuración del router.
 | whisrs | Acer | ✅ Instalado, Super+V |
 | lan-mouse | Madre + Acer | ⚠️ Config lista, bloqueado por AP Isolation |
 | Docker | Madre | ✅ Operativo |
-| THDORA | Madre | ✅ En producción (v0.17.0 — pendiente merge a main) |
+| **THDORA** | Madre | ✅ En producción (v0.17.0 — pendiente merge a main) |
 | Ollama | Madre | ✅ Instalado — llama3.2:3b |
 | Ollama | Acer (varopc) | ✅ qwen2.5-coder:14b · deepseek-r1:14b · qwen3:8b |
+| KVM/virt-manager | Acer (varopc) | ✅ Instalado · libvirtd activo |
+| wget | Acer (varopc) | ⏳ Pendiente instalar |
 | PostgreSQL | Madre | ⏳ Pendiente |
 | Pi-hole | Madre | ⏳ Pendiente |
 | Uptime Kuma | Madre | ⏳ Pendiente |
 | Open WebUI | Madre | ⏳ Planificado |
-| Obsidian | Acer | ⏳ Planificado (próxima sesión) |
+| Obsidian | Acer | ⏳ Planificado |
 | n8n | Madre | ⏳ Documentado en ai-toolkit, sin levantar |
 
 ---
@@ -67,6 +84,8 @@ Requiere acceso al panel de configuración del router.
 | **THDORA** | [thdora](https://github.com/alvarofernandezmota-tech/thdora) | ✅ v0.17.0 rama activa, pendiente merge | Añadir secrets CI/CD + alembic upgrade + merge |
 | **yggdrasil-dew** | [yggdrasil-dew](https://github.com/alvarofernandezmota-tech/yggdrasil-dew) | ✅ Vault central activo | Instalar Obsidian + plugin Git |
 | **ai-toolkit** | [ai-toolkit](https://github.com/alvarofernandezmota-tech/ai-toolkit) | ✅ Activo | Corregir CEREBRO.md (ref. `personal` → `yggdrasil-dew`) |
+| **Servidor Madre** | yggdrasil-dew/setup/servidor/ | 🔧 Setup en curso | UFW + PostgreSQL + completar servicios |
+| **Redmi A5** | yggdrasil-dew/setup/ | ⏳ Descargando ROM (curl en curso) | Flash EDL cuando termine descarga |
 | **Python** | — | ⏳ Pendiente retomar | Kaggle primera lección |
 
 ---
@@ -85,24 +104,28 @@ Requiere acceso al panel de configuración del router.
 
 ---
 
-## Ecosistema nuevo en construcción
-
-Objetivo: conectar thdora + yggdrasil-dew + Obsidian + OpenCode en un second brain vivo.
+## Ecosistema conectado — Flujo vivo
 
 ```
-Telegram /diario → thdora → GitHub API → yggdrasil-dew/diarios/
+📱 Telegram (/diario texto...)
+    ↓ handler /diario (por implementar en thdora)
+🤖 thdora → GitHub Contents API → yggdrasil-dew/diarios/YYYY-MM-DD.md
     ↓
-Obsidian (plugin Git) → edición visual + RAG local (Ollama)
+👁️ Obsidian (plugin Git) → edición visual + RAG local (Ollama)
     ↓
-OpenCode → agente código con contexto personal (.opencode-context.md)
+🧠 Open WebUI → chateas con todo tu historial (RAG nativo Markdown)
     ↓
-GitHub Actions 23:00 → resumen nocturno → commit → Telegram notify
+🛠️ OpenCode → código más personalizado con contexto tuyo
+    ↓
+⚙️ GitHub Actions 23:00 → resumen nocturno → commit → Telegram notify
 ```
 
 **Decisiones tomadas:**
-- yggdrasil-dew = fuente de verdad única del diario (ai-toolkit/diario/ = changelog técnico del stack)
+- `yggdrasil-dew` = fuente de verdad única del ecosistema
+- `thdora` = el bot que ejecuta, lee contexto de yggdrasil-dew
+- `ai-toolkit/diario/` = changelog técnico del stack (NO diario personal)
 - Handler /diario usará GitHub Contents API (sin Git local en contenedor)
-- Raíz de yggdrasil-dew = raíz del vault Obsidian (sin subcarpeta extra)
+- Raíz de yggdrasil-dew = raíz del vault Obsidian
 
 ---
 
@@ -119,5 +142,5 @@ GitHub Actions 23:00 → resumen nocturno → commit → Telegram notify
 ---
 
 _Ver ecosistema completo: [ECOSISTEMA.md](ECOSISTEMA.md)_
-_Ver plan de tareas: [setup/servidor/plan-maestro.md](setup/servidor/plan-maestro.md)_
-_Última actualización: 16 junio 2026 — 19:36 CEST_
+_Ver setup servidor: [setup/servidor/README.md](setup/servidor/README.md)_
+_Última actualización: 17 junio 2026 — 15:29 CEST_
