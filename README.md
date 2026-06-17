@@ -1,112 +1,78 @@
-# personal-v2
+# 🌲 yggdrasil-dew
 
-> Base de datos personal de Álvaro Fernández Mota.
-> Fuente de verdad única · 100% Git · Auditado y versionado.
-> Última actualización: 14 junio 2026
-
----
-
-## 🧠 Principio de este repo
-
-**Este repo NO es un archivo histórico. Es una herramienta de trabajo viva.**
-
-Cada sección existe en dos capas:
-- **Histórico** → lo que se aprendió o hizo (para repasar)
-- **Referencia técnica** → lo que se consulta en producción (para trabajar)
-
-Un ingeniero consulta su repo como consulta documentación oficial — rápido, preciso, sin buscar entre carpetas de "cuándo lo aprendí".
+> Second brain personal de Álvaro Fernández Mota.
+> Última actualización: **17 junio 2026**
 
 ---
 
-## Estructura del repo
+## ¿Qué es esto?
+
+Este repo es el cerebro. La fuente de verdad única de todo el ecosistema técnico y personal.
+Si no está aquí, no existe.
 
 ```
-personal-v2/
-├── README.md              ← este archivo
-├── AGENT.md               ← instrucciones para IAs (leer primero)
-├── CONTEXT.md             ← estado actual del sistema
-├── CHANGELOG.md           ← historial de cambios
-├── filosofia.md           ← principios y valores del sistema
-├── .gitignore
-│
-├── agentes/               ← instrucciones y flujos por herramienta IA
-├── yo/                    ← perfil, CV, empleabilidad, certificaciones
-├── diarios/               ← diarios de sesión por año
-├── formacion/             ← Python, SQL, Linux, SO, C, cursos
-│   └── python/
-│       ├── curso/         ← módulos Escuela Musk (M1→M7) — para estudiar
-│       └── referencia/    ← diccionario técnico vivo — para trabajar
-├── proyectos/             ← THDORA, thea-ia, ai-toolkit, analytics
-└── setup/                 ← configuración de máquinas y servicios
-    ├── equipos.md
-    ├── software.md
-    ├── workspace.md
-    ├── servicios.md
-    ├── omarchy/
-    └── servidor/
+yggdrasil-dew
+├── AGENT.md        ← leer primero si eres una IA
+├── CONTEXT.md      ← estado HOY (actualizar cada sesión)
+├── ECOSISTEMA.md   ← mapa completo del ecosistema
+├── diarios/        ← un archivo por día — única fuente del diario
+├── proyectos/      ← fichas de proyectos activos
+├── setup/          ← toda la configuración técnica
+├── formacion/      ← aprendizaje estructurado
+├── agentes/        ← fichas y prompts de cada IA
+└── yo/             ← perfil, CV, objetivos
 ```
 
 ---
 
-## Ecosistema de máquinas
+## Proyectos activos
 
-| Máquina | Rol | IP Tailscale | OS |
-|---|---|---|---|
-| **Madre** | Workstation principal + GPU | `100.91.112.32` | Arch Linux / Hyprland |
-| **Acer** | Servidor 24/7 | `100.86.119.102` | Arch Linux |
-| **MacBook** | Cliente puro | Pendiente | macOS |
-
-> **Regla:** Madre produce y sirve. Acer corre 24/7. MacBook solo consume.
-
----
-
-## Estado del servidor — Pirámide de Resiliencia
-
-| Capa | Objetivo | Estado | Fecha |
-|---|---|---|---|
-| 0 — Acceso | sshd + wayvnc + Tailscale | ⚠️ Tailscale ✅, SSH pendiente | 13 jun 2026 |
-| 1 — Blindaje | UFW + fail2ban | ⚠️ UFW Acer ✅, Madre pendiente | 13 jun 2026 |
-| 2 — Auditoría | lynis + journald + btop | ⏳ Pendiente | — |
-| 3 — Aislamiento | Docker + contenedores | ⏳ Pendiente | — |
-
----
-
-## Flujo de trabajo IA
-
-```
-Gemini (voz / visual / docs largos)
-    ↓
-Álvaro revisa
-    ↓
-Perplexity estructura y sube al repo
-    ↓
-GitHub — fuente de verdad
-```
-
-**Regla de oro:** Si tiene que quedar documentado → acaba en este repo.
-
----
-
-## Archivos raíz
-
-| Archivo | Propósito | Frecuencia |
+| Proyecto | Repo | Estado |
 |---|---|---|
-| `AGENT.md` | Instrucciones para IAs | Al cambiar el flujo |
-| `CONTEXT.md` | Estado actual del sistema | Cada sesión |
-| `CHANGELOG.md` | Historial de cambios | Al hacer cambios |
-| `filosofia.md` | 7 principios del sistema | Mensual o menos |
+| **thdora** (bot TOKI) | [thdora](https://github.com/alvarofernandezmota-tech/thdora) | v0.17.0 pendiente merge |
+| **ai-toolkit** | [ai-toolkit](https://github.com/alvarofernandezmota-tech/ai-toolkit) | Activo |
+| **Servidor Madre** | — | Docker ✅ · UFW pendiente |
+| **Redmi A5** | [proyectos/redmi-a5.md](proyectos/redmi-a5.md) | ROM descargando |
+| **HP rescate** | [proyectos/hp-rescate.md](proyectos/hp-rescate.md) | Verificar cables |
 
 ---
 
-## Carpetas pendientes de poblar
+## IAs del ecosistema
 
-| Carpeta | Contenido pendiente |
+| IA | Rol |
 |---|---|
-| `yo/` | CV, empleabilidad, certificaciones, portfolio |
-| `formacion/python/referencia/` | Diccionario técnico consolidado desde M1–M5 |
-| `proyectos/` | THDORA, thea-ia, ai-toolkit, analytics |
+| **Perplexity** (Claude Sonnet 4.6) | Principal · repos · código · MCP GitHub |
+| **Grok** | Investigación · datos frescos · truth-seeking |
+| **Gemini** | Código largo · contexto 1M tokens |
+| **OpenCode** | Agente código en terminal |
+
+> Ver fichas completas → [agentes/](agentes/)
 
 ---
 
-_Ver `AGENT.md` para instrucciones completas de uso con IAs._
-_Ver `setup/servidor/plan-maestro.md` para tareas pendientes._
+## Cómo arrancar una sesión nueva
+
+### Con Perplexity
+```
+Lee AGENT.md y CONTEXT.md de yggdrasil-dew y dame el estado actual.
+```
+
+### Auditoría rápida (desde varopc)
+```bash
+bash setup/scripts/audit-repo.sh
+```
+
+### Sync manual
+```bash
+bash setup/scripts/daily-sync.sh
+```
+
+---
+
+## Regla de oro
+
+> *Si no está en el repo, no existe.*
+
+---
+
+_Mantenido por Álvaro + Perplexity (MCP GitHub) · Arch Linux · Obsidian_
