@@ -1,114 +1,80 @@
-# 🤖 thdora / TOKI — Ficha de Proyecto
+# THDORA — Estado del Proyecto
 
-> Fuente de verdad del proyecto thdora.
-> Última actualización: **17 junio 2026**
-
----
-
-## Qué es
-
-Bot Telegram personal + API REST. El asistente se llama **TOKI**.
-Gestiona citas, hábitos, diario y notificaciones diarias desde Telegram.
-Diferenciador: ningún competidor (Wysa / Woebot / Replika / Youper / Bearable) usa Telegram en español.
-
-**Repo:** https://github.com/alvarofernandezmota-tech/thdora
+> Bot Telegram personal con FastAPI + SQLite + LangGraph + Groq  
+> Repo: https://github.com/alvarofernandezmota-tech/thdora
 
 ---
 
-## Estado actual
+## Estado Actual · 18 junio 2026
 
-| Campo | Valor |
-|---|---|
-| Versión en producción | v0.16.0 (main) |
-| Versión pendiente merge | v0.17.0 (`feature/v0.17.0-nlp-llm-multiuser`) |
-| Servidor | Madre · Docker · corriendo 24/7 desde 24 abril 2026 |
-| DB actual | SQLite |
-| DB planificada | PostgreSQL |
-| LLM actual | Groq (Llama 3.1) |
-| LLM local | Ollama qwen3:8b (varopc) · llama3.2:3b (Madre) |
-
----
-
-## Pendiente antes del merge v0.17.0
-
-- [ ] Añadir secrets en GitHub Actions (`GITHUB_TOKEN`, `GROQ_API_KEY`, `HOST`, `USER`, `KEY`, `PORT`)
-- [ ] `alembic upgrade head` en Servidor Madre
-- [ ] `pytest tests/unit/bot/ -v` en local sin errores
-- [ ] Eliminar workflow `tests.yml` obsoleto
+| Elemento | Estado |
+|----------|--------|
+| Versión | v0.22.0 |
+| Cold-start | ✅ Resuelto (17 fixes) |
+| Docker stack | ✅ Robusto |
+| Flujo /nueva | ✅ Funciona |
+| Flujo NLP natural | ⚠️ Parcial (BUG-001, BUG-002) |
+| Tests unitarios | ❌ Pendientes (5 críticos) |
+| Auditoría IA | ✅ Completada hoy |
 
 ---
 
-## Roadmap v0.18+
-
-### 🔜 Próxima versión — v0.18.0
-- Notas de voz (Whisper vía Groq)
-- Historial conversacional NLP persistente entre reinicios
-- CD automático GitHub Actions → Madre por SSH (si no está en v0.17)
-
-### 🟡 Medio plazo — v0.19.0
-- Fallback automático Ollama → Groq
-- Soporte multiusuario completo con gestión desde bot
-- Capa regex NLP nivel 0 (intenciones simples sin LLM)
-- PostgreSQL en Servidor Madre
-
-### 🔵 Largo plazo
-- Extracción de `thdora-base` como módulo reutilizable / open source
-- RAG sobre yggdrasil-dew (Open WebUI + Ollama)
-- Handler `/diario` completo con resumen nocturno automático
-- Comercialización TOKI: ver [toki-comercializacion.md](toki-comercializacion.md)
-
----
-
-## Conexión con yggdrasil-dew
-
-| Dirección | Cómo | Estado |
-|---|---|---|
-| thdora **escribe** en ygg | `/diario` → GitHub Contents API | ⏳ En rama v0.17.0 |
-| thdora **lee** ygg | RAG Ollama sobre vault | 🔵 Planificado |
-| GitHub Actions **resumen nocturno** | 23:00 → commit en ygg | 🔵 Planificado |
-
----
-
-## Arquitectura real (v0.17.0)
+## Stack Técnico
 
 ```
-src/
-├── api/          ← FastAPI endpoints
-├── ai/           ← LLMBackend: GroqBackend + OllamaBackend + Factory
-├── bot/
-│   ├── handlers/
-│   │   ├── citas.py
-│   │   ├── habitos.py
-│   │   ├── semana.py
-│   │   ├── nlp.py
-│   │   └── diario.py   ← escribe en yggdrasil-dew
-│   ├── api_client.py
-│   ├── github_client.py  ← GitHub Contents API
-│   └── scheduler.py
-├── core/
-└── db/           ← SQLAlchemy + Alembic + multiusuario
+Bot         python-telegram-bot v21
+API         FastAPI + uvicorn
+DB          SQLite via SQLAlchemy
+Agente      LangGraph + Groq (llama-3.3-70b-versatile)
+Memoria     langgraph-checkpoint-sqlite
+Monitor     Prometheus + Grafana
+Infra       Docker multi-stage
 ```
 
 ---
 
-## Decisiones técnicas clave
+## Cómo arrancar
 
-- **Separación API/bot:** el bot es un cliente HTTP puro, nunca toca la DB directamente
-- **LLMBackend factory:** intercambiable entre Groq y Ollama sin cambiar handlers
-- **AbstractLifeManager:** permite migrar de SQLite a PostgreSQL cambiando solo una clase
-- **Multiusuario:** `user_id` en todos los modelos, aislamiento total de datos
-- **yggdrasil-dew como destino:** el diario no vive en thdora, vive en el segundo cerebro
-
----
-
-## Historial de versiones
-
-| Versión | Fecha | Hito |
-|---|---|---|
-| v0.16.0 | 24 abril 2026 | Lanzamiento producción, 9 comandos, NLP Groq |
-| v0.17.0 | junio 2026 | LLMBackend, multiusuario, /diario → ygg |
+```bash
+cd ~/Projects/thdora
+git pull origin main
+make smoke && make fresh && make logs
+```
 
 ---
 
-_Ver ROADMAP.md en el repo para estado de branches: [thdora/ROADMAP.md](https://github.com/alvarofernandezmota-tech/thdora/blob/main/ROADMAP.md)_
-_Diario del proyecto: [diarios/](../diarios/)_
+## Bugs Pendientes
+
+### BUG-001 — MEDIO · Regex NLP incompleto
+- Frases como "mañana tengo dentista" no crean cita
+- Fix: ampliar regex en `src/bot/handlers/nlp.py`
+
+### BUG-002 — MEDIO · LLM no llama a create_appointment
+- El agente responde texto pero no persiste la cita en DB
+- Fix: integrar tool `create_appointment` en el grafo
+
+### BUG-003 — BAJO · Docker depends_on circular
+- API depende de Prometheus → retrasa arranque
+- Fix: eliminar `depends_on: prometheus` de `thdora` en docker-compose
+
+---
+
+## Próximas Acciones
+
+- [ ] Arrancar bot y verificar `/start`, `hola`, `/nueva`, `/citas`
+- [ ] Ejecutar `python scripts/ai_audit.py` con key real
+- [ ] Fix BUG-001 (regex NLP)
+- [ ] Fix BUG-002 (LLM → create_appointment)
+- [ ] Fix BUG-003 (docker-compose depends_on)
+- [ ] Implementar 5 tests pytest críticos
+- [ ] Conectar THDORA con Obsidian en YGG
+
+---
+
+## Documentación Técnica (links directos)
+
+- [Informe auditoría 18-jun](https://github.com/alvarofernandezmota-tech/thdora/blob/main/docs/THDORA_AUDIT_2026-06-18.md)
+- [Consultas a IAs](https://github.com/alvarofernandezmota-tech/thdora/blob/main/docs/AI_QUERIES_2026-06-18.md)
+- [Runbook arranque](https://github.com/alvarofernandezmota-tech/thdora/blob/main/docs/STARTUP_RUNBOOK.md)
+- [Sesión interna](https://github.com/alvarofernandezmota-tech/thdora/blob/main/.github/audits/2026-06-18-session.md)
+- [Script ai_audit.py](https://github.com/alvarofernandezmota-tech/thdora/blob/main/scripts/ai_audit.py)
