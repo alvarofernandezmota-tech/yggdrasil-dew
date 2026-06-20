@@ -1,77 +1,113 @@
 # CONTEXT.md — Estado HOY
 
-> Actualizar cada sesión. Este fichero es el "resumen ejecutivo" del ecosistema.
-> Última actualización: **20 junio 2026 — 00:36 CEST**
+> ⚠️ Actualizar SIEMPRE al inicio y al final de cada sesión.
+> Este fichero es el "resumen ejecutivo" del ecosistema — lo primero que lee cualquier agente.
+> Última actualización: **20 junio 2026 — 10:00 CEST**
 
 ---
 
-## ¿Dónde estamos?
+## 📍 Dónde estamos ahora mismo
 
-### THDORA
+### THDORA — bot TOKI
 - Versión: **v0.22.1** en rama `main`
 - Stack Docker en Madre: **6/6 contenedores arriba** ✅
-- API FastAPI (`thdora`): **healthy** en puerto 8000 ✅
-- Bot Telegram (`thdora-bot`): **Up pero en restart loop** ⚠️
-  - Causa: `langgraph.checkpoint.sqlite` no instalado en imagen vieja
-  - Fix: hacer `git pull + docker compose up -d --build` en Madre
-  - Pendiente confirmar que arranque limpio
-- CI/CD (`deploy.yml`): ✅ correcto, tiene `--build` y notificación Telegram
-- Tests CI (`tests.yml`): ✅ vars dummy inyectadas, no necesita credenciales reales
+- API FastAPI (puerto 8000): **healthy** ✅
+- Bot Telegram: ⚠️ **pendiente verificar** — hacer `/start` en Telegram para confirmar
+- Fix bot restart loop (langgraph): ⏳ pendiente `git pull + docker compose up --build` en Madre
 
-### Yggdrasil-dew
-- Carpeta `osint/` creada ✅
-- `setup/obsidian.md` documentado ✅
-- Obsidian en varopc: ⏳ **PENDIENTE INSTALAR**
-- Open WebUI en Madre: ⏳ pendiente
+### yggdrasil-dew — segundo cerebro
+- **AUDITORÍA MASIVA completada hoy 20 jun 2026** ✅
+- ~30 archivos nuevos o actualizados esta mañana
+- HOME.md: ✅ completo, cero links rotos
+- inbox/: ✅ 8 notas etiquetadas con destino claro
+- Filosofía, agentes, formación, setup, diarios: ✅ todo conectado
+- **Vault local Obsidian: ⏳ PENDIENTE `git pull`** — no ve los cambios de hoy
 
-### varopc (Acer Theodora)
-- Obsidian: ⏳ **PENDIENTE** (`yay -S obsidian`)
-- Repo yggdrasil-dew clonado en varopc: ❓ verificar
-- nmap / theHarvester: ⏳ instalar cuando Obsidian esté
+### varopc (Acer — terminal de trabajo)
+- OS: Arch Linux + Hyprland (Omarchy) ✅
+- IP Tailscale: `100.86.119.102`
+- Obsidian instalado: ✅ (verificar `yay -S obsidian` si no)
+- Plugin Git Obsidian: ⏳ pendiente instalar
+- nmap / theHarvester: ⏳ pendiente `yay -S nmap theharvester`
 
-### Madre (servidor)
-- Docker + docker-compose: ✅
-- Tailscale: ✅
+### Madre (servidor central)
+- OS: Linux (verificar: `uname -a`)
+- IP Tailscale: `100.91.112.32`
+- CPU: i5-8400 · RAM: 16GB · GPU: GTX 1060 6GB VRAM
+- Docker: ✅ · Tailscale: ✅ · Ollama: ✅
 - UFW + fail2ban: ⏳ pendiente
-- Open WebUI: ⏳ pendiente
-- tmux: instalar para builds largos sin perder sesión SSH
+- tmux: ⏳ instalar
 
 ---
 
-## Próximos pasos en orden
+## 🔴 Urgente — hacer hoy
 
-### 🔴 Urgente (mañana)
-1. SSH a Madre → `git pull origin main` → `docker compose up -d --build` → verificar bot
-2. `docker compose logs --tail=30 bot` → confirmar que no hay error `langgraph`
-3. Probar `/start` en Telegram → ver si TOKI responde
-
-### 🟡 Importante (esta semana)
-4. Instalar Obsidian en varopc: `yay -S obsidian`
-5. Abrir vault: `~/repos/yggdrasil-dew`
-6. Instalar plugin Git en Obsidian
-7. Primer commit desde Obsidian → verificar sync con GitHub
-
-### 🟢 Planificado
-8. nmap en varopc → primer OSINT real red de casa → guardar en `osint/resultados/`
-9. Open WebUI en Madre (Docker)
-10. UFW + fail2ban en Madre
-11. Handler `/diario` en thdora → escribir en Ygg desde Telegram
-12. n8n en Docker (automatización)
+1. `cd ~/Projects/yggdrasil-dew && git pull` → sincronizar vault local
+2. Instalar plugin **Obsidian Git** → auto-sync permanente
+3. SSH Madre → `git pull + docker compose up -d --build` → fix bot
+4. Probar `/start` en Telegram → confirmar TOKI responde
+5. SSH Madre → ejecutar diagnóstico hardware (ver `inbox/modelos-ollama-hardware-madre.md`)
 
 ---
 
-## Stack tecnológico activo
+## 🟡 Esta semana
+
+- Instalar Local GPT en Obsidian → conectar a Ollama Madre (`100.91.112.32:11434`)
+- Handler `/diario` en thdora → escribir en ygg desde Telegram
+- Handler `/inbox` en thdora → captura rápida desde móvil
+- Documentar ruta repo thdora en Madre (`find ~ -name docker-compose.yml`)
+- Upgrade RAM Madre: verificar slots libres antes de comprar (~45€)
+
+---
+
+## 📊 Stack tecnológico completo
 
 | Herramienta | Dónde | Estado |
 |---|---|---|
-| THDORA (API + bot) | Madre | ⚠️ API ok, bot restart loop |
-| Prometheus + Grafana | Madre | ✅ corriendo |
+| THDORA API + bot TOKI | Madre Docker | ⚠️ API ok · bot verificar |
+| Prometheus + Grafana | Madre Docker | ✅ corriendo |
+| PostgreSQL | Madre Docker | ✅ corriendo |
+| Ollama | Madre | ✅ · modelos pendiente pull |
 | Tailscale | varopc + Madre | ✅ |
-| Ollama | varopc + Madre | ✅ |
-| Obsidian | varopc | ⏳ instalar |
+| Obsidian | varopc | ✅ · plugin Git pendiente |
 | Open WebUI | Madre | ⏳ pendiente |
 | n8n | Madre | ⏳ pendiente |
+| UFW + fail2ban | Madre | ⏳ pendiente |
 
 ---
 
-_Mantenido por Perplexity (Claude Sonnet 4.6) vía MCP GitHub · 20 junio 2026_
+## 📐 Arquitectura del sistema — flujo de información
+
+```
+Cualquier idea / dato / cambio
+        ↓
+    inbox/          ← TODO entra aquí primero
+        ↓
+  se organiza y se decide dónde va
+        ↓
+  se mueve a su destino definitivo:
+    setup/ · proyectos/ · formacion/ · diarios/ · agentes/
+        ↓
+  CONTEXT.md se actualiza    ← SIEMPRE al final
+        ↓
+  AGENT.md se actualiza si cambia contexto estructural
+```
+
+**Regla de oro:** Nada se sobreescribe directamente. Primero inbox, luego destino, luego CONTEXT.
+
+---
+
+## 🤖 Agentes activos
+
+| Agente | Rol | Acceso GitHub |
+|---|---|---|
+| **Perplexity** | Principal — escribe en repos vía MCP | ✅ directo |
+| **Grok** | Investigación · datos frescos | ❌ no |
+| **Gemini** | Código largo · arquitectura | ❌ no |
+| **OpenCode** | Terminal · archivos locales | ✅ local |
+| **TOKI** | Bot Telegram · control móvil | ⏳ en desarrollo |
+
+---
+
+_Mantenido por Perplexity (Claude Sonnet 4.6) vía MCP GitHub_
+_20 junio 2026 10:00 CEST · Post-auditoría masiva_
