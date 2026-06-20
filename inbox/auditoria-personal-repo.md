@@ -1,61 +1,118 @@
 ---
-tags: [auditoria, personal, migracion, pendiente]
+tags: [inbox, auditoria, personal, migracion, tracking, formacion]
 fecha: 2026-06-20
-destino: se cierra cuando personal esté archivado
+fuente: auditoria manual repo personal
+destino-pendiente: multiples (ver tabla)
+estado: planificacion
 ---
 
-# 📋 Auditoría repo `personal` — Qué migrar y qué archivar
+# 📊 Auditoría repo `personal` — Plan de migración
 
-## Lo que ya está migrado hoy
-
-| Origen en `personal` | Destino en ygg | Estado |
-|---|---|---|
-| `00_sistema/equipos.md` | `setup/varopc.md` + `setup/madre.md` + `setup/hp-touchsmart.md` | ✅ migrado |
-| Hardware Madre | `setup/madre.md` | ✅ migrado |
-| Hardware varopc | `setup/varopc.md` | ✅ migrado |
-| Hardware HP | `setup/hp-touchsmart.md` | ✅ migrado |
-| `02_formacion/02_python/` | `formacion/python.md` (apunta) | ✅ SE QUEDA en personal |
-
-## Pendiente de migrar
-
-### 🔴 Alta prioridad
-| Carpeta | Contenido | Destino |
-|---|---|---|
-| `01_traking_diario/` | Diarios históricos | `diarios/` en ygg |
-| `00_sistema/sistema-filosofia.md` | Filosofía técnica | `filosofia.md` en ygg |
-| `00_sistema/CONTEXT.md` | Contexto anterior | Revisar vs `CONTEXT.md` ygg |
-
-### 🟡 Media prioridad
-| Carpeta | Contenido | Destino |
-|---|---|---|
-| `02_formacion/07_linux/` | Aprendizaje Linux | `formacion/linux.md` |
-| `02_formacion/05_sql/` | Aprendizaje SQL | `formacion/sql.md` |
-| `02_formacion/03_so2-kernel/` | SO / kernel | Revisar — puede archivar |
-| `04_curiosidad/` | Notas curiosidades | `inbox/` lo útil |
-| `00_yo/` | Perfil personal | `yo/` en ygg |
-| `00_sistema/PROMPTS-DICCIONARIO.md` | Prompts útiles | `agentes/prompts.md` |
-| `00_sistema/nuevo-dia.sh` | Script nuevo día | `setup/varopc.md` |
-
-### 🟢 Baja prioridad / revisar si borrar
-| Carpeta | Contenido | Decisión |
-|---|---|---|
-| `03_proyectos/` + `05_proyectos/` | Proyectos anteriores (duplicado) | Revisar y limpiar |
-| `05_contenido/` | Contenido creado | Revisar |
-| `02_formacion/04_lenguaje-c/` | C | Archivar (no activo) |
-| `02_formacion/06_cursos-externos/` | Cursos externos | Revisar |
-| `00_sistema/openclaw/` | ? | Leer antes de decidir |
-
-## Lo que SE QUEDA en `personal` (intocable)
-
-- `02_formacion/02_python/` — curso completo, se acaba ahí
-- Historial de diarios antiguos — archivo histórico
-
-## Cuando esté todo migrado
-
-- [ ] `personal/README.md` → marcar como "Archivado — migrado a yggdrasil-dew"
-- [ ] Mantener el repo público como histórico
-- [ ] Eliminar del vault local si ocupa demasiado
+> INBOX. No migrar nada hasta decidirlo aquí primero.
+> El repo `personal` NO se toca mientras el curso de Python siga activo.
+> Se va migrando poco a poco, carpeta por carpeta, sin prisa.
 
 ---
 
-_Esta nota se cierra cuando personal esté archivado · 20 jun 2026_
+## 🗂️ Estructura actual de `personal`
+
+```
+personal/
+├── 00_sistema/        ← prompts, sistema, diccionario IA
+├── 00_yo/             ← identidad, objetivos, reflexiones
+├── 01_traking_diario/ ← ⭐ VIDA DIARIA — hábitos, diarios 2025
+├── 02_formacion/      ← ⭐ CURSO PYTHON — activo, no tocar
+├── 03_proyectos/      ← proyectos anteriores
+├── 04_curiosidad/     ← notas sueltas, recursos, links
+├── 05_contenido/      ← contenido creado
+├── 05_proyectos/      ← duplicado de 03? — auditar
+├── sql/               ← prácticas SQL — activo
+├── docs/              ← documentación general
+├── CHANGELOG.md
+└── README.md
+```
+
+---
+
+## 🛋️ Plan de migración — carpeta por carpeta
+
+| Carpeta | Contenido | Destino en ygg | Prioridad | Tocar? |
+|---|---|---|---|---|
+| `01_traking_diario/` | Diarios 2025 · hábitos · tracking | `diarios/2025/` + `yo/habitos.md` | 🟡 media | ⏳ planificar |
+| `02_formacion/` | Curso Python M01-M07 · SQL | **NO TOCAR** — sigue activo aquí | 🔴 nunca mover | ❌ dejar |
+| `00_yo/` | Identidad · objetivos · reflexiones | `yo/` en ygg | 🟡 media | ⏳ planificar |
+| `00_sistema/` | Prompts · diccionario IA | `agentes/prompts.md` | 🟢 baja | ⏳ futuro |
+| `04_curiosidad/` | Notas sueltas · recursos · links | `inbox/` ygg → decidir | 🟢 baja | ⏳ futuro |
+| `03_proyectos/` | Proyectos anteriores | `proyectos/` o `archive/` | 🟢 baja | ⏳ futuro |
+| `05_proyectos/` | Duplicado? — auditar primero | A decidir | 🟢 baja | ⏳ auditar |
+| `sql/` | Prácticas SQL activas | **NO TOCAR** — sigue activo | 🔴 nunca mover | ❌ dejar |
+| `05_contenido/` | Contenido creado | `yo/contenido/` o `archive/` | 🟢 baja | ⏳ futuro |
+
+---
+
+## 🗓️ `01_traking_diario/` — Vida diaria y hábitos
+
+> Esta es la carpeta más valiosa para migrar.
+> Contiene el historial de vida de 2025 — diarios, hábitos, tracking.
+
+### ¿Cómo seguir el tracking desde hoy?
+
+**Opción A — Seguir en `personal` (más simple):**
+- Abrir `personal/01_traking_diario/` desde Obsidian
+- Añadir entradas 2026 directamente allí
+- Migrar a ygg cuando `personal` se archive
+
+**Opción B — Continuar en `yggdrasil-dew` desde hoy (recomendado):**
+- Tracking 2025 → se queda en `personal` como histórico
+- Tracking 2026 → `diarios/` en ygg (ya empezamos hoy)
+- `yo/habitos.md` en ygg → tracking de hábitos activo
+- `personal` queda como archivo histórico 2025
+
+> ⭐ **Recomendación: Opción B.** El diario de hoy (20 jun 2026) ya está en ygg.
+> El corte es limpio: 2025 en `personal`, 2026 en `yggdrasil-dew`.
+
+### Migrar diarios 2025 (cuando haya tiempo)
+
+```
+personal/01_traking_diario/01_diarios/2025/
+        ↓ (cuando se decida)
+yggdrasil-dew/diarios/2025/
+```
+No urgente. El histórico no desaparece — sigue en `personal` con Git.
+
+---
+
+## 🐍 `02_formacion/` — Curso Python (NO TOCAR)
+
+> El curso vive en `personal` y **termina allí**.
+> Los aprendizajes se documentan en [[formacion/python]] de ygg.
+> El repo `personal` no se archiva hasta terminar el curso.
+
+```
+personal/02_formacion/02_python/
+  ├── M01/ ✅
+  ├── M02/ ✅
+  ├── M03/ ✅
+  ├── M04/ ✅
+  ├── M05/ ⏳ ← SIGUIENTE
+  ├── M06/ ⏳
+  └── M07/ ⏳
+```
+
+Lo que sí se hace: documentar conceptos aprendidos en [[formacion/python]] después de cada módulo.
+
+---
+
+## ✅ Acciones antes de archivar esta nota
+
+- [ ] Decidir Opción A o B para tracking diario → confirmado: **Opción B** (2026 en ygg)
+- [ ] Crear `yo/habitos.md` en ygg → tracking de hábitos 2026
+- [ ] Auditar `05_proyectos/` en personal → ¿es duplicado de `03_proyectos/`?
+- [ ] Terminar M05 Python → documentar en [[formacion/python]]
+- [ ] Cuando termine el curso → archivar `personal` completo
+- [ ] Mover esta nota a [[diarios/2026-06-20]] cuando procesada
+
+---
+
+_Repo personal: https://github.com/alvarofernandezmota-tech/personal_
+_Ver también: [[formacion/python]] · [[diarios/2026-06-20]] · [[inbox/MASTER-PENDIENTES]] · [[HOME]]_
