@@ -1,5 +1,5 @@
 ---
-tags: [setup, obsidian, ia, plugins, configuracion]
+tags: [setup, obsidian, ia, plugins, configuracion, open-source]
 fecha-actualizacion: 2026-06-20
 ---
 
@@ -8,82 +8,161 @@ fecha-actualizacion: 2026-06-20
 ## Qué es
 
 Obsidian es el vault local del segundo cerebro yggdrasil-dew.
-Los archivos son Markdown puro — viven en `~/Projects/yggdrasil-dew/`.
-GitHub es el backup y el puente entre agentes.
+Archivos Markdown puro en `~/Projects/yggdrasil-dew/` — sincronizados con GitHub.
+
+> ⚠️ No existe plugin oficial de Microsoft Copilot open-source.
+> Lo que sí existe es un ecosistema de plugins libres y gratuitos que meten IA real dentro de Obsidian.
 
 ---
 
-## 🔌 Plugins instalados (instalar en orden)
+## 🧠 IA en Obsidian — Mapa real (jun 2026)
 
-### 1. Obsidian Git — auto-sync con GitHub
+### 🟩 Opción A — Local AI (100% gratis, open-source, sin nube)
+
+```
+Settings → Community Plugins → Browse → "Local AI" → Install
+```
+
+| Característica | Valor |
+|---|---|
+| Coste | ✅ Gratis |
+| Open-source | ✅ Sí |
+| Privacidad | ✅ Todo en local — nada sale fuera |
+| Offline | ✅ Funciona sin internet |
+| Modelos | LLaMA, Mistral, Phi-3, Gemma, qwen2.5 |
+| Requisito | PC con 8-16 GB RAM |
+
+**Para tu setup:** conectar a Ollama en Madre vía Tailscale:
+```
+Ollama URL: http://100.91.112.32:11434
+Modelo recomendado: qwen2.5:7b (mejor en castellano)
+```
+Gratis para siempre. Sin API key. Sin datos fuera.
+
+---
+
+### 🟦 Opción B — Obsidian-Copilot (open-source, 7k+ estrellas GitHub)
+
+```
+Settings → Community Plugins → Browse → "Copilot" → Install
+```
+
+| Característica | Valor |
+|---|---|
+| Coste | ✅ Gratis si usas modelos locales |
+| Open-source | ✅ Sí — https://github.com/logancyang/obsidian-copilot |
+| Con modelos locales | ✅ 100% gratis |
+| Con modelos nube | ⚠️ Necesita API key (Claude, GPT, Gemini) |
+
+Qué permite:
+- Chat contextual con tus notas
+- Agentes sobre el vault
+- Resumen de notas
+- Modo completamente local conectado a Ollama
+
+**Config para modo local (gratis):**
+```
+Copilot Settings → Model: Ollama
+Ollama Base URL: http://100.91.112.32:11434
+Model name: qwen2.5:7b
+```
+
+---
+
+### 🟨 Opción C — Smart Connections (RAG sobre el vault)
+
+```
+Settings → Community Plugins → Browse → "Smart Connections" → Install
+```
+
+- Busca conexiones semánticas entre notas automáticamente
+- Muestra qué notas están relacionadas sin que las hayas enlazado
+- Puede usar embeddings locales (gratis) o OpenAI (de pago)
+- **Usar modo local:** embeddings con modelo descargado
+
+---
+
+## 🔌 Plugins esenciales (sin IA) — instalar todos
+
+### 1. Obsidian Git — auto-sync con GitHub (el más importante)
 ```
 Settings → Community Plugins → Browse → "Obsidian Git" → Install
 ```
 Config:
 ```
 Auto pull interval: 5 minutos
-Auto push interval: 10 minutos  
+Auto push interval: 10 minutos
 Commit message: vault: auto-sync {{date}}
 Default branch: main
 ```
-> Resultado: escribes una nota → se sube sola a GitHub en 10 min. Sin `git push` manual.
+> Escribes una nota → se sube sola a GitHub en 10 min. Nunca más `git push` manual.
 
-### 2. Copilot — Chat IA dentro de Obsidian
-```
-Settings → Community Plugins → Browse → "Copilot" → Install
-```
-
-**Sí — Copilot tiene Obsidian DENTRO** — o mejor dicho: el plugin Copilot mete un chat con Claude/GPT/Gemini directamente en Obsidian, con contexto de tus notas.
-
-Conéctalo a Claude (Anthropic API) o GPT (OpenAI API):
-```
-Settings → Copilot → API Keys:
-  - Anthropic API Key: sk-ant-...
-  - Model: claude-sonnet-4-5
-```
-
-Qué puedes hacer desde dentro de Obsidian:
-- Chat con Claude con tus notas como contexto
-- Mejorar una nota: seleccionar texto → "Improve Writing"
-- Resumir un archivo largo
-- Preguntar sobre el contenido de tu vault
-- Generar nuevas notas desde el chat
-
-### 3. Local GPT — IA 100% local con Ollama (sin API key)
-```
-Settings → Community Plugins → Browse → "Local GPT" → Install
-```
-Config:
-```
-Ollama URL: http://100.91.112.32:11434
-Modelo: qwen2.5:7b  (mejor en castellano)
-```
-> Funciona vía Tailscale. Sin internet, sin coste, sin mandar datos fuera.
-
-### 4. Smart Connections — RAG sobre tus notas
-```
-Settings → Community Plugins → Browse → "Smart Connections" → Install
-```
-Busca conexiones semánticas entre notas. Muestra qué notas están relacionadas sin que tú lo hayas enlazado.
-
-### 5. Dataview — Queries sobre el vault
+### 2. Dataview — queries sobre el vault
 ```
 Settings → Community Plugins → Browse → "Dataview" → Install
 ```
-Permite hacer queries sobre tus notas como si fueran una base de datos:
+Ejemplo — ver todos los proyectos activos:
 ````
 ```dataview
-TABLE estado, fecha FROM "proyectos"
+TABLE estado, fecha-actualizacion FROM "proyectos"
 WHERE estado = "activo"
-SORT fecha DESC
+SORT fecha-actualizacion DESC
 ```
 ````
 
-### 6. Templater — Plantillas automáticas
+### 3. Templater — plantillas automáticas
 ```
 Settings → Community Plugins → Browse → "Templater" → Install
 ```
-Plantilla diario automática: al crear `diarios/YYYY-MM-DD.md` → rellena la estructura sola.
+Plantilla diario (`templates/diario.md`):
+```markdown
+---
+tags: [diario]
+fecha: <% tp.date.now("YYYY-MM-DD") %>
+---
+
+# 🗓️ <% tp.date.now("dddd D MMMM YYYY") %>
+
+## Lo más importante del día
+-
+
+## Técnico
+-
+
+## Reflexión
+
+
+## Hábitos
+- 💤 Dormir:
+- 🏋️ Ejercicio:
+- 🐾 Thea:
+
+## Links
+- [[HOME]]
+```
+
+### 4. Calendar — navegación por diarios
+```
+Settings → Community Plugins → Browse → "Calendar" → Install
+```
+Calendario visual en el panel lateral — clic en un día → abre su diario.
+
+---
+
+## 📈 Tabla de decisión — qué IA elegir
+
+| Objetivo | Plugin | Coste |
+|---|---|---|
+| IA local gratis sin nube | **Local AI** + Ollama Madre | ✅ 0€ |
+| Chat potente open-source | **Obsidian-Copilot** + Ollama | ✅ 0€ |
+| Conexiones semánticas auto | **Smart Connections** local | ✅ 0€ |
+| Chat con Claude/GPT (nube) | Obsidian-Copilot + API key | 💰 de pago |
+
+**Recomendación para tu setup:**
+```
+Obsidian-Copilot + Ollama en Madre (100.91.112.32:11434)
+→ Gratis · open-source · potente · en castellano con qwen2.5:7b
+```
 
 ---
 
@@ -97,7 +176,6 @@ Settings → Files & Links:
 
 Settings → Editor:
   Readable line length: ON
-  Strict line breaks: OFF
 
 Settings → Appearance:
   Theme: Minimal (recomendado)
@@ -105,52 +183,20 @@ Settings → Appearance:
 
 ---
 
-## 🗓️ Plantilla diario (Templater)
-
-Guardar en `templates/diario.md`:
-```markdown
----
-tags: [diario]
-fecha: <% tp.date.now("YYYY-MM-DD") %>
----
-
-# 🗓️ <% tp.date.now("dddd D MMMM YYYY") %>
-
-## Lo más importante del día
-- 
-
-## Técnico
-- 
-
-## Reflexión
-
-
-## Hábitos
-- 💤 Dormir: 
-- 🏋️ Ejercicio: 
-- 💧 Agua: 
-- 🐾 Thea: 
-
-## Links
-- [[HOME]]
-```
-
----
-
-## ✅ Pasos de instalación (orden correcto)
+## ✅ Orden de instalación (hazlo así)
 
 - [ ] `git pull` en `~/Projects/yggdrasil-dew`
-- [ ] Abrir Obsidian → seleccionar vault `~/Projects/yggdrasil-dew`
+- [ ] Abrir Obsidian → vault `~/Projects/yggdrasil-dew`
 - [ ] Settings → Community Plugins → activar
-- [ ] Instalar: Obsidian Git → configurar auto-sync
-- [ ] Instalar: Copilot → conectar API Claude o GPT
-- [ ] Instalar: Local GPT → apuntar a Ollama Madre
-- [ ] Instalar: Smart Connections
-- [ ] Instalar: Dataview
-- [ ] Instalar: Templater → crear plantilla diario
+- [ ] Instalar **Obsidian Git** → configurar auto-sync
+- [ ] Instalar **Obsidian-Copilot** → conectar a Ollama Madre
+- [ ] Instalar **Dataview**
+- [ ] Instalar **Templater** → crear plantilla diario
+- [ ] Instalar **Calendar**
 - [ ] Settings → Files → Default location: `inbox/`
 - [ ] Abrir HOME.md → verificar grafo con `Ctrl+G`
+- [ ] Probar chat en Copilot → pregunta algo sobre tus notas
 
 ---
 
-_Ver también: [[setup/varopc]] · [[agentes/perplexity]] · [[HOME]]_
+_Ver también: [[setup/varopc]] · [[agentes/perplexity]] · [[agentes/AGENT-SCRIPT]] · [[HOME]]_
