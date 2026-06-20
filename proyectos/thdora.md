@@ -1,60 +1,89 @@
 ---
-tags: [proyecto, thdora, python, telegram, docker, activo]
+tags: [proyecto, thdora, bot, telegram, docker, activo, produccion]
 fecha-actualizacion: 2026-06-20
+estado: produccion
 ---
 
-# 🤖 THDORA — Bot Telegram TOKI
+# 🤖 thdora — Bot TOKI en producción
 
 ## Qué es
 
-Bot de Telegram personal llamado **TOKI**.
-Backend FastAPI + bot aiogram + Docker en [[setup/madre]].
-Repo: https://github.com/alvarofernandezmota-tech/thdora
+Bot de Telegram personal. Nombre del bot: **TOKI**.
+Stack: Python + LangGraph + FastAPI + PostgreSQL + Docker.
+Corre 24/7 en [[setup/madre]].
 
-## Estado actual (20 jun 2026)
+## Estado actual
 
-- Versión: **v0.22.1** en `main`
-- Stack Docker en Madre: **6/6 contenedores** ✅
-- API FastAPI: **healthy** puerto 8000 ✅
-- Bot Telegram: **healthy** ✅
-- Prometheus + Grafana: ✅ corriendo
-- CI/CD: ✅ `deploy.yml` con `--build` y notificación Telegram
+- Versión: **v0.22.1**
+- Stack Docker: 6/6 contenedores ✅
+- API FastAPI (puerto 8000): ✅ healthy
+- Bot Telegram: ⚠️ verificar — pend. fix restart loop (`git pull + docker compose up --build`)
+- CI/CD: ✅ auto-deploy en push a `main`
 
-## Stack técnico
+## Acceso rápido
 
-| Componente | Tecnología |
-|---|---|
-| API | FastAPI + Uvicorn |
-| ORM | SQLAlchemy + Alembic |
-| Bot | aiogram (Telegram) |
-| IA | LangGraph + Groq + Ollama |
-| Infra | Docker Compose · red `thdora-net` |
-| Monitoreo | Prometheus + Grafana |
-| CI/CD | GitHub Actions |
+```bash
+# Conectar
+ssh alvaro@100.91.112.32
 
-## Decisiones técnicas
+# Estado
+docker compose ps
 
-- `@lru_cache` en `Settings` para evitar errores de importación en CI
-- Healthcheck del bot: `python3 -c "import sys; sys.exit(0)"` — no curl (bot no expone HTTP)
-- `fastapi<0.137.0` fijado — compat con prometheus-fastapi-instrumentator
-- Imagen multi-stage, usuario no-root, `/app/data` y `/app/logs` con permisos
+# Fix bot (si está en restart loop)
+git pull && docker compose up -d --build
 
-## Próximo paso
+# Logs
+docker compose logs --tail=50 thdora-bot
 
-- [ ] Verificar `/start` en Telegram
-- [ ] `docs/DEPLOY.md` — guía de deploy paso a paso
-- [ ] `docs/SERVIDOR_MADRE.md` — documentar ruta repo en Madre
-- [ ] PostgreSQL (sustituir SQLite en producción)
-- [ ] Handler `/diario` — escribir en yggdrasil-dew desde Telegram
+# Verificar salud
+docker inspect thdora-bot --format='{{json .State.Health}}'
+```
 
-## Historial clave
+## Inbox del proyecto
 
-| Fecha | Hito |
-|---|---|
-| Jun 2026 | v0.22.1 — Sprint 5 completo, stack Docker operativo |
-| Jun 2026 | Fix healthcheck bot (falso positivo curl→python3) |
-| Jun 2026 | 14 bugs críticos B12–B25 resueltos |
+> Todo lo nuevo sobre thdora → primero a `proyectos/thdora/inbox/`
+> Desde ahí → se decide dónde va (docs, handlers, fixes)
+
+Notas en inbox ahora:
+- [[inbox/thdora-estado-stack]] → mover aquí cuando se confirme estado
+
+## Documentación técnica
+
+Ver plan completo: [[proyectos/thdora-docs]]
+
+## Handlers TOKI — estado
+
+| Handler | Estado | Prioridad |
+|---|---|---|
+| `/start` | ✅ existe | — |
+| `/help` | ✅ existe | — |
+| `/inbox <texto>` | ⏳ diseñado | 🔴 primera |
+| `/diario <texto>` | ⏳ diseñado | 🔴 primera |
+| `/tarea <texto>` | ⏳ pendiente | 🟡 |
+| `/estado` | ⏳ pendiente | 🟡 |
+| `/deploy` | ⏳ pendiente | 🟡 |
+| `/logs` | ⏳ pendiente | 🟢 |
+
+## Servicios Docker
+
+| Servicio | Puerto | Estado |
+|---|---|---|
+| thdora API (FastAPI) | 8000 | ✅ |
+| thdora-bot (Telegram) | — | ⚠️ verificar |
+| PostgreSQL | 5432 | ✅ |
+| Prometheus | 9090 | ✅ |
+| Grafana | 3000 | ✅ |
+| Ollama | 11434 | ✅ |
+
+## Próximos pasos
+
+- [ ] SSH Madre → `git pull + docker compose up --build` → fix bot
+- [ ] Probar `/start` en Telegram
+- [ ] Implementar handler `/inbox` (más sencillo — empezar aquí)
+- [ ] Implementar handler `/diario`
+- [ ] Crear `thdora/docs/DEPLOY.md`
+- [ ] Crear `thdora/docs/SERVIDOR_MADRE.md`
 
 ---
 
-_Ver también: [[setup/madre]] · [[diarios/2026-06-20]] · [[HOME]]_
+_Ver también: [[proyectos/thdora-docs]] · [[agentes/toki-bot]] · [[setup/madre]] · [[HOME]]_
