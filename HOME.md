@@ -1,90 +1,139 @@
 ---
-tags: [home, indice, navegacion]
+tags: [home, indice, navegacion, sistema]
 fecha-actualizacion: 2026-06-20
 ---
 
-# 🏠 HOME — yggdrasil-dew
+# 🌳 Yggdrasil-dew — Segundo Cerebro
 
-> Segundo cerebro de Álvaro Fernández Mota.
-> Todo entra por `inbox/`. Todo se encuentra desde aquí.
-
----
-
-## 📥 Inbox — entra aquí primero
-
-[[inbox/README]] — el baúl. Todo lo nuevo va aquí.
+> Vault de Álvaro Fernández Mota · Sincronizado con GitHub · Obsidian como interfaz local.
+> Todo entra por `inbox/` primero. Nunca sobreescribir directo.
 
 ---
 
-## 🗓️ Diarios
+## 🔴 Estado ahora mismo
 
-| Fecha | Resumen |
-|---|---|
-| [[diarios/2026-06-20]] | Auditoría masiva ecosistema · fix gordo · ygg al 100% |
-| [[diarios/2026-06-12]] | Omarchy instalado Madre + Acer · Linux definitivo |
-| [[diarios/2026-06-05]] | Proyecto Linux Acer · 17 fallos simulados · Thea 🐾 |
+→ Leer siempre: [[CONTEXT]]
+→ Reglas del sistema: [[AGENT]]
+→ Script para Grok/Claude: [[agentes/AGENT-SCRIPT]]
 
 ---
 
-## 🚀 Proyectos
+## 📥 Inbox — El baulón
 
-- [[proyectos/thdora]] — bot TOKI · v0.22.1 en producción ✅
-- [[proyectos/ai-toolkit]] — pendiente ficha
-- [[proyectos/impresion-3d]] — pendiente ficha
-- [[proyectos/redmi-a5]] — pendiente ficha
-- [[proyectos/hp-rescate]] — pendiente ficha
+> Primer destino de TODO. Nada va directo a su carpeta.
+
+| Nota | Tags | Destino | Estado |
+|---|---|---|---|
+| [[inbox/MASTER-PENDIENTES]] | `pendiente` `master` | Permanente — revisión dominical | 🟢 activo |
+| [[inbox/PENDIENTE-git-pull-y-obsidian]] | `urgente` `obsidian` | Ejecutar hoy | 🔴 urgente |
+| [[inbox/modelos-ollama-hardware-madre]] | `ollama` `hardware` | [[setup/madre]] | 🟡 semana |
+| [[inbox/auditoria-ecosistema-2026-06-20]] | `auditoria` | [[diarios/2026-06-20]] | 🟡 semana |
+| [[inbox/auditoria-personal-repo]] | `migracion` | Al archivar personal | 🟢 activo |
+| [[inbox/thdora-estado-stack]] | `thdora` `docker` | [[proyectos/thdora]] | 🟡 semana |
+| [[inbox/madre-servidor-pendientes]] | `madre` `infra` | [[setup/madre]] | 🟡 semana |
+| [[inbox/obsidian-configuracion]] | `obsidian` `setup` | [[setup/obsidian]] | 🔴 urgente |
+| [[inbox/formacion-python-osint]] | `python` `osint` | [[formacion/python]] | 🟢 activo |
+| [[inbox/segundo-cerebro-fix-gordo]] | `migracion` | Cerrar — ya completado | ✅ cerrar |
+
+→ Procedimiento completo: [[inbox/README]]
 
 ---
 
-## 🖥️ Setup
+## 🖥️ Setup — Máquinas y herramientas
 
-- [[setup/varopc]] — Acer · Arch + Hyprland · terminal principal
-- [[setup/madre]] — Servidor 24/7 · Docker · thdora en producción
-- [[setup/hp-touchsmart]] — HP 23" · visualización · configurando
-- [[setup/red]] — red local + Tailscale
-
----
-
-## 🧠 Formación
-
-- [[formacion/python]] — curso en `personal` + exploración thdora ⏳ activo
-- [[formacion/linux]] — Arch + Hyprland · en uso diario ✅
-- [[formacion/sql]] — DBeaver · CE02 JOINs ⏳ activo
-- [[formacion/osint]] — herramientas por instalar ⏳ pendiente
+| Archivo | Tags | Para qué |
+|---|---|---|
+| [[setup/madre]] | `servidor` `docker` `hardware` | Servidor 24/7 · servicios · upgrades |
+| [[setup/varopc]] | `arch` `hyprland` `terminal` | Acer · terminal de trabajo diario |
+| [[setup/obsidian]] | `obsidian` `plugins` `ia` | Vault · plugins · IA integrada |
+| [[setup/red]] | `red` `tailscale` `ip` | IPs · Tailscale · topología |
+| [[setup/hp]] | `hp` `dashboard` `pendiente` | HP TouchSmart · pendiente configurar |
 
 ---
 
 ## 🤖 Agentes IA
 
-| Agente | Para qué |
+| Archivo | Tags | Para qué |
+|---|---|---|
+| [[agentes/perplexity]] | `perplexity` `mcp` `principal` | Agente principal · MCP GitHub directo |
+| [[agentes/AGENT-SCRIPT]] | `script` `raw` `grok` `claude` | Contexto RAW para Grok/Claude/Gemini |
+| [[agentes/grok]] | `grok` `investigacion` | Datos frescos · investigación |
+| [[agentes/gemini]] | `gemini` `codigo` | Código largo · arquitectura |
+| [[agentes/opencode]] | `opencode` `terminal` | Terminal local |
+| [[agentes/toki-bot]] | `toki` `telegram` `bot` | Bot Telegram · control móvil |
+
+---
+
+## 📁 Proyectos
+
+| Archivo | Tags | Estado |
+|---|---|---|
+| [[proyectos/thdora]] | `thdora` `bot` `produccion` | ✅ v0.22.1 en producción |
+| [[proyectos/thdora-docs]] | `thdora` `documentacion` | ⏳ plan milimétrico activo |
+| [[proyectos/impresion-3d]] | `impresion-3d` `hardware` | 🔵 investigando |
+| [[proyectos/ai-toolkit]] | `ai-toolkit` `ia` | 🔵 bloqueado hasta RTX 3060 |
+
+---
+
+## 📚 Formación
+
+| Archivo | Tags | Estado |
+|---|---|---|
+| [[formacion/python]] | `python` `curso` `thdora` | ⏳ Módulo 05 SIGUIENTE |
+| [[formacion/linux]] | `linux` `arch` `terminal` | ✅ en uso diario |
+| [[formacion/sql]] | `sql` `postgresql` `dbeaver` | ⏳ CE02 JOINs |
+| [[formacion/osint]] | `osint` `nmap` `seguridad` | 🔴 pendiente arrancar |
+
+---
+
+## 🗓️ Diarios
+
+| Archivo | Tags |
 |---|---|
-| [[agentes/perplexity]] | MCP GitHub · escribe en repos · agente principal |
-| [[agentes/grok]] | Datos frescos · investigación · primera capa |
-| [[agentes/gemini]] | Código largo · arquitectura · contexto enorme |
-| [[agentes/opencode]] | Terminal · archivos locales · sin salir del editor |
-| [[agentes/toki-bot]] | Bot Telegram · control móvil del ecosistema |
+| [[diarios/2026-06-20]] | `diario` `auditoria` `hito` |
+| [[diarios/2026-06-12]] | `diario` |
+| [[diarios/2026-06-05]] | `diario` |
+
+→ Plantilla: [[templates/diario]]
 
 ---
 
 ## 👤 Yo
 
-- [[yo/perfil]] — quién soy, stack, objetivos 2026
-- [[yo/objetivos-2026]] — pendiente de crear
+| Archivo | Tags | Para qué |
+|---|---|---|
+| [[yo/perfil]] | `yo` `stack` `objetivos` | Quién soy · stack · objetivos 2026 |
+| [[filosofia]] | `filosofia` `principios` | Los 5 principios del sistema |
 
 ---
 
-## 🧭 Filosofía
+## 📖 Sistema — Cómo funciona
 
-- [[filosofia]] — el ciclo, los principios, las frases fundacionales
+```
+Cualquier cosa nueva
+        ↓
+    inbox/     ← SIEMPRE aquí primero
+        ↓
+  se decide dónde va
+        ↓
+  se mueve al destino (setup/ proyectos/ formacion/ diarios/)
+        ↓
+  CONTEXT.md se actualiza   ← al final de cada sesión
+```
+
+**Regla de oro:** Nada se sobreescribe sin pasar por inbox. Nunca.
 
 ---
 
-## 📚 Recursos
+## 🧭 Flujo diario
 
-- [[AGENT]] — contexto para agentes IA al inicio de sesión
-- [[CONTEXT]] — estado actual del sistema
-- [[ECOSISTEMA]] — mapa de todos los repos
+```
+Mañana   → [[inbox/MASTER-PENDIENTES]] → elegir 3 tareas → [[diarios/YYYY-MM-DD]]
+Noche    → Marcar completadas en MASTER-PENDIENTES
+Domingo  → Revisar inbox completo → limpiar → reordenar
+```
 
 ---
 
-_Última actualización: 20 jun 2026 · Auditoría masiva completa_
+_Vault: yggdrasil-dew · GitHub: https://github.com/alvarofernandezmota-tech/yggdrasil-dew_
+_Sincronizado con Obsidian · Actualizado: 20 jun 2026 10:12 CEST_
