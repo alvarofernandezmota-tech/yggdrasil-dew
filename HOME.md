@@ -1,81 +1,90 @@
 ---
-tags: [home, indice, cerebro]
+tags: [home, indice, navegacion]
+fecha-actualizacion: 2026-06-20
 ---
 
-# 🏠 HOME — Nodo Central del Cerebro
+# 🏠 HOME — yggdrasil-dew
 
-> Punto de entrada a todo el ecosistema.
-> **Regla de oro:** *«Si no está en el repo, no existe.»*
-
----
-
-## 📥 Inbox — El Baúl
-
-> Todo lo nuevo entra aquí. Captura sin pensar dónde va.
-
-[[inbox/README|Abrir el baúl →]]
+> Segundo cerebro de Álvaro Fernández Mota.
+> Todo entra por `inbox/`. Todo se encuentra desde aquí.
 
 ---
 
-## 📅 Diarios recientes
+## 📥 Inbox — entra aquí primero
 
-- [[diarios/2026-06-20]] ← hoy
-- [[diarios/2026-06-19]]
-- [[diarios/2026-06-18]]
-- [[diarios/2026-06-17]]
-
-> Ver todos en [diarios/](diarios/)
+[[inbox/README]] — el baúl. Todo lo nuevo va aquí.
 
 ---
 
-## 🚀 Proyectos activos
+## 🗓️ Diarios
 
-- [[proyectos/thdora]] — 🤖 Bot TOKI en producción
-- [[proyectos/yggdrasil-dew]] — 🧠 Este cerebro
-- [[proyectos/ai-toolkit]] — 🛠️ Stack IA open source
-- [[proyectos/personal]] — 📔 Contexto histórico personal
+| Fecha | Resumen |
+|---|---|
+| [[diarios/2026-06-20]] | Auditoría masiva ecosistema · fix gordo · ygg al 100% |
+| [[diarios/2026-06-12]] | Omarchy instalado Madre + Acer · Linux definitivo |
+| [[diarios/2026-06-05]] | Proyecto Linux Acer · 17 fallos simulados · Thea 🐾 |
 
-## ⏸️ Proyectos pausados
+---
 
-- [[proyectos/impresion-3d]] — 🖨️ Anycubic Photon
-- [[proyectos/redmi-a5]] — 📱 Rescate ROM
-- [[proyectos/hp-rescate]] — 💻 Disco duro
-- [[proyectos/thea-ia]] — 🗂️ Predecesor de thdora
-- [[proyectos/image-calculator]] — 🐍 OCR Python
+## 🚀 Proyectos
+
+- [[proyectos/thdora]] — bot TOKI · v0.22.1 en producción ✅
+- [[proyectos/ai-toolkit]] — pendiente ficha
+- [[proyectos/impresion-3d]] — pendiente ficha
+- [[proyectos/redmi-a5]] — pendiente ficha
+- [[proyectos/hp-rescate]] — pendiente ficha
+
+---
+
+## 🖥️ Setup
+
+- [[setup/varopc]] — Acer · Arch + Hyprland · terminal principal
+- [[setup/madre]] — Servidor 24/7 · Docker · thdora en producción
+- [[setup/hp-touchsmart]] — HP 23" · visualización · configurando
+- [[setup/red]] — red local + Tailscale
+
+---
+
+## 🧠 Formación
+
+- [[formacion/python]] — curso en `personal` + exploración thdora ⏳ activo
+- [[formacion/linux]] — Arch + Hyprland · en uso diario ✅
+- [[formacion/sql]] — DBeaver · CE02 JOINs ⏳ activo
+- [[formacion/osint]] — herramientas por instalar ⏳ pendiente
 
 ---
 
 ## 🤖 Agentes IA
 
-- [[agentes/perplexity]] — Principal · MCP GitHub
-- [[agentes/grok]] — Investigación
-- [[agentes/gemini]] — Contexto largo
-- [[agentes/opencode]] — Código en terminal
+| Agente | Para qué |
+|---|---|
+| [[agentes/perplexity]] | MCP GitHub · escribe en repos · agente principal |
+| [[agentes/grok]] | Datos frescos · investigación · primera capa |
+| [[agentes/gemini]] | Código largo · arquitectura · contexto enorme |
+| [[agentes/opencode]] | Terminal · archivos locales · sin salir del editor |
+| [[agentes/toki-bot]] | Bot Telegram · control móvil del ecosistema |
 
 ---
 
-## 🖥️ Infraestructura
+## 👤 Yo
 
-- [[setup/madre]] — Servidor producción 24/7
-- [[setup/varopc]] — PC desarrollo (Acer Theodora)
-- [[setup/red]] — Tailscale · IPs · red
-
----
-
-## 📚 Formación
-
-- [[formacion/python]] — Aprendizaje Python
-- [[formacion/linux]] — Arch · Hyprland · terminal
-- [[formacion/osint]] — OSINT · pentesting
+- [[yo/perfil]] — quién soy, stack, objetivos 2026
+- [[yo/objetivos-2026]] — pendiente de crear
 
 ---
 
-## 🗺️ Mapa completo
+## 🧭 Filosofía
 
-→ [[ECOSISTEMA]] — fuente de verdad macro
-→ [[AGENT]] — instrucciones para IAs
-→ [[CONTEXT]] — estado actual del sistema
+- [[filosofia]] — el ciclo, los principios, las frases fundacionales
 
 ---
 
-_Mantenido por Perplexity (Claude Sonnet 4.6) vía MCP GitHub · 20 junio 2026_
+## 📚 Recursos
+
+- [[AGENT]] — contexto para agentes IA al inicio de sesión
+- [[CONTEXT]] — estado actual del sistema
+- [[ECOSISTEMA]] — mapa de todos los repos
+
+---
+
+_Última actualización: 20 jun 2026 · Auditoría masiva completa_

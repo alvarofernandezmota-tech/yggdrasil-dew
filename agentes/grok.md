@@ -1,41 +1,27 @@
-# 🔴 Grok — Ficha de Agente
-
-> Última actualización: 17 junio 2026
-
+---
+tags: [agente, ia, grok, investigacion]
+fecha-actualizacion: 2026-06-20
 ---
 
-## Rol
+# ⚫ Grok — Investigación y datos frescos
 
-Investigación brutal y datos frescos. El mejor para mercado, tecnología emergente, X/Twitter y verdades incómodas.
+## Qué es
+IA de xAI. Acceso a datos en tiempo real. Mejor para noticias, precios, tendencias y datos que cambian rápido.
 
-## Capacidades clave
+## Para qué se usa
+- Investigación de mercado, precios hardware, tendencias
+- Noticias y datos frescos (hoy, esta semana)
+- Primera capa de investigación antes de documentar en ygg
 
-| Capacidad | Uso concreto |
-|---|---|
-| Datos frescos | Noticias, releases, tendencias hoy |
-| X/Twitter | Opinión real de devs y comunidad |
-| Truth-seeking | Pros/contras honestos sin filtro |
-| Investigación de mercado | Competidores, alternativas, precios |
+## Para qué NO se usa
+- Escribir en GitHub → [[agentes/perplexity]]
+- Código largo o arquitectura → [[agentes/gemini]]
+- Terminal / editor → [[agentes/opencode]]
 
-## Cuándo usarlo
-
-- Antes de elegir una herramienta ("qué stack usar para X")
-- Investigar competidores de thdora
-- Datos frescos que Perplexity puede no tener
-- Validar decisiones técnicas con opinión externa
-
-## Prompt de arranque
-
+## Protocolo
 ```
-Soy Álvaro, dev autodidacta Madrid. Mi ecosistema:
-- Bot Telegram personal (thdora/TOKI): https://github.com/alvarofernandezmota-tech/thdora
-- Second brain: https://github.com/alvarofernandezmota-tech/yggdrasil-dew
-- Stack: Python · FastAPI · Docker · Arch Linux · Tailscale
-
-Necesito que investigues [TEMA] y me des opciones con pros/contras honestos.
-Voy a implementar el resultado con Perplexity+GitHub.
+Grok (investiga) → Perplexity (valida + sube al repo)
 ```
 
-## Motor
-
-Grok 3 (xAI)
+---
+_Ver también: [[agentes/perplexity]] · [[agentes/gemini]] · [[HOME]]_
