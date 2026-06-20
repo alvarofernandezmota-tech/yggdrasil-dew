@@ -4,15 +4,16 @@ tags: [home, indice, cerebro]
 
 # 🏠 HOME — Nodo Central del Cerebro
 
-> Este es el punto de entrada a todo el ecosistema.
-> Abre este archivo primero en Obsidian.
+> Punto de entrada a todo el ecosistema.
 > **Regla de oro:** *«Si no está en el repo, no existe.»*
 
 ---
 
-## 🧠 Quién soy
+## 📥 Inbox — El Baúl
 
-[[yo/perfil]] · [[filosofia]] · [[ECOSISTEMA]]
+> Todo lo nuevo entra aquí. Captura sin pensar dónde va.
+
+[[inbox/README|Abrir el baúl →]]
 
 ---
 
@@ -34,7 +35,7 @@ tags: [home, indice, cerebro]
 - [[proyectos/ai-toolkit]] — 🛠️ Stack IA open source
 - [[proyectos/personal]] — 📔 Contexto histórico personal
 
-## ⏸️ Proyectos pausados / archivo
+## ⏸️ Proyectos pausados
 
 - [[proyectos/impresion-3d]] — 🖨️ Anycubic Photon
 - [[proyectos/redmi-a5]] — 📱 Rescate ROM
@@ -51,16 +52,13 @@ tags: [home, indice, cerebro]
 - [[agentes/gemini]] — Contexto largo
 - [[agentes/opencode]] — Código en terminal
 
-> Ver todas: [agentes/](agentes/)
-
 ---
 
 ## 🖥️ Infraestructura
 
-- [[setup/servidor]] — Madre (producción)
-- [[setup/varopc]] — PC desarrollo
-- [[setup/tailscale]] — Red P2P
-- [[setup/obsidian]] — Esta herramienta
+- [[setup/madre]] — Servidor producción 24/7
+- [[setup/varopc]] — PC desarrollo (Acer Theodora)
+- [[setup/red]] — Tailscale · IPs · red
 
 ---
 
@@ -70,14 +68,12 @@ tags: [home, indice, cerebro]
 - [[formacion/linux]] — Arch · Hyprland · terminal
 - [[formacion/osint]] — OSINT · pentesting
 
-> Ver todo: [formacion/](formacion/)
-
 ---
 
 ## 🗺️ Mapa completo
 
 → [[ECOSISTEMA]] — fuente de verdad macro
-→ [[AGENT.md]] — instrucciones para IAs
+→ [[AGENT]] — instrucciones para IAs
 → [[CONTEXT]] — estado actual del sistema
 
 ---
