@@ -1,12 +1,16 @@
 ---
-tags: [filosofia, sistema, principios, identidad]
-fecha-actualizacion: 2026-06-20
+tags: [filosofia, sistema, principios, identidad, ingenieria, python, ia-local]
+fecha-creacion: 2026-06-20
+fecha-actualizacion: 2026-06-22
 migrado-de: personal/00_sistema/sistema-filosofia.md
+version: 2.0
 ---
 
 # 🧭 Filosofía del Sistema
 
-> *"Aquí se evoluciona. Se aprende. Se reflexiona. Se crece. Se hace caos. Se ordena. Se derrumba todo. Y se vuelve a empezar — pero desde un piso más arriba que antes."*
+> *"Áquí se evoluciona. Se aprende. Se reflexiona. Se crece. Se hace caos. Se ordena. Se derrumba todo. Y se vuelve a empezar — pero desde un piso más arriba que antes."*
+
+---
 
 ## El Ciclo — La ley fundamental
 
@@ -21,7 +25,9 @@ Se derrumba todo ←────────────── Se derrumba todo
 
 **El caos no es un fallo del sistema. Es parte del sistema.**
 
-## Los 5 principios
+---
+
+## Los 5 principios del sistema
 
 ### 1. Las cosas se hacen haciendo
 La planificación es una herramienta, no un fin.
@@ -42,8 +48,75 @@ Este proyecto no compite con nadie. Construir sin destruir. Avanzar sin pisar.
 | Pilar | Qué significa |
 |---|---|
 | 🔎 Curiosidad | Algo que no sabías antes de ese día |
-| 🪞 Introspección | Algo honesto sobre cómo estás |
+| 🪟 Introspección | Algo honesto sobre cómo estás |
 | 🏗️ Avance | Aunque sea pequeño — un commit, una idea |
+
+---
+
+## Principios de Ingeniería — Antes de hacer cualquier cosa
+
+> Aplica a todo: crear un agente, escribir un script, documentar un archivo,
+> refactorizar código, instalar una herramienta, añadir una ficha al repo.
+> **Si no puedes responder las 4 preguntas — no se hace.**
+
+### Las 4 preguntas obligatorias
+
+```
+1. ¿QUÉ problema concreto existe ahora mismo?
+   (específico y real — no teórico)
+
+2. ¿POR QUÉ hay que resolverlo ahora y no después?
+   (si no tiene urgencia real, va al backlog)
+
+3. ¿CÓMO se resuelve de la forma más simple posible?
+   (la solución más sencilla que funcione — no la más elegante)
+
+4. ¿CÓMO se verifica que está resuelto?
+   (criterio de éxito concreto y medible)
+```
+
+### Anti-patrones del sistema
+
+> Cosas que parecen productivas pero no lo son:
+
+- **Documentar por documentar** — crear fichas sin información real o útil
+- **Construir herramientas que nadie usa** — automatizar algo que no duele
+- **Arquitectura prematura** — diseñar sistemas complejos antes de tener el problema
+- **Mover sin leer** — reorganizar archivos sin verificar su contenido
+- **Irse por las ramas** — explorar posibilidades en lugar de resolver lo concreto
+- **Perfeccionar antes de funcionar** — pulir algo que aún no hace lo básico
+
+### El criterio de un agente o herramienta Python
+
+Antes de escribir una línea de código:
+
+```
+¿Lo hago a mano ahora mismo y duele?
+  Sí → tiene sentido automatizar
+  No → no hace falta el agente
+
+¿El resultado mejora algo concreto del ecosistema?
+  Sí → adelante
+  No → es un juguete — va al backlog o se descarta
+
+¿Puedo construirlo en menos de 100 líneas de Python?
+  Sí → ésa es la versión 1.0
+  No → estás complicando algo simple
+```
+
+### Principio de IA local
+
+> La IA local no es un juguete — es infraestructura.
+> Cada agente que corre en Madre resuelve una necesidad real del ecosistema.
+> Un agente que nadie usa es peor que no tenerlo: es deuda técnica.
+
+```
+Primer criterio:  ¿Hay una necesidad real y concreta?
+Segundo criterio: ¿El LLM local añade valor que no tiene un script puro?
+Tercer criterio:  ¿Cabe en el ecosistema actual sin romper nada?
+```
+
+---
 
 ## Frases fundacionales
 
@@ -52,7 +125,18 @@ Este proyecto no compite con nadie. Construir sin destruir. Avanzar sin pisar.
 - *"Producción primero, perfección después."*
 - *"El caos es necesario para que haya orden."*
 - *"Cimientos en abril. Construcción en mayo. Sistema en junio."*
+- *"Si no puedes responder las 4 preguntas — no se hace."*
+- *"La solución más simple que funcione siempre gana."*
+- *"Un agente que nadie usa es peor que no tenerlo."*
 
 ---
-_Migrado de `personal/00_sistema/sistema-filosofia.md` · actualizado jun 2026_
-_Ver también: [[yo/perfil]] · [[HOME]]_
+
+## Changelog
+
+| Versión | Fecha | Cambios |
+|---|---|---|
+| 1.0 | 2026-06-20 | Filosofía base — 5 principios, el ciclo, frases fundacionales |
+| 2.0 | 2026-06-22 | Añadidos principios de ingeniería: 4 preguntas, anti-patrones, criterio agentes Python, principio IA local |
+
+---
+_Ver también: [[yo/perfil]] · [[HOME]] · [[inbox/README]] · [[inbox/MASTER-PENDIENTES]]_
