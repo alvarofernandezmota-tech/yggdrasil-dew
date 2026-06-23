@@ -1,77 +1,112 @@
 ---
-tags: [agente, ia, llm, claude-sonnet-4.6]
-fecha-actualizacion: 2026-06-22
+tags: [agente, claude, anthropic, mcp, codigo, arquitectura, refactor]
+fecha-creacion: 2026-06-22
+fecha-actualizacion: 2026-06-23
+version: claude-sonnet-4.6
+proveedor: Anthropic
+contexto-tokens: 200000
+uso-principal: codigo · refactor · arquitectura · MCP
+wikilink: agentes/claude-sonnet-4.6
 ---
 
-# 🤖 Claude Sonnet 4.6 — Orquestador Principal de Desarrollo de Software Complejo
+# 🤖 Claude Sonnet 4.6 — El Arquitecto del Código
 
-## Modelo y versión
-- **Identificador:** claude-sonnet-4.6 (alias de actualización continua en la plataforma)
-- **Versión:** Producción / Estable — Lanzamiento de optimización agéntica
+> Modelo de razonamiento y ejecución técnica. Especialista en refactorización,
+> arquitectura de software y cumplimiento estricto de reglas de diseño.
 
-## Empresa y lanzamiento
-- **Desarrollador:** Anthropic
-- **Fecha de lanzamiento:** 17 de febrero de 2026
+## Ficha técnica
 
-## Arquitectura y entrenamiento
-- **Tipo:** Modelo propietario transformador autorregresivo híbrido
-- **Optimización:** Post-entrenamiento enfocado en autonomía agéntica, planificación de largo horizonte y mitigación avanzada de prompt injections
-- **Alineamiento:** Constitutional AI (CAI) — conjunto de principios éticos que el modelo usa para auto-evaluarse
+| Campo | Valor |
+|---|---|
+| Proveedor | Anthropic |
+| Versión activa | claude-sonnet-4.6 |
+| Contexto efectivo | 200k tokens |
+| Acceso | API + claude.ai |
+| MCP support | ✅ nativo |
+| Coste | Pro plan / API por token |
 
-## Ventana de contexto
-- **API Beta:** 1.000.000 tokens
-- **Interfaz web claude.ai:** 200.000 tokens estándar
-- **Límite de salida:** 8.192 tokens de generación
+## Cuándo usarlo vs Gemini 2.5 Pro
 
-## Modalidades
-- **Entrada:** Texto, Código, Imágenes (visión multimodal de alta densidad)
-- **Salida:** Texto estructurado, código nativo, JSON/XML limpio
+**Usa Claude cuando:**
+- Necesites escribir código limpio o refactorizar repos estructurados
+- Diseñar flujos lógicos con dependencias críticas (docker-compose, scripts bash)
+- Cumplir sintaxis específicas sin margen de error
+- Ejecutar cambios directos en GitHub vía MCP archivo por archivo
+- Lógica pura, cohesión de scripts, validación estricta de formato
 
-## Herramientas nativas
-- **MCP (Model Context Protocol):** Soporte nativo para conectores que interactúan con entornos locales o SaaS externos
-- **Search and Fetch:** Búsqueda web con auto-ejecución de código interno para filtrar ruido
-- **Computer Use:** Control autónomo de escritorios e interfaces gráficas web mediante coordenadas espaciales
+**Evítalo cuando:**
+- Tengas que auditar volcados masivos de texto plano (+150 páginas)
+- Necesites Deep Research con búsqueda web simultánea
+- El contexto supere los 200k tokens (usa Gemini)
 
-## Modos especiales
-- **Adaptive Thinking:** Evalúa la dificultad técnica del prompt y determina dinámicamente los tokens de razonamiento interno
-- **Extended Thinking:** Cadena de pensamiento explícita para problemas complejos
-- **Interleaved thinking with tool calls:** Razonamiento intercalado con llamadas a herramientas
+## Integración MCP — Model Context Protocol
 
-## Benchmarks (junio 2026)
-- **OSWorld-Verified:** 72,5% — Liderazgo absoluto en interacción con sistemas operativos
-- **SWE-bench:** 79,6% — Top en resolución de issues reales de código
-- **Vending-Bench Arena:** Máximo rendimiento en consistencia estratégica multitarea
+Claude es el agente principal para operaciones directas sobre el repositorio.
+Con acceso MCP puede:
 
-## Mejor para
-- Refactorización y depuración de código en repositorios complejos (yggdrasil-dew)
-- Orquestación de flujos autónomos y automatización agéntica via MCP
-- Escritura y actualización de archivos directamente en GitHub
-- Auditorías de repo, arquitectura, documentación técnica
+- Leer/escribir archivos directamente en GitHub sin copiar/pegar
+- Inspeccionar estructuras de directorios y proponer cambios en diff
+- Crear ramas, commits, PRs con mensajes descriptivos
+- Actuar como linter antes de confirmar cambios en main
+- Ejecutar secuencias de tareas: leer → modificar → commit → siguiente archivo
 
-## Peor para (usar otra IA)
-- Consumo masivo de vídeo continuo nativo → usar Gemini
-- Casos con limitaciones críticas de coste por volumen bruto de tokens
-- Investigación de mercado o datos frescos → usar Grok
-
-## Coste
-- **API:** 3,00$/M tokens entrada | 15,00$/M tokens salida
-- **claude.ai Pro:** ~20$/mes — incluido en suscripción personal
-- **Free tier:** Disponible con límites diarios
-
-## Privacidad y datos
-- Anthropic **no entrena** con datos enviados via API comercial ni entornos Enterprise
-- Constitutional AI: principios de honestidad, utilidad y evitar daños
-- Informes de seguridad públicos disponibles en anthropic.com
-
-## Integración en el ecosistema de Álvaro
-- **Rol:** Agente principal — todo output final pasa por aquí porque tiene MCP GitHub
-- **Protocolo:** Grok/Gemini investigan → Perplexity (Claude) valida y sube al repo
-
-## Cómo arranco sesión
+**Setup MCP en este ecosistema:**
 ```
-Lee AGENT.md y CONTEXT.md de yggdrasil-dew y dime el estado actual del ecosistema.
-Repo: https://github.com/alvarofernandezmota-tech/yggdrasil-dew
+Repo cerebro: alvarofernandezmota-tech/yggdrasil-dew
+Repo bot: alvarofernandezmota-tech/thdora
+Acceso: token GitHub con permisos repo
 ```
+
+## Protocolo de prompts efectivos
+
+Estructura óptima para tareas de repo o código:
+
+```
+[ROL]: Ingeniero de Software Senior
+[CONTEXTO]: Operando sobre [[HOME]] del cerebro yggdrasil-dew
+[LEYES]:
+  1. Nunca duplicar — usar wikilinks [[archivo]]
+  2. Infraestructura != Producto
+  3. Todo nuevo entra por inbox/ primero
+[RESTRICCIONES]: NO tocar agentes/ — es referencia perfecta
+[TAREA]: [descripción concreta con output esperado]
+```
+
+## Aprendizajes de uso real
+
+### Sesión 2026-06-23
+- Excelente ejecutando tareas encadenadas archivo por archivo con confirmación entre pasos
+- Propone jerarquías planas y limpias — evita sobre-categorización
+- Superior a Gemini para empaquetar specs JSON y configs sin romper formato
+- Con MCP: crea repos, sube archivos, hace commits en secuencia sin intervención manual
+- Punto débil: actúa a ciegas sin MCP — necesita contexto vía texto igual que Gemini
+- Ideal para: crear `docker-compose.yml` completo, `Makefile`, `README.md` profesional
+
+### Flujo óptimo Claude + Gemini
+```
+Gemini → auditoría masiva, clasificación, análisis cruzado
+Claude → ejecución concreta, commits, código, MCP directo
+Perplexity → contexto real-time, documentar sesiones, guardar en repo
+```
+
+## Casos de uso en este ecosistema
+
+| Tarea | Claude | Gemini |
+|---|---|---|
+| Crear docker-compose completo | ✅ ideal | ⚠️ posible |
+| Auditar 30 archivos inbox | ⚠️ lento | ✅ ideal |
+| Commit directo en GitHub | ✅ vía MCP | ❌ sin acceso |
+| Refactor carpeta completa | ✅ ideal | ⚠️ posible |
+| Deep Research web | ❌ | ✅ ideal |
+| Contexto >200k tokens | ❌ | ✅ 2M tokens |
+
+## Ver también
+
+- [[agentes/gemini-2.5-pro]] — para contexto masivo y auditorías
+- [[agentes/perplexity]] — para documentar sesiones en tiempo real
+- [[agentes/AGENT-SCRIPT]] — protocolo de uso de agentes
+- [[inbox/2026-06-23-prompt-claude-refactor-repo]] — prompt refactor repo
+- [[inbox/2026-06-23-prompt-claude-ecosistema-docker]] — prompt Docker
 
 ---
-_Ver también: [[agentes/grok]] · [[agentes/gemini]] · [[agentes/opencode]] · [[HOME]]_
+_Actualizado: 2026-06-23 · Fuente: uso real sesión arquitectura yggdrasil-dew_

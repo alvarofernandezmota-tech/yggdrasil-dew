@@ -1,75 +1,129 @@
 ---
-tags: [agente, ia, llm, gemini-2.5-pro]
-fecha-actualizacion: 2026-06-22
+tags: [agente, gemini, google, deep-research, contexto-masivo, auditoria]
+fecha-creacion: 2026-06-22
+fecha-actualizacion: 2026-06-23
+version: gemini-2.5-pro
+proveedor: Google DeepMind
+contexto-tokens: 2000000
+uso-principal: auditoria · deep-research · contexto-masivo · clasificacion
+wikilink: agentes/gemini-2.5-pro
 ---
 
-# 🎞️ Gemini 2.5 Pro — Análisis Masivo de Repositorios y Contexto Multimodal Largo
+# 🤖 Gemini 2.5 Pro — El Analista de Contexto Masivo
 
-## Modelo y versión
-- **Identificador:** gemini-2.5-pro
-- **Versión:** General Availability (GA)
+> Modelo de ingesta masiva y Deep Research. Especialista en auditorías globales,
+> procesamiento de sesiones completas y correlación cruzada de múltiples fuentes.
 
-## Empresa y lanzamiento
-- **Desarrollador:** Google
-- **Fecha de lanzamiento:** Actualización continua estable de la familia 2.5
+## Ficha técnica
 
-## Arquitectura y entrenamiento
-- **Tipo:** Transformador nativo multimodal — entrenado de forma conjunta con múltiples modalidades desde el origen
-- **Enfoque:** No acopla codificadores independientes a posteriori sino entrenamiento unificado
+| Campo | Valor |
+|---|---|
+| Proveedor | Google DeepMind |
+| Versión activa | gemini-2.5-pro |
+| Contexto efectivo | 2,000,000 tokens |
+| Acceso | gemini.google.com / API |
+| Deep Research | ✅ activable en chat |
+| MCP support | ❌ no nativo en chat |
+| Coste | Gemini Advanced / API |
 
-## Ventana de contexto
-- **Entrada:** 1.048.576 tokens (1M constante)
-- **Límite de salida:** 65.536 tokens de generación
+## Cuándo usarlo vs Claude Sonnet 4.6
 
-## Modalidades
-- **Entrada:** Texto, Código, hasta 3.000 imágenes concurrentes, Audio nativo (hasta 8,4h continuas), Vídeo nativo (hasta 45-60 min en una sola solicitud)
-- **Salida:** Texto estructurado y código
+**Usa Gemini cuando:**
+- Tengas volcados masivos de sesión (+150 páginas, logs kilométricos)
+- Necesites auditar 30+ archivos cruzando datos simultáneamente
+- Deep Research: búsqueda web + síntesis en un solo paso
+- Contexto supere 200k tokens (Gemini aguanta 2M)
+- Clasificar grandes volúmenes de notas sin perder el hilo de las leyes del sistema
+- Investigación técnica externa (hardware, redes, documentación de herramientas)
 
-## Herramientas nativas
-- **Grounding with Google Search / Maps:** Verificación de hechos en tiempo real
-- **Code Execution:** Ejecución nativa de código para validación lógica interna
-- **Context Caching (Explícito/Implícito):** Almacenamiento de contexto estático masivo para abaratar consultas iterativas
+**Evítalo cuando:**
+- Busques ejecución directa de código en producción sin revisión
+- Necesites commits directos en GitHub (no tiene MCP en chat)
+- El formato de salida requiera rigidez extrema en JSON complejo
 
-## Modos especiales
-- **Deep Research:** Investigación profunda autónoma con síntesis de fuentes múltiples — ideal para el prompt maestro de fichas LLM
-- **Context Caching:** Cachear un repo completo o manual técnico para consultas repetidas
-- **Gems:** Asistentes personalizados con instrucciones fijas (equivalente a Custom GPTs)
+## Estrategia de ingesta: Serialización por Bloques
 
-## Benchmarks (junio 2026)
-- **Long-Context Needle In A Haystack:** 99,9% de precisión recuperando datos en 1M tokens
-- **Coding benchmarks:** Top en generación y comprensión de código largo
+Sin acceso directo a GitHub, el protocolo óptimo es alimentarlo con texto:
 
-## Mejor para
-- Ingerir repositorios completos de código para auditorías de arquitectura integral
-- Análisis de archivos multimedia largos (audios, vídeos técnicos) sin fragmentación
-- Investigación profunda con Deep Research (prompt maestro LLM)
-- Diseño de sistemas complejos con contexto masivo
-
-## Peor para (usar otra IA)
-- Tareas locales estrictas sin conectividad WAN
-- Interacciones agénticas precisas de terminal dependientes de formato Anthropic
-- Privacidad estricta de datos sensibles
-
-## Coste
-- **API:** PayGo por capas con descuentos por Context Caching
-- **Gemini Advanced:** ~20$/mes (Google One AI Premium)
-- **Google AI Studio:** Gratuito para desarrolladores en nivel básico
-
-## Privacidad y datos
-- Vertex AI y AI Studio con facturación activa: **no se usan para entrenar modelos públicos**
-- Cumplimiento GDPR en la plataforma Google Cloud
-- Datos procesados en infraestructura de Google
-
-## Integración en el ecosistema de Álvaro
-- **Rol:** Investigación profunda + código largo + análisis multimedia
-- **Protocolo:** Gemini diseña/investiga → Perplexity sube al repo
-
-## Cómo arranco sesión
 ```
-Soy Álvaro. Contexto completo en:
-https://github.com/alvarofernandezmota-tech/yggdrasil-dew/blob/main/ECOSISTEMA.md
-Necesito que implementes [TAREA LARGA / INVESTIGACIÓN PROFUNDA] completa.
+--- INICIO ARCHIVO: [[ruta/del/archivo.md]] ---
+[Contenido íntegro del archivo]
+--- FIN ARCHIVO: [[ruta/del/archivo.md]] ---
 ```
+
+Este formato permite a Gemini:
+- Indexar internamente la estructura del repo
+- Resolver dependencias cruzadas vía [[wikilinks]]
+- No confundir límites entre documentos
+- Mantener las leyes del sistema activas durante toda la sesión
+
+**Alternativa rápida:** dar el inventario clasificado (nombre + tipo + descripción una línea)
+y dejar que Gemini proponga el plan antes de ejecutar.
+
+## Deep Research — cómo activarlo
+
+1. Abrir gemini.google.com con Gemini Advanced
+2. Activar Deep Research (icono lupa/investigación)
+3. Dar el prompt con contexto completo del repo
+4. Gemini lanza búsquedas web + sintetiza en un informe
+5. Revisar fuentes antes de integrar en el cerebro
+
+**Ideal para:** ronda 2 LLM (7 fichas nuevas en agentes/), investigación de herramientas OSINT, benchmarks de modelos locales.
+
+## Protocolo de prompts efectivos
+
+```
+[ROL]: Ingeniero de Software Senior / Guardián de arquitectura del conocimiento
+[LEYES]:
+  1. Nunca duplicar — wikilinks [[archivo]]
+  2. Todo nuevo entra por inbox/ primero
+  3. Infraestructura != Producto
+[CONTEXTO]: [inventario completo o bloques serializados]
+[RESTRICCIONES]: NO tocar agentes/ — referencia perfecta
+[TAREA]: [descripción + output esperado + confirmación antes de ejecutar]
+```
+
+## Aprendizajes de uso real
+
+### Sesión 2026-06-23
+- Sin MCP actúa a ciegas — necesita contexto vía texto serializado
+- Cuando recibe el inventario clasificado, propone plan de 4 fases ordenado y coherente
+- Respeta las 3 leyes del sistema cuando se las das explícitamente en el prompt
+- Propone tablas de migración detalladas con origen → destino → tipo
+- Punto fuerte: correlaciona 37 archivos de inbox con estado de 15 carpetas en un solo paso
+- Tono: formal-técnico, usa emojis de estado, estructura sus respuestas en secciones claras
+- Pide confirmación antes de ejecutar cambios — buena práctica de seguridad
+
+### Output de calidad en esta sesión
+- Plan de 4 fases de limpieza y reestructuración
+- Tabla completa de migración inbox → ollama/modelos/
+- Fichas mejoradas claude-sonnet-4.6.md y gemini-2.5-pro.md
+- Propuesta de subcarpetas ollama/modelos/ y ollama/arquitectura/
+
+### Flujo óptimo Gemini + Claude
+```
+Gemini → auditoría masiva, plan, clasificación, research
+Claude → ejecución concreta, commits, código, MCP
+Perplexity → tiempo real, guardar sesión en repo, contexto vivo
+```
+
+## Casos de uso en este ecosistema
+
+| Tarea | Gemini | Claude |
+|---|---|---|
+| Auditar 30+ archivos inbox | ✅ ideal | ⚠️ lento |
+| Deep Research herramientas OSINT | ✅ ideal | ❌ |
+| Ronda LLM (7 fichas nuevas) | ✅ ideal | ⚠️ posible |
+| Commit directo GitHub | ❌ sin MCP | ✅ vía MCP |
+| Análisis logs docker/systemd | ✅ ideal | ⚠️ posible |
+| Contexto >200k tokens | ✅ 2M | ❌ |
+
+## Ver también
+
+- [[agentes/claude-sonnet-4.6]] — para ejecución y código
+- [[agentes/perplexity]] — para documentar sesiones en tiempo real
+- [[agentes/AGENT-SCRIPT]] — protocolo de uso de agentes
+- [[inbox/2026-06-23-prompt-gemini-auditoria-inbox]] — prompt auditoría completo
 
 ---
-_Ver también: [[agentes/perplexity]] · [[agentes/grok]] · [[agentes/chatgpt-o3]]_
+_Actualizado: 2026-06-23 · Fuente: uso real sesión arquitectura yggdrasil-dew_
