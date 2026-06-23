@@ -1,52 +1,56 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# DEPLOY LOCAL BRAIN: Ollama + Obsidian RAG Backend
-# Adaptado para Madre (varopc) - GTX 1060 6GB
-# Ollama corre en Docker en localhost:11434
-# Vault: ~/Projects/yggdrasil-dew
+# LOCAL BRAIN v2 — Ollama RAG 100% local
+# Embeddings: nomic-embed-text (Ollama)
+# LLM:        qwen2.5:3b (Ollama) — mejor español que llama3.2:3b
+# Puerto:     8001
 # ==============================================================================
 set -e
 
 OBSIDIAN_VAULT="${HOME}/Projects/yggdrasil-dew"
 BACKEND_DIR="${HOME}/Projects/local-brain"
-PORT="8001"  # 8000 ocupado por thdora
+PORT="8001"
 
-LLM_MODEL="llama3.2:3b"       # óptimo para GTX 1060 6GB
-EMBED_MODEL="nomic-embed-text"
-
-echo "==== 1. Verificando Ollama ==="
+echo "==== Comprobando Ollama ===="
 if ! curl -s http://localhost:11434/api/tags > /dev/null; then
-    echo "[-] Ollama no responde en localhost:11434. ¿Está el docker corriendo?"
+    echo "[-] Ollama no responde. Instala y arranca:"
+    echo "    curl -fsSL https://ollama.com/install.sh | sh"
+    echo "    ollama serve"
     exit 1
 fi
 
-echo "[+] Descargando modelos..."
-curl -s http://localhost:11434/api/pull -d "{\"name\": \"$LLM_MODEL\"}" | tail -1
-curl -s http://localhost:11434/api/pull -d "{\"name\": \"$EMBED_MODEL\"}" | tail -1
+echo "==== Comprobando modelos ===="
+if ! ollama list | grep -q "qwen2.5:3b"; then
+    echo "[*] Descargando qwen2.5:3b..."
+    ollama pull qwen2.5:3b
+fi
+if ! ollama list | grep -q "nomic-embed-text"; then
+    echo "[*] Descargando nomic-embed-text..."
+    ollama pull nomic-embed-text
+fi
 
-echo "==== 2. Creando directorio de trabajo ==="
-mkdir -p "$BACKEND_DIR"
-cd "$BACKEND_DIR"
+echo "==== Preparando entorno ===="
+mkdir -p "$BACKEND_DIR" && cd "$BACKEND_DIR"
+cp "$(dirname "$0")/main.py"         "$BACKEND_DIR/main.py"
+cp "$(dirname "$0")/requirements.txt" "$BACKEND_DIR/requirements.txt"
 
-echo "==== 3. Generando main.py ==="
-cp "$(dirname "$0")/main.py" "$BACKEND_DIR/main.py"
-
-echo "==== 4. Entorno virtual con uv ==="
 if ! command -v uv &> /dev/null; then
-    echo "[*] Instalando uv..."
     curl -sSf https://astral.sh/uv/install.sh | sh
     source $HOME/.local/bin/env
 fi
 
 uv venv .venv --python 3.11
 source .venv/bin/activate
-uv pip install fastapi uvicorn chromadb requests rank_bm25 pydantic
+uv pip install -r requirements.txt
 
-echo "==========================================================="
-echo "[+] LISTO. Arrancando backend en puerto $PORT..."
-echo "==========================================================="
 export OBSIDIAN_VAULT="$OBSIDIAN_VAULT"
-export LLM_MODEL="$LLM_MODEL"
-export EMBED_MODEL="$EMBED_MODEL"
+export LLM_MODEL="qwen2.5:3b"
+export EMBED_MODEL="nomic-embed-text"
 
+echo "=================================================="
+echo "[+] Local Brain v2 arrancando en :$PORT"
+echo "    LLM:    $LLM_MODEL"
+echo "    Embed:  $EMBED_MODEL"
+echo "    Vault:  $OBSIDIAN_VAULT"
+echo "=================================================="
 uvicorn main:app --host 127.0.0.1 --port $PORT --reload
