@@ -2,67 +2,75 @@
 tags: [rag, ollama, chromadb, fastapi, segundo-cerebro, local-brain]
 fecha: 2026-06-23
 estado: pendiente-desplegar
-ruta-obsidian: tools/local-brain/README.md
 ---
 
-# Local Brain — RAG Híbrido sobre yggdrasil-dew
+# Local Brain — RAG Híbrido con Ollama
 
-Backend FastAPI que indexa el vault de Obsidian y expone una API de consulta inteligente usando Ollama local.
+Este es el **core del proyecto**: backend FastAPI que indexa yggdrasil-dew
+usando **Ollama 100% local** para embeddings y generación.
 
 ## Arquitectura
 
 ```
-yggdrasil-dew (Markdown)
-        ↓ indexa
-  ChromaDB (vectorial)
-  BM25 (léxico)
-        ↓ consulta híbrida
-  Ollama llama3.2:3b (generación)
+yggdrasil-dew (*.md)          ← tu vault / conocimiento
+        ↓ lee y chunka
+  nomic-embed-text             ← Ollama :11434 (embeddings locales)
+        ↓ vectoriza
+  ChromaDB + BM25              ← índice en disco
+        ↓ RAG híbrido
+  llama3.2:3b                  ← Ollama :11434 (LLM local, GTX 1060 6GB)
         ↓
-  FastAPI :8001
+  FastAPI :8001                ← tu API
         ↓
-  Thdora bot / curl / Obsidian plugin
+  Thdora / curl / Obsidian
 ```
+
+**100% local. Sin red. Sin API keys. Sin datos saliendo de Madre.**
+
+## Modos disponibles
+
+| Puerto | Embeddings | LLM | Red necesaria |
+|---|---|---|---|
+| `:8001` | Ollama `nomic-embed-text` | Ollama `llama3.2:3b` | ❌ ninguna |
+| `:8002` | Ollama `nomic-embed-text` | Claude `claude-sonnet-4-6` | ✅ Anthropic API |
+
+El core siempre es `:8001`. El modo Claude es opcional para casos
+que requieran razonamiento más profundo.
 
 ## Requisitos
 
-- Ollama corriendo en Docker (`~/docker/batcueva-nueva/`) en `:11434`
+- Ollama instalado: `curl -fsSL https://ollama.com/install.sh | sh`
+- Modelos: `ollama pull llama3.2:3b && ollama pull nomic-embed-text`
 - `uv` instalado
 - Python 3.11
-- Modelos: `llama3.2:3b` + `nomic-embed-text`
 
 ## Despliegue
 
 ```bash
+# Paso 1 — arrancar Ollama (terminal 1)
+ollama serve
+
+# Paso 2 — bajar modelos (terminal 2)
+ollama pull llama3.2:3b
+ollama pull nomic-embed-text
+
+# Paso 3 — lanzar backend (terminal 3)
 chmod +x tools/local-brain/deploy_brain.sh
 ./tools/local-brain/deploy_brain.sh
-```
 
-## Endpoints
-
-| Endpoint | Método | Para qué |
-|---|---|---|
-| `/health` | GET | Ver estado |
-| `/index` | POST | Re-indexar vault |
-| `/query` | POST | Consultar cerebro |
-
-## Uso
-
-```bash
-# Indexar vault
+# Paso 4 — indexar vault
 curl -X POST http://127.0.0.1:8001/index
 
-# Consultar
+# Paso 5 — consultar
 curl -X POST http://127.0.0.1:8001/query \
   -H "Content-Type: application/json" \
-  -d '{"prompt": "qué pendientes tengo con thdora?", "top_k": 4}'
+  -d '{"prompt": "qué pendientes tengo con thdora?", "top_k": 5}'
 ```
 
 ## Integración con Thdora
 
-Thdora puede llamar a `/query` directamente:
 ```python
-# En thdora — handler de mensaje
+# En thdora — handler de mensaje Telegram
 response = requests.post("http://localhost:8001/query",
     json={"prompt": user_message, "top_k": 5})
 reply = response.json()["response"]
@@ -70,13 +78,4 @@ reply = response.json()["response"]
 
 ## Estado
 
-⏳ Pendiente desplegar — requiere Ollama corriendo (descargando)
-
-## Para investigar más
-
-- [ChromaDB docs](https://docs.trychroma.com)
-- [Ollama API](https://github.com/ollama/ollama/blob/main/docs/api.md)
-- [rank_bm25](https://github.com/dorianbrown/rank_bm25)
-- [FastAPI](https://fastapi.tiangolo.com)
-- RAG híbrido: combinar dense retrieval (vectorial) + sparse retrieval (BM25)
-- Reranking: `cross-encoder/ms-marco-MiniLM-L-6-v2` para mejorar resultados
+⏳ Pendiente desplegar — Ollama descargando (~6% al momento de documentar)
