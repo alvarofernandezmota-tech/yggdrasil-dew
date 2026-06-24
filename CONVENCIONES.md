@@ -70,6 +70,7 @@ Tipos:
   fix:      corrección
   refactor: reorganización
   cierre:   commit automático fin de sesión
+  migrate:  mover contenido entre repos
 ```
 
 ---
@@ -154,11 +155,12 @@ Si no puedes responder las 4 → va al inbox, no se implementa.
 Cada repo tiene **una sola responsabilidad**. Así lo hacen los ingenieros senior.
 
 ```
-personal          ← VIDA: diarios, metas, reflexiones (siempre privado)
+huginn            ← VIDA: diarios, metas, reflexiones (siempre privado)
 yggdrasil-dew     ← CONOCIMIENTO: docs, formación, referencias, agentes
 batcueva          ← INFRAESTRUCTURA: scripts, composes, setup Madre
 thdora            ← PROYECTO: código agente IA (público)
 local-brain       ← PROYECTO: código cerebro local (público)
+osint-stack       ← PROYECTO: stack OSINT (público)
 [futuros]         ← cada proyecto nuevo = repo propio si llega a Nivel 3
 ```
 
@@ -187,5 +189,37 @@ Móvil            → pendiente Obsidian + Tailscale
 
 ---
 
-_Actualizado: 24 jun 2026 03:39 CEST_
+## Regla 15 — Revisar el ecosistema antes de actuar
+
+**Antes de crear, mover, decidir o escribir cualquier cosa**, leer obligatoriamente:
+
+```
+☐ CONVENCIONES.md  ← reglas del sistema
+☐ ECOSISTEMA.md    ← mapa de repos y arquitectura
+☐ ESTADO-SISTEMA.md ← estado real del stack ahora
+```
+
+Nunca duplicar lo que ya existe. Si algo ya está documentado → referenciar, no reescribir.
+Si entras en frío (nueva sesión, nueva IA) → estos 3 ficheros son el punto de entrada obligatorio.
+
+---
+
+## Regla 16 — Migración entre repos
+
+Cuando un fichero o contenido se mueve de un repo a otro:
+
+```
+☐ 1. Crear en destino (commit tipo migrate:)
+☐ 2. Eliminar en origen (commit tipo migrate:)
+☐ 3. Actualizar referencias en ambos repos
+☐ 4. Actualizar ECOSISTEMA.md si cambia la arquitectura
+```
+
+Formato de commit: `migrate: <descripción> — de <origen> a <destino>`
+
+Nunca copiar sin eliminar el original → genera duplicados y contradicciones.
+
+---
+
+_Actualizado: 24 jun 2026 05:08 CEST_
 _Ver: [ESTADO-SISTEMA.md](ESTADO-SISTEMA.md) · [MASTER-PENDIENTES.md](MASTER-PENDIENTES.md) · [ROADMAP.md](ROADMAP.md) · [ECOSISTEMA.md](ECOSISTEMA.md)_
