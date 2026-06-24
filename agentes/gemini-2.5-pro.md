@@ -1,129 +1,115 @@
 ---
-tags: [agente, gemini, google, deep-research, contexto-masivo, auditoria]
-fecha-creacion: 2026-06-22
-fecha-actualizacion: 2026-06-23
-version: gemini-2.5-pro
+tags: [agente, gemini, google, investigacion, contexto-largo, ia-externa]
+nombre: Gemini 2.5 Pro
 proveedor: Google DeepMind
-contexto-tokens: 2000000
-uso-principal: auditoria · deep-research · contexto-masivo · clasificacion
-wikilink: agentes/gemini-2.5-pro
+acceso: https://aistudio.google.com
+estado: activo
+rol-en-ecosistema: investigacion-profunda · contexto-1M · analisis-repos-completos
+fecha: 2026-06-24
 ---
 
-# 🤖 Gemini 2.5 Pro — El Analista de Contexto Masivo
+# Gemini 2.5 Pro — Ficha de agente
 
-> Modelo de ingesta masiva y Deep Research. Especialista en auditorías globales,
-> procesamiento de sesiones completas y correlación cruzada de múltiples fuentes.
+## Qué es
 
-## Ficha técnica
+Gemini 2.5 Pro es el modelo de Google con **ventana de contexto de 1 millón de tokens** (el mayor disponible públicamente). Ideal para tareas que requieren leer repos enteros, documentos largos, o múltiples ficheros a la vez sin perder contexto.
 
-| Campo | Valor |
+---
+
+## Rol en el ecosistema de Álvaro
+
+| Tarea | Por qué Gemini y no otra IA |
 |---|---|
-| Proveedor | Google DeepMind |
-| Versión activa | gemini-2.5-pro |
-| Contexto efectivo | 2,000,000 tokens |
-| Acceso | gemini.google.com / API |
-| Deep Research | ✅ activable en chat |
-| MCP support | ❌ no nativo en chat |
-| Coste | Gemini Advanced / API |
+| Investigación profunda (Modelfiles, LoRA, RAG) | Contexto 1M permite meter todo el repo + papers |
+| Análisis de repos completos | Lee todos los ficheros de una vez sin truncar |
+| Generación de código largo (compose, scripts) | Menos errores en ficheros grandes |
+| Auditoría nocturna automática | Procesa inbox entero + genera resumen |
+| Fine-tuning y entrenamiento LLM | Experto en ai-toolkit / LoRA / QLoRA |
 
-## Cuándo usarlo vs Claude Sonnet 4.6
-
-**Usa Gemini cuando:**
-- Tengas volcados masivos de sesión (+150 páginas, logs kilométricos)
-- Necesites auditar 30+ archivos cruzando datos simultáneamente
-- Deep Research: búsqueda web + síntesis en un solo paso
-- Contexto supere 200k tokens (Gemini aguanta 2M)
-- Clasificar grandes volúmenes de notas sin perder el hilo de las leyes del sistema
-- Investigación técnica externa (hardware, redes, documentación de herramientas)
-
-**Evítalo cuando:**
-- Busques ejecución directa de código en producción sin revisión
-- Necesites commits directos en GitHub (no tiene MCP en chat)
-- El formato de salida requiera rigidez extrema en JSON complejo
-
-## Estrategia de ingesta: Serialización por Bloques
-
-Sin acceso directo a GitHub, el protocolo óptimo es alimentarlo con texto:
-
-```
---- INICIO ARCHIVO: [[ruta/del/archivo.md]] ---
-[Contenido íntegro del archivo]
---- FIN ARCHIVO: [[ruta/del/archivo.md]] ---
-```
-
-Este formato permite a Gemini:
-- Indexar internamente la estructura del repo
-- Resolver dependencias cruzadas vía [[wikilinks]]
-- No confundir límites entre documentos
-- Mantener las leyes del sistema activas durante toda la sesión
-
-**Alternativa rápida:** dar el inventario clasificado (nombre + tipo + descripción una línea)
-y dejar que Gemini proponga el plan antes de ejecutar.
-
-## Deep Research — cómo activarlo
-
-1. Abrir gemini.google.com con Gemini Advanced
-2. Activar Deep Research (icono lupa/investigación)
-3. Dar el prompt con contexto completo del repo
-4. Gemini lanza búsquedas web + sintetiza en un informe
-5. Revisar fuentes antes de integrar en el cerebro
-
-**Ideal para:** ronda 2 LLM (7 fichas nuevas en agentes/), investigación de herramientas OSINT, benchmarks de modelos locales.
-
-## Protocolo de prompts efectivos
-
-```
-[ROL]: Ingeniero de Software Senior / Guardián de arquitectura del conocimiento
-[LEYES]:
-  1. Nunca duplicar — wikilinks [[archivo]]
-  2. Todo nuevo entra por inbox/ primero
-  3. Infraestructura != Producto
-[CONTEXTO]: [inventario completo o bloques serializados]
-[RESTRICCIONES]: NO tocar agentes/ — referencia perfecta
-[TAREA]: [descripción + output esperado + confirmación antes de ejecutar]
-```
-
-## Aprendizajes de uso real
-
-### Sesión 2026-06-23
-- Sin MCP actúa a ciegas — necesita contexto vía texto serializado
-- Cuando recibe el inventario clasificado, propone plan de 4 fases ordenado y coherente
-- Respeta las 3 leyes del sistema cuando se las das explícitamente en el prompt
-- Propone tablas de migración detalladas con origen → destino → tipo
-- Punto fuerte: correlaciona 37 archivos de inbox con estado de 15 carpetas en un solo paso
-- Tono: formal-técnico, usa emojis de estado, estructura sus respuestas en secciones claras
-- Pide confirmación antes de ejecutar cambios — buena práctica de seguridad
-
-### Output de calidad en esta sesión
-- Plan de 4 fases de limpieza y reestructuración
-- Tabla completa de migración inbox → ollama/modelos/
-- Fichas mejoradas claude-sonnet-4.6.md y gemini-2.5-pro.md
-- Propuesta de subcarpetas ollama/modelos/ y ollama/arquitectura/
-
-### Flujo óptimo Gemini + Claude
-```
-Gemini → auditoría masiva, plan, clasificación, research
-Claude → ejecución concreta, commits, código, MCP
-Perplexity → tiempo real, guardar sesión en repo, contexto vivo
-```
-
-## Casos de uso en este ecosistema
-
-| Tarea | Gemini | Claude |
-|---|---|---|
-| Auditar 30+ archivos inbox | ✅ ideal | ⚠️ lento |
-| Deep Research herramientas OSINT | ✅ ideal | ❌ |
-| Ronda LLM (7 fichas nuevas) | ✅ ideal | ⚠️ posible |
-| Commit directo GitHub | ❌ sin MCP | ✅ vía MCP |
-| Análisis logs docker/systemd | ✅ ideal | ⚠️ posible |
-| Contexto >200k tokens | ✅ 2M | ❌ |
-
-## Ver también
-
-- [[agentes/claude-sonnet-4.6]] — para ejecución y código
-- [[agentes/perplexity]] — para documentar sesiones en tiempo real
-- [[agentes/AGENT-SCRIPT]] — protocolo de uso de agentes
-- [[inbox/2026-06-23-prompt-gemini-auditoria-inbox]] — prompt auditoría completo
+**Protocolo del ecosistema:**
+> Grok investiga noticias frescas → Gemini investiga en profundidad → Perplexity valida + sube al repo vía MCP
 
 ---
-_Actualizado: 2026-06-23 · Fuente: uso real sesión arquitectura yggdrasil-dew_
+
+## Cómo usar Gemini para este ecosistema
+
+### Acceso
+1. `https://aistudio.google.com` → seleccionar `gemini-2.5-pro`
+2. Subir ficheros directamente o pegar contenido
+3. Para repos: pegar contenido de múltiples ficheros en el prompt
+
+### Patrón de prompt óptimo
+```
+CONTEXTO DEL SISTEMA:
+[pegar ECOSISTEMA.md]
+[pegar ESTADO-SISTEMA.md]
+[pegar ficheros relevantes]
+
+TAREA:
+[descripción clara]
+
+FORMATO DE RESPUESTA:
+- Todo en markdown
+- Comandos ejecutables
+- Guardar resultado en: [ruta del repo]
+```
+
+---
+
+## Prompts preparados
+
+### 🔍 Investigación Modelfiles + especialización LLM
+Ver: [[inbox/2026-06-24-prompt-gemini-modelfiles]]
+
+Cubre:
+- Modelfiles óptimos para qwen2.5:3b especializado
+- RAM real por modelo en CPU-only
+- RAG vs Modelfile vs LoRA — cuándo usar cada uno
+- Fine-tuning sin GPU (Colab / AI Studio)
+- Flujo nocturno n8n automatizado
+- Plan de 7 días de implementación
+
+Resultado esperado → guardar en: `ollama/GUIA-ESPECIALIZACION.md`
+
+### 🏛️ Auditoría nocturna de repos
+Prompt rápido:
+```
+Audita estos ficheros del inbox de yggdrasil-dew y díme:
+1. Cuáles están completos y listos para migrar a su destino
+2. Cuáles necesitan más trabajo
+3. Dónde va cada uno según CONVENCIONES.md
+[pegar contenido del inbox]
+```
+
+### 📊 Análisis de repo completo
+Prompt rápido:
+```
+Analiza este repo completo y dame:
+1. Ficheros duplicados o redundantes
+2. Ficheros que faltan según la estructura definida
+3. Inconsistencias entre ESTADO-SISTEMA.md y la realidad
+[pegar estructura del repo]
+```
+
+---
+
+## Limitaciones a tener en cuenta
+
+- **No tiene MCP** — no puede subir al repo directamente (lo hace Perplexity)
+- **Sin acceso a internet en tiempo real** — para noticias frescas usar Grok
+- **Contexto no es infinito** — 1M tokens ≈ 750.000 palabras ≈ 3-4 repos medianos
+- **Gratis con límites** en AI Studio — para uso intensivo revisar quota diaria
+
+---
+
+## Descargas relacionadas
+
+No requiere descarga local. Acceso web en `https://aistudio.google.com`.
+
+Si se quiere modelo local similar: `gemma3:12b` o `gemma3:27b` en Ollama
+(cuando Madre tenga más RAM o GPU).
+
+---
+
+_Actualizado: 24 jun 2026 05:43 CEST_
+_Ver: [[agentes/README]] · [[agentes/perplexity]] · [[agentes/grok-3]]_
