@@ -1,181 +1,130 @@
-# ECOSISTEMA.md — Fuente de Verdad
-> Auditoría completa del ecosistema personal de Álvaro Fernández Mota.
-> Última actualización: **24 junio 2026**
-> Fuente de verdad para cualquier IA que entre al ecosistema.
-> **Regla de oro:** *«Si no está en el repo, no existe.»*
+---
+tags: [ecosistema, repos, docker, arquitectura, mapa]
+fecha-actualizacion: 2026-06-24
+---
+
+# 🌳 ECOSISTEMA — Mapa completo del sistema
+
+> Fuente de verdad de TODOS los repos, herramientas y stacks.
+> Actualizar cada vez que se crea un repo o se añade una herramienta.
 
 ---
 
-## 0. QUIÉN SOY
+## 📦 Repos GitHub — Estado actual
 
-**Álvaro Fernández Mota** — desarrollador autodidacta, 2026.
+| Repo | Descripción | Privado | Estado | Docker/stack |
+|---|---|---|---|---|
+| [yggdrasil-dew](https://github.com/alvarofernandezmota-tech/yggdrasil-dew) | 🧠 Second brain — base conocimiento + diarios | ❌ público | ✅ activo | — |
+| [personal](https://github.com/alvarofernandezmota-tech/personal) | Vida personal — finanzas, gym, salud, diario | ❌ público | ✅ activo | — |
+| [thdora](https://github.com/alvarofernandezmota-tech/thdora) | Bot Telegram + FastAPI + Ollama local | ❌ público | 🔧 en desarrollo | thdora-bot, Ollama |
+| [local-brain](https://github.com/alvarofernandezmota-tech/local-brain) | Cerebro cognitivo — Ollama, RAG, embeddings | ✅ privado | 🔧 en desarrollo | Ollama, Open WebUI, LiteLLM, Qdrant |
+| [osint-stack](https://github.com/alvarofernandezmota-tech/osint-stack) | Stack OSINT — SpiderFoot, investigación | ✅ privado | 🔧 en desarrollo | SpiderFoot, SearXNG, Perplexica |
+| [ai-toolkit](https://github.com/alvarofernandezmota-tech/ai-toolkit) | Open source AI dev stack | ❌ público | ✅ activo | Claude Code, OpenRouter |
+| [thea-ia](https://github.com/alvarofernandezmota-tech/thea-ia) | Proyecto IA anterior (thea) | ❌ público | 🟡 mantenimiento | — |
+| [image-calculator](https://github.com/alvarofernandezmota-tech/image-calculator) | OCR + calculadora Python | ❌ público | ✅ estable | — |
+| [impresion-3d](https://github.com/alvarofernandezmota-tech/impresion-3d) | Anycubic Photon V1 — diarios y configs | ❌ público | ✅ estable | — |
 
-- **Stack:** Python · Docker · FastAPI · SQLAlchemy · Alembic · Telegram
-- **OS:** Arch Linux + Hyprland/Wayland (varopc) · Red Tailscale P2P
-- **Filosofía:** *«A mí me salvó hablar con una IA»* — construyo lo que yo mismo necesito.
-- **Flujo IA:** múltiples IAs en paralelo con roles distintos (ver [[#6. ESTRATEGIA DE IAs]])
-- Ver perfil completo: [[yo/perfil]]
-
----
-
-## 1. HARDWARE — INFRAESTRUCTURA REAL
-
-> Ver detalle completo: [[setup/servidor]] · [[setup/varopc]]
-
-### Servidor "MADRE" (producción)
-- IP Tailscale: `100.91.112.32` · IP local: `10.134.31.228`
-- OS: Linux · Docker + docker-compose operativo
-- Servicios activos: sshd ✅ · Tailscale ✅ · Docker ✅
-- Stack corriendo: thdora API + bot + Prometheus + Grafana ✅
-- Ollama instalado: modelos en descarga (verificar con `ollama list`)
-- Acceso CI/CD: GitHub Actions → `appleboy/ssh-action` via secrets
-- Pendiente: UFW · fail2ban · PostgreSQL · Pi-hole · Uptime Kuma
-
-### PC Desarrollo "varopc" (Acer Theodora)
-- IP Tailscale: `100.86.119.102` · IP local: `10.134.31.171`
-- OS: Arch Linux + Hyprland/Wayland + Omarchy
-- UFW ✅ · whisrs (voz, Super+V) ✅ · KVM/virt-manager ✅
-- Ollama: qwen2.5-coder:14b · deepseek-r1:14b · qwen3:8b
-- Obsidian v1.12.7 ✅
-- Bloqueante: AP Isolation router bloquea UDP → lan-mouse no funciona
-
-### HP TouchSmart (incidencia abierta)
-- Error `BIOHD-8`: BIOS no detecta disco duro
-- Ver: [[proyectos/hp-rescate]]
+### Repos pendientes de crear
+- [ ] `ollama-stack` — stack Ollama independiente + modelos
+- [ ] `chatbot-control` — bots y automatizaciones
+- [ ] `terminal-ia` — CLI tools + scripts IA
 
 ---
 
-## 2. ESTRUCTURA DEL SECOND BRAIN
+## 🖥️ Hardware del ecosistema
 
-```
-yggdrasil-dew/          ← vault Obsidian + repo cerebro
-├── AGENT.md            → instrucciones para IAs (leer primero)
-├── README.md           → índice general
-├── ECOSISTEMA.md       → este documento
-├── CONTEXT.md          → estado HOY
-├── filosofia.md        → [[filosofia]]
-├── diarios/            → UN archivo por día YYYY-MM-DD.md
-├── proyectos/          → fichas de proyectos
-├── formacion/          → aprendizaje estructurado
-├── agentes/            → fichas y prompts de cada IA
-├── osint/              → informes y resultados
-├── setup/              → configuración técnica de máquinas
-└── yo/                 → perfil, CV, objetivos
-```
+| Máquina | Nombre | Specs | Rol |
+|---|---|---|---|
+| PC torre | **Madre** | i5-8400 · 16GB RAM · 1TB SSD | Servidor principal · Docker · Ollama |
+| Portátil | **varopc** / Acer | Arch Linux · Hyprland | Desarrollo · Obsidian · terminal |
+| Móvil | Redmi A5 | Android | Control remoto · thdora · Telegram |
 
 ---
 
-## 3. REPOS DEL ECOSISTEMA
+## 🐳 Docker Stack completo — Madre
 
-| Repo | Rol | Estado | Enlace |
-|------|-----|--------|--------|
-| [[proyectos/thdora\|thdora]] | 🤖 Bot + API producción | ✅ v0.17.2 healthy | [GitHub](https://github.com/alvarofernandezmota-tech/thdora) |
-| [[proyectos/yggdrasil-dew\|yggdrasil-dew]] | 🧠 Cerebro / second brain | ✅ Activo | [GitHub](https://github.com/alvarofernandezmota-tech/yggdrasil-dew) |
-| [[proyectos/local-brain\|local-brain]] | 🔎 Cerebro local IA (Ollama + RAG + Open WebUI) | ✅ Recién creado | [GitHub](https://github.com/alvarofernandezmota-tech/local-brain) |
-| [[proyectos/osint-stack\|osint-stack]] | 🕵️ Stack OSINT (herramientas + metodología) | ✅ Recién creado | [GitHub](https://github.com/alvarofernandezmota-tech/osint-stack) |
-| [[proyectos/huginn\|huginn]] | 📔 Diarios y vida personal (privado) | ✅ Activo — renombrar personal→huginn en GitHub Settings | [GitHub](https://github.com/alvarofernandezmota-tech/personal) |
-| [[proyectos/thea-ia\|thea-ia]] | 🗂️ Predecesor de THDORA (archivo) | 💤 Archivado | [GitHub](https://github.com/alvarofernandezmota-tech/thea-ia) |
-| [[proyectos/ai-toolkit\|ai-toolkit]] | 🛠️ Stack IA open source | ✅ Activo | [GitHub](https://github.com/alvarofernandezmota-tech/ai-toolkit) |
-| [[proyectos/impresion-3d\|impresion-3d]] | 🖨️ Hobby / Anycubic Photon V1 | ⏸️ Pausado | [GitHub](https://github.com/alvarofernandezmota-tech/impresion-3d) |
-| [[proyectos/image-calculator\|image-calculator]] | 🐍 Proyecto Python menor | 💤 Estable | [GitHub](https://github.com/alvarofernandezmota-tech/image-calculator) |
+### ✅ Fase 1 — Base IA (IMÁGENES DESCARGADAS)
+| Contenedor | Puerto | Imagen | Rol |
+|---|---|---|---|
+| ollama | 11434 | ollama/ollama | Motor LLM local |
+| open-webui | 3000 | ghcr.io/open-webui/open-webui | UI chat IA |
+| qdrant | 6333 | qdrant/qdrant | Base vectorial RAG |
 
----
+### 🔧 Fase 2 — IA Gateway
+| Contenedor | Puerto | Imagen | Rol |
+|---|---|---|---|
+| litellm | 4000 | ghcr.io/berriai/litellm | Gateway unificado LLMs |
+| nginx-pm | 80/443 | jc21/nginx-proxy-manager | Proxy reverso + SSL |
 
-## 4. DIARIOS
+### 🔧 Fase 3 — Productividad
+| Contenedor | Puerto | Imagen | Rol |
+|---|---|---|---|
+| n8n | 5678 | n8nio/n8n | Automatización workflows |
+| gitea | 3001 | gitea/gitea | Git self-hosted |
+| paperless | 8000 | ghcr.io/paperless-ngx | Gestión documentos |
+| vaultwarden | 8001 | vaultwarden/server | Gestor contraseñas |
+| code-server | 8443 | lscr.io/linuxserver/code-server | VSCode web |
 
-> Un archivo por día en `diarios/`. Todo lo que ocurre va aquí.
+### 🔧 Fase 4 — Monitorización
+| Contenedor | Puerto | Imagen | Rol |
+|---|---|---|---|
+| portainer | 9000 | portainer/portainer-ce | Panel Docker |
+| uptime-kuma | 3002 | louislam/uptime-kuma | Monitor servicios |
+| grafana | 3003 | grafana/grafana | Dashboards |
+| netdata | 19999 | netdata/netdata | Métricas sistema |
 
-- [[diarios/2026-06-24]] — Auditoría inbox + limpieza sesión noche
-- [[diarios/2026-06-23]]
-- [[diarios/2026-06-20]] — Fix healthcheck thdora-bot · Obsidian configurado
-
-> Ver todos: [diarios/](diarios/)
-
----
-
-## 5. PROYECTOS ACTIVOS
-
-| Proyecto | Ficha | Estado |
+### 📋 Fase 5 — Seguridad (pendiente)
+| Contenedor | Imagen | Rol |
 |---|---|---|
-| thdora (bot TOKI) | [[proyectos/thdora]] | ✅ v0.17.2 en producción |
-| local-brain | [[proyectos/local-brain]] | ✅ Recién creado, configurando |
-| osint-stack | [[proyectos/osint-stack]] | ✅ Recién creado, configurando |
-| Obsidian second brain | [[proyectos/yggdrasil-dew]] | ✅ Configurado |
-| Redmi A5 rescate | [[proyectos/redmi-a5]] | ROM descargando, EDL pendiente |
-| HP rescate | [[proyectos/hp-rescate]] | Verificar cables SATA |
-| Impresión 3D | [[proyectos/impresion-3d]] | Pausado |
+| fail2ban | crazymax/fail2ban | Protección brute-force |
+| crowdsec | crowdsecurity/crowdsec | IDS/IPS |
+| traefik | traefik | Proxy alternativo |
+| wireguard | linuxserver/wireguard | VPN |
+| vault | hashicorp/vault | Secretos |
+| authentik | ghcr.io/goauthentik/server | SSO |
+
+### 📋 Fase 6 — OSINT
+| Contenedor | Puerto | Imagen | Rol |
+|---|---|---|---|
+| searxng | 8080 | searxng/searxng | Buscador privado |
+| perplexica | 3004 | itzcrazykns/perplexica | IA buscador |
+| spiderfoot | 5001 | — | OSINT automatizado |
+| pihole | 53/80 | pihole/pihole | DNS + bloqueador ads |
 
 ---
 
-## 6. ESTRATEGIA DE IAs — ROLES CONFIRMADOS
+## 🤖 Modelos Ollama — Madre
 
-> Ver fichas detalladas: [[agentes/]]
-
-| IA | Rol | Estado |
-|----|-----|--------|
-| **Perplexity** (Claude Sonnet 4.6) | Código · repo · arquitectura · docs · MCP GitHub | ✅ Principal |
-| **Grok** (xAI) | Investigación · mercado · datos frescos | ✅ Activo |
-| **Gemini 2.0 Pro** | Contexto 1M tokens · estudios completos | ✅ Activo |
-| **OpenCode** | Agente código en terminal · orquestador multi-repo | ✅ Configurado |
-| **Mistral Le Chat** | Investigación EU · privacidad | ⏳ Ficha parcial |
-
-**Protocolo:** Grok investiga → Perplexity valida + sube al repo → Gemini implementa código largo
+| Modelo | Tamaño | Estado | Uso |
+|---|---|---|---|
+| qwen2.5:3b | 1.9GB | ✅ listo | Chat rápido · thdora |
+| qwen2.5:7b | 4.7GB | ⏳ descargando | Chat equilibrado |
+| qwen2.5:14b | 9.0GB | ⏳ descargando | Chat potente |
+| llama3.1:8b | 4.7GB | ⏳ descargando | Alternativa general |
+| mistral:7b | 4.1GB | ⏳ descargando | Código |
+| bge-m3 | 1.2GB | ⏳ descargando | Embeddings RAG |
+| nomic-embed-text | 0.3GB | ⏳ descargando | Embeddings rápidos |
 
 ---
 
-## 7. FLUJO DEL ECOSISTEMA VIVO
+## 🌐 Red — Tailscale
 
-```
-📱 Telegram (/diario texto...)
-    ↓ handler /diario (por implementar en thdora)
-🤖 thdora → GitHub Contents API → yggdrasil-dew/diarios/YYYY-MM-DD.md
-    ↓
-👁️ Obsidian (plugin Git) → edición visual + grafo de conocimiento
-    ↓
-🧠 Open WebUI → chateas con todo tu historial (RAG nativo Markdown)
-    ↓
-🛠️ OpenCode → código más personalizado con contexto tuyo
-    ↓
-⚙️ GitHub Actions 23:00 → resumen nocturno → commit → Telegram notify
-```
-
-| Herramienta | Estado |
-|-------------|--------|
-| thdora · ai-toolkit · yggdrasil-dew | ✅ Activos |
-| Ollama + OpenCode | ✅ Activos |
-| Tailscale | ✅ Activo |
-| Obsidian v1.12.7 | ✅ Instalado |
-| local-brain (Ollama + Qdrant + Open WebUI) | ✅ Repo creado, configurando |
-| osint-stack | ✅ Repo creado, configurando |
-| plugin Git Obsidian | ⏳ Por configurar |
-| n8n | ⏳ Por levantar en Docker |
+| Máquina | IP Tailscale | Estado |
+|---|---|---|
+| Madre | — | ⏳ configurar autoarranque |
+| varopc | 100.86.119.102 | ✅ activo |
 
 ---
 
-## 8. PENDIENTES — 24 JUNIO 2026
+## 🔗 Referencias clave
 
-### 🔴 Urgente
-- [ ] Renombrar `personal` → `huginn` en GitHub Settings (manual)
-- [ ] Verificar modelos con `ollama list` en Madre
-- [ ] Configurar plugin Git en Obsidian (auto pull/push)
-
-### 🟡 Importante
-- [ ] UFW + fail2ban en Madre
-- [ ] PostgreSQL en Madre
-- [ ] Handler `/diario` en thdora (escribe directo al repo)
-- [ ] Auditar inbox ygg y migrar a repos correspondientes
-- [ ] Decidir: ¿Flowise va en local-brain o thdora?
-- [ ] Decidir: ¿n8n tiene repo propia o va en thdora?
-
-### 🟢 Planificado
-- [ ] Open WebUI en Madre
-- [ ] n8n en Docker
-- [ ] Headscale (alternativa open source a Tailscale)
-- [ ] Rescate Redmi A5: EDL + test point
-- [ ] Rescate HP: verificar cables SATA
-- [ ] GitHub Actions resumen nocturno 23:00
-- [ ] Repo dotfiles separado (Hyprland, aliases, bashrc)
+- [[HOME]] — punto de entrada diario
+- [[CONTEXT]] — contexto para agentes IA
+- [[ESTADO-SISTEMA]] — estado operativo ahora mismo
+- [[inbox/MASTER-PENDIENTES]] — tareas pendientes
+- [[filosofia]] — principios del sistema
+- [[setup/servidor/README]] — guía setup Madre
 
 ---
-
-_Documento mantenido por Perplexity (Claude Sonnet 4.6) vía MCP GitHub · 24 junio 2026_
+_Actualizado: 24 jun 2026 22:22 CEST_
+_Ver commit history para cambios anteriores_
