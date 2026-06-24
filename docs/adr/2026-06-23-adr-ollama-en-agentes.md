@@ -4,7 +4,6 @@ fecha: 2026-06-23
 estado: decision-tomada
 tipo: adr
 ruta-obsidian: docs/adr/2026-06-23-adr-ollama-en-agentes.md
-fuente: inbox/2026-06-23-adr-ollama-en-agentes.md
 ---
 
 # ADR — Separación agentes/ vs ollama/
@@ -36,17 +35,17 @@ Contiene todo lo que corre en Madre localmente:
 - Open WebUI
 - Guía selección de modelos
 
-## Regla
-
-> Si necesita internet para funcionar → `agentes/`
-> Si corre en Madre → `ollama/`
-
 ## Cambios a ejecutar
 
 - [ ] Eliminar fichas `agentes/ollama-*.md` (están duplicadas)
 - [ ] Verificar que `ollama/` tiene todas las fichas equivalentes
 - [ ] Actualizar `agentes/README.md` — quitar referencias a modelos locales
 - [ ] Actualizar `ollama/README.md` — es la fuente de verdad de modelos locales
+
+## Regla
+
+> Si necesita internet para funcionar → `agentes/`
+> Si corre en Madre → `ollama/`
 
 ## Referencias
 - [[agentes/README]]
