@@ -1,7 +1,8 @@
 # ============================================================
 # BATCUEVA OSINT STACK
-# SpiderFoot + IVRE + Maltego CE
+# SpiderFoot + IVRE + TheHive (desactivado por RAM)
 # Uso: docker compose -f docker/batcueva-osint.yml up -d
+# Para solo SpiderFoot: docker compose -f docker/batcueva-osint.yml up -d spiderfoot
 # ============================================================
 name: batcueva-osint
 
@@ -17,6 +18,7 @@ volumes:
 services:
 
   # ---- SpiderFoot: OSINT por persona/dominio/IP/email ----
+  # Web UI: http://100.91.112.32:5001
   spiderfoot:
     image: spiderfoot/spiderfoot:latest
     container_name: spiderfoot
@@ -34,8 +36,10 @@ services:
       retries: 3
 
   # ---- IVRE: Recon de red e inteligencia de infraestructura ----
+  # Imagen corregida: ivre/base (imagen oficial correcta en Docker Hub)
+  # Web UI: http://100.91.112.32:5002
   ivre-web:
-    image: ivre/ivre:latest
+    image: ivre/base:latest
     container_name: ivre-web
     restart: unless-stopped
     ports:
@@ -45,7 +49,8 @@ services:
     volumes:
       - ivre-data:/var/lib/ivre
     depends_on:
-      - ivre-db
+      ivre-db:
+        condition: service_healthy
     networks:
       - osint-net
 
@@ -57,21 +62,24 @@ services:
       - ivre-db:/data/db
     networks:
       - osint-net
-
-  # ---- TheHive: Gestión de casos e incidentes ----
-  thehive:
-    image: strangebee/thehive:latest
-    container_name: thehive
-    restart: unless-stopped
-    ports:
-      - "9000:9000"
-    environment:
-      - JVM_OPTS=-Xms512m -Xmx1g
-    networks:
-      - osint-net
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/api/status"]
-      interval: 60s
-      timeout: 20s
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
       retries: 5
-      start_period: 60s
+      start_period: 20s
+
+  # ---- TheHive: Gestión de casos ----
+  # DESACTIVADO: consume 1-2GB RAM (JVM). Activar cuando Acer esté en el stack.
+  # Para activar: descomentar y ejecutar con perfil --profile thehive
+  # thehive:
+  #   image: strangebee/thehive:latest
+  #   container_name: thehive
+  #   restart: unless-stopped
+  #   ports:
+  #     - "9000:9000"
+  #   environment:
+  #     - JVM_OPTS=-Xms512m -Xmx1g
+  #   networks:
+  #     - osint-net
+  #   profiles: ["thehive"]
