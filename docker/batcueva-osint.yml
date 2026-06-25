@@ -1,0 +1,77 @@
+# ============================================================
+# BATCUEVA OSINT STACK
+# SpiderFoot + IVRE + Maltego CE
+# Uso: docker compose -f docker/batcueva-osint.yml up -d
+# ============================================================
+name: batcueva-osint
+
+networks:
+  osint-net:
+    driver: bridge
+
+volumes:
+  spiderfoot-data:
+  ivre-data:
+  ivre-db:
+
+services:
+
+  # ---- SpiderFoot: OSINT por persona/dominio/IP/email ----
+  spiderfoot:
+    image: spiderfoot/spiderfoot:latest
+    container_name: spiderfoot
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    volumes:
+      - spiderfoot-data:/home/spiderfoot/.spiderfoot
+    networks:
+      - osint-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ---- IVRE: Recon de red e inteligencia de infraestructura ----
+  ivre-web:
+    image: ivre/ivre:latest
+    container_name: ivre-web
+    restart: unless-stopped
+    ports:
+      - "5002:80"
+    environment:
+      - IVRE_CONF=/etc/ivre.conf
+    volumes:
+      - ivre-data:/var/lib/ivre
+    depends_on:
+      - ivre-db
+    networks:
+      - osint-net
+
+  ivre-db:
+    image: mongo:6
+    container_name: ivre-db
+    restart: unless-stopped
+    volumes:
+      - ivre-db:/data/db
+    networks:
+      - osint-net
+
+  # ---- TheHive: Gestión de casos e incidentes ----
+  thehive:
+    image: strangebee/thehive:latest
+    container_name: thehive
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    environment:
+      - JVM_OPTS=-Xms512m -Xmx1g
+    networks:
+      - osint-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/api/status"]
+      interval: 60s
+      timeout: 20s
+      retries: 5
+      start_period: 60s
