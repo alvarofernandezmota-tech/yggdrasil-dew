@@ -1,78 +1,127 @@
-# 🌲 yggdrasil-dew
+---
+tags: [inbox, reglas, workflow, obsidian]
+fecha-creacion: 2026-06-24
+actualizado: 2026-06-24
+estado: permanente
+---
 
-> Second brain personal de Álvaro Fernández Mota.
-> Última actualización: **17 junio 2026**
+# 📥 Inbox — Zona de aterrizaje temporal
+
+> **El inbox NO es un archivo. Es una puerta de entrada.**
+> Todo lo que entra aquí tiene 24h para encontrar su carpeta definitiva.
 
 ---
 
-## ¿Qué es esto?
+## ⚠️ Reglas de uso — NO negociables
 
-Este repo es el cerebro. La fuente de verdad única de todo el ecosistema técnico y personal.
-Si no está aquí, no existe.
-
-```
-yggdrasil-dew
-├── AGENT.md        ← leer primero si eres una IA
-├── CONTEXT.md      ← estado HOY (actualizar cada sesión)
-├── ECOSISTEMA.md   ← mapa completo del ecosistema
-├── diarios/        ← un archivo por día — única fuente del diario
-├── proyectos/      ← fichas de proyectos activos
-├── setup/          ← toda la configuración técnica
-├── formacion/      ← aprendizaje estructurado
-├── agentes/        ← fichas y prompts de cada IA
-└── yo/             ← perfil, CV, objetivos
-```
-
----
-
-## Proyectos activos
-
-| Proyecto | Repo | Estado |
-|---|---|---|
-| **thdora** (bot TOKI) | [thdora](https://github.com/alvarofernandezmota-tech/thdora) | v0.17.0 pendiente merge |
-| **ai-toolkit** | [ai-toolkit](https://github.com/alvarofernandezmota-tech/ai-toolkit) | Activo |
-| **Servidor Madre** | — | Docker ✅ · UFW pendiente |
-| **Redmi A5** | [proyectos/redmi-a5.md](proyectos/redmi-a5.md) | ROM descargando |
-| **HP rescate** | [proyectos/hp-rescate.md](proyectos/hp-rescate.md) | Verificar cables |
-
----
-
-## IAs del ecosistema
-
-| IA | Rol |
+| Regla | Límite |
 |---|---|
-| **Perplexity** (Claude Sonnet 4.6) | Principal · repos · código · MCP GitHub |
-| **Grok** | Investigación · datos frescos · truth-seeking |
-| **Gemini** | Código largo · contexto 1M tokens |
-| **OpenCode** | Agente código en terminal |
-
-> Ver fichas completas → [agentes/](agentes/)
-
----
-
-## Cómo arrancar una sesión nueva
-
-### Con Perplexity
-```
-Lee AGENT.md y CONTEXT.md de yggdrasil-dew y dame el estado actual.
-```
-
-### Auditoría rápida (desde varopc)
-```bash
-bash setup/scripts/audit-repo.sh
-```
-
-### Sync manual
-```bash
-bash setup/scripts/daily-sync.sh
-```
+| Máximo de archivos simultáneos | **10** |
+| Vida máxima de un archivo | **24 horas** |
+| Archivos permanentes permitidos | **3** (README, MASTER-PENDIENTES, PLANTILLA-DIARIO) |
+| Scripts en inbox | **❌ Nunca** → van a `codigo/scripts/` |
+| Documentación definitiva en inbox | **❌ Nunca** → va a `docs/` |
+| Sesiones completas en inbox | **❌ Nunca** → van a `diarios/` |
 
 ---
 
-## Regla de oro
+## ✅ Qué SÍ puede estar en inbox
 
-> *Si no está en el repo, no existe.*
+- Una idea que acaba de llegar y no sabes aún dónde va
+- Un enlace o referencia rápida para procesar hoy
+- Un borrador en construcción activa (máx 24h)
+- Un archivo de arranque de sesión (se migra al diario al cerrar)
+
+## ❌ Qué NUNCA debe estar en inbox
+
+- Scripts o código → `codigo/scripts/`
+- Debates multi-IA resueltos → `docs/ias/debates/`
+- Documentación de setup → `docs/setup/servidor/`
+- Investigación de modelos/herramientas → `investigacion/`
+- Fichas de proyectos → `proyectos/`
+- Resúmenes de sesión → `diarios/YYYY-MM-DD.md`
+- ADRs (decisiones de arquitectura) → `docs/arquitectura/`
+- Prompts definitivos → `docs/ias/prompts/`
 
 ---
 
-_Mantenido por Álvaro + Perplexity (MCP GitHub) · Arch Linux · Obsidian_
+## 🔁 Flujo correcto
+
+```
+Llega información / idea / código
+          ↓
+   ¿Sabes dónde va?
+   /            \
+  SÍ            NO
+   ↓              ↓
+Va directo     Inbox (máx 24h)
+a su carpeta        ↓
+               Al cerrar sesión:
+               → migra a su carpeta
+               → o consolida en diarios/
+```
+
+---
+
+## 📁 Destinos definitivos
+
+```
+yggdrasil-dew/
+│
+├── inbox/                    ← AQUÍ, temporal, máx 10 archivos
+│
+├── diarios/                  ← Un archivo por día con TODO lo de ese día
+│   └── YYYY-MM-DD.md
+│
+├── docs/                     ← Documentación permanente
+│   ├── arquitectura/         ← ADRs, decisiones de diseño
+│   ├── ias/
+│   │   ├── ollama/           ← Guías, modelfiles, benchmarks
+│   │   ├── debates/          ← Debates multi-IA resueltos
+│   │   └── prompts/          ← Prompts definitivos y plantillas
+│   └── setup/
+│       ├── servidor/         ← Docker, stacks, compose files
+│       ├── seguridad/        ← SSH, sysctl, hardening
+│       └── arch/             ← Arch Linux, Hyprland, dotfiles
+│
+├── codigo/                   ← Código ejecutable
+│   ├── scripts/              ← bash, python, utils
+│   ├── docker/               ← compose files, Dockerfiles
+│   └── agentes/              ← Modelfiles, prompts ejecutables
+│
+├── investigacion/            ← Research en proceso
+│   ├── modelos/              ← Comparativas, benchmarks de LLMs
+│   ├── herramientas/         ← Evaluación de tools nuevas
+│   └── osint/                ← Técnicas, herramientas OSINT
+│
+└── proyectos/                ← Proyectos activos
+    ├── thdora/
+    ├── local-brain/
+    ├── chatbot-control/
+    └── batcueva/
+```
+
+---
+
+## 📋 Archivos permanentes del inbox
+
+| Archivo | Propósito |
+|---|---|
+| `README.md` | Este archivo — reglas del inbox |
+| `MASTER-PENDIENTES.md` | Único tracker de tareas activas |
+| `PLANTILLA-DIARIO.md` | Template para arrancar sesiones |
+
+---
+
+## 🚨 Señal de alarma
+
+Si el inbox supera **10 archivos** → parar todo y vaciar antes de continuar.
+Si un archivo lleva **más de 24h** → migrarlo o borrarlo, sin excepciones.
+
+> **Historia:** En jun 2026 el inbox llegó a 93 archivos en 3 días.
+> Ese caos costó horas de auditoría. Esta regla existe por eso.
+
+---
+
+*Actualizado: 2026-06-24 por Perplexity vía MCP*
+*Ver también: [[MASTER-PENDIENTES]] · [[diarios/2026-06-24]]*
