@@ -39,7 +39,6 @@ log ""
 log "--- FASE 2: Batcueva (monitoring + OSINT) ---"
 pull portainer/portainer-ce:latest
 pull louislam/uptime-kuma:latest
-pull smicallef/spiderfoot:latest
 pull linuxserver/heimdall:latest
 
 # -------------------------------------------------------------------
