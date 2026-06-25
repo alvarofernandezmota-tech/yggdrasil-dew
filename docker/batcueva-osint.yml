@@ -2,7 +2,7 @@
 # BATCUEVA OSINT STACK
 # SpiderFoot + IVRE + TheHive (desactivado por RAM)
 # Uso: docker compose -f docker/batcueva-osint.yml up -d
-# Para solo SpiderFoot: docker compose -f docker/batcueva-osint.yml up -d spiderfoot
+# Solo SpiderFoot: docker compose -f docker/batcueva-osint.yml up -d spiderfoot
 # ============================================================
 name: batcueva-osint
 
@@ -17,10 +17,10 @@ volumes:
 
 services:
 
-  # ---- SpiderFoot: OSINT por persona/dominio/IP/email ----
+  # ---- SpiderFoot — imagen correcta: smicallef/spiderfoot ----
   # Web UI: http://100.91.112.32:5001
   spiderfoot:
-    image: spiderfoot/spiderfoot:latest
+    image: smicallef/spiderfoot:latest
     container_name: spiderfoot
     restart: unless-stopped
     ports:
@@ -35,8 +35,7 @@ services:
       timeout: 10s
       retries: 3
 
-  # ---- IVRE: Recon de red e inteligencia de infraestructura ----
-  # Imagen corregida: ivre/base (imagen oficial correcta en Docker Hub)
+  # ---- IVRE — imagen correcta: ivre/base ----
   # Web UI: http://100.91.112.32:5002
   ivre-web:
     image: ivre/base:latest
@@ -44,8 +43,6 @@ services:
     restart: unless-stopped
     ports:
       - "5002:80"
-    environment:
-      - IVRE_CONF=/etc/ivre.conf
     volumes:
       - ivre-data:/var/lib/ivre
     depends_on:
@@ -69,17 +66,11 @@ services:
       retries: 5
       start_period: 20s
 
-  # ---- TheHive: Gestión de casos ----
-  # DESACTIVADO: consume 1-2GB RAM (JVM). Activar cuando Acer esté en el stack.
-  # Para activar: descomentar y ejecutar con perfil --profile thehive
+  # TheHive: DESACTIVADO (1-2GB RAM). Activar con Acer en el stack.
   # thehive:
   #   image: strangebee/thehive:latest
-  #   container_name: thehive
-  #   restart: unless-stopped
+  #   profiles: ["thehive"]
   #   ports:
   #     - "9000:9000"
-  #   environment:
-  #     - JVM_OPTS=-Xms512m -Xmx1g
   #   networks:
   #     - osint-net
-  #   profiles: ["thehive"]
