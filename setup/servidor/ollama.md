@@ -1,117 +1,112 @@
-# Ollama + Open WebUI — LLM Local
+---
+tags: [ollama, llm, docker, cpu, modelos]
+fecha-actualizacion: 2026-06-25
+relacionado: [[setup/servidor/docker-compose.yml]] [[ollama/modelos]]
+---
 
-> Stack completo para correr LLMs locales en el Ordenador Madre.
-> Diseñado por Gemini · Integrado por Perplexity · 12 junio 2026
-> Hardware: i5-8400 · 16GB RAM · GTX 1060 6GB
+# Ollama — LLM Local en Madre (CPU-only)
+
+> Stack validado para i5-8400 · 16GB RAM · **SIN GPU** (GTX 1060 no usada)  
+> Config activa en: `setup/servidor/docker-compose.yml`  
+> Documentado por Perplexity · 25 junio 2026
 
 ---
 
-## Requisito previo — NVIDIA Container Toolkit
+## ⚠️ Restricciones de hardware
 
-```bash
-# En Arch Linux (AUR)
-yay -S nvidia-container-toolkit
+| Límite | Valor | Motivo |
+|---|---|---|
+| RAM disponible con stack activo | ~4.5GB libres | Stack completo usa ~11.5GB |
+| Modelo máximo con stack activo | qwen2.5:7b | 4.7GB caben en lo disponible |
+| Modelo máximo sin stack | qwen2.5:14b | Necesita ~9GB libres |
+| `OLLAMA_MAX_LOADED_MODELS` | 1 | Nunca dos 7B+ simultáneos → OOM |
+| `OLLAMA_NUM_THREADS` | 3 | Máx seguros en i5-8400 |
 
-# Reiniciar Docker para que detecte la GPU
-sudo systemctl restart docker
-
-# Verificar que Docker ve la GPU
-docker run --rm --gpus all nvidia/cuda:12.0-base nvidia-smi
-```
-
----
-
-## Docker Compose
-
-Crea `~/servidor/ollama/docker-compose.yml`:
-
-```yaml
-services:
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ./ollama:/root/.ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-
-  open-webui:
-    image: ghcr.io/open-webui/open-webui:main
-    container_name: open-webui
-    ports:
-      - "3000:8080"
-    environment:
-      - OLLAMA_BASE_URL=http://ollama:11434
-    volumes:
-      - ./webui:/app/backend/data
-    depends_on:
-      - ollama
-```
+> **NUNCA** cargar qwen2.5:14b con el stack completo activo → OOM Killer
 
 ---
 
-## Arrancar el stack
+## Modelos descargados — estado actual
 
-```bash
-# Levantar en background
-docker compose up -d
-
-# Verificar que corren
-docker compose ps
-
-# Ver logs
-docker compose logs -f
-```
-
-**Open WebUI disponible en:** http://localhost:3000 (o desde otra máquina: http://IP_MADRE:3000)
-
----
-
-## Modelos recomendados para GTX 1060 6GB
-
-| Modelo | VRAM | Velocidad | Uso recomendado |
+| Modelo | Tamaño | Estado | Uso |
 |---|---|---|---|
-| `llama3.2:3b` | ~2GB | Rápido | Chat diario, respuestas rápidas |
-| `codellama:7b-q4` | ~4GB | Medio | Código, programación |
-| `mistral:7b-q4` | ~4GB | Medio | Razonamiento general |
-| `phi3:mini` | ~2GB | Muy rápido | Tareas ligeras |
+| `qwen2.5:3b` | 1.9GB | ✅ listo | Chat rápido · thdora-bot |
+| `qwen2.5:7b` | 4.7GB | ✅ listo | Chat equilibrado · uso diario |
+| `qwen2.5:14b` | 9.0GB | ✅ listo | Investigación profunda (solo offline) |
+| `llama3.1:8b` | 4.7GB | ❌ pendiente | Alternativa general |
+| `mistral:7b` | 4.1GB | ❌ pendiente | Análisis técnico |
+| `qwen2.5-coder:7b` | 4.7GB | ❌ pendiente | Pentest · scripts · CVEs |
+| `bge-m3` | 1.2GB | ❌ pendiente | Embeddings RAG (ollama-embeddings) |
+| `nomic-embed-text` | 0.3GB | ❌ pendiente | Embeddings rápidos |
+
+---
+
+## Comandos esenciales
 
 ```bash
-# Descargar modelo (ejecutar dentro del contenedor)
-docker exec -it ollama ollama pull llama3.2:3b
-docker exec -it ollama ollama pull codellama:7b-q4
+# Ver modelos en disco
+docker exec ollama ollama list
+
+# Ver modelo cargado en RAM ahora mismo
+docker exec ollama ollama ps
+
+# Descargar modelo
+docker exec ollama ollama pull qwen2.5-coder:7b
+
+# Forzar descarga de RAM (solo si está activo)
+docker exec ollama ollama stop qwen2.5:7b
+
+# Warm-up: cargar modelo en RAM inmediatamente
+docker exec ollama ollama run qwen2.5:7b ""
 ```
 
 ---
 
-## Integración con THDORA (futuro)
+## Flujo para usar qwen2.5:14b (investigación profunda)
+
+```bash
+# 1. Liberar RAM parando servicios no críticos
+docker stop open-webui ollama-embeddings
+
+# 2. Verificar RAM libre (debe ser > 9GB)
+free -h
+
+# 3. Correr el 14B
+docker exec ollama ollama run qwen2.5:14b
+
+# 4. Al terminar, restaurar stack
+docker compose up -d
+```
+
+---
+
+## Comportamiento de memoria (KEEP_ALIVE)
+
+- `OLLAMA_KEEP_ALIVE=5m` (valor actual en compose) → el modelo se descarga de RAM automáticamente tras 5 min de inactividad
+- `ollama ps` vacío = normal, modelo está en disco pero no en RAM
+- `ollama stop` da error si el modelo ya fue descargado automáticamente → es esperado, no es un bug
+- Para investigaciones largas sin interrupciones, hacer warm-up antes de empezar
+
+---
+
+## Integración con thdora-bot
 
 ```python
-# THDORA llamando al LLM local
+# thdora llamando a ollama local
 import httpx
 
 response = httpx.post(
-    "http://IP_MADRE:11434/api/generate",
-    json={"model": "llama3.2:3b", "prompt": "...", "stream": False}
+    "http://ollama:11434/api/generate",
+    json={"model": "qwen2.5:3b", "prompt": "...", "stream": False}
 )
 ```
 
+> Usar `qwen2.5:3b` para thdora (respuesta rápida) · `qwen2.5:7b` para análisis
+
 ---
 
-## Estado
+## Ver también
 
-| Tarea | Estado |
-|---|---|
-| NVIDIA Container Toolkit instalado | ⏳ Pendiente |
-| docker-compose.yml creado | ✅ Documentado aquí |
-| Primer `docker compose up` | ⏳ Pendiente |
-| Modelo descargado | ⏳ Pendiente |
-| Open WebUI accesible desde LAN | ⏳ Pendiente |
-| THDORA integrado con Ollama | ⏳ Futuro |
+- [[ollama/modelos]] — Modelfiles y perfiles personalizados
+- [[setup/servidor/docker-compose.yml]] — Config completa del stack
+- [[setup/servidor/ollama-cpu-setup]] — Notas de optimización CPU
