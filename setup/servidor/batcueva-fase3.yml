@@ -2,7 +2,7 @@
 # batcueva-fase3.yml — Automatización + Dev remoto + Self-hosted infra
 # Ejecutar: docker compose -f batcueva-fase3.yml up -d
 # Requiere: Fase 1+2 activas (red batcueva creada)
-# Actualizado: 2026-06-25 — fix code-server path absoluto
+# Actualizado: 2026-06-25 — fix headscale puerto 9090→9091 (conflicto Prometheus)
 # =============================================================================
 
 services:
@@ -72,7 +72,7 @@ services:
     restart: always
     ports:
       - "8085:8080"
-      - "9090:9090"
+      - "9091:9090"
     volumes:
       - headscale_config:/etc/headscale
       - headscale_data:/var/lib/headscale
@@ -95,7 +95,7 @@ networks:
 
 # =============================================================================
 # NOTAS:
-# - headscale usa volúmenes Docker nombrados (NO necesita /opt/batcueva)
+# - headscale: puerto metrics 9091 (9090 ocupado por Prometheus)
 # - code-server monta /home/varopc/yggdrasil-dew (ruta absoluta, fix ~ en Docker)
 # - N8N_ENCRYPTION_KEY: definir en ~/.env ANTES del primer up
 # - Red batcueva: crear antes con `docker network create batcueva`
