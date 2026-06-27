@@ -9,14 +9,14 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 # 📋 MASTER PENDIENTES — Ecosistema completo
 
 > Fuente única de verdad de TODO lo pendiente.
-> Última auditoría: 27 jun 2026 04:02 CEST — Perplexity vía MCP
+> Última auditoría: 27 jun 2026 04:18 CEST — Perplexity vía MCP
 > Se revisa cada domingo. Se ejecuta cada día desde aquí.
 
 ---
 
 ## 🟢 HOY — 27 jun 2026 (sábado)
 
-### ✅ Completado esta sesión (madrugada)
+### ✅ Completado esta sesión (madrugada 03:00–04:18)
 - [x] **MadreAP WiFi resuelto** — hostapd + systemd-networkd + UFW ✅ persistente tras reboot
 - [x] **`iwd` desactivado** — conflicto con hostapd resuelto
 - [x] **Acer (theodora) conectado** — `192.168.72.26` · ping OK · internet OK
@@ -25,18 +25,23 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 - [x] **ESTADO-SISTEMA.md** actualizado 03:56
 - [x] **`docs/infra/red-madre-ap.md`** — referencia permanente red creada
 - [x] **ADR-004** — seguridad privilege explosion documentado
+- [x] **`inbox/2026-06-27-monitoring-pentest-research.md`** — investigación SOC homelab stack completo (7 capas, script levantamiento, dashboards Grafana, THDORA webhook, cheatsheet)
+- [x] **Prompt Gemini generado** — contexto completo para continuar con scripts de Fase 1–4 en Madre
+- [x] **Plan de acción ordenado** documentado — Fase 0→9 alineado con PLAN-SEGURIDAD-Y-DESPLIEGUE.md
 
-### 🔴 Pendiente crítico — próxima sesión
+### 🔴 Pendiente crítico — próxima sesión (en casa)
 - [ ] `git pull --rebase` en Madre — sincronizar repo
-- [ ] **Seguridad red ANTES de levantar dockers:**
+- [ ] **FASE 1 — Seguridad red ANTES de levantar dockers:**
   - [ ] UFW activar completo — `setup/servidor/ufw-reglas-completas.sh`
   - [ ] SSH hardening — `setup/servidor/fase1b-seguridad.md`
   - [ ] Tailscale autoarranque — `sudo systemctl enable tailscaled`
   - [ ] Deshabilitar suspensión — `sudo systemctl mask sleep.target suspend.target`
-- [ ] **Script seguro levantar dockers** — verificar UFW + Tailscale antes de `docker compose up`
+  - [ ] Reboot verificación final
+- [ ] **FASE 2 — Script seguro levantar dockers** — `scripts/start-batcueva.sh`
+- [ ] **Gemini → scripts generados** — instalar en Madre (instalar-dependencias.sh, ufw-completo.sh, ssh-hardening.sh)
 - [ ] **Script Restic backup** — ver `docs/infra/backup-restic.md`
 - [ ] **Uptime Kuma → THDORA** — alertas Telegram cuando caiga servicio
-- [ ] **Grafana dashboard** — CPU + RAM + latencia Ollama
+- [ ] **Grafana dashboard** — CPU + RAM + temperatura + latencia Ollama + Docker
 
 ---
 
@@ -50,15 +55,16 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 ### Red avanzada
 - [ ] HT40 en hostapd — mayor velocidad MadreAP
 - [ ] Mitmproxy / tcpdump en `wlan0` — interceptar tráfico clientes
-- [ ] VLANs — separar red pentest de red doméstica (ver ADR-004)
+- [ ] VLANs — separar red pentest de red doméstica (ver ADR-004 + investigación 27-jun)
 - [ ] Wazuh prereq: `sudo sysctl -w vm.max_map_count=262144`
+- [ ] Suricata IDS pasivo en Madre (ver inbox/2026-06-27-monitoring-pentest-research.md)
 
 ### THDORA — handlers pendientes
 - [ ] Implementar `/estado`
 - [ ] Implementar `/inbox`
 - [ ] Implementar `/diario`
 - [ ] Implementar `/pull <modelo>`
-- [ ] Integrar Uptime Kuma webhooks → THDORA
+- [ ] Integrar Uptime Kuma webhooks → THDORA (endpoint `/webhook/uptime`)
 
 ### Modelos Ollama pendientes
 - [ ] `llama3.1:8b`
@@ -78,9 +84,6 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 - [ ] Instalar Tailscale en Redmi A5 (Play Store)
 
 ### Repositorios GitHub a crear
-- [ ] alvarofernandezmota-tech/ollama-stack
-- [ ] alvarofernandezmota-tech/osint-stack
-- [ ] alvarofernandezmota-tech/local-brain
 - [ ] alvarofernandezmota-tech/chatbot-control
 - [ ] alvarofernandezmota-tech/terminal-ia
 
@@ -112,7 +115,7 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 - [ ] **Restic backup offsite** → Cloudflare R2 o Backblaze B2
 - [ ] **Rootless Docker** — seguridad contenedores
 - [ ] **Mozilla SOPS** — secrets cifrados en repo
-- [ ] **Ansible Playbooks** — IaC completo
+- [ ] **Ansible Playbooks** — IaC completo (0% config manual)
 - [ ] Dockge (UI docker-compose visual) — puerto 5010
 - [ ] Migrar Ollama → llama.cpp puro
 
@@ -126,6 +129,8 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 
 | Fecha | Tarea |
 |---|---|
+| 2026-06-27 | Investigación SOC homelab stack — inbox/2026-06-27-monitoring-pentest-research.md |
+| 2026-06-27 | Prompt Gemini completo con contexto técnico total del ecosistema |
 | 2026-06-27 | MadreAP WiFi resuelto — hostapd + networkd + UFW persistente |
 | 2026-06-27 | Acer (theodora) conectado a MadreAP 192.168.72.26 |
 | 2026-06-27 | Inbox vaciada — 3 ficheros migrados a docs/ |
@@ -162,5 +167,5 @@ Domingo   → revisión semanal + auditoría inbox
 ```
 
 ---
-_Actualizado: 27 jun 2026 04:02 CEST — Perplexity vía MCP_
+_Actualizado: 27 jun 2026 04:18 CEST — Perplexity vía MCP_
 _Ver: [[HOME]] · [[ECOSISTEMA]] · [[ESTADO-SISTEMA]] · [[inbox/README]]_
