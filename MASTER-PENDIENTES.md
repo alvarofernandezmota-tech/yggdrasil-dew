@@ -1,6 +1,6 @@
 ---
 tags: [pendiente, master, planificacion, urgente, python, pentest, llm, ia-local]
-fecha: 2026-06-25
+fecha: 2026-06-27
 revision: cada-domingo
 owner: alvarofernandezmota-tech
 perfil: dev-python · pentest-linux · ia-local · llm · ml
@@ -9,50 +9,49 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 # 📋 MASTER PENDIENTES — Ecosistema completo
 
 > Fuente única de verdad de TODO lo pendiente.
-> Última auditoría: 25 jun 2026 18:30 CEST — Perplexity vía MCP
+> Última auditoría: 27 jun 2026 04:02 CEST — Perplexity vía MCP
 > Se revisa cada domingo. Se ejecuta cada día desde aquí.
 
 ---
 
-## 🟢 HOY — 25 jun 2026 (jueves)
+## 🟢 HOY — 27 jun 2026 (sábado)
 
-### ✅ Completado hoy
-- [x] Stack Fase 1+2 HEALTHY — ollama + open-webui + qdrant
-- [x] SSH sin contraseña varopc→Madre
-- [x] SSH GitHub sin passphrase
-- [x] git pull/push funcionando desde Madre
-- [x] Alias `bc` instalado en .zshrc
-- [x] Stack OSINT/Pentest/SIEM/Vuln YMLs creados
-- [x] Orquestador maestro batcueva-master.yml
-- [x] GitHub Actions CI — yamllint en cada push
-- [x] Ansible bootstrap — infra/ansible/bootstrap-nodo.yml
-- [x] Imágenes Docker corregidas
-- [x] **Fix healthcheck qdrant** — TCP bash check
-- [x] **Fix healthcheck open-webui** — TCP bash check
-- [x] **Stack 13 contenedores 100% operativo**
-- [x] **Ficheros infra subidos** — docker-compose, headscale, thdora-handlers, ufw
-- [x] **Auditoría Engineering Excellence** — documentada
-- [x] **Diario sesión tarde** — diarios/2026-06-25-tarde.md
-- [x] **ESTADO-SISTEMA.md** — actualizado 18:30
+### ✅ Completado esta sesión (madrugada)
+- [x] **MadreAP WiFi resuelto** — hostapd + systemd-networkd + UFW ✅ persistente tras reboot
+- [x] **`iwd` desactivado** — conflicto con hostapd resuelto
+- [x] **Acer (theodora) conectado** — `192.168.72.26` · ping OK · internet OK
+- [x] **UFW reglas wlan0** — DHCP + routing permanentes
+- [x] **Inbox vaciada** — 3 ficheros migrados a `docs/` y `diarios/`
+- [x] **ESTADO-SISTEMA.md** actualizado 03:56
+- [x] **`docs/infra/red-madre-ap.md`** — referencia permanente red creada
+- [x] **ADR-004** — seguridad privilege explosion documentado
 
 ### 🔴 Pendiente crítico — próxima sesión
-- [ ] `git pull --rebase` en Madre — sincronizar fixes del repo
-- [ ] **Script Restic backup** — copias cifradas automáticas (regla 3-2-1)
+- [ ] `git pull --rebase` en Madre — sincronizar repo
+- [ ] **Seguridad red ANTES de levantar dockers:**
+  - [ ] UFW activar completo — `setup/servidor/ufw-reglas-completas.sh`
+  - [ ] SSH hardening — `setup/servidor/fase1b-seguridad.md`
+  - [ ] Tailscale autoarranque — `sudo systemctl enable tailscaled`
+  - [ ] Deshabilitar suspensión — `sudo systemctl mask sleep.target suspend.target`
+- [ ] **Script seguro levantar dockers** — verificar UFW + Tailscale antes de `docker compose up`
+- [ ] **Script Restic backup** — ver `docs/infra/backup-restic.md`
 - [ ] **Uptime Kuma → THDORA** — alertas Telegram cuando caiga servicio
 - [ ] **Grafana dashboard** — CPU + RAM + latencia Ollama
-- [ ] Levantar SpiderFoot — `docker compose -f docker/batcueva-osint.yml up -d spiderfoot`
-- [ ] Levantar Kali Desktop — `bc up pentest`
 
 ---
 
 ## 🟡 ESTA SEMANA
 
-### Red y seguridad Madre
-- [ ] UFW activar — ver `setup/servidor/ufw-reglas-completas.sh`
-- [ ] SSH hardening — ver `setup/servidor/fase1b-seguridad.md`
-- [ ] Tailscale autoarranque
+### Seguridad Acer (theodora)
+- [ ] Instalar Prey (rastreo antirrobo): `sudo apt install prey`
+- [ ] Verificar Computrace en BIOS: `sudo dmidecode -t bios | grep -i computrace`
+- [ ] Extraer y documentar número de serie: `sudo dmidecode -t system | grep Serial`
+
+### Red avanzada
+- [ ] HT40 en hostapd — mayor velocidad MadreAP
+- [ ] Mitmproxy / tcpdump en `wlan0` — interceptar tráfico clientes
+- [ ] VLANs — separar red pentest de red doméstica (ver ADR-004)
 - [ ] Wazuh prereq: `sudo sysctl -w vm.max_map_count=262144`
-- [ ] Deshabilitar suspensión en Madre
 
 ### THDORA — handlers pendientes
 - [ ] Implementar `/estado`
@@ -113,7 +112,6 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 - [ ] **Restic backup offsite** → Cloudflare R2 o Backblaze B2
 - [ ] **Rootless Docker** — seguridad contenedores
 - [ ] **Mozilla SOPS** — secrets cifrados en repo
-- [ ] **VLANs** — segmentar red pentest de red doméstica
 - [ ] **Ansible Playbooks** — IaC completo
 - [ ] Dockge (UI docker-compose visual) — puerto 5010
 - [ ] Migrar Ollama → llama.cpp puro
@@ -128,8 +126,13 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 
 | Fecha | Tarea |
 |---|---|
+| 2026-06-27 | MadreAP WiFi resuelto — hostapd + networkd + UFW persistente |
+| 2026-06-27 | Acer (theodora) conectado a MadreAP 192.168.72.26 |
+| 2026-06-27 | Inbox vaciada — 3 ficheros migrados a docs/ |
+| 2026-06-27 | docs/infra/red-madre-ap.md creado |
+| 2026-06-27 | ADR-004 seguridad privilege explosion documentado |
 | 2026-06-25 | Fix healthcheck qdrant + open-webui — TCP bash check |
-| 2026-06-25 | Stack 13 contenedores 100% healthy — sesión tarde |
+| 2026-06-25 | Stack 13 contenedores 100% healthy |
 | 2026-06-25 | Ficheros infra subidos al repo |
 | 2026-06-25 | Auditoría Engineering Excellence documentada |
 | 2026-06-25 | GitHub Actions CI activo — yamllint |
@@ -137,14 +140,10 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 | 2026-06-25 | Ansible bootstrap |
 | 2026-06-25 | Stack ciberseguridad completo — OSINT + Pentest + SIEM + Vuln |
 | 2026-06-25 | Comando `bc` instalado |
-| 2026-06-25 | Stack Fase 1+2 HEALTHY |
 | 2026-06-25 | SSH sin contraseña varopc→Madre |
 | 2026-06-25 | SSH GitHub sin passphrase |
 | 2026-06-24 | docker-compose.yml optimizado |
-| 2026-06-24 | Fases 1-4 documentadas |
 | 2026-06-23 | filosofia.md v3.0 |
-| 2026-06-23 | ADR homelab + docs-as-code |
-| 2026-06-23 | Auditorías completas todas las carpetas |
 | 2026-06-22 | Netdata multi-nodo Madre + Acer |
 | 2026-06-22 | 15 fichas LLM en agentes/ |
 
@@ -156,12 +155,12 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 Lunes     → thdora + Madre (día técnico)
 Martes    → formación Python
 Miércoles → thdora handlers + Python bots
-Jueves    → OSINT + pentest + seguridad     ← HOY
+Jueves    → OSINT + pentest + seguridad
 Viernes   → LLM + IA local + Ollama
-Sábado    → libre / exploración
+Sábado    → libre / exploración     ← HOY
 Domingo   → revisión semanal + auditoría inbox
 ```
 
 ---
-_Actualizado: 25 jun 2026 18:30 CEST — Perplexity vía MCP_
-_Ver: [[HOME]] · [[CONTEXT]] · [[ECOSISTEMA]] · [[ESTADO-SISTEMA]] · [[inbox/README]]_
+_Actualizado: 27 jun 2026 04:02 CEST — Perplexity vía MCP_
+_Ver: [[HOME]] · [[ECOSISTEMA]] · [[ESTADO-SISTEMA]] · [[inbox/README]]_
