@@ -1,0 +1,29 @@
+# yggdrasil-dew/osint-stack/docker-compose.kali.yml
+# Entorno ofensivo Kali con red macvlan VLAN 66
+
+networks:
+  pentest_vlan:
+    driver: macvlan
+    driver_opts:
+      parent: eno1.66
+    ipam:
+      config:
+        - subnet: 192.168.66.0/24
+          gateway: 192.168.66.1
+          ip_range: 192.168.66.128/25
+
+services:
+  kali-pentest:
+    image: kasmweb/kali-rolling-desktop:latest
+    container_name: kali-pentest
+    hostname: kali-batcueva
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    networks:
+      pentest_vlan:
+        ipv4_address: 192.168.66.100
+    environment:
+      - VNC_PW=${KALI_VNC_PASSWORD:-batcueva2026}
+    restart: unless-stopped
