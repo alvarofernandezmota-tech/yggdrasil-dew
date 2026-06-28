@@ -1,6 +1,6 @@
 ---
 tags: [pendiente, master, planificacion, urgente, python, pentest, llm, ia-local]
-fecha: 2026-06-27
+fecha: 2026-06-28
 revision: cada-domingo
 owner: alvarofernandezmota-tech
 perfil: dev-python · pentest-linux · ia-local · llm · ml
@@ -9,27 +9,29 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 # 📋 MASTER PENDIENTES — Ecosistema completo
 
 > Fuente única de verdad de TODO lo pendiente.
-> Última auditoría: 27 jun 2026 04:18 CEST — Perplexity vía MCP
+> Última auditoría: 28 jun 2026 22:35 CEST — Perplexity vía MCP
 > Se revisa cada domingo. Se ejecuta cada día desde aquí.
 
 ---
 
-## 🟢 HOY — 27 jun 2026 (sábado)
+## 🟢 HOY — 28 jun 2026 (domingo)
 
-### ✅ Completado esta sesión (madrugada 03:00–04:18)
-- [x] **MadreAP WiFi resuelto** — hostapd + systemd-networkd + UFW ✅ persistente tras reboot
-- [x] **`iwd` desactivado** — conflicto con hostapd resuelto
-- [x] **Acer (theodora) conectado** — `192.168.72.26` · ping OK · internet OK
-- [x] **UFW reglas wlan0** — DHCP + routing permanentes
-- [x] **Inbox vaciada** — 3 ficheros migrados a `docs/` y `diarios/`
-- [x] **ESTADO-SISTEMA.md** actualizado 03:56
-- [x] **`docs/infra/red-madre-ap.md`** — referencia permanente red creada
-- [x] **ADR-004** — seguridad privilege explosion documentado
-- [x] **`inbox/2026-06-27-monitoring-pentest-research.md`** — investigación SOC homelab stack completo (7 capas, script levantamiento, dashboards Grafana, THDORA webhook, cheatsheet)
-- [x] **Prompt Gemini generado** — contexto completo para continuar con scripts de Fase 1–4 en Madre
-- [x] **Plan de acción ordenado** documentado — Fase 0→9 alineado con PLAN-SEGURIDAD-Y-DESPLIEGUE.md
+### ✅ Completado esta sesión (madrugada 00:37–01:00 + noche 22:00)
+- [x] **fail2ban jail sshd** — Madre + Acer (`/etc/fail2ban/jail.local` · maxretry:5 · bantime:86400) ✅
+- [x] **Puerto 53317 cerrado** — UFW Madre + Acer (tcp+udp) ✅
+- [x] **Netdata Acer** — activo + puerto 19999 restringido a Madre ✅
+- [x] **dnsmasq instalado y activo** — DHCP `192.168.72.50-150` en wlan0 Madre ✅
+- [x] **UFW puerto 53 wlan0** — clientes AP pueden resolver DNS ✅
+- [x] **Auditoría repo completa** — estructura de carpetas, archivos root, issues auditados ✅
 
-### 🔴 Pendiente crítico — próxima sesión (en casa)
+### 🔴 Pendiente crítico — próxima sesión
+- [ ] **Fix driver RTL8188FTV** — AP se cae solo (INTERFACE-DISABLED en logs)
+  ```bash
+  echo "options 8188fu rtw_power_mgnt=0 rtw_enusbss=0" | sudo tee /etc/modprobe.d/8188fu.conf
+  sudo modprobe -r 8188fu 2>/dev/null; sudo modprobe 8188fu
+  sudo systemctl restart hostapd
+  ```
+- [ ] **Verificar AP estable** — conectar móvil a MadreAP y mantener sesión >10min
 - [ ] `git pull --rebase` en Madre — sincronizar repo
 - [ ] **FASE 1 — Seguridad red ANTES de levantar dockers:**
   - [ ] UFW activar completo — `setup/servidor/ufw-reglas-completas.sh`
@@ -38,7 +40,7 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
   - [ ] Deshabilitar suspensión — `sudo systemctl mask sleep.target suspend.target`
   - [ ] Reboot verificación final
 - [ ] **FASE 2 — Script seguro levantar dockers** — `scripts/start-batcueva.sh`
-- [ ] **Gemini → scripts generados** — instalar en Madre (instalar-dependencias.sh, ufw-completo.sh, ssh-hardening.sh)
+- [ ] **Gemini → scripts generados** — instalar en Madre
 - [ ] **Script Restic backup** — ver `docs/infra/backup-restic.md`
 - [ ] **Uptime Kuma → THDORA** — alertas Telegram cuando caiga servicio
 - [ ] **Grafana dashboard** — CPU + RAM + temperatura + latencia Ollama + Docker
@@ -47,17 +49,18 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 
 ## 🟡 ESTA SEMANA
 
+### AP MadreAP — estabilidad
+- [ ] Fix driver RTL8188FTV — `modprobe.d/8188fu.conf` (power_mgnt=0)
+- [ ] Script `ap-ctl [start|stop|status|clients]` — ver issue #5
+- [ ] HT40 en hostapd — mayor velocidad MadreAP
+- [ ] Mitmproxy / tcpdump en `wlan0` — interceptar tráfico clientes
+- [ ] VLANs — separar red pentest de red doméstica (ver ADR-004)
+
 ### Seguridad Acer (theodora)
 - [ ] Instalar Prey (rastreo antirrobo): `sudo apt install prey`
 - [ ] Verificar Computrace en BIOS: `sudo dmidecode -t bios | grep -i computrace`
 - [ ] Extraer y documentar número de serie: `sudo dmidecode -t system | grep Serial`
-
-### Red avanzada
-- [ ] HT40 en hostapd — mayor velocidad MadreAP
-- [ ] Mitmproxy / tcpdump en `wlan0` — interceptar tráfico clientes
-- [ ] VLANs — separar red pentest de red doméstica (ver ADR-004 + investigación 27-jun)
-- [ ] Wazuh prereq: `sudo sysctl -w vm.max_map_count=262144`
-- [ ] Suricata IDS pasivo en Madre (ver inbox/2026-06-27-monitoring-pentest-research.md)
+- [ ] SSH hardening → clave pública ambos nodos
 
 ### THDORA — handlers pendientes
 - [ ] Implementar `/estado`
@@ -76,6 +79,8 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 - [ ] Primer scan Nmap desde Kali
 - [ ] SpiderFoot: primer scan OSINT
 - [ ] Bettercap: `network_mode: host`
+- [ ] Wazuh prereq: `sudo sysctl -w vm.max_map_count=262144`
+- [ ] Suricata IDS pasivo en Madre
 
 ### varopc — escritorio
 - [ ] Audio sistema — mapear teclas volúmen Hyprland
@@ -86,6 +91,15 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 ### Repositorios GitHub a crear
 - [ ] alvarofernandezmota-tech/chatbot-control
 - [ ] alvarofernandezmota-tech/terminal-ia
+
+### Repo yggdrasil-dew — limpieza pendiente
+- [ ] `tailscale-full.apk` — archivo vacío (0 bytes) en root, borrar o subir APK real
+- [ ] `ly` — archivo vacío (0 bytes) en root, identificar y limpiar
+- [ ] `ESTADO-SISTEMA.md` — actualizar con estado real 28-06-2026
+- [ ] `CHANGELOG.md` — añadir entrada sesión 28-06-2026
+- [ ] `ROADMAP.md` — marcar Fase 3 como completada
+- [ ] `infra/` — documentar dnsmasq, fail2ban jails, UFW final actualizado
+- [ ] Carpetas a auditar internamente: `thdora/`, `scripts/`, `docker/`, `osint-stack/`, `formacion/`, `diarios/`
 
 ---
 
@@ -122,6 +136,7 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 ### Hardware
 - [ ] RAM 16GB DDR4 SO-DIMM varopc (~40-50€)
 - [ ] RTX 3060 12GB Madre (~200-250€ 2ª mano)
+- [ ] SSD para Madre — HDD WD 28.409h en riesgo
 
 ---
 
@@ -129,6 +144,11 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 
 | Fecha | Tarea |
 |---|---|
+| 2026-06-28 | fail2ban jail sshd activo — Madre + Acer |
+| 2026-06-28 | Puerto 53317 cerrado UFW — Madre + Acer |
+| 2026-06-28 | dnsmasq DHCP activo en wlan0 Madre (192.168.72.50-150) |
+| 2026-06-28 | Netdata Acer activo + puerto 19999 restringido |
+| 2026-06-28 | Auditoría completa repo yggdrasil-dew |
 | 2026-06-27 | Investigación SOC homelab stack — inbox/2026-06-27-monitoring-pentest-research.md |
 | 2026-06-27 | Prompt Gemini completo con contexto técnico total del ecosistema |
 | 2026-06-27 | MadreAP WiFi resuelto — hostapd + networkd + UFW persistente |
@@ -144,7 +164,6 @@ perfil: dev-python · pentest-linux · ia-local · llm · ml
 | 2026-06-25 | ADR-001/002/003 creados |
 | 2026-06-25 | Ansible bootstrap |
 | 2026-06-25 | Stack ciberseguridad completo — OSINT + Pentest + SIEM + Vuln |
-| 2026-06-25 | Comando `bc` instalado |
 | 2026-06-25 | SSH sin contraseña varopc→Madre |
 | 2026-06-25 | SSH GitHub sin passphrase |
 | 2026-06-24 | docker-compose.yml optimizado |
@@ -162,10 +181,10 @@ Martes    → formación Python
 Miércoles → thdora handlers + Python bots
 Jueves    → OSINT + pentest + seguridad
 Viernes   → LLM + IA local + Ollama
-Sábado    → libre / exploración     ← HOY
-Domingo   → revisión semanal + auditoría inbox
+Sábado    → libre / exploración
+Domingo   → revisión semanal + auditoría inbox  ← HOY
 ```
 
 ---
-_Actualizado: 27 jun 2026 04:18 CEST — Perplexity vía MCP_
+_Actualizado: 28 jun 2026 22:35 CEST — Perplexity vía MCP_
 _Ver: [[HOME]] · [[ECOSISTEMA]] · [[ESTADO-SISTEMA]] · [[inbox/README]]_
