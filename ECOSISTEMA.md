@@ -1,6 +1,6 @@
 ---
 tags: [ecosistema, repos, docker, arquitectura, mapa]
-fecha-actualizacion: 2026-06-24
+fecha-actualizacion: 2026-06-28
 ---
 
 # 🌳 ECOSISTEMA — Mapa completo del sistema
@@ -16,7 +16,7 @@ fecha-actualizacion: 2026-06-24
 |---|---|---|---|---|
 | [yggdrasil-dew](https://github.com/alvarofernandezmota-tech/yggdrasil-dew) | 🧠 Second brain — base conocimiento + diarios | ❌ público | ✅ activo | — |
 | [personal](https://github.com/alvarofernandezmota-tech/personal) | Vida personal — finanzas, gym, salud, diario | ❌ público | ✅ activo | — |
-| [thdora](https://github.com/alvarofernandezmota-tech/thdora) | Bot Telegram + FastAPI + Ollama local | ❌ público | 🔧 en desarrollo | thdora-bot, Ollama |
+| [thdora](https://github.com/alvarofernandezmota-tech/thdora) | Bot Telegram + FastAPI + Ollama local | ❌ público | 🔧 handlers pendientes | thdora-bot, Ollama |
 | [local-brain](https://github.com/alvarofernandezmota-tech/local-brain) | Cerebro cognitivo — Ollama, RAG, embeddings | ✅ privado | 🔧 en desarrollo | Ollama, Open WebUI, LiteLLM, Qdrant |
 | [osint-stack](https://github.com/alvarofernandezmota-tech/osint-stack) | Stack OSINT — SpiderFoot, investigación | ✅ privado | 🔧 en desarrollo | SpiderFoot, SearXNG, Perplexica |
 | [ai-toolkit](https://github.com/alvarofernandezmota-tech/ai-toolkit) | Open source AI dev stack | ❌ público | ✅ activo | Claude Code, OpenRouter |
@@ -33,63 +33,70 @@ fecha-actualizacion: 2026-06-24
 
 ## 🖥️ Hardware del ecosistema
 
-| Máquina | Nombre | Specs | Rol |
-|---|---|---|---|
-| PC torre | **Madre** | i5-8400 · 16GB RAM · 1TB SSD | Servidor principal · Docker · Ollama |
-| Portátil | **varopc** / Acer | Arch Linux · Hyprland | Desarrollo · Obsidian · terminal |
-| Móvil | Redmi A5 | Android | Control remoto · thdora · Telegram |
+| Máquina | Hostname | Specs | Rol | IP Tailscale |
+|---|---|---|---|---|
+| PC torre | **varpc (Madre)** | i5-8400 · 16GB RAM · HDD 1TB · GTX 1060 6GB | Servidor principal · Docker · Ollama · AP WiFi | `100.91.112.32` |
+| Portátil | **varo12f (theodora/Acer)** | Arch Linux · Hyprland · AMD Ryzen 5 | Desarrollo · Obsidian · terminal | `100.86.119.102` |
+| Móvil | **Redmi A5** | Android | Control remoto · thdora · Telegram | ⚠️ pendiente instalar |
+
+---
+
+## 🌐 Red — Madre
+
+| Interfaz | IP | Rol |
+|---|---|---|
+| `wlan0` (RTL8188FTV USB) | `192.168.72.1/24` | AP WiFi MadreAP |
+| `tailscale0` | `100.91.112.32` | VPN mesh |
+| `enp0s20f0u3` (Xiaomi USB tethering) | `10.204.17.34/24` | Internet upstream (4G ~20Mbps) |
+| `enp4s0` (Ethernet Gigabit) | — | DOWN / sin cable |
+
+### MadreAP WiFi
+| Parámetro | Valor |
+|---|---|
+| SSID | `MadreAP` |
+| Seguridad | WPA2-PSK / CCMP |
+| Canal | 6 (2.4GHz) |
+| Gateway | `192.168.72.1` |
+| DHCP pool | `192.168.72.50 – 192.168.72.150` (dnsmasq) |
+| Driver | RTL8188FTV ⚠️ inestable — fix pendiente |
 
 ---
 
 ## 🐳 Docker Stack completo — Madre
 
-### ✅ Fase 1 — Base IA (IMÁGENES DESCARGADAS)
-| Contenedor | Puerto | Imagen | Rol |
-|---|---|---|---|
-| ollama | 11434 | ollama/ollama | Motor LLM local |
-| open-webui | 3000 | ghcr.io/open-webui/open-webui | UI chat IA |
-| qdrant | 6333 | qdrant/qdrant | Base vectorial RAG |
+### ✅ Levantado y healthy (desde 25-jun-2026)
+| Contenedor | Puerto | Rol |
+|---|---|---|
+| ollama | 11434 | Motor LLM local |
+| ollama-embeddings | 11435 | Embeddings |
+| open-webui | 3001 | UI chat IA |
+| qdrant | 6333 | Base vectorial RAG |
+| uptime-kuma | 3002 | Monitor servicios |
+| thdora | 8000 | FastAPI backend |
+| thdora-bot | — | Bot Telegram |
+| grafana | 3000 | Dashboards |
+| prometheus | 9090 | Métricas |
+| portainer | 9000 | Panel Docker |
+| code-server | 8443 | VSCode web |
+| n8n | 5678 | Automatización workflows |
+| gitea | 3003 | Git self-hosted |
 
-### 🔧 Fase 2 — IA Gateway
-| Contenedor | Puerto | Imagen | Rol |
-|---|---|---|---|
-| litellm | 4000 | ghcr.io/berriai/litellm | Gateway unificado LLMs |
-| nginx-pm | 80/443 | jc21/nginx-proxy-manager | Proxy reverso + SSL |
-
-### 🔧 Fase 3 — Productividad
-| Contenedor | Puerto | Imagen | Rol |
-|---|---|---|---|
-| n8n | 5678 | n8nio/n8n | Automatización workflows |
-| gitea | 3001 | gitea/gitea | Git self-hosted |
-| paperless | 8000 | ghcr.io/paperless-ngx | Gestión documentos |
-| vaultwarden | 8001 | vaultwarden/server | Gestor contraseñas |
-| code-server | 8443 | lscr.io/linuxserver/code-server | VSCode web |
-
-### 🔧 Fase 4 — Monitorización
-| Contenedor | Puerto | Imagen | Rol |
-|---|---|---|---|
-| portainer | 9000 | portainer/portainer-ce | Panel Docker |
-| uptime-kuma | 3002 | louislam/uptime-kuma | Monitor servicios |
-| grafana | 3003 | grafana/grafana | Dashboards |
-| netdata | 19999 | netdata/netdata | Métricas sistema |
-
-### 📋 Fase 5 — Seguridad (pendiente)
+### ⏳ Pendiente levantar — Fase 5 Seguridad
 | Contenedor | Imagen | Rol |
 |---|---|---|
-| fail2ban | crazymax/fail2ban | Protección brute-force |
-| crowdsec | crowdsecurity/crowdsec | IDS/IPS |
-| traefik | traefik | Proxy alternativo |
-| wireguard | linuxserver/wireguard | VPN |
-| vault | hashicorp/vault | Secretos |
-| authentik | ghcr.io/goauthentik/server | SSO |
+| Wazuh | wazuh/wazuh | SIEM — prereq `vm.max_map_count=262144` |
+| Suricata | jasonish/suricata | IDS pasivo en wlan0 |
+| CrowdSec | crowdsecurity/crowdsec | IDS/IPS |
+| Traefik | traefik | Proxy alternativo |
+| Vault | hashicorp/vault | Secretos |
 
-### 📋 Fase 6 — OSINT
-| Contenedor | Puerto | Imagen | Rol |
-|---|---|---|---|
-| searxng | 8080 | searxng/searxng | Buscador privado |
-| perplexica | 3004 | itzcrazykns/perplexica | IA buscador |
-| spiderfoot | 5001 | — | OSINT automatizado |
-| pihole | 53/80 | pihole/pihole | DNS + bloqueador ads |
+### ⏳ Pendiente levantar — Fase 6 OSINT
+| Contenedor | Puerto | Rol |
+|---|---|---|
+| Kali Desktop | 6901 | Pentest |
+| SpiderFoot | 5001 | OSINT automatizado |
+| SearXNG | 8080 | Buscador privado |
+| PiHole | 53/80 | DNS + bloqueador ads |
 
 ---
 
@@ -97,22 +104,24 @@ fecha-actualizacion: 2026-06-24
 
 | Modelo | Tamaño | Estado | Uso |
 |---|---|---|---|
-| qwen2.5:3b | 1.9GB | ✅ listo | Chat rápido · thdora |
-| qwen2.5:7b | 4.7GB | ⏳ descargando | Chat equilibrado |
-| qwen2.5:14b | 9.0GB | ⏳ descargando | Chat potente |
-| llama3.1:8b | 4.7GB | ⏳ descargando | Alternativa general |
-| mistral:7b | 4.1GB | ⏳ descargando | Código |
-| bge-m3 | 1.2GB | ⏳ descargando | Embeddings RAG |
-| nomic-embed-text | 0.3GB | ⏳ descargando | Embeddings rápidos |
+| qwen2.5-coder:7b | 4.7GB | ✅ descargado | Código · thdora |
+| qwen2.5:3b | 1.9GB | ✅ descargado | Chat rápido |
+| llama3.1:8b | 4.7GB | ❌ pendiente pull | Chat general |
+| bge-m3 | 1.2GB | ❌ pendiente pull | Embeddings RAG |
+| nomic-embed-text | 0.3GB | ❌ pendiente pull | Embeddings rápidos |
 
 ---
 
-## 🌐 Red — Tailscale
+## 📡 Monitorización
 
-| Máquina | IP Tailscale | Estado |
+| Servicio | URL | Estado |
 |---|---|---|
-| Madre | — | ⏳ configurar autoarranque |
-| varopc | 100.86.119.102 | ✅ activo |
+| Netdata Madre | `http://100.91.112.32:19999` | ✅ activo |
+| Netdata Acer | `http://100.86.119.102:19999` | ✅ activo |
+| Netdata streaming | Acer → Madre stream.conf | ✅ 2 nodos · 4400+ métricas |
+| Grafana | `http://100.91.112.32:3000` | ✅ up |
+| Uptime Kuma | `http://100.91.112.32:3002` | ✅ up |
+| Portainer | `http://100.91.112.32:9000` | ✅ up |
 
 ---
 
@@ -121,10 +130,10 @@ fecha-actualizacion: 2026-06-24
 - [[HOME]] — punto de entrada diario
 - [[CONTEXT]] — contexto para agentes IA
 - [[ESTADO-SISTEMA]] — estado operativo ahora mismo
-- [[inbox/MASTER-PENDIENTES]] — tareas pendientes
+- [[MASTER-PENDIENTES]] — tareas pendientes
 - [[filosofia]] — principios del sistema
 - [[setup/servidor/README]] — guía setup Madre
 
 ---
-_Actualizado: 24 jun 2026 22:22 CEST_
+_Actualizado: 28 jun 2026 22:37 CEST — Perplexity vía MCP_
 _Ver commit history para cambios anteriores_
