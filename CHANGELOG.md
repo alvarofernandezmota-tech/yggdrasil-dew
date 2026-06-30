@@ -10,6 +10,10 @@
 
 ### Junio
 
+- `2026-06-30` · `add` inbox/2026-06-30-ollama-modelos-pull.md — pull llama3.1:8b + nomic-embed-text completado
+- `2026-06-30` · `update` ESTADO-SISTEMA.md — 4 modelos Ollama activos, git pull --rebase OK, AP estable
+- `2026-06-30` · `add` modelos llama3.1:8b + nomic-embed-text descargados en Ollama
+- `2026-06-30` · `fix` git pull --rebase en Madre — repo local sincronizado con GitHub
 - `2026-06-30` · `update` ESTADO-SISTEMA.md — estado real 30-jun: stack 13/13 up, THDORA v0.12.1, modelos Ollama confirmados
 - `2026-06-30` · `add` diarios/2026/2026-06-30.md — sesión 30-jun documentada: validación completa post-reboot
 - `2026-06-30` · `fix` Docker daemon reiniciado limpio — v29.5.1, todos los contenedores recuperados
@@ -20,10 +24,10 @@
 - `2026-06-28` · `update` ECOSISTEMA.md — IPs Tailscale corregidas, dnsmasq añadido, estado real 28-jun
 - `2026-06-28` · `update` CHANGELOG.md — entradas sesión 28-jun añadidas
 - `2026-06-28` · `add` issues #5 (AP hostapd) + #6 (DIARY 28-jun) creados vía MCP
-- `2026-06-28` · `fix` fail2ban jail sshd activo — Madre + Acer (reload necesario tras crear jail.local)
+- `2026-06-28` · `fix` fail2ban jail sshd activo — Madre + Acer
 - `2026-06-28` · `fix` dnsmasq instalado y activo — DHCP 192.168.72.50-150 en wlan0 Madre
 - `2026-06-28` · `fix` puerto 53317 cerrado UFW — Madre + Acer
-- `2026-06-28` · `fix` Netdata Acer activo — puerto 19999 restringido a Madre (100.91.112.32)
+- `2026-06-28` · `fix` Netdata Acer activo — puerto 19999 restringido a Madre
 - `2026-06-28` · `add` UFW puerto 53 wlan0 — DNS para clientes AP
 - `2026-06-27` · `fix` MadreAP WiFi resuelto — hostapd + systemd-networkd + UFW persistente tras reboot
 - `2026-06-27` · `fix` iwd desactivado — conflicto con hostapd resuelto

@@ -1,10 +1,10 @@
 ---
 tags: [estado, sistema, operativo, servicios, ahora]
 fecha-actualizacion: 2026-06-30
-hora: 21:20
+hora: 21:30
 ---
 
-# 📊 ESTADO DEL SISTEMA — 30 jun 2026 (21:20)
+# 📊 ESTADO DEL SISTEMA — 30 jun 2026 (21:30)
 
 > Este archivo refleja el estado REAL operativo ahora mismo.
 > Actualizar cada vez que cambie algo importante.
@@ -27,15 +27,15 @@ hora: 21:20
 | Servicio | Estado | Detalle |
 |---|---|---|
 | Tailscale Madre | ✅ activo | `100.91.112.32` |
-| Tailscale Acer | ✅ activo | `100.86.119.102` · relay `mad` · tx 2.7MB rx 43MB |
+| Tailscale Acer | ✅ activo | `100.86.119.102` · relay `mad` |
 | Tailscale iPhone 11 | ✅ activo | `100.81.187.99` |
 | Tailscale Redmi A5 | ❌ pendiente | Instalar desde Play Store |
-| **MadreAP (hostapd)** | ✅ activo | SSID: MadreAP · WPA2 · canal 6 · wlan0 RTL8188FTV |
+| **MadreAP (hostapd)** | ✅ activo y estable | SSID: MadreAP · WPA2 · canal 6 · wlan0 RTL8188FTV · sin caídas |
 | **dnsmasq DHCP** | ✅ activo | `192.168.72.50-150` · 12h lease · wlan0 |
 | **NAT/IP Masquerade** | ✅ activo | Clientes WiFi tienen internet |
-| **UFW Madre** | ✅ activo | docker-dns · tailscale0 · SSH Acer · Netdata Acer · DHCP wlan0 · DNS wlan0 · forwarding wlan0 |
-| **UFW Acer** | ✅ activo | docker-dns · tailscale0 · SSH Madre · Input Leap · Netdata Madre |
-| ⚠️ Driver RTL8188FTV | ❌ inestable | INTERFACE-DISABLED espontáneo en logs — fix pendiente (modprobe.d) |
+| **UFW Madre** | ✅ activo | Reglas completas activas |
+| **UFW Acer** | ✅ activo | Reglas completas activas |
+| ⚠️ Driver RTL8188FTV | ✅ estable hoy | Sin INTERFACE-DISABLED en sesión 30-jun · módulo real pendiente identificar |
 | SSH hardening | ⚠️ parcial | `PasswordAuthentication no` ✅ · clave pública pendiente |
 
 ---
@@ -73,9 +73,9 @@ hora: 21:20
 |---|---|---|
 | `qwen2.5-coder:7b` | 4.7GB | ✅ descargado · Q4_K_M · ctx 32k · tools |
 | `qwen2.5:3b` | 1.9GB | ✅ descargado · Q4_K_M · ctx 32k · tools |
-| `llama3.1:8b` | — | ❌ pendiente pull |
+| `llama3.1:8b` | 4.7GB | ✅ descargado 30-jun · chat general · tools |
+| `nomic-embed-text` | ~274MB | ✅ descargado 30-jun · embeddings RAG → Qdrant |
 | `bge-m3` | — | ❌ pendiente pull |
-| `nomic-embed-text` | — | ❌ pendiente pull |
 
 ---
 
@@ -122,7 +122,7 @@ hora: 21:20
 | Repo | Estado |
 |---|---|
 | yggdrasil-dew (GitHub) | ✅ sincronizado — sesión 30-jun committed |
-| yggdrasil-dew (Madre local) | ⚠️ pendiente `git pull --rebase` |
+| yggdrasil-dew (Madre local) | ✅ sincronizado — `git pull --rebase` hecho 30-jun |
 | thdora | 🔧 handlers pendientes |
 | local-brain | 🔧 en desarrollo |
 | osint-stack | 🔧 en desarrollo |
@@ -131,15 +131,15 @@ hora: 21:20
 
 ## 📋 Próximas acciones (orden prioridad)
 
-1. **`git pull --rebase`** en Madre — sincronizar repo local con GitHub
-2. **Fix driver RTL8188FTV** — AP inestable (`modprobe.d/8188fu.conf`)
-3. Modelos Ollama: `llama3.1:8b` + `bge-m3` + `nomic-embed-text`
-4. THDORA handlers: mapear endpoints via `/docs`, implementar handlers Telegram
+1. **Fix driver RTL8188FTV** — identificar módulo real (`sudo modinfo` + dkms) y documentar
+2. **THDORA handlers** — mapear endpoints via `/docs`, implementar handlers Telegram
+3. **Pull `bge-m3`** — modelo embeddings avanzado
+4. **Pipeline RAG** — nomic-embed-text → Qdrant → Open WebUI
 5. SSH hardening — clave pública ambos nodos
 6. Tailscale Redmi A5
 7. Uptime Kuma → THDORA alertas Telegram
 8. Wazuh prereq + levantar SIEM
 
 ---
-_Actualizado: 30 jun 2026 21:20 CEST — Perplexity vía MCP_
+_Actualizado: 30 jun 2026 21:30 CEST — Perplexity vía MCP_
 _Ver: [[MASTER-PENDIENTES]] · [[ECOSISTEMA]] · [[diarios/]]_
