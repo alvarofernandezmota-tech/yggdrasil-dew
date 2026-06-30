@@ -1,10 +1,10 @@
 ---
 tags: [estado, sistema, operativo, servicios, ahora]
-fecha-actualizacion: 2026-06-28
-hora: 22:37
+fecha-actualizacion: 2026-06-30
+hora: 21:20
 ---
 
-# 📊 ESTADO DEL SISTEMA — 28 jun 2026 (22:37)
+# 📊 ESTADO DEL SISTEMA — 30 jun 2026 (21:20)
 
 > Este archivo refleja el estado REAL operativo ahora mismo.
 > Actualizar cada vez que cambie algo importante.
@@ -16,7 +16,8 @@ hora: 22:37
 | Máquina | Estado | Observaciones |
 |---|---|---|
 | **Madre (varpc)** | ✅ encendida y accesible | SSH OK · AP MadreAP activo · Tailscale `100.91.112.32` |
-| **Acer (theodora / varo12f)** | ✅ operativo | Tailscale `100.86.119.102` · Netdata activo |
+| **Acer (theodora / varo12f)** | ✅ operativo | Tailscale `100.86.119.102` · Netdata activo · relay `mad` activo |
+| **iPhone 11** | ✅ Tailscale activo | `100.81.187.99` |
 | **Redmi A5** | ⚠️ sin Tailscale | Tailscale pendiente instalar desde Play Store |
 
 ---
@@ -26,7 +27,8 @@ hora: 22:37
 | Servicio | Estado | Detalle |
 |---|---|---|
 | Tailscale Madre | ✅ activo | `100.91.112.32` |
-| Tailscale Acer | ✅ activo | `100.86.119.102` |
+| Tailscale Acer | ✅ activo | `100.86.119.102` · relay `mad` · tx 2.7MB rx 43MB |
+| Tailscale iPhone 11 | ✅ activo | `100.81.187.99` |
 | Tailscale Redmi A5 | ❌ pendiente | Instalar desde Play Store |
 | **MadreAP (hostapd)** | ✅ activo | SSID: MadreAP · WPA2 · canal 6 · wlan0 RTL8188FTV |
 | **dnsmasq DHCP** | ✅ activo | `192.168.72.50-150` · 12h lease · wlan0 |
@@ -34,13 +36,13 @@ hora: 22:37
 | **UFW Madre** | ✅ activo | docker-dns · tailscale0 · SSH Acer · Netdata Acer · DHCP wlan0 · DNS wlan0 · forwarding wlan0 |
 | **UFW Acer** | ✅ activo | docker-dns · tailscale0 · SSH Madre · Input Leap · Netdata Madre |
 | ⚠️ Driver RTL8188FTV | ❌ inestable | INTERFACE-DISABLED espontáneo en logs — fix pendiente (modprobe.d) |
-| SSH hardening | ⚠️ documentado, no aplicado | clave pública pendiente |
+| SSH hardening | ⚠️ parcial | `PasswordAuthentication no` ✅ · clave pública pendiente |
 
 ---
 
 ## 🐳 Docker — Estado Madre
 
-### Stack — 13 CONTENEDORES HEALTHY ✅ (desde 25-jun)
+### Stack — 13/13 CONTENEDORES UP ✅ (validado 30-jun 21:15)
 
 | Contenedor | Puerto | Estado |
 |---|---|---|
@@ -49,7 +51,7 @@ hora: 22:37
 | `open-webui` | 3001 | ✅ healthy |
 | `qdrant` | 6333 | ✅ healthy |
 | `uptime-kuma` | 3002 | ✅ healthy |
-| `thdora` | 8000 | ✅ healthy |
+| `thdora` | 8000 | ✅ healthy — FastAPI v0.12.1 |
 | `thdora-bot` | — | ✅ healthy |
 | `grafana` | 3000 | ✅ up |
 | `prometheus` | 9090 | ✅ up |
@@ -67,13 +69,13 @@ hora: 22:37
 
 ### Modelos Ollama
 
-| Modelo | Estado |
-|---|---|
-| `qwen2.5-coder:7b` | ✅ descargado (4.7GB) |
-| `qwen2.5:3b` | ✅ descargado (1.9GB) |
-| `llama3.1:8b` | ❌ pendiente pull |
-| `bge-m3` | ❌ pendiente pull |
-| `nomic-embed-text` | ❌ pendiente pull |
+| Modelo | Tamaño | Estado |
+|---|---|---|
+| `qwen2.5-coder:7b` | 4.7GB | ✅ descargado · Q4_K_M · ctx 32k · tools |
+| `qwen2.5:3b` | 1.9GB | ✅ descargado · Q4_K_M · ctx 32k · tools |
+| `llama3.1:8b` | — | ❌ pendiente pull |
+| `bge-m3` | — | ❌ pendiente pull |
+| `nomic-embed-text` | — | ❌ pendiente pull |
 
 ---
 
@@ -83,8 +85,9 @@ hora: 22:37
 |---|---|---|
 | fail2ban | ✅ activo · jail sshd ✅ | ✅ activo · jail sshd ✅ |
 | UFW | ✅ activo y limpio | ✅ activo y limpio |
-| SSH | ✅ sin contraseña varopc→Madre | ✅ contraseña |
+| SSH PasswordAuth | ✅ `no` — confirmado 30-jun | ✅ contraseña |
 | Puerto 53317 | ✅ cerrado | ✅ cerrado |
+| Clave pública SSH | ❌ pendiente | ❌ pendiente |
 
 ---
 
@@ -105,9 +108,11 @@ hora: 22:37
 
 | Componente | Estado |
 |---|---|
-| thdora (FastAPI) | ✅ healthy |
+| thdora (FastAPI) | ✅ healthy · v0.12.1 |
 | thdora-bot | ✅ healthy |
-| Handlers implementados | ⚠️ básicos — `/estado` `/inbox` `/diario` `/pull` pendientes |
+| Endpoint `/health` | ✅ `{"status":"ok","service":"thdora","version":"0.12.1"}` |
+| Endpoint `/docs` | ✅ Swagger UI accesible |
+| Handlers Telegram | ⚠️ básicos — mapear endpoints pendiente |
 | Uptime Kuma → THDORA webhook | ❌ pendiente |
 
 ---
@@ -116,7 +121,7 @@ hora: 22:37
 
 | Repo | Estado |
 |---|---|
-| yggdrasil-dew (GitHub) | ✅ sincronizado |
+| yggdrasil-dew (GitHub) | ✅ sincronizado — sesión 30-jun committed |
 | yggdrasil-dew (Madre local) | ⚠️ pendiente `git pull --rebase` |
 | thdora | 🔧 handlers pendientes |
 | local-brain | 🔧 en desarrollo |
@@ -126,15 +131,15 @@ hora: 22:37
 
 ## 📋 Próximas acciones (orden prioridad)
 
-1. **Fix driver RTL8188FTV** — AP inestable (`modprobe.d/8188fu.conf`)
-2. `git pull --rebase` en Madre — sincronizar repo
+1. **`git pull --rebase`** en Madre — sincronizar repo local con GitHub
+2. **Fix driver RTL8188FTV** — AP inestable (`modprobe.d/8188fu.conf`)
 3. Modelos Ollama: `llama3.1:8b` + `bge-m3` + `nomic-embed-text`
-4. THDORA handlers: `/estado` `/inbox` `/diario` `/pull <modelo>`
-5. Wazuh prereq + levantar SIEM
+4. THDORA handlers: mapear endpoints via `/docs`, implementar handlers Telegram
+5. SSH hardening — clave pública ambos nodos
 6. Tailscale Redmi A5
-7. SSH hardening — clave pública ambos nodos
-8. Uptime Kuma → THDORA alertas Telegram
+7. Uptime Kuma → THDORA alertas Telegram
+8. Wazuh prereq + levantar SIEM
 
 ---
-_Actualizado: 28 jun 2026 22:37 CEST — Perplexity vía MCP_
+_Actualizado: 30 jun 2026 21:20 CEST — Perplexity vía MCP_
 _Ver: [[MASTER-PENDIENTES]] · [[ECOSISTEMA]] · [[diarios/]]_

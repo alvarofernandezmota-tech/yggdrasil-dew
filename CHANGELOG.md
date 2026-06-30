@@ -10,6 +10,11 @@
 
 ### Junio
 
+- `2026-06-30` · `update` ESTADO-SISTEMA.md — estado real 30-jun: stack 13/13 up, THDORA v0.12.1, modelos Ollama confirmados
+- `2026-06-30` · `add` diarios/2026/2026-06-30.md — sesión 30-jun documentada: validación completa post-reboot
+- `2026-06-30` · `fix` Docker daemon reiniciado limpio — v29.5.1, todos los contenedores recuperados
+- `2026-06-30` · `fix` Tailscale confirmado activo — varpc + iphone-11 + varo12f (relay mad)
+- `2026-06-30` · `fix` SSH PasswordAuthentication: no — confirmado hardening activo
 - `2026-06-28` · `update` MASTER-PENDIENTES.md — sesión 28-jun documentada, tareas completadas marcadas
 - `2026-06-28` · `update` ESTADO-SISTEMA.md — estado real 28-jun: dnsmasq, fail2ban jails, UFW actualizado
 - `2026-06-28` · `update` ECOSISTEMA.md — IPs Tailscale corregidas, dnsmasq añadido, estado real 28-jun
