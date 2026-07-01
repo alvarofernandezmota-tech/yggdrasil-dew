@@ -23,44 +23,45 @@ tags: [tipo/moc, estado/activo, #infra/docker]
 ## Servicios en producción ahora mismo
 
 ### Fase 1 — Stack IA base
-*Compose: `docker-compose.fase1-real.yml` — fuente: `~/docker-compose.yml`*
+*Compose: `docker-compose.fase1-real.yml`*
 
-| Servicio | Puerto | Estado | Notas |
-|----------|--------|--------|-------|
-| `ollama` | 11434 | ✅ healthy | qwen2.5:7b — máx 7g RAM |
-| `ollama-embeddings` | 11435 | ✅ healthy | bge-m3 para RAG |
-| `qdrant` | 6333 | ✅ healthy | BD vectorial RAG |
-| `open-webui` | 3001 | ✅ healthy | UI para Ollama |
+| Servicio | Puerto | Estado |
+|----------|--------|--------|
+| `ollama` | 11434 | ✅ healthy — qwen2.5:7b, máx 7g RAM |
+| `ollama-embeddings` | 11435 | ✅ healthy — bge-m3 para RAG |
+| `qdrant` | 6333 | ✅ healthy — BD vectorial |
+| `open-webui` | 3001 | ✅ healthy — UI Ollama |
 
 ### Fase 2 — Monitoring + OSINT
-*Compose: `docker-compose.fase2.yml` — fuente: `~/Obsidian/.../batcueva-fase2.yml`*
+*Compose: `docker-compose.fase2.yml`*
 
-| Servicio | Puerto | Estado | Notas |
-|----------|--------|--------|-------|
-| `portainer` | 9000 | ✅ up | ⚠️ docker.sock expuesto |
-| `uptime-kuma` | 3002 | ✅ healthy | monitoreo servicios |
-| `spiderfoot` | 5001 | ✅ up | OSINT — imagen local |
-| `heimdall` | 8090 | ❌ no corre | imagen descargada, no levantado |
+| Servicio | Puerto | Estado |
+|----------|--------|--------|
+| `portainer` | 9000 | ✅ up — ⚠️ docker.sock montado |
+| `uptime-kuma` | 3002 | ✅ healthy |
+| `spiderfoot` | 5001 | ✅ up — imagen local |
+| `heimdall` | 8090 | ❌ no levantado |
 
 ### Fase 3 — Automatización + Dev
-*Compose: `docker-compose.fase3.yml` — fuente: `~/Obsidian/.../batcueva-fase3.yml`*
+*Compose: `docker-compose.fase3.yml`*
 
-| Servicio | Puerto | Estado | Notas |
-|----------|--------|--------|-------|
-| `n8n` | 5678 | ✅ up | orquestador flujos |
-| `gitea` | 3003/2222 | ✅ up | git local |
-| `code-server` | 8443 | ✅ up | VSCode en browser |
-| `headscale` | — | ❌ no corre | VPN propia — pendiente |
+| Servicio | Puerto | Estado |
+|----------|--------|--------|
+| `n8n` | 5678 | ✅ up — orquestador flujos |
+| `gitea` | 3003/2222 | ✅ up — git local |
+| `code-server` | 8443 | ✅ up — VSCode browser |
+| `headscale` | — | ❌ pendiente — VPN propia |
 
-### Thdora
-*Compose: `docker-compose.thdora.yml` — fuente: `~/Projects/thdora/docker-compose.yml`*
+### Thdora — proyecto independiente
+> ⚠️ Thdora tiene su propio repo. Su compose NO vive aquí (Regla 13).
+> Referencia: `~/Projects/thdora/docker-compose.yml` — repo: `thdora`
 
-| Servicio | Puerto | Estado | Notas |
-|----------|--------|--------|-------|
-| `thdora` | 8000 | ✅ healthy | API FastAPI |
-| `thdora-bot` | — | ✅ healthy | Bot Telegram |
-| `prometheus` | 9090 | ✅ up | métricas |
-| `grafana` | 3000 | ✅ up | ⚠️ admin/admin — CAMBIAR |
+| Servicio | Puerto | Estado |
+|----------|--------|--------|
+| `thdora` | 8000 | ✅ healthy — API FastAPI |
+| `thdora-bot` | — | ✅ healthy — Bot Telegram |
+| `prometheus` | 9090 | ✅ up — métricas thdora |
+| `grafana` | 3000 | ✅ up — ✅ password cambiado 2026-07-01 |
 
 ---
 
@@ -92,37 +93,45 @@ tags: [tipo/moc, estado/activo, #infra/docker]
 
 ---
 
-## Problemas de seguridad activos 🔴
+## Hardening completado ✅
 
-1. **Todos los servicios en `0.0.0.0`** — accesibles desde cualquier dispositivo LAN
-2. **`ollama :11434`** — API IA sin autenticación
-3. **`qdrant :6333`** — BD vectorial sin autenticación
-4. **`prometheus :9090`** — métricas raw sin autenticación
-5. **`portainer`** — docker.sock montado (riesgo container breakout)
-6. **`grafana`** — credencial `admin/admin` por defecto
-7. **Puerto 21 WAN** — FTP Digi expuesto (no controlable por nosotros)
+| Fecha | Acción | Resultado |
+|-------|--------|-----------|
+| 2026-07-01 | Grafana `admin/admin` cambiado | ✅ |
+| 2026-07-01 | Audit `Privileged=false` todos los contenedores | ✅ ninguno privilegiado |
+
+## Hardening pendiente 🔴
+
+| Problema | Riesgo | Acción |
+|----------|--------|--------|
+| Todos en `0.0.0.0` | Accesibles desde LAN completa | Cambiar a `127.0.0.1` en compose |
+| `ollama :11434` | API IA sin auth | Bind a `127.0.0.1` o tailscale0 |
+| `qdrant :6333` | BD vectorial sin auth | Bind a `127.0.0.1` |
+| `prometheus :9090` | Métricas raw sin auth | Bind a `127.0.0.1` |
+| `portainer` docker.sock | Riesgo breakout indirecto | Evaluar alternativa sin socket |
+| `N8N_ENCRYPTION_KEY` | Clave por defecto en .env | Verificar y rotar |
 
 ---
 
-## Próximos pasos ordenados por prioridad
+## Próximos pasos ordenados
 
-### 🔴 Crítico — hacer ya
-- [ ] Cambiar password Grafana (`admin/admin`)
-- [ ] Auditar `docker inspect --format='{{.Name}}: Privileged={{.HostConfig.Privileged}}' $(docker ps -aq)`
-- [ ] Verificar `N8N_ENCRYPTION_KEY` en .env de madre
-
-### 🟡 Hardening — esta semana
-- [ ] Cambiar puertos `0.0.0.0` → `127.0.0.1` en compose
+### 🔴 Inmediato
+- [ ] Verificar `N8N_ENCRYPTION_KEY` en `.env` de madre — no debe ser la de ejemplo
 - [ ] Levantar `fail2ban` + `crowdsec` (imágenes listas)
-- [ ] UFW: `default deny incoming` + permitir solo tailscale0
 
-### 🟢 Fase 4 — próxima
+### 🟡 Esta semana — Hardening
+- [ ] Cambiar puertos `0.0.0.0` → `127.0.0.1` en todos los compose
+- [ ] UFW: `default deny incoming` + permitir solo tailscale0
+- [ ] Auditar `docker inspect` para mounts sensibles
+
+### 🟢 Fase 4
 - [ ] Levantar Pihole + SearXNG
 - [ ] Levantar Wazuh SIEM
 - [ ] Terminar descarga Kali KasmWeb
 
 ### 🔵 Bots SecOps — después del hardening
-- [ ] Bot 1: rastreador de logs (Python + watchdog)
-- [ ] Bot 2: analista IA (Ollama API)
+- [ ] `secops-bot` — contenedor independiente en madre
+- [ ] Bot 1: rastreador logs (Python + watchdog)
+- [ ] Bot 2: analista IA (Ollama API local)
 - [ ] Bot 3: alertas Telegram
 - [ ] Orquestar con n8n
