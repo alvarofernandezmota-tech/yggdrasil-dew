@@ -6,67 +6,57 @@ tags: [tipo/adr, estado/activo, #infra/docker]
 
 > ✅ ACTIVO — VALIDADO: 2026-07-01
 
-## Problema detectado (Regla 14)
+## Mapa completo de composes en madre
 
-En madre hay **14 servicios corriendo** pero el repo solo documentaba 4.
-Esta auditoría mapea todos los compose encontrados y su estado real.
-
----
-
-## Compose encontrados en madre
-
-| Ruta | Servicios | Estado |
-|------|-----------|--------|
-| `~/docker-compose.yml` | ollama, ollama-embeddings, qdrant, open-webui | ✅ ACTIVO |
-| `~/Projects/thdora/docker-compose.yml` | thdora, thdora-bot | ✅ ACTIVO |
-| `~/Projects/thdora/docker/docker-compose.yml` | thdora (alt) | ❓ revisar |
-| `~/spiderfoot/docker-compose.yml` | spiderfoot | ✅ ACTIVO |
-| `~/spiderfoot/docker-compose-full.yml` | spiderfoot full | ⏳ no levantado |
-| `~/spiderfoot/docker-compose-dev.yml` | spiderfoot dev | ⏳ no levantado |
-| `~/docker/batcueva-nueva/docker-compose.yml` | batcueva nueva | ⏳ pendiente revisar |
-| `~/Obsidian/cerebro/.../docker-compose.yml` | antiguo cerebro | 📦 archivo |
+| Ruta en madre | Compose en repo | Servicios | Estado |
+|---------------|-----------------|-----------|--------|
+| `~/docker-compose.yml` | `docker/madre/docker-compose.fase1-real.yml` | ollama, ollama-embeddings, qdrant, open-webui | ✅ ACTIVO |
+| `~/Projects/thdora/docker-compose.yml` | `docker/madre/docker-compose.thdora.yml` | thdora, thdora-bot, prometheus, grafana | ✅ ACTIVO |
+| `~/spiderfoot/docker-compose.yml` | pendiente subir | spiderfoot | ✅ ACTIVO |
+| `~/docker/batcueva-nueva/docker-compose.yml` | `docker/madre/docker-compose.batcueva-nueva.yml` | ollama GPU | 🔜 PENDIENTE (sin GPU) |
+| `~/Obsidian/cerebro/.../docker-compose.yml` | — | antiguo | 📦 ARCHIVO |
 
 ---
 
-## Servicios corriendo NO documentados en repo
+## Servicios sin compose localizado ⚠️
 
-Estos 10 servicios están en producción pero su compose no está en `docker/madre/`:
+Estos 6 servicios están corriendo pero su compose no ha sido encontrado aún:
 
-| Servicio | Puerto | Origen probable |
-|----------|--------|-----------------|
-| `code-server` | 8443 | compose separado pendiente localizar |
-| `n8n` | 5678 | compose separado pendiente localizar |
-| `gitea` | 3003/2222 | compose separado pendiente localizar |
-| `uptime-kuma` | 3002 | compose separado pendiente localizar |
-| `portainer` | 9000 | compose separado pendiente localizar |
-| `grafana` | 3000 | compose separado pendiente localizar |
-| `prometheus` | 9090 | compose separado pendiente localizar |
-| `thdora` | 8000 | `~/Projects/thdora/` |
-| `thdora-bot` | — | `~/Projects/thdora/` |
-| `spiderfoot` | 5001 | `~/spiderfoot/` |
+| Servicio | Puerto | Estado |
+|----------|--------|--------|
+| `n8n` | 5678 | ❓ compose no localizado |
+| `gitea` | 3003/2222 | ❓ compose no localizado |
+| `code-server` | 8443 | ❓ compose no localizado |
+| `portainer` | 9000 | ❓ compose no localizado |
+| `uptime-kuma` | 3002 | ❓ compose no localizado |
+| `spiderfoot` | 5001 | ❓ compose pendiente de subir |
+
+```bash
+# Comando para localizar compose de los restantes:
+grep -r "n8n\|gitea\|code-server\|portainer\|uptime-kuma" \
+  ~ --include="*.yml" -l 2>/dev/null | grep -v yggdrasil-dew
+```
 
 ---
 
-## Problema de seguridad detectado
+## Problema de seguridad detectado 🔴
 
-Todos los servicios escuchan en `0.0.0.0` — accesibles desde cualquier dispositivo en la LAN.
+Todos los servicios escuchan en `0.0.0.0` — accesibles desde cualquier dispositivo en LAN.
 
-**Servicios críticos sin autenticación:**
-- `ollama :11434` — API IA sin auth 🔴
-- `qdrant :6333` — BD vectorial sin auth 🔴
-- `prometheus :9090` — métricas raw sin auth 🔴
-
-**Plan de hardening:**
-1. Cambiar puertos a `127.0.0.1:XXXX:XXXX` en los compose
-2. O configurar Traefik como reverse proxy con auth
-3. UFW: permitir solo desde tailscale0 e interfaz local
+| Servicio | Riesgo | Acción |
+|----------|--------|--------|
+| `ollama :11434` | API IA sin auth | Cambiar a `127.0.0.1:11434:11434` |
+| `qdrant :6333` | BD vectorial sin auth | Cambiar a `127.0.0.1:6333:6333` |
+| `prometheus :9090` | Métricas raw sin auth | Cambiar a `127.0.0.1:9090:9090` |
+| `grafana :3000` | Credencial `admin/admin` | ⚠️ Cambiar password YA |
 
 ---
 
 ## Próximos pasos
 
-- [ ] Localizar compose de: code-server, n8n, gitea, uptime-kuma, portainer, grafana, prometheus
-- [ ] Migrar todos a `docker/madre/` en el repo
-- [ ] Aplicar hardening de puertos (`127.0.0.1` binding)
-- [ ] Crear `docker-compose.madre-completo.yml` con los 14 servicios
-- [ ] Etiquetar cada servicio con `# VALIDADO: YYYY-MM-DD`
+- [ ] Localizar compose de: n8n, gitea, code-server, portainer, uptime-kuma
+- [ ] Subir `~/spiderfoot/docker-compose.yml` al repo
+- [ ] Hardening: cambiar `0.0.0.0` → `127.0.0.1` en todos los compose
+- [ ] Cambiar `admin/admin` en Grafana
+- [ ] Crear `docker-compose.madre-completo.yml` unificado con los 14 servicios
+- [ ] Levantar fail2ban + crowdsec (imágenes ya descargadas)
