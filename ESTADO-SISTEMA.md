@@ -1,10 +1,10 @@
 ---
 tags: [estado, sistema, operativo, servicios, ahora]
 fecha-actualizacion: 2026-07-01
-hora: 01:12
+hora: 02:04
 ---
 
-# 📊 ESTADO DEL SISTEMA — 01 jul 2026 (01:12)
+# 📊 ESTADO DEL SISTEMA — 01 jul 2026 (02:04)
 
 > Este archivo refleja el estado REAL operativo ahora mismo.
 > Actualizar cada vez que cambie algo importante.
@@ -40,7 +40,7 @@ hora: 01:12
 
 ## 🐳 Docker — Estado varopc
 
-### Stack base — 13/13 CONTENEDORES UP ✅ (validado 01-jul 01:10 CEST)
+### Stack base + OSINT — 14/14 CONTENEDORES UP ✅ (validado 01-jul 02:00 CEST)
 
 | Contenedor | Puerto | Estado | Bloque |
 |---|---|---|---|
@@ -57,27 +57,23 @@ hora: 01:12
 | `n8n` | 5678 | ✅ up | Dev |
 | `gitea` | 3003 | ✅ up | Dev |
 | `code-server` | 8443 | ✅ up | Dev |
+| `spiderfoot` | 5001 | ✅ UP 🆕 | OSINT |
 
-### 🔜 Pendiente levantar — Bloque Pentest/OSINT/SIEM
+### 🔄 En descarga / pendiente levantar
 
-| Contenedor | Puerto | Prereq | Prioridad |
+| Contenedor | Puerto | Estado | Notas |
 |---|---|---|---|
-| `kali-desktop` | 6901 | ninguno | 🔴 Alta |
-| `spiderfoot` | 5001 | ninguno | 🔴 Alta |
-| `wazuh` | 1514/55000 | `vm.max_map_count=262144` | 🟡 Media |
-| `suricata` | — | modo pasivo en wlan0 | 🟡 Media |
-| `defectdojo` | 8080 | wazuh activo | 🟢 Baja |
+| `kali-pentest` | 6901 | ⏳ Descargando ~35% (1.3GB/3.7GB) | `kasmweb/kali-rolling-desktop:1.16.0` |
+| `wazuh` | 1514/55000 | 🔜 pendiente | prereq `vm.max_map_count=262144` |
+| `suricata` | — | 🔜 pendiente | modo pasivo en wlan0 |
+| `defectdojo` | 8080 | 🔜 pendiente | depende de wazuh |
 
-**Para levantar Kali + SpiderFoot ahora mismo:**
+**Cuando Kali termine de descargar:**
 ```bash
-# prereq Wazuh (solo para wazuh, no para kali/spiderfoot):
-sudo sysctl -w vm.max_map_count=262144
-
-# levantar solo pentest:
-docker compose -f docker/batcueva-pentest.yml up -d
-
-# levantar solo OSINT:
-docker compose -f docker/batcueva-osint.yml up -d
+# Verificar que levantó:
+docker ps | grep kali
+# Acceder:
+# https://100.91.112.32:6901  — usuario: kasm_user  — pass: batcueva2026
 ```
 
 ### Modelos Ollama
@@ -101,6 +97,25 @@ docker compose -f docker/batcueva-osint.yml up -d
 | SSH PasswordAuth | ✅ `no` | ✅ `no` |
 | Puerto 53317 | ✅ cerrado | ✅ cerrado |
 | Clave pública SSH | ❌ pendiente | ❌ pendiente |
+
+### ⚠️ Hallazgos seguridad abiertos
+
+| ID | Hallazgo | Riesgo | Estado |
+|---|---|---|---|
+| SEC-001 | **Puerto 21 FTP abierto en IP pública** `79.116.247.44` | 🟡 MEDIO | ❌ PENDIENTE cerrar |
+
+**SEC-001 — Acción requerida:**
+```bash
+# 1. Entrar al router Digi:
+ip route | grep default   # ver IP del router
+# Abrir: http://192.168.X.X
+# Buscar: USB / FTP Server / Administración → desactivar FTP
+
+# 2. Verificar tras cerrar:
+nmap -Pn --open -p 21 79.116.247.44
+# Resultado esperado: filtered (no open)
+```
+> Ver detalle completo: `inbox/2026-07-01-hallazgo-ftp-puerto21.md`
 
 ---
 
@@ -130,23 +145,35 @@ docker compose -f docker/batcueva-osint.yml up -d
 
 | Repo | Estado |
 |---|---|
-| yggdrasil-dew | ✅ sincronizado — 01-jul commit |
-| docker/madre/docker-compose.fase1.yml | ✅ subido — compose real validado |
-| docker/README.md | ✅ estructura documentada |
-| CONVENCIONES.md | ✅ Regla 14 añadida |
+| yggdrasil-dew | ✅ sincronizado — 01-jul 02:04 CEST |
+| `docker/madre/docker-compose.fase1.yml` | ✅ compose real validado |
+| `osint-stack/docker-compose.kali.yml` | ✅ corregido (bridge, p6901) |
+| `docs/infra/accesos-servicios.md` | ✅ todos los accesos documentados |
+| `inbox/2026-07-01-hallazgo-ftp-puerto21.md` | ✅ hallazgo SEC-001 documentado |
 
 ---
 
 ## 📋 Próximas acciones (orden prioridad)
 
-1. 🔴 **Levantar Kali Desktop** — `docker compose -f docker/batcueva-pentest.yml up -d`
-2. 🔴 **Levantar SpiderFoot** — primer scan OSINT real
-3. 🟡 **Prereq Wazuh** — `sudo sysctl -w vm.max_map_count=262144`
-4. 🟡 **Levantar Wazuh SIEM** — `docker compose -f docker/batcueva-siem.yml up -d`
-5. 🟢 Pipeline RAG — bge-m3 → Qdrant → Open WebUI
-6. 🟢 SSH clave pública ambos nodos
-7. 🟢 Tailscale Redmi A5
+### 🔴 URGENTE — hacer hoy/mañana
+1. **⚠️ SEC-001** — Cerrar FTP puerto 21 en router Digi
+2. **Verificar Kali up** — `docker ps | grep kali` → acceder `https://100.91.112.32:6901`
+3. **Crear cuenta admin Open WebUI** — `http://100.91.112.32:3001`
+
+### 🟡 PRÓXIMO — cuando Kali esté UP
+4. Escaneo red local desde Kali — `nmap -sn 192.168.72.0/24`
+5. Auditar aislamiento redes Docker (todos en bridge = riesgo)
+6. Auditar APIs sin auth: Ollama `:11434`, Qdrant `:6333`
+7. `searchsploit` contra versiones de servicios Docker
+
+### 🟢 PLANIFICADO
+8. Prereq Wazuh — `sudo sysctl -w vm.max_map_count=262144`
+9. Levantar Wazuh SIEM
+10. Pipeline RAG — bge-m3 → Qdrant → Open WebUI
+11. SSH clave pública ambos nodos
+12. Tailscale Redmi A5
+13. Reorganizar filesystem varopc — todos los composes a `~/docker/`
 
 ---
-_Actualizado: 01 jul 2026 01:12 CEST — Perplexity vía MCP_
+_Actualizado: 01 jul 2026 02:04 CEST — Perplexity vía MCP_
 _Ver: [[MASTER-PENDIENTES]] · [[ECOSISTEMA]] · [[diarios/]]_
