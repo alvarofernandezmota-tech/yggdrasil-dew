@@ -1,6 +1,6 @@
-# Estado del Sistema — Yggdrasil Dew
+# Estado del Sistema — Yggdrasil
 
-> Última actualización: 2026-07-01 06:00 CEST
+> Última actualización: 2026-07-02 02:30 CEST
 
 ---
 
@@ -8,40 +8,50 @@
 
 | Nodo | Rol | Estado | IP Tailscale | Conectividad |
 |------|-----|--------|--------------|--------------|
-| **madre** | Servidor principal / AP | ✅ ON | 100.x.x.x | LAN + MadreAP + Tailscale |
-| **theodora** | Workstation dev | ✅ ON | 100.x.x.x | Hotspot Redmi A5 |
-| **Redmi A5** | Hotspot 4G | ✅ ON | — | DIGI ES LTE CA |
-| **iPhone** | Cliente móvil | ✅ ON | 100.x.x.x | MadreAP + Tailscale |
+| **madre** | Servidor principal / AP | ✅ ON | `100.91.112.32` | LAN + MadreAP + Tailscale |
+| **theodora** | Workstation dev | ✅ ON | `100.86.119.102` | Hotspot Redmi A5 |
+| **Redmi A5** | Hotspot 4G | ✅ ON | ⏳ pendiente login | DIGI ES LTE CA |
+| **iPhone** | Cliente móvil | ✅ ON | `100.81.187.99` | MadreAP + Tailscale |
+| **Xiaomi** | Dispositivo adicional | ✅ ON | `100.106.133.70` | Tailscale |
 
 ---
 
 ## Servicios en madre
 
-### Corriendo ✅
+### ✅ Corriendo
 - **Ollama** — systemd service activo
-  - `llama3.2:3b` ✅
-  - `mistral:7b` ✅
+  - `qwen2.5-coder:7b` ✅
+  - `qwen2.5:3b` ✅
+  - `llama3.1:8b` ✅
+  - `bge-m3` ✅
   - `nomic-embed-text` ✅
 - **hostapd** — MadreAP en wlan0 (192.168.72.0/24) ✅
 - **dnsmasq** — DHCP para MadreAP ✅
-- **Tailscale** — nodo activo ✅
-- **SSH** — hardened (ed25519 only, no password) ✅
+- **Tailscale** — nodo activo, 4 nodos conectados ✅
+- **SSH** — hardened (ed25519 only, no password, no root) ✅
 
-### Descargando 🔄 (overnight 2026-07-01)
-- `kasmweb/kali-rolling-desktop:1.16.0` — 2.58GB, tmux `descargas`
-- `wazuh/wazuh-dashboard:4.7.0` — en cola
-- `jasonish/suricata:latest` — en cola
+### Docker Stack principal ✅
+- open-webui (3001) · qdrant (6333) · uptime-kuma (3002)
+- thdora (8000) · thdora-bot · grafana (3000) · prometheus (9090)
+- portainer (9000) · code-server (8443) · n8n (5678)
+- gitea (3003) · spiderfoot (5001)
+- ollama (11434) · ollama-embeddings (11435)
 
-### Imágenes Docker disponibles ✅
-- `pihole/pihole:latest` (150MB)
-- `searxng/searxng:latest` (376MB)
-- `wazuh/wazuh-manager:4.7.0` (1.2GB)
+### Bots de seguridad — yggdrasil-secops ✅/⚠️
+| Bot | Estado | Issues |
+|---|---|---|
+| Watchdog | ✅ Activo | — |
+| Tailscale Monitor | ✅ Activo | ⚠️ Crash-loop cada ~10min (healthcheck timeout) |
+| Network Radar | ✅ Activo | — |
+| Log Guardian | ✅ Activo | ⚠️ Crash-loop cada ~8min (healthcheck estricto) |
+| Local Tripwire | ⚠️ Activo | 🔴 0 archivos vigilados — sin rutas configuradas |
+| Guardian Bot (Telegram) | ✅ Activo | — |
 
-### Pendiente de levantar (mañana)
-- Pihole + SearXNG
-- Wazuh Manager + Dashboard
-- Kali KasmWeb
+### Pendiente de levantar ⏳
+- Wazuh Manager + Dashboard (4.7.0)
 - Suricata IDS
+- Kali KasmWeb (descargando)
+- Pihole + SearXNG
 
 ---
 
@@ -50,10 +60,14 @@
 ### Hardening completado ✅
 - SSH: solo ed25519, passphrase, sin root login, sin password auth
 - `sleep.target suspend.target hibernate.target` — maskeados
-- Firewall: pendiente de revisar reglas
+- Fail2ban activo
+- Watchdog + Log Guardian monitorizando
 
 ### Hallazgos pendientes 🔴
-- **Puerto 21 FTP abierto en router** — ver `infra/hallazgos/2026-07-01-ftp-puerto21.md`
+- **Puerto 21 FTP abierto en router** — CRÍTICO, cerrar en Digi
+- **local_tripwire sin rutas** — 0 archivos vigilados
+- **Healthchecks de bots** — ajustar timeouts (log_guardian_bot, tailscale_monitor)
+- **APIs sin auth**: Ollama `:11434`, Qdrant `:6333` — auditar exposición
 
 ---
 
@@ -65,21 +79,13 @@
 | 2 | Ollama + modelos | ✅ Completada |
 | 3 | Pentest inicial red local | ✅ Completada |
 | 4 | MadreAP WiFi | ✅ Completada |
-| 5 | Docker OSINT Stack | 🔄 Descargando |
-| 6 | Wazuh + Suricata IDS | ⏳ Pendiente |
-| 7 | Pihole + SearXNG | ⏳ Pendiente |
-| 8 | Kali KasmWeb | ⏳ Pendiente |
-
----
-
-## Tmux sessions en madre
-
-```
-fase5: 1 windows
-kali:  1 windows (attached)
-wazuh: 1 windows
-descargas: 1 windows (overnight)
-```
+| 5 | Docker stack principal (thdora, RAG, grafana…) | ✅ Completada |
+| 6 | Bots watchdog y monitorización (yggdrasil-secops) | 🔄 Activo — con issues a corregir |
+| 7 | Wazuh + Suricata IDS | ⏳ Pendiente |
+| 8 | Pihole + SearXNG privacidad | ⏳ Pendiente |
+| 9 | Kali KasmWeb pentest lab | ⏳ Descargando |
+| 10 | AlertManager + Loki — cadena de alertas completa | ⏳ Planeado |
+| 11 | CrowdSec + DefectDojo | ⏳ Planeado |
 
 ---
 
@@ -87,5 +93,16 @@ descargas: 1 windows (overnight)
 
 - **LAN:** 192.168.1.0/24 (router doméstico)
 - **MadreAP:** 192.168.72.0/24 (hostapd en madre)
-- **Tailscale:** 100.x.x.x (red privada)
-- **Hotspot Redmi:** 4G DIGI ES, LTE Carrier Aggregation, canal 2850
+- **Tailscale:** 100.x.x.x (red privada — 4 nodos activos)
+- **Hotspot Redmi:** 4G DIGI ES, LTE Carrier Aggregation
+
+---
+
+## Tmux sessions en madre
+
+```
+fase5:      1 windows
+kali:       1 windows
+wazuh:      1 windows
+descargas:  1 windows
+```

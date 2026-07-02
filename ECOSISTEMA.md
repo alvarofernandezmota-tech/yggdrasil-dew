@@ -1,6 +1,6 @@
 ---
 tags: [ecosistema, repos, docker, arquitectura, mapa]
-fecha-actualizacion: 2026-07-01
+fecha-actualizacion: 2026-07-02
 ---
 
 # 🌳 ECOSISTEMA — Mapa completo del sistema
@@ -29,6 +29,7 @@ fecha-actualizacion: 2026-07-01
 | PC torre | **madre** (`varopc`) | `100.91.112.32` | ✅ activo | Servidor principal |
 | Portátil Acer | **theodora** (`varo12f`) | `100.86.119.102` | ✅ activo | Máquina de trabajo |
 | iPhone 11 | iPhone de varo | `100.81.187.99` | ✅ activo | Móvil personal |
+| Xiaomi | xiaomi | `100.106.133.70` | ✅ activo | Detectado por Tailscale Monitor |
 | Redmi A5 | redmi-a5 | ⏳ pendiente asignar | ⚠️ instalado — falta login | App instalada vía ADB ✅ |
 
 > Cuando el Redmi haga login en Tailscale aparecerá aquí con su IP asignada.
@@ -81,25 +82,6 @@ adb shell dumpsys battery | grep temperature
 
 > **Recomendación:** mantener cargado pero no al 100% constante. Si es posible, limitar carga a 80% desde ajustes MIUI (Ajustes → Batería → Modo de carga).
 
-#### 📶 Forzar subida de datos hotspot (cuando la conexión va lenta)
-```bash
-# Ver interfaz de red activa en madre:
-ip route | head -3
-# Normalmente enp0s20f0u3 = USB tethering del Redmi
-
-# Reiniciar tethering desde ADB si va lento:
-adb shell svc usb setFunctions rndis
-# O desde hotspot:
-adb shell svc wifi disable && sleep 2 && adb shell svc wifi enable
-```
-
-### iPhone 11 — móvil iOS
-| Parámetro | Valor |
-|---|---|
-| IP Tailscale | `100.81.187.99` |
-| Estado | ✅ Tailscale activo |
-| Rol | Acceso remoto · Telegram · monitoring |
-
 ---
 
 ## 🌐 Red — Madre
@@ -128,16 +110,51 @@ adb shell svc wifi disable && sleep 2 && adb shell svc wifi enable
 ### Por dispositivo
 | Dispositivo | Tailscale | Firewall | SSH hardening | Notas |
 |---|---|---|---|---|
-| madre | ✅ | UFW + fail2ban | ⚠️ parcial (clave pública pendiente) | PasswordAuth desactivado |
+| madre | ✅ | UFW + fail2ban | ✅ completado (ed25519, no password, no root) | PasswordAuth desactivado |
 | theodora | ✅ | UFW + fail2ban | ⚠️ parcial | PasswordAuth desactivado |
 | iPhone 11 | ✅ | iOS nativo | — | Solo acceso Tailscale |
 | Redmi A5 | ⚠️ pendiente login | Android nativo | ADB habilitado | Instalar vía USB activo |
 
 ### Pendientes seguridad
-- [ ] **SEC-001** — Cerrar FTP puerto 21 router Digi (`79.116.247.44`)
-- [ ] SSH clave pública madre y theodora
+- [ ] **SEC-001** — Cerrar FTP puerto 21 router Digi (`79.116.247.44`) 🔴 CRÍTICO
+- [ ] SSH clave pública theodora
 - [ ] Desactivar ADB en Redmi cuando no se use
 - [ ] Auditar APIs sin auth: Ollama `:11434`, Qdrant `:6333`
+
+---
+
+## 🤖 Stack de Bots y Monitorización — yggdrasil-secops
+
+> Repo satélite: [yggdrasil-secops](https://github.com/alvarofernandezmota-tech/yggdrasil-secops) (privado)
+> Contiene: Self-OSINT, Canary Tokens, Tripwires y automatización defensiva.
+
+### Bots activos (Docker)
+
+| Bot | Contenedor | Rol | Estado |
+|---|---|---|---|
+| **Yggdrasil Watchdog** | `yggdrasilwatchdog` | Vigila 7 contenedores, reinicia los unhealthy | ✅ Activo |
+| **Tailscale Monitor** | `tailscalemonitor` | Ping ICMP a los 4 nodos VPN, alerta si caen | ✅ Activo |
+| **Network Radar** | `networkradar` + `radarbackup` | Escanea LAN 192.168.1.0/24, detecta nuevos dispositivos | ✅ Activo |
+| **Log Guardian** | `logguardianbot` | Vigila `auth.log`, `ufw.log`, `syslog` — detecta bans fail2ban, bloqueos UFW, SSH brute force | ✅ Activo |
+| **Local Tripwire** | `localtripwire` | Monitoriza integridad de archivos — alerta ante cambios | ⚠️ Activo sin rutas configuradas |
+| **Guardian Bot** | `guardianbot` | Bot Telegram central de notificaciones | ✅ Activo |
+
+### Nodos monitorizados por Tailscale Monitor
+```
+• varo12f  — 100.86.119.102 (theodora)
+• madre    — 100.91.112.32
+• iphone   — 100.81.187.99
+• xiaomi   — 100.106.133.70
+Check interval: 60s | Offline threshold: 3 failed checks
+```
+
+### 🐛 Issues detectados en bots (2026-07-02)
+
+| Bot | Problema | Causa probable | Fix |
+|---|---|---|---|
+| `log_guardian_bot` | Crash-loop cada ~8 min (intento #2) | Healthcheck demasiado estricto o arranque lento | Aumentar `start_period` en docker-compose |
+| `tailscale_monitor` | Reinicia cada ~10 min | Ping ICMP falla durante healthcheck (timeout corto) | Aumentar timeout del healthcheck |
+| `local_tripwire` | **0 archivos bajo vigilancia** | Sin rutas configuradas → healthcheck siempre falla | Configurar `WATCH_PATHS` en el compose |
 
 ---
 
@@ -161,13 +178,31 @@ adb shell svc wifi disable && sleep 2 && adb shell svc wifi enable
 | gitea | 3003 | Git self-hosted |
 | spiderfoot | 5001 | OSINT automatizado |
 
+### 🤖 Bots de seguridad (yggdrasil-secops)
+| Contenedor | Rol | Estado |
+|---|---|---|
+| yggdrasilwatchdog | Watchdog de contenedores | ✅ |
+| tailscalemonitor | Monitor VPN mesh | ✅ |
+| networkradar + radarbackup | Radar LAN | ✅ |
+| logguardianbot | Guardian de logs | ✅ |
+| localtripwire | Tripwire de archivos | ⚠️ sin rutas |
+| guardianbot | Bot Telegram central | ✅ |
+
 ### ⏳ Pendiente levantar
 | Contenedor | Puerto | Estado | Notas |
 |---|---|---|---|
-| kali-pentest | 6901 | ⏳ Descargando (`tmux -t kali`) | `kasmweb/kali-rolling-desktop:1.16.0` 3.7GB |
+| kali-pentest | 6901 | ⏳ Descargando | `kasmweb/kali-rolling-desktop:1.16.0` 3.7GB |
 | wazuh | 1514/55000 | 🔜 pendiente | prereq `vm.max_map_count=262144` |
 | suricata | — | 🔜 pendiente | IDS pasivo wlan0 |
 | defectdojo | 8080 | 🔜 pendiente | depende de wazuh |
+
+### 🔜 Propuestos (próximas fases)
+| Contenedor | Puerto | Por qué añadir |
+|---|---|---|
+| AlertManager | 9093 | Gestiona alertas de Prometheus → enruta a Telegram/thdora-bot |
+| Loki + Promtail | 3100 | Agregador de logs de todos los contenedores → visible en Grafana |
+| CrowdSec | 8080 | Análisis colaborativo IPs maliciosas, complementa fail2ban |
+| Ntfy | 80/443 | Notificaciones push ligeras desde cualquier servicio |
 
 ---
 
@@ -193,18 +228,36 @@ adb shell svc wifi disable && sleep 2 && adb shell svc wifi enable
 | Uptime Kuma | `http://100.91.112.32:3002` | ✅ up |
 | Portainer | `http://100.91.112.32:9000` | ✅ up |
 
+### 🔔 Cadena de alertas (objetivo)
+```
+Suricata → Wazuh → AlertManager → Telegram (thdora-bot)
+                              ↕
+                         Grafana (histórico)
+```
+
 ---
 
 ## 📦 Repos GitHub
 
 | Repo | Descripción | Privado | Estado |
 |---|---|---|---|
-| [yggdrasil-dew](https://github.com/alvarofernandezmota-tech/yggdrasil-dew) | Second brain — conocimiento + diarios | ❌ público | ✅ activo |
+| [yggdrasil-dew](https://github.com/alvarofernandezmota-tech/yggdrasil-dew) | Second brain — conocimiento + diarios + orquestación | ❌ público | ✅ activo |
+| [yggdrasil-secops](https://github.com/alvarofernandezmota-tech/yggdrasil-secops) | Satélite de seguridad — bots watchdog, tripwire, canary tokens, OSINT defensivo | ✅ privado | ✅ activo |
 | [personal](https://github.com/alvarofernandezmota-tech/personal) | Vida personal — finanzas, gym, salud | ❌ público | ✅ activo |
 | [thdora](https://github.com/alvarofernandezmota-tech/thdora) | Bot Telegram + FastAPI + Ollama local | ❌ público | 🔧 handlers pendientes |
 | [local-brain](https://github.com/alvarofernandezmota-tech/local-brain) | Ollama, RAG, embeddings | ✅ privado | 🔧 en desarrollo |
 | [osint-stack](https://github.com/alvarofernandezmota-tech/osint-stack) | SpiderFoot, investigación OSINT | ✅ privado | 🔧 en desarrollo |
 | [ai-toolkit](https://github.com/alvarofernandezmota-tech/ai-toolkit) | Open source AI dev stack | ❌ público | ✅ activo |
+
+### Relación entre repos
+```
+          yggdrasil-dew (cerebro central)
+          ├── thdora          (bot Telegram + FastAPI)
+          ├── local-brain     (RAG + embeddings)
+          ├── osint-stack     (OSINT)
+          ├── yggdrasil-secops ← SATÉLITE (bots watchdog, tripwire, defensa)
+          └── ai-toolkit      (herramientas IA)
+```
 
 ---
 
@@ -217,4 +270,4 @@ adb shell svc wifi disable && sleep 2 && adb shell svc wifi enable
 - [[filosofia]] — principios del sistema
 
 ---
-_Actualizado: 01 jul 2026 05:12 CEST — Perplexity vía MCP_
+_Actualizado: 02 jul 2026 02:30 CEST — Perplexity vía MCP_
