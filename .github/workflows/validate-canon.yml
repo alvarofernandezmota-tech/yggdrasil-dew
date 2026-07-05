@@ -1,0 +1,48 @@
+name: Validate Canon
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'wiki/**'
+      - '**.md'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check frontmatter presence
+        run: |
+          python3 - <<'PY'
+          import os, re, sys
+          errors = []
+          for root, _, files in os.walk('docs'):
+              for f in files:
+                  if f.endswith('.md'):
+                      path = os.path.join(root, f)
+                      content = open(path).read()
+                      if not content.startswith('---'):
+                          errors.append(f'MISSING FRONTMATTER: {path}')
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print('Frontmatter OK')
+          PY
+
+      - name: Check no secrets patterns
+        run: |
+          if grep -rn -E '(TOKEN|SECRET|PASSWORD|PRIVATE_KEY|aws_secret_access_key|BEGIN RSA)' docs/ --include='*.md'; then
+            echo 'CRITICAL: possible secret found in docs/'
+            exit 1
+          fi
+          echo 'No secrets found'
+
+      - name: Check no shebangs in docs
+        run: |
+          if grep -rn '^#!' docs/ --include='*.md'; then
+            echo 'ERROR: shebang found in markdown doc'
+            exit 1
+          fi
+          echo 'No shebangs found'
