@@ -48,3 +48,5 @@ Thumbs.db
 # SMART CONNECTIONS / COPILOT (Obsidian plugins pesados)
 # ============================================================
 .smart-connections/
+.env
+logs/
