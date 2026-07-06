@@ -1,5 +1,7 @@
 # 🧠 yggdrasil-dew
 
+> 👁️ **Empieza siempre por [`DASHBOARD.md`](./DASHBOARD.md)** — una página con el estado de todos los planes activos.
+
 > Cerebro técnico del ecosistema Yggdrasil.
 > **DEW = CÓMO funciona y QUÉ se decidió. Nunca QUÉ existe (eso es WIKI).**
 

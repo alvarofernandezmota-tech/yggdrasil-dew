@@ -19,6 +19,9 @@ status: activo
 ## Ritual de cierre de sesión (cada vez que terminas)
 
 ```bash
+# 0. Abrir DASHBOARD.md y actualizar la columna "Fase actual"
+#    de cualquier plan en el que hayas avanzado hoy
+
 # 1. Actualizar estado del sistema
 # Editar: ESTADO-SISTEMA.md con servicios actuales y fecha
 
@@ -52,6 +55,7 @@ git push
 - [ ] Revisar issues abiertos en Dew, secops y WIKI — priorizar o cerrar los que ya no aplican
 - [ ] Verificar `MASTER-PENDIENTES.md` — ¿sigue siendo la realidad o hay tareas fantasma?
 - [ ] Comprobar `ESTADO-SISTEMA.md` — ¿algún servicio ha cambiado de estado?
+- [ ] Revisar `DASHBOARD.md` — ¿alguna fase avanzó esta semana? Actualizar columna.
 
 **Tiempo estimado:** 15 minutos.
 
@@ -112,9 +116,6 @@ sin intervención manual. Se implementa con Ansible o con scripts propios.
 ### Automatizable en Madre (cron)
 
 ```bash
-# Ejemplo: cron semanal que verifica UFW y Ollama
-# Agregar a crontab: crontab -e
-
 # Lunes 08:00 — verificación de seguridad básica
 0 8 * * 1 /home/alvaro/scripts/weekly-health-check.sh
 ```
@@ -124,25 +125,17 @@ Contenido del script `weekly-health-check.sh` (a crear):
 ```bash
 #!/bin/bash
 # weekly-health-check.sh
-# Verificaciones semanales automatizadas del ecosistema
 
 LOG="/home/alvaro/logs/health-$(date +%Y-%m-%d).log"
 
 echo "=== Health Check $(date) ===" >> "$LOG"
 
-# UFW activo
 ufw status | grep -q 'Status: active' && echo 'UFW: OK' >> "$LOG" || echo 'UFW: ALERTA - inactivo' >> "$LOG"
 
-# Ollama no expuesto a internet (requiere IP publica)
-# nmap -p 11434 <IP-PUBLICA> 2>&1 | grep -q 'closed' && echo 'Ollama: OK' >> "$LOG" || echo 'Ollama: ALERTA - puerto abierto' >> "$LOG"
-
-# Docker servicios activos
 docker ps --format '{{.Names}}:{{.Status}}' >> "$LOG"
 
-# Espacio en disco
 df -h / | tail -1 >> "$LOG"
 
-# Notificar via Thdora si hay alertas
 grep -q 'ALERTA' "$LOG" && curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage" \
   -d chat_id="$CHAT_ID" \
   -d text="⚠️ Health check con alertas: $(cat $LOG | grep ALERTA)" > /dev/null
@@ -150,7 +143,7 @@ grep -q 'ALERTA' "$LOG" && curl -s -X POST "https://api.telegram.org/bot$TELEGRA
 echo 'Health check completado' >> "$LOG"
 ```
 
-### Automatizable a futuro (bot Thdora o nuevo bot)
+### Automatizable a futuro (Thdora o nuevo bot)
 - Ejecutar el ritual de cierre de sesión vía comando Telegram
 - Notificar cuando hay PRs de Dependabot sin revisar >3 días
 - Recordatorio semanal de los lunes con el checklist
