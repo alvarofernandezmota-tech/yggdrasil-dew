@@ -18,6 +18,17 @@ Si un archivo explica conceptos, relaciones y decisiones → NO es un repo opera
 
 ---
 
+## Regla de diarios
+
+- **Un diario = un día.** Máximo un archivo por fecha.
+- **Nombre siempre:** `YYYY-MM-DD.md` — sin sufijos, sin `noche`, sin números.
+- **Ubicación siempre:** `yggdrasil-dew/docs/diarios/` — nunca en WIKI ni en otro repo.
+- Si hay varias sesiones en el día → secciones separadas dentro del **mismo archivo**.
+- Si el agente crea un fragmento durante la sesión → lo integra en el diario del día antes de cerrar.
+- Ver plantilla: [`docs/canon/PLANTILLA-DIARIO.md`](./docs/canon/PLANTILLA-DIARIO.md)
+
+---
+
 ## WIKI---PERSONAL — qué va aquí
 
 **Sí:**
@@ -130,4 +141,4 @@ status: vigente | borrador | deprecado
 
 ---
 
-_Última actualización: 2026-07-05 · Perplexity-MCP_
+_Última actualización: 2026-07-06 · Fase 3 Plan de Alineación · Perplexity-MCP_
