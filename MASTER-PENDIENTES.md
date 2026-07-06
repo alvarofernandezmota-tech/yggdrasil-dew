@@ -2,7 +2,7 @@
 tipo: backlog
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-06-01 00:00 CEST
-actualizado: 2026-07-06 22:52 CEST
+actualizado: 2026-07-07 00:53 CEST
 ruta: MASTER-PENDIENTES.md
 tags: [backlog, pendientes, tareas]
 status: vigente
@@ -53,6 +53,51 @@ status: vigente
 
 ---
 
+## 🟡 PENDIENTE DE DECISIÓN — Análisis Grok 2026-07-07
+
+> Análisis realizado con raw de WIKI---PERSONAL + yggdrasil-dew.
+> Revisar con Claude mañana tras ejecutar lo indispensable del DASHBOARD.
+> Decidir qué entra en el plan y qué se archiva.
+
+### Hallazgos principales
+
+- `docs/` de WIKI---PERSONAL es un **vertedero temporal** de la migración hacia Dew
+- ~15-20 documentos solapan temas centrales (arquitectura, normas, estado, flujos)
+- Los 4 archivos `COPILOT-*` son los más urgentes de archivar — confunden a cualquier IA
+- `NORMAS-ECOSISTEMA.md` + `CONVENCIONES.md` en docs/ duplican versiones canónicas
+
+### Candidatos a migrar/archivar (decidir con Claude)
+
+| Archivo en WIKI/docs/ | Acción propuesta | Razón |
+|---|---|---|
+| `NORMAS-ECOSISTEMA.md` | Mover a Dew o eliminar | Duplica `NORMAS.md` |
+| `CONVENCIONES.md` (docs/) | Consolidar | Existe versión raíz y en Dew |
+| `CORE-ECOSISTEMA.md` | Mover a Dew canon/ | Contenido estructural central |
+| `PLAN-MAESTRO-ECOSISTEMA.md` | Mover | Duplica planes de Dew |
+| `VISION-COMPLETA-ECOSISTEMA.md` | Migrar o stub | Mejor en Dew architecture |
+| `ROADMAP.md`, `SPRINTS.md` | Mover | Duplican `ROADMAP-MASTER.md` |
+| `COPILOT-BRIEFING-COMPLETO.md` | Archivar | Muy volátil y operativo |
+| `COPILOT-MASTER-TASKLIST.md` | Archivar | Posible duplicado de TASKS |
+| `COPILOT-MASTER-TASKS.md` | Archivar | Posible duplicado de TASKLIST |
+| `COPILOT-CONTEXT.md` | Archivar o mover a Dew | Muy operativo |
+| `OPERATIONAL-PLAYBOOK.md` | Mover a Dew | Operativa → Dew |
+| `flujo-sesiones.md` | Mover a Dew | Operativa → Dew |
+| `protocolo-sesiones.md` | Mover a Dew | Operativa → Dew |
+
+### Mantener en WIKI
+
+- `hardware.md`, `filosofia.md` — contenido puramente conceptual
+- `AGENT.md`, `CONTEXT.md` — contexto para agentes IA
+- Fichas de islas y relaciones
+
+### Acción pendiente
+
+- [ ] Revisar análisis Grok con Claude mañana (tras DASHBOARD)
+- [ ] Decidir si se genera script de migración (`git mv` + commits)
+- [ ] Consolidar documentos de estado en DASHBOARD como única fuente viva
+
+---
+
 ## 🟢 PRÓXIMAMENTE
 
 - [ ] Fase 2 secops: purga duplicados internos
@@ -83,4 +128,4 @@ status: vigente
 
 ---
 
-_Actualizado: 2026-07-06 22:52 CEST · Perplexity-MCP · Verificación en vivo Claude_
+_Actualizado: 2026-07-07 00:53 CEST · Análisis Grok integrado · Perplexity-MCP_
