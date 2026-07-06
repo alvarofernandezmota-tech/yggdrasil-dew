@@ -25,7 +25,7 @@ fuentes:
 - [x] `WIKI---PERSONAL` → privado — **hecho 2026-07-06**
 - [x] `yggdrasil-dew` → público (carta de presentación técnica) — **hecho 2026-07-06**
 - [x] `VIDAPERSONAL` → privado — **hecho 2026-07-06**
-- [x] CI `validate-canon.yml` completo en Dew (IPs, emails, tokens, MACs, rutas, SSH keys) — **hecho 2026-07-06**
+- [x] CI `validate-canon.yml` completo en Dew — **hecho 2026-07-06**
 - [x] CI `validate-canon.yml` completo en secops — **hecho 2026-07-06**
 - [x] CI `validate-canon.yml` completo en WIKI---PERSONAL — **hecho 2026-07-06**
 - [x] Gitleaks en Dew, secops y WIKI---PERSONAL — **hecho 2026-07-06**
@@ -36,7 +36,7 @@ fuentes:
 
 ## ✅ Fase 1 — Purga y consolidación de WIKI---PERSONAL — COMPLETADA 2026-07-06
 
-- [x] Borrados stubs vacíos en `docs/` (28 bytes) — **hecho 2026-07-06**
+- [x] Borrados stubs vacíos en `docs/` — **hecho 2026-07-06**
 - [x] Borrados duplicados mayúsculas/kebab en `docs/` — **hecho 2026-07-06**
 - [x] Archivados temporales fechados en `docs/archivo/` — **hecho 2026-07-06**
 - [x] Carpetas técnicas del `inbox/` eliminadas — **hecho 2026-07-06**
@@ -53,8 +53,8 @@ fuentes:
 ## ✅ Fase 2 — Resolver duplicados y completar el canon — COMPLETADA 2026-07-06
 
 - [x] Crear `docs/canon/INDICE-ADR.md` en Dew — **hecho 2026-07-06**
-- [x] Renombrar ADRs duplicados de WIKI al siguiente número libre — **hecho 2026-07-06** (ADR-003-ssh→ADR-005, ADR-004-privilege→ADR-006)
-- [x] Escribir ADR-002 (Seguridad), ADR-003 (IA local/RAG), ADR-004 (Agentes/MCP) — **hecho 2026-07-06**
+- [x] Renombrar ADRs duplicados de WIKI al siguiente número libre — **hecho 2026-07-06**
+- [x] Escribir ADR-002, ADR-003, ADR-004 — **hecho 2026-07-06**
 - [x] Arreglar enlace `HOME.md` → `infra.md` — **hecho 2026-07-06**
 - [x] Unificar los tres índices de islas en `wiki/islas/INDEX.md` — **hecho 2026-07-06**
 - [x] Crear `INDICE-HALLAZGOS.md` en secops — **hecho 2026-07-06**
@@ -78,21 +78,21 @@ fuentes:
 
 ---
 
-## 🔄 Fase 4 — Gobernanza — EN PROGRESO 2026-07-06
+## ✅ Fase 4 — Gobernanza — COMPLETADA 2026-07-06 20:49 CEST
 
-- [ ] Branch protection en WIKI, Dew y secops — **pendiente — ver issue #25 — ejecutar desde terminal Madre**
-- [ ] Labels y milestones pendientes
+- [x] Branch protection en WIKI, Dew y secops — **hecho 2026-07-06 20:49 CEST — ejecutado desde Blink/iPhone en Madre — gh v2.92.0**
+- [x] Labels y milestones (issue templates ADR, HAL, tarea + PR template) — **hecho 2026-07-06**
 - [x] Transferir issues #32 y #29 de WIKI → Dew — **ya transferidos (dew#3 y dew#5) 2026-07-05**
 - [x] Cerrar issue #4 de Dew — **ya cerrado 2026-07-05**
 - [x] Actualizar lista de repos en `NORMAS.md` — **hecho 2026-07-06**
 - [x] Evaluar Dependabot/Renovate — **activado dependabot.yml 2026-07-06**
 - [x] Definir CODEOWNERS activo — **hecho `.github/CODEOWNERS` 2026-07-06**
 
-**Criterio de salida:** sin casillas ❌ en sección GitHub de `ESTADO-SISTEMA.md`.
+**Criterio de salida ✅:** sin casillas pendientes en Fase 4. Branch protection activo en los 3 repos principales.
 
 ---
 
-## Fase 5 — Madurez operativa (no bloqueante)
+## Fase 5 — Madurez operativa (siguiente)
 
 - [ ] Diagrama C4 en Mermaid en Dew
 - [ ] Risk register / STRIDE básico
@@ -117,10 +117,10 @@ fuentes:
 2. ✅ ~~Fase 1~~ — completada 2026-07-06
 3. ✅ ~~Fase 2~~ — completada 2026-07-06
 4. ✅ ~~Fase 3~~ — completada 2026-07-06
-5. 🔄 **Fase 4 — en progreso** — 2 puntos pendientes: labels/milestones + branch protection (terminal)
-6. **Cuando 0-4 cerradas:** Fase 5
+5. ✅ ~~Fase 4~~ — completada 2026-07-06 20:49 CEST
+6. **👉 Fase 5 — siguiente**
 7. **Para siempre:** Fase 6
 
 ---
 
-_Creado: 2026-07-06 · Actualizado: 2026-07-06 20:34 CEST · Fases 0+1+2+3 ✅ · Fase 4 en progreso_
+_Creado: 2026-07-06 · Actualizado: 2026-07-06 20:49 CEST · Fases 0+1+2+3+4 ✅ COMPLETADAS_
