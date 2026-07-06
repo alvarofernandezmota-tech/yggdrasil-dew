@@ -23,6 +23,7 @@ fuentes:
 ## Fase 0 — Seguridad (crítico, primeras 24-48h)
 
 - [x] `WIKI---PERSONAL` → privado — **hecho 2026-07-06**
+- [x] `yggdrasil-dew` → público (carta de presentación técnica) — **hecho 2026-07-06**
 - [ ] `VIDAPERSONAL` → privado
 - [ ] Decidir sobre las IPs Tailscale ya commiteadas en `ESTADO-SISTEMA.md`: con el repo en privado el riesgo baja mucho; opcional purgar historial con `git filter-repo` si quieres borrar el rastro por completo
 - [ ] Ampliar `.github/workflows/validate-canon.yml` (Dew) para detectar IPv4 y emails, no solo `TOKEN|SECRET|PASSWORD|PRIVATE_KEY|BEGIN RSA`:
@@ -36,6 +37,8 @@ fuentes:
 - [ ] Evaluar `gitleaks` como pre-commit hook en los 3 repos activos (sugerencia Perplexity, más robusto que el regex casero)
 
 **Criterio de salida:** los 3 repos activos (WIKI, Dew, secops) tienen CI de secretos+IP+email, y los dos repos con datos personales están en privado.
+
+**Progreso: 2/7 ✅**
 
 ---
 
@@ -134,4 +137,4 @@ fuentes:
 
 ---
 
-_Creado: 2026-07-06 · Basado en auditorías de Claude y Perplexity del 2026-07-05_
+_Creado: 2026-07-06 · Actualizado: 2026-07-06 12:50 CEST · Basado en auditorías de Claude y Perplexity del 2026-07-05_
