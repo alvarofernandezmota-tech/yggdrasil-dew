@@ -1,48 +1,195 @@
 name: Validate Canon
 
 on:
+  push:
+    paths:
+      - 'docs/**'
+      - '**.md'
   pull_request:
     paths:
       - 'docs/**'
-      - 'wiki/**'
       - '**.md'
 
 jobs:
-  validate:
+
+  # ─────────────────────────────────────────────
+  # JOB 1: Frontmatter
+  # ─────────────────────────────────────────────
+  frontmatter:
+    name: "📝 Frontmatter"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check frontmatter presence
+      - name: Validar frontmatter en docs/
         run: |
           python3 - <<'PY'
-          import os, re, sys
+          import os, sys
+          REQUIRED = ['title', 'tipo', 'creado', 'actualizado', 'status']
           errors = []
           for root, _, files in os.walk('docs'):
               for f in files:
-                  if f.endswith('.md'):
-                      path = os.path.join(root, f)
-                      content = open(path).read()
-                      if not content.startswith('---'):
-                          errors.append(f'MISSING FRONTMATTER: {path}')
+                  if not f.endswith('.md'):
+                      continue
+                  path = os.path.join(root, f)
+                  content = open(path, encoding='utf-8', errors='ignore').read()
+                  if not content.startswith('---'):
+                      errors.append(f'MISSING FRONTMATTER: {path}')
+                      continue
+                  for field in REQUIRED:
+                      if f'{field}:' not in content.split('---')[1]:
+                          errors.append(f'MISSING FIELD [{field}]: {path}')
           if errors:
               print('\n'.join(errors))
               sys.exit(1)
           print('Frontmatter OK')
           PY
 
-      - name: Check no secrets patterns
-        run: |
-          if grep -rn -E '(TOKEN|SECRET|PASSWORD|PRIVATE_KEY|aws_secret_access_key|BEGIN RSA)' docs/ --include='*.md'; then
-            echo 'CRITICAL: possible secret found in docs/'
-            exit 1
-          fi
-          echo 'No secrets found'
+  # ─────────────────────────────────────────────
+  # JOB 2: Contenido sensible
+  # ─────────────────────────────────────────────
+  sensitive-content:
+    name: "🔴 Contenido sensible"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: Check no shebangs in docs
+      - name: Scan secretos y datos sensibles
         run: |
-          if grep -rn '^#!' docs/ --include='*.md'; then
-            echo 'ERROR: shebang found in markdown doc'
+          python3 - <<'PY'
+          import os, re, sys
+
+          PATTERNS = [
+              # 🔴 CRÍTICO — Tokens y claves
+              (r'(?i)(token|api[_-]?key|secret[_-]?key|access[_-]?key|auth[_-]?token)\s*[=:]\s*[\'"]?[\w\-]{8,}', 'TOKEN/API KEY'),
+              (r'(?i)(password|passwd|pwd)\s*[=:]\s*[\'"]?.{4,}', 'PASSWORD'),
+              (r'-----BEGIN (RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----', 'PRIVATE KEY'),
+              (r'(?i)bearer\s+[a-zA-Z0-9\-._~+/]{20,}', 'BEARER TOKEN'),
+              (r'(?i)aws_secret_access_key\s*[=:]', 'AWS SECRET KEY'),
+              (r'ghp_[a-zA-Z0-9]{36}', 'GITHUB TOKEN'),
+              (r'xox[baprs]-[0-9a-zA-Z\-]{10,}', 'SLACK TOKEN'),
+
+              # 🔴 CRÍTICO — IPs privadas y Tailscale
+              (r'\b192\.168\.\d{1,3}\.\d{1,3}\b', 'IP PRIVADA (192.168.x.x)'),
+              (r'\b10\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', 'IP PRIVADA (10.x.x.x)'),
+              (r'\b172\.(1[6-9]|2[0-9]|3[01])\.\d{1,3}\.\d{1,3}\b', 'IP PRIVADA (172.16-31.x.x)'),
+              (r'\b100\.(6[4-9]|[7-9][0-9]|1[01][0-9]|12[0-7])\.\d{1,3}\.\d{1,3}\b', 'IP TAILSCALE (100.64-127.x.x)'),
+
+              # 🔴 CRÍTICO — Emails
+              (r'[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}', 'EMAIL'),
+
+              # 🟠 ALTO — Hashes de contraseñas
+              (r'\$2[aby]\$\d{2}\$[./A-Za-z0-9]{53}', 'BCRYPT HASH'),
+              (r'\$argon2(i|d|id)\$', 'ARGON2 HASH'),
+              (r'sha256:[a-fA-F0-9]{64}', 'SHA256 HASH'),
+
+              # 🟠 ALTO — MACs de red
+              (r'\b([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}\b', 'MAC ADDRESS'),
+
+              # 🟠 ALTO — Rutas absolutas personales
+              (r'/home/[a-zA-Z0-9_\-]+/', 'RUTA ABSOLUTA /home/'),
+              (r'/root/', 'RUTA ABSOLUTA /root/'),
+              (r'/Users/[a-zA-Z0-9_\-]+/', 'RUTA ABSOLUTA /Users/ (macOS)'),
+
+              # 🟠 ALTO — Claves SSH en formato comentario
+              (r'ssh-(rsa|ed25519|ecdsa)\s+AAAA[0-9A-Za-z+/]{20,}', 'SSH PUBLIC KEY'),
+          ]
+
+          SKIP_DIRS = {'.git', '.github', 'node_modules'}
+          SKIP_FILES = {'NORMAS.md', 'CONVENCIONES.md'}  # docs de reglas pueden mencionar patrones
+
+          errors = []
+          for root, dirs, files in os.walk('.'):
+              dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
+              for f in files:
+                  if not f.endswith('.md'):
+                      continue
+                  if f in SKIP_FILES:
+                      continue
+                  path = os.path.join(root, f)
+                  try:
+                      content = open(path, encoding='utf-8', errors='ignore').read()
+                  except Exception:
+                      continue
+                  for pattern, label in PATTERNS:
+                      matches = re.findall(pattern, content)
+                      if matches:
+                          errors.append(f'[{label}] en {path}: {len(matches)} coincidencia(s)')
+
+          if errors:
+              print('\n❌ '.join(['\n❌ '] + errors))
+              sys.exit(1)
+          print('✅ Sin contenido sensible detectado')
+          PY
+
+  # ─────────────────────────────────────────────
+  # JOB 3: Calidad de docs
+  # ─────────────────────────────────────────────
+  doc-quality:
+    name: "🟡 Calidad docs"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: No shebangs en markdown
+        run: |
+          if grep -rn '^#!' docs/ --include='*.md' 2>/dev/null; then
+            echo 'ERROR: shebang encontrado en markdown'
             exit 1
           fi
-          echo 'No shebangs found'
+          echo 'Sin shebangs'
+
+      - name: No enlaces rotos internos obvios
+        run: |
+          python3 - <<'PY'
+          import os, re, sys
+          errors = []
+          for root, _, files in os.walk('docs'):
+              for f in files:
+                  if not f.endswith('.md'):
+                      continue
+                  path = os.path.join(root, f)
+                  content = open(path, encoding='utf-8', errors='ignore').read()
+                  # Detectar enlaces relativos que apuntan a archivos .md inexistentes
+                  links = re.findall(r'\[.*?\]\(([^)]+\.md[^)]*)\)', content)
+                  for link in links:
+                      if link.startswith('http') or link.startswith('#'):
+                          continue
+                      # Resolver ruta relativa
+                      target = os.path.normpath(os.path.join(root, link.split('#')[0]))
+                      if not os.path.exists(target):
+                          errors.append(f'ENLACE ROTO: {path} -> {link}')
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print('Enlaces internos OK')
+          PY
+
+      - name: Archivos sin actualizar (borrador > 30 dias)
+        run: |
+          python3 - <<'PY'
+          import os, re, sys
+          from datetime import datetime, date
+          warnings = []
+          today = date.today()
+          for root, _, files in os.walk('docs'):
+              for f in files:
+                  if not f.endswith('.md'):
+                      continue
+                  path = os.path.join(root, f)
+                  content = open(path, encoding='utf-8', errors='ignore').read()
+                  if 'status: borrador' not in content:
+                      continue
+                  m = re.search(r'actualizado:\s*(\d{4}-\d{2}-\d{2})', content)
+                  if not m:
+                      continue
+                  updated = datetime.strptime(m.group(1), '%Y-%m-%d').date()
+                  days = (today - updated).days
+                  if days > 30:
+                      warnings.append(f'BORRADOR VIEJO ({days} dias): {path}')
+          if warnings:
+              print('\n'.join(warnings))
+              # Warning, no falla el CI
+          else:
+              print('Sin borradores viejos')
+          PY
