@@ -23,82 +23,68 @@ fuentes:
 ## ✅ Fase 0 — Seguridad — COMPLETADA 2026-07-06
 
 - [x] `WIKI---PERSONAL` → privado — **hecho 2026-07-06**
-- [x] `yggdrasil-dew` → público (carta de presentación técnica) — **hecho 2026-07-06**
+- [x] `yggdrasil-dew` → público — **hecho 2026-07-06**
 - [x] `VIDAPERSONAL` → privado — **hecho 2026-07-06**
-- [x] CI `validate-canon.yml` completo en Dew — **hecho 2026-07-06**
-- [x] CI `validate-canon.yml` completo en secops — **hecho 2026-07-06**
-- [x] CI `validate-canon.yml` completo en WIKI---PERSONAL — **hecho 2026-07-06**
-- [x] Gitleaks en Dew, secops y WIKI---PERSONAL — **hecho 2026-07-06**
+- [x] CI `validate-canon.yml` en Dew, secops y WIKI — **hecho 2026-07-06**
+- [x] Gitleaks en Dew, secops y WIKI — **hecho 2026-07-06**
 
-**Criterio de salida ✅:** los 3 repos activos tienen CI de secretos+IP+email+gitleaks, y los repos con datos personales están en privado.
+**Criterio de salida ✅:** los 3 repos activos tienen CI de secretos+IP+email+gitleaks.
 
 ---
 
 ## ✅ Fase 1 — Purga y consolidación de WIKI---PERSONAL — COMPLETADA 2026-07-06
 
-- [x] Borrados stubs vacíos en `docs/` — **hecho 2026-07-06**
-- [x] Borrados duplicados mayúsculas/kebab en `docs/` — **hecho 2026-07-06**
-- [x] Archivados temporales fechados en `docs/archivo/` — **hecho 2026-07-06**
-- [x] Carpetas técnicas del `inbox/` eliminadas — **hecho 2026-07-06**
-- [x] `_archivo/AUDITORIA-COMPLETA-YGG.md` migrado → `dew/docs/auditorias/` — **hecho 2026-07-06**
-- [x] `_archivo/` eliminado de WIKI — **hecho 2026-07-06**
-- [x] `diarios/` eliminado de WIKI — **hecho 2026-07-06**
-- [x] `hardware/` eliminado de WIKI — **hecho 2026-07-06**
-- [x] `.obsidian/` ya en `.gitignore` — **hecho 2026-07-06**
+- [x] Stubs vacíos, duplicados, temporales eliminados — **hecho 2026-07-06**
+- [x] `_archivo/`, `diarios/`, `hardware/` eliminados de WIKI — **hecho 2026-07-06**
+- [x] `.obsidian/` en `.gitignore` — **hecho 2026-07-06**
 
-**Criterio de salida ✅:** raíz de WIKI solo contiene `wiki/`, `docs/`, `inbox/`, `.github/` y archivos de raíz.
+**Criterio de salida ✅:** raíz de WIKI solo contiene `wiki/`, `docs/`, `inbox/`, `.github/`.
 
 ---
 
 ## ✅ Fase 2 — Resolver duplicados y completar el canon — COMPLETADA 2026-07-06
 
-- [x] Crear `docs/canon/INDICE-ADR.md` en Dew — **hecho 2026-07-06**
-- [x] Renombrar ADRs duplicados de WIKI al siguiente número libre — **hecho 2026-07-06**
-- [x] Escribir ADR-002, ADR-003, ADR-004 — **hecho 2026-07-06**
-- [x] Arreglar enlace `HOME.md` → `infra.md` — **hecho 2026-07-06**
-- [x] Unificar los tres índices de islas en `wiki/islas/INDEX.md` — **hecho 2026-07-06**
-- [x] Crear `INDICE-HALLAZGOS.md` en secops — **hecho 2026-07-06**
-- [x] Documentar estado de HAL-001, HAL-003, HAL-006 — **hecho 2026-07-06**
-- [x] Service ownership matrix en `docs/canon/` — **hecho 2026-07-06**
-- [x] Resolver ambigüedad `thdora` vs `THDORA-PERSONAL` — **hecho 2026-07-06**
+- [x] `INDICE-ADR.md`, ADR-002/003/004, ownership matrix — **hecho 2026-07-06**
+- [x] Colisiones ADR-003/004 en WIKI renumerados a ADR-005/006 — **hecho 2026-07-06**
+- [x] `INDICE-HALLAZGOS.md` + HAL-001/003/006 documentados — **hecho 2026-07-06**
+- [x] HOME.md, islas INDEX, thdora ambigüedad resuelta — **hecho 2026-07-06**
 
-**Criterio de salida ✅:** cero ADR o HAL duplicados; un índice de islas; ownership matrix existe.
+**Criterio de salida ✅:** cero ADR o HAL duplicados; ownership matrix existe.
 
 ---
 
 ## ✅ Fase 3 — Consolidar diarios — COMPLETADA 2026-07-06
 
-- [x] Fusionar los 11 archivos `2026-07-05-noche-*.md` en uno solo — **hecho 2026-07-06**
-- [x] Añadir regla: un diario = un día, máximo 1 archivo por fecha — **hecho 2026-07-06**
-- [x] Borrar `diarios/` (WIKI) — ya hecho en Fase 1
-- [x] Crear plantilla estándar `docs/canon/PLANTILLA-DIARIO.md` — **hecho 2026-07-06**
-- [x] Crear diario de hoy `docs/diarios/2026-07-06.md` — **hecho 2026-07-06**
+- [x] 11 fragmentos `noche-*.md` fusionados en `2026-07-05.md` — **hecho 2026-07-06**
+- [x] Regla un diario = un día en NORMAS.md — **hecho 2026-07-06**
+- [x] `PLANTILLA-DIARIO.md` en `docs/canon/` — **hecho 2026-07-06**
 
-**Criterio de salida ✅:** máximo 1 archivo de diario por día; plantilla publicada en `docs/canon/`.
+**Criterio de salida ✅:** máximo 1 archivo de diario por día; plantilla en canon.
 
 ---
 
 ## ✅ Fase 4 — Gobernanza — COMPLETADA 2026-07-06 20:49 CEST
 
-- [x] Branch protection en WIKI, Dew y secops — **hecho 2026-07-06 20:49 CEST — ejecutado desde Blink/iPhone en Madre — gh v2.92.0**
-- [x] Labels y milestones (issue templates ADR, HAL, tarea + PR template) — **hecho 2026-07-06**
-- [x] Transferir issues #32 y #29 de WIKI → Dew — **ya transferidos (dew#3 y dew#5) 2026-07-05**
-- [x] Cerrar issue #4 de Dew — **ya cerrado 2026-07-05**
-- [x] Actualizar lista de repos en `NORMAS.md` — **hecho 2026-07-06**
-- [x] Evaluar Dependabot/Renovate — **activado dependabot.yml 2026-07-06**
-- [x] Definir CODEOWNERS activo — **hecho `.github/CODEOWNERS` 2026-07-06**
+- [x] Branch protection `main` en Dew, WIKI, secops — **hecho 2026-07-06 20:49 CEST — Blink/iPhone — gh v2.92.0**
+- [x] Issue templates (ADR, hallazgo, tarea) + PR template — **hecho 2026-07-06**
+- [x] NORMAS.md con 14 repos documentados — **hecho 2026-07-06**
+- [x] Dependabot activo — **hecho 2026-07-06**
+- [x] CODEOWNERS con 5 rutas críticas — **hecho 2026-07-06**
+- [x] Issues transferidos y cerrados — **hecho 2026-07-05/06**
 
-**Criterio de salida ✅:** sin casillas pendientes en Fase 4. Branch protection activo en los 3 repos principales.
+**Criterio de salida ✅:** branch protection activo en 3 repos. Sin casillas pendientes.
 
 ---
 
-## Fase 5 — Madurez operativa (siguiente)
+## ✅ Fase 5 — Madurez operativa — COMPLETADA 2026-07-06 20:55 CEST
 
-- [ ] Diagrama C4 en Mermaid en Dew
-- [ ] Risk register / STRIDE básico
-- [ ] Testing strategy para scripts críticos
-- [ ] Runbooks estandarizados
-- [ ] Evaluar Ansible para Madre
+- [x] Diagrama C4 (Context + Container) en Mermaid — **hecho 2026-07-06** — `docs/arquitectura/C4-ecosistema.md`
+- [x] Risk register / STRIDE básico — **hecho 2026-07-06** — `docs/seguridad/STRIDE-risk-register.md` — 14 amenazas
+- [x] Testing strategy para scripts críticos — **hecho 2026-07-06** — `docs/canon/TESTING-STRATEGY.md` — BATS
+- [x] Runbooks estandarizados — **hecho 2026-07-06** — `docs/canon/RUNBOOKS.md` — 6 runbooks (RB-001 a RB-006)
+- [x] Evaluar Ansible para Madre — **hecho 2026-07-06** — `docs/infra/ansible/ANSIBLE-EVALUACION.md` — RECOMENDADO
+
+**Criterio de salida ✅:** 5 documentos de madurez operativa creados y en canon.
 
 ---
 
@@ -108,6 +94,7 @@ fuentes:
 - Cada PR: CI valida frontmatter + secretos + IPs/emails
 - Revisión mensual: borradores >30 días → promocionar o archivar
 - Nuevo ADR o HAL: registrar primero en el índice central
+- STRIDE: revisar trimestralmente o tras incidente
 
 ---
 
@@ -118,9 +105,9 @@ fuentes:
 3. ✅ ~~Fase 2~~ — completada 2026-07-06
 4. ✅ ~~Fase 3~~ — completada 2026-07-06
 5. ✅ ~~Fase 4~~ — completada 2026-07-06 20:49 CEST
-6. **👉 Fase 5 — siguiente**
-7. **Para siempre:** Fase 6
+6. ✅ ~~Fase 5~~ — completada 2026-07-06 20:55 CEST
+7. **♾️ Fase 6 — mantenimiento permanente**
 
 ---
 
-_Creado: 2026-07-06 · Actualizado: 2026-07-06 20:49 CEST · Fases 0+1+2+3+4 ✅ COMPLETADAS_
+_Creado: 2026-07-06 · Actualizado: 2026-07-06 20:55 CEST · ✅ Fases 0+1+2+3+4+5 COMPLETADAS_
