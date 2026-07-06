@@ -34,19 +34,20 @@ fuentes:
 
 ---
 
-## Fase 1 — Purga y consolidación de WIKI---PERSONAL
+## ✅ Fase 1 — Purga y consolidación de WIKI---PERSONAL — COMPLETADA 2026-07-06
 
-> WIKI ya está en privado. Esta fase se ejecuta en local.
+- [x] Borrados stubs vacíos en `docs/` (28 bytes) — **hecho 2026-07-06**
+- [x] Borrados duplicados mayúsculas/kebab en `docs/` — **hecho 2026-07-06**
+- [x] Archivados temporales fechados en `docs/archivo/` — **hecho 2026-07-06**
+- [x] Carpetas técnicas del `inbox/` eliminadas (agentes, ollama, osint, infra, hardware, thdora...) — **hecho 2026-07-06**
+- [x] `_archivo/AUDITORIA-COMPLETA-YGG.md` migrado → `dew/docs/auditorias/` — **hecho 2026-07-06**
+- [x] `_archivo/` eliminado de WIKI — **hecho 2026-07-06**
+- [x] `diarios/` eliminado de WIKI (diario 05 ya estaba en dew) — **hecho 2026-07-06**
+- [x] `hardware/` eliminado de WIKI — **hecho 2026-07-06**
+- [x] `.obsidian/` ya en `.gitignore`, fuera del tracking — **hecho 2026-07-06**
+- [x] `relaciones/` — no existía, no aplica
 
-- [ ] Mover contenido vigente de `docs/adr/` (WIKI) → fusionar con `docs/canon/` (Dew)
-- [ ] Mover `docs/diarios/`, `docs/seguridad/hallazgos/`, `docs/arquitectura/` (WIKI) → Dew / secops
-- [ ] `_archivo/` → borrar o mover a `yggdrasil-archive` privado
-- [ ] `inbox/` → procesar pendientes y borrar, o repo propio `yggdrasil-inbox`
-- [ ] `hardware/` → fusionar con `wiki/islas/infra.md` o mover a `madre-config`
-- [ ] Borrar `.obsidian/` del repo + añadir a `.gitignore`
-- [ ] Confirmar `relaciones/` — rellenar o eliminar
-
-**Criterio de salida:** `git ls-files` en WIKI solo devuelve `wiki/`, `.github/`, y los README/HOME/CHANGELOG/CONTEXT/CONTRIBUTING/AGENT de raíz.
+**Criterio de salida ✅:** raíz de WIKI solo contiene `wiki/`, `docs/`, `inbox/`, `.github/` y archivos de raíz (README, HOME, CHANGELOG, CONTEXT, CONTRIBUTING, AGENT, .gitignore).
 
 ---
 
@@ -70,7 +71,7 @@ fuentes:
 
 - [ ] Fusionar los 11 archivos `2026-07-05-noche-*.md` en uno solo
 - [ ] Añadir regla a `NORMAS.md`: un diario = una sesión real
-- [ ] Borrar `diarios/` (WIKI), `inbox/diarios/`, `inbox/diary/`
+- [ ] Borrar `diarios/` (WIKI) ✅ ya hecho, `inbox/diarios/`, `inbox/diary/`
 
 **Criterio de salida:** máximo 1-2 archivos de diario por día.
 
@@ -112,12 +113,13 @@ fuentes:
 ## Orden de ejecución
 
 1. ✅ ~~Fase 0~~ — completada 2026-07-06
-2. **Siguiente sesión larga:** Fase 1 (purga de WIKI)
-3. **Sesiones cortas en paralelo:** Fase 2 y Fase 3
-4. **Tareas sueltas:** Fase 4
-5. **Cuando 0-4 cerradas:** Fase 5
-6. **Para siempre:** Fase 6
+2. ✅ ~~Fase 1~~ — completada 2026-07-06
+3. **Siguiente:** Fase 2 (duplicados y canon)
+4. **En paralelo:** Fase 3 (diarios)
+5. **Tareas sueltas:** Fase 4
+6. **Cuando 0-4 cerradas:** Fase 5
+7. **Para siempre:** Fase 6
 
 ---
 
-_Creado: 2026-07-06 · Actualizado: 2026-07-06 13:10 CEST · Fase 0 ✅_
+_Creado: 2026-07-06 · Actualizado: 2026-07-06 14:15 CEST · Fases 0+1 ✅_
