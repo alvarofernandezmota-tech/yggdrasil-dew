@@ -39,15 +39,14 @@ fuentes:
 - [x] Borrados stubs vacíos en `docs/` (28 bytes) — **hecho 2026-07-06**
 - [x] Borrados duplicados mayúsculas/kebab en `docs/` — **hecho 2026-07-06**
 - [x] Archivados temporales fechados en `docs/archivo/` — **hecho 2026-07-06**
-- [x] Carpetas técnicas del `inbox/` eliminadas (agentes, ollama, osint, infra, hardware, thdora...) — **hecho 2026-07-06**
+- [x] Carpetas técnicas del `inbox/` eliminadas — **hecho 2026-07-06**
 - [x] `_archivo/AUDITORIA-COMPLETA-YGG.md` migrado → `dew/docs/auditorias/` — **hecho 2026-07-06**
 - [x] `_archivo/` eliminado de WIKI — **hecho 2026-07-06**
-- [x] `diarios/` eliminado de WIKI (diario 05 ya estaba en dew) — **hecho 2026-07-06**
+- [x] `diarios/` eliminado de WIKI — **hecho 2026-07-06**
 - [x] `hardware/` eliminado de WIKI — **hecho 2026-07-06**
-- [x] `.obsidian/` ya en `.gitignore`, fuera del tracking — **hecho 2026-07-06**
-- [x] `relaciones/` — no existía, no aplica
+- [x] `.obsidian/` ya en `.gitignore` — **hecho 2026-07-06**
 
-**Criterio de salida ✅:** raíz de WIKI solo contiene `wiki/`, `docs/`, `inbox/`, `.github/` y archivos de raíz (README, HOME, CHANGELOG, CONTEXT, CONTRIBUTING, AGENT, .gitignore).
+**Criterio de salida ✅:** raíz de WIKI solo contiene `wiki/`, `docs/`, `inbox/`, `.github/` y archivos de raíz.
 
 ---
 
@@ -56,7 +55,7 @@ fuentes:
 - [x] Crear `docs/canon/INDICE-ADR.md` en Dew — **hecho 2026-07-06**
 - [x] Renombrar ADRs duplicados de WIKI al siguiente número libre — **hecho 2026-07-06** (ADR-003-ssh→ADR-005, ADR-004-privilege→ADR-006)
 - [x] Escribir ADR-002 (Seguridad), ADR-003 (IA local/RAG), ADR-004 (Agentes/MCP) — **hecho 2026-07-06**
-- [x] Arreglar enlace `HOME.md` → `infra.md` (no `infraestructura.md`) — **hecho 2026-07-06**
+- [x] Arreglar enlace `HOME.md` → `infra.md` — **hecho 2026-07-06**
 - [x] Unificar los tres índices de islas en `wiki/islas/INDEX.md` — **hecho 2026-07-06**
 - [x] Crear `INDICE-HALLAZGOS.md` en secops — **hecho 2026-07-06**
 - [x] Documentar estado de HAL-001, HAL-003, HAL-006 — **hecho 2026-07-06**
@@ -67,15 +66,15 @@ fuentes:
 
 ---
 
-## Fase 3 — Consolidar diarios
+## ✅ Fase 3 — Consolidar diarios — COMPLETADA 2026-07-06
 
-- [ ] Fusionar los 11 archivos `2026-07-05-noche-*.md` en uno solo
-- [ ] Añadir regla a `NORMAS.md`: un diario = una sesión real
-- [ ] Borrar `diarios/` (WIKI) ✅ ya hecho, `inbox/diarios/`, `inbox/diary/`
-- [ ] Crear plantilla estándar de diario diario con secciones por isla
-- [ ] Crear diario de hoy: `2026-07-06.md` con todo lo hecho en la sesión
+- [x] Fusionar los 11 archivos `2026-07-05-noche-*.md` en uno solo — **hecho 2026-07-06**
+- [x] Añadir regla: un diario = un día, máximo 1 archivo por fecha — **hecho 2026-07-06**
+- [x] Borrar `diarios/` (WIKI) — ya hecho en Fase 1
+- [x] Crear plantilla estándar `docs/canon/PLANTILLA-DIARIO.md` — **hecho 2026-07-06**
+- [x] Crear diario de hoy `docs/diarios/2026-07-06.md` — **hecho 2026-07-06**
 
-**Criterio de salida:** máximo 1-2 archivos de diario por día; plantilla publicada en `docs/canon/`.
+**Criterio de salida ✅:** máximo 1 archivo de diario por día; plantilla publicada en `docs/canon/`.
 
 ---
 
@@ -117,11 +116,11 @@ fuentes:
 1. ✅ ~~Fase 0~~ — completada 2026-07-06
 2. ✅ ~~Fase 1~~ — completada 2026-07-06
 3. ✅ ~~Fase 2~~ — completada 2026-07-06
-4. **Siguiente:** Fase 3 (diarios)
-5. **Tareas sueltas:** Fase 4
+4. ✅ ~~Fase 3~~ — completada 2026-07-06
+5. **Siguiente:** Fase 4 (gobernanza)
 6. **Cuando 0-4 cerradas:** Fase 5
 7. **Para siempre:** Fase 6
 
 ---
 
-_Creado: 2026-07-06 · Actualizado: 2026-07-06 19:51 CEST · Fases 0+1+2 ✅_
+_Creado: 2026-07-06 · Actualizado: 2026-07-06 20:05 CEST · Fases 0+1+2+3 ✅_
