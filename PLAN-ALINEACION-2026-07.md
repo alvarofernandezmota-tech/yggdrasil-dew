@@ -78,15 +78,15 @@ fuentes:
 
 ---
 
-## Fase 4 — Gobernanza
+## 🔄 Fase 4 — Gobernanza — EN PROGRESO 2026-07-06
 
-- [ ] Branch protection en WIKI, Dew y secops
+- [ ] Branch protection en WIKI, Dew y secops — **pendiente — ver issue #25 — ejecutar desde terminal Madre**
 - [ ] Labels y milestones pendientes
-- [ ] Transferir issues #32 y #29 de WIKI → Dew
-- [ ] Cerrar issue #4 de Dew
-- [ ] Actualizar lista de repos en `NORMAS.md`
-- [ ] Evaluar Dependabot/Renovate
-- [ ] Definir CODEOWNERS activo
+- [x] Transferir issues #32 y #29 de WIKI → Dew — **ya transferidos (dew#3 y dew#5) 2026-07-05**
+- [x] Cerrar issue #4 de Dew — **ya cerrado 2026-07-05**
+- [x] Actualizar lista de repos en `NORMAS.md` — **hecho 2026-07-06**
+- [x] Evaluar Dependabot/Renovate — **activado dependabot.yml 2026-07-06**
+- [x] Definir CODEOWNERS activo — **hecho `.github/CODEOWNERS` 2026-07-06**
 
 **Criterio de salida:** sin casillas ❌ en sección GitHub de `ESTADO-SISTEMA.md`.
 
@@ -117,10 +117,10 @@ fuentes:
 2. ✅ ~~Fase 1~~ — completada 2026-07-06
 3. ✅ ~~Fase 2~~ — completada 2026-07-06
 4. ✅ ~~Fase 3~~ — completada 2026-07-06
-5. **Siguiente:** Fase 4 (gobernanza)
+5. 🔄 **Fase 4 — en progreso** — 2 puntos pendientes: labels/milestones + branch protection (terminal)
 6. **Cuando 0-4 cerradas:** Fase 5
 7. **Para siempre:** Fase 6
 
 ---
 
-_Creado: 2026-07-06 · Actualizado: 2026-07-06 20:05 CEST · Fases 0+1+2+3 ✅_
+_Creado: 2026-07-06 · Actualizado: 2026-07-06 20:34 CEST · Fases 0+1+2+3 ✅ · Fase 4 en progreso_
