@@ -2,7 +2,7 @@
 tipo: backlog
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-06-01 00:00 CEST
-actualizado: 2026-07-07 00:53 CEST
+actualizado: 2026-07-07 01:04 CEST
 ruta: MASTER-PENDIENTES.md
 tags: [backlog, pendientes, tareas]
 status: vigente
@@ -50,6 +50,9 @@ status: vigente
 - [ ] Cerrar SSH puerto 22 público en Madre — Tier 2
 - [ ] Cerrar FTP puerto 21 en router Digi `http://192.168.1.1` — Tier 2
 - [ ] Verificar Ollama :11434: `nmap -p 11434 <IP-publica>` — Tier 2
+- [ ] **⚠️ WIKI descoordinada con Dew** — WIKI no se actualiza automáticamente cuando cambia Dew.
+  Al cierre de cada sesión activa en Dew, actualizar manualmente `CONTEXT.md` y `HOME.md` en WIKI.
+  Solución futura: workflow de sync automático WIKI←Dew (decidir con Claude).
 
 ---
 
@@ -65,6 +68,7 @@ status: vigente
 - ~15-20 documentos solapan temas centrales (arquitectura, normas, estado, flujos)
 - Los 4 archivos `COPILOT-*` son los más urgentes de archivar — confunden a cualquier IA
 - `NORMAS-ECOSISTEMA.md` + `CONVENCIONES.md` en docs/ duplican versiones canónicas
+- **WIKI y Dew no están sincronizados** — no existe mecanismo automático
 
 ### Candidatos a migrar/archivar (decidir con Claude)
 
@@ -95,6 +99,7 @@ status: vigente
 - [ ] Revisar análisis Grok con Claude mañana (tras DASHBOARD)
 - [ ] Decidir si se genera script de migración (`git mv` + commits)
 - [ ] Consolidar documentos de estado en DASHBOARD como única fuente viva
+- [ ] Diseñar workflow de sync automático WIKI←Dew
 
 ---
 
@@ -123,9 +128,9 @@ status: vigente
 - [x] PLAN-ALINEACION-SECOPS-2026-07.md + PLAN-DEUDA-TECNICA-2026-07.md
 - [x] DASHBOARD.md + enlace en README
 - [x] Conflicto merge `docs/diario-2026-07-06.md` — resuelto con rebase
-- [x] ADR-005/006 creados en WIKI (ssh-github-sin-passphrase, seguridad-privilege-explosion)
+- [x] ADR-005/006 creados en WIKI (ssh-github-sin-passphrase, seguridad-privilege-exploration)
 - [x] `docs/adr/` de WIKI purgada — colisión ADR-003/004 resuelta renombrando
 
 ---
 
-_Actualizado: 2026-07-07 00:53 CEST · Análisis Grok integrado · Perplexity-MCP_
+_Actualizado: 2026-07-07 01:04 CEST · Sync WIKI←Dew añadido como pendiente · Perplexity-MCP_
