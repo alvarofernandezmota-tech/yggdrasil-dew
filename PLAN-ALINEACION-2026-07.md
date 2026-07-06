@@ -15,7 +15,7 @@ fuentes:
 # 🧭 Plan de Alineación — Ecosistema Yggdrasil
 
 > Plan ejecutable derivado de las dos auditorías en `docs/auditorias/`.
-> Este documento NO repite el análisis — solo define qué hacer, en qué orden y con qué criterio de "hecho".
+> Este documento NO repite el análisis — solo define qué hacer, en qué orden y con qué criterio de “hecho”.
 > Actualizar el checkbox y la fecha al completar cada punto.
 
 ---
@@ -51,19 +51,19 @@ fuentes:
 
 ---
 
-## Fase 2 — Resolver duplicados y completar el canon
+## ✅ Fase 2 — Resolver duplicados y completar el canon — COMPLETADA 2026-07-06
 
-- [ ] Crear `docs/canon/INDICE-ADR.md` en Dew
-- [ ] Renombrar ADRs duplicados de WIKI al siguiente número libre
-- [ ] Escribir ADR-002 (Seguridad), ADR-003 (IA local/RAG), ADR-004 (Agentes/MCP)
-- [ ] Arreglar enlace `HOME.md` → `infra.md` (no `infraestructura.md`)
-- [ ] Unificar los tres índices de islas en `wiki/islas/INDEX.md`
-- [ ] Crear `INDICE-HALLAZGOS.md` en secops
-- [ ] Documentar estado de HAL-001, HAL-003, HAL-006
-- [ ] Service ownership matrix en `docs/canon/`
-- [ ] Resolver ambigüedad `thdora` vs `THDORA-PERSONAL`
+- [x] Crear `docs/canon/INDICE-ADR.md` en Dew — **hecho 2026-07-06**
+- [x] Renombrar ADRs duplicados de WIKI al siguiente número libre — **hecho 2026-07-06** (ADR-003-ssh→ADR-005, ADR-004-privilege→ADR-006)
+- [x] Escribir ADR-002 (Seguridad), ADR-003 (IA local/RAG), ADR-004 (Agentes/MCP) — **hecho 2026-07-06**
+- [x] Arreglar enlace `HOME.md` → `infra.md` (no `infraestructura.md`) — **hecho 2026-07-06**
+- [x] Unificar los tres índices de islas en `wiki/islas/INDEX.md` — **hecho 2026-07-06**
+- [x] Crear `INDICE-HALLAZGOS.md` en secops — **hecho 2026-07-06**
+- [x] Documentar estado de HAL-001, HAL-003, HAL-006 — **hecho 2026-07-06**
+- [x] Service ownership matrix en `docs/canon/` — **hecho 2026-07-06**
+- [x] Resolver ambigüedad `thdora` vs `THDORA-PERSONAL` — **hecho 2026-07-06**
 
-**Criterio de salida:** cero ADR o HAL duplicados; un índice de islas; ownership matrix existe.
+**Criterio de salida ✅:** cero ADR o HAL duplicados; un índice de islas; ownership matrix existe.
 
 ---
 
@@ -72,8 +72,10 @@ fuentes:
 - [ ] Fusionar los 11 archivos `2026-07-05-noche-*.md` en uno solo
 - [ ] Añadir regla a `NORMAS.md`: un diario = una sesión real
 - [ ] Borrar `diarios/` (WIKI) ✅ ya hecho, `inbox/diarios/`, `inbox/diary/`
+- [ ] Crear plantilla estándar de diario diario con secciones por isla
+- [ ] Crear diario de hoy: `2026-07-06.md` con todo lo hecho en la sesión
 
-**Criterio de salida:** máximo 1-2 archivos de diario por día.
+**Criterio de salida:** máximo 1-2 archivos de diario por día; plantilla publicada en `docs/canon/`.
 
 ---
 
@@ -114,12 +116,12 @@ fuentes:
 
 1. ✅ ~~Fase 0~~ — completada 2026-07-06
 2. ✅ ~~Fase 1~~ — completada 2026-07-06
-3. **Siguiente:** Fase 2 (duplicados y canon)
-4. **En paralelo:** Fase 3 (diarios)
+3. ✅ ~~Fase 2~~ — completada 2026-07-06
+4. **Siguiente:** Fase 3 (diarios)
 5. **Tareas sueltas:** Fase 4
 6. **Cuando 0-4 cerradas:** Fase 5
 7. **Para siempre:** Fase 6
 
 ---
 
-_Creado: 2026-07-06 · Actualizado: 2026-07-06 14:15 CEST · Fases 0+1 ✅_
+_Creado: 2026-07-06 · Actualizado: 2026-07-06 19:51 CEST · Fases 0+1+2 ✅_
