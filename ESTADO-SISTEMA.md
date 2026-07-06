@@ -2,31 +2,43 @@
 tipo: estado
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-07-05 12:00 CEST
-actualizado: 2026-07-05 20:55 CEST
+actualizado: 2026-07-06 21:48 CEST
 ruta: ESTADO-SISTEMA.md
 tags: [estado, sistema, operativo]
 status: vigente
 ---
 
-# 📊 ESTADO DEL SISTEMA — 2026-07-05 (noche)
+# 📊 ESTADO DEL SISTEMA — 2026-07-06 (cierre de sesión)
 
 ---
 
 ## Repos
 
-| Repo | Estado | Último cambio |
+| Repo | Visibilidad | Estado | Último cambio |
+|---|---|---|---|
+| `yggdrasil-dew` | 🟢 Público | ✅ Fases 0-5 completadas · gobernanza activa · branch protection | 2026-07-06 21:48 CEST |
+| `WIKI---PERSONAL` | 🔒 Privado | ✅ Organizado · purga completada · branch protection | 2026-07-06 |
+| `yggdrasil-secops` | ⚠️ PÚBLICO | 🔴 DEBE SER PRIVADO — pendiente mañana | 2026-07-06 |
+| `THDORA-PERSONAL` | 🔒 Privado | ⚠️ HAL-001+003 pendiente rotación token | 2026-07-06 |
+| `madre-config` | 🔒 Privado | 🟡 README + scripts, pendiente organizar | 2026-07-05 |
+| `VIDAPERSONAL` | 🔒 Privado | ✅ Privado | 2026-07-06 |
+| `formacion-tech` | 🔒 Privado | 🟡 estructura 9 carpetas, contenido pendiente | 2026-07-05 |
+| `acer-config` | 🔒 Privado | 🔴 vacío — pendiente estructura | — |
+| `ollama-stack` | 🔒 Privado | 🔴 pendiente estructurar | — |
+| `local-brain` | 🔒 Privado | 🔴 pendiente estructurar | — |
+| `investigacion-ia` | 🔒 Privado | 🔴 pendiente crear estructura | — |
+| `dev-labs` | 🔒 Privado | 🔴 vacío sandbox | — |
+
+---
+
+## Planes activos
+
+| Plan | Ruta | Estado |
 |---|---|---|
-| `yggdrasil-dew` | 🟢 organizado, docs/diarios/ activo | 2026-07-05 noche |
-| `WIKI---PERSONAL` | 🟢 wiki/ estructurada, convenciones escritas | 2026-07-05 noche |
-| `madre-config` | 🟡 README + scripts sesión creados, pendiente organizar más | 2026-07-05 |
-| `yggdrasil-secops` | 🟡 HAL-001 FTP documentado, hallazgo pendiente remediar | 2026-07-05 |
-| `formacion-tech` | 🟡 estructura 9 carpetas creada, contenido pendiente | 2026-07-05 |
-| `THDORA-PERSONAL` | 🟡 Fase 10 multi-usuario bloqueada | 2026-07-03 |
-| `acer-config` | 🔴 vacío — pendiente crear estructura | — |
-| `ollama-stack` | 🔴 pendiente estructurar | — |
-| `local-brain` | 🔴 pendiente estructurar | — |
-| `investigacion-ia` | 🔴 pendiente crear estructura | — |
-| `dev-labs` | 🔴 vacío sandbox | — |
+| Plan de Alineación (Dew/WIKI) | `PLAN-ALINEACION-2026-07.md` | ✅ Fases 0-5 COMPLETADAS |
+| Plan de Alineación (secops) | `PLAN-ALINEACION-SECOPS-2026-07.md` | 🟡 Fase 0 pendiente |
+| Plan Deuda Técnica | `PLAN-DEUDA-TECNICA-2026-07.md` | 🔴 Tier 1+2 urgentes |
+| Mantenimiento continuo | `docs/canon/FASE6-MANTENIMIENTO.md` | ♾️ Permanente |
 
 ---
 
@@ -34,12 +46,12 @@ status: vigente
 
 | Servicio | Estado |
 |---|---|
-| Madre (Torre Arch Linux / Omarchy) | ✅ operativa · IP Tailscale `100.91.112.32` |
+| Madre (Torre Arch Linux) | ✅ operativa · IP Tailscale `100.91.112.32` |
 | Acer (Arch Linux + Hyprland) | ✅ operativo · IP Tailscale `100.86.119.102` |
-| iPhone 11 | ✅ Perplexity MCP activo |
-| Tailscale | ✅ Madre + Acer conectados |
+| iPhone 11 (Blink) | ✅ Perplexity MCP activo · acceso SSH Madre vía Tailscale |
+| Tailscale | ✅ Madre + Acer + iPhone conectados |
 | Docker (Madre) | ✅ corriendo |
-| Ollama (Madre) | ✅ operativo |
+| Ollama (Madre) | ✅ operativo · :11434 — exposición internet SIN VERIFICAR |
 | Portainer | ✅ activo |
 | Grafana + Prometheus | ✅ activo |
 | Nextcloud + Vaultwarden | ✅ activo |
@@ -51,43 +63,29 @@ status: vigente
 
 ## Seguridad
 
-| Hallazgo | Estado | Referencia |
-|---|---|---|
-| HAL-001 FTP puerto 21 router Digi | 🔴 EXPUESTO — remediar urgente | `yggdrasil-secops/hallazgos/HAL-001` |
-| SSH `PasswordAuthentication` | ⚠️ Pendiente deshabilitar | `madre-config/docs/ssh-hardening.md` |
-| SSH `PermitRootLogin no` | ⚠️ Pendiente | `madre-config/docs/ssh-hardening.md` |
+| ID | Hallazgo | Estado | Prioridad |
+|---|---|---|---|
+| HAL-001 | Token Telegram THDORA en historial git | 🔴 PENDIENTE ROTACIÓN | Tier 1 — mañana |
+| HAL-003 | Segunda exposición token Telegram | 🔴 PENDIENTE ROTACIÓN | Tier 1 — mañana |
+| HAL-006 | Puerto 21 FTP abierto en router | 🔴 ABIERTO | Tier 2 — esta semana |
+| T-007 | Ollama :11434 exposición internet | ⚠️ SIN VERIFICAR | Tier 2 — esta semana |
+| T-012 | SSH puerto 22 público abierto | 🔴 PENDIENTE CERRAR | Tier 2 — esta semana |
+| T-009 | Thdora sin logging estructurado | 🟡 Tier 3 | Este mes |
 
 ---
 
-## GitHub
+## Gobernanza GitHub (post-Fase 4)
 
-| Herramienta | Estado |
-|---|---|
-| CODEOWNERS (WIKI) | ✅ activo |
-| PR template (WIKI) | ✅ activo |
-| Issue forms (WIKI, 4 tipos) | ✅ activos |
-| Actions: context-reminder | ✅ activo |
-| Actions: lint-commits | ✅ activo |
-| Actions: inbox-health | ✅ activo |
-| Labels personalizados (22) | ❌ pendiente crear |
-| Milestones | ❌ pendiente |
-| Branch protection | ❌ pendiente |
-| `WIKI---PERSONAL` privada | ❌ pendiente (hacer manual en Settings) |
-| `VIDAPERSONAL` privada | ❌ pendiente (hacer manual en Settings) |
+| Herramienta | Dew | WIKI | secops |
+|---|---|---|---|
+| Branch protection `main` | ✅ activo | ✅ activo | ✅ activo |
+| CI validate-canon | ✅ activo | ✅ activo | ✅ activo |
+| CI gitleaks | ✅ activo | ✅ activo | ✅ activo |
+| CODEOWNERS | ✅ activo | — | — |
+| Dependabot | ✅ lunes 09:00 | — | — |
+| Issue templates | ✅ ADR+HAL+tarea | — | ✅ hal.yml |
+| PR template | ✅ activo | — | — |
 
 ---
 
-## Issues pendientes de transferir (desde terminal Madre)
-
-```bash
-# Desde ~/WIKI---PERSONAL
-gh issue transfer 32 alvarofernandezmota-tech/yggdrasil-dew
-gh issue transfer 29 alvarofernandezmota-tech/yggdrasil-dew
-
-# Desde ~/yggdrasil-dew
-gh issue close 4 --comment 'Resuelto: diary/ consolidado en docs/diarios/' --reason completed
-```
-
----
-
-_Actualizado: 2026-07-05 20:55 CEST · Perplexity-MCP_
+_Actualizado: 2026-07-06 21:48 CEST · Perplexity-MCP · Cierre de sesión_
