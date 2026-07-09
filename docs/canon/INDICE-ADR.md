@@ -1,59 +1,42 @@
 ---
-title: Índice de ADRs — Ecosistema Yggdrasil
+title: Índice de ADRs
 tipo: indice
-author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
-creado: 2026-07-06
-actualizado: 2026-07-09
-ruta: docs/canon/INDICE-ADR.md
-tags: [indice, adr, canon, arquitectura]
+creado: 2026-07-05
+actualizado: 2026-07-09 23:25 CEST
 status: vigente
+ruta: docs/canon/INDICE-ADR.md
+tags: [adr, indice, canon]
 ---
 
-# 📋 Índice de ADRs — Ecosistema Yggdrasil
+# Índice de ADRs
 
-> **¿Qué es un ADR?**  
-> Architecture Decision Record — documento que registra UNA decisión técnica o de ecosistema: qué se decidió, por qué, qué alternativas se descartaron y qué consecuencias tiene.  
-> Son **permanentes e inmutables** una vez en estado `vigente`. Si la decisión cambia, se crea un ADR nuevo que depreca al anterior.
-
-> **¿Para qué sirven en este ecosistema?**  
-> Para que cualquier persona (o yo mismo en 6 meses) entienda POR QUÉ el sistema está construido así, y para construir un portafolio técnico que demuestre que cada decisión tiene una razón y una alternativa evaluada. No se toman decisiones por inercia.
-
----
-
-## Registro
-
-| ID | Título | Estado | Fecha | Repo |
-|----|--------|--------|-------|------|
-| [ADR-001](./ADR-001-platform-stack.md) | Platform Stack de Madre | ✅ vigente | 2026-07-05 | yggdrasil-dew |
-| [ADR-002](./ADR-002-seguridad-ecosistema.md) | Modelo de Seguridad del Ecosistema | ✅ vigente | 2026-07-06 | yggdrasil-dew |
-| [ADR-003](./ADR-003-ia-local-rag.md) | Estrategia IA Local y RAG | ✅ vigente | 2026-07-06 | yggdrasil-dew |
-| [ADR-004](./ADR-004-agentes-mcp.md) | Arquitectura de Agentes y MCP | ✅ vigente | 2026-07-06 | yggdrasil-dew |
-| [ADR-005](./ADR-005-ssh-github-sin-passphrase.md) | Clave SSH GitHub sin passphrase | ✅ vigente | 2026-06-25 | WIKI---PERSONAL |
-| [ADR-006](./ADR-006-seguridad-privilege-explosion.md) | Seguridad — privilege explosion | ✅ vigente | 2026-06-25 | WIKI---PERSONAL |
+> Architectural Decision Records del ecosistema Yggdrasil.
+> Cada decisión técnica importante queda registrada aquí.
 
 ---
 
-## Estados posibles
-
-| Estado | Significado |
-|--------|-------------|
-| 🟡 borrador | En redacción, no vinculante aún |
-| ✅ vigente | Decisión activa, el sistema la sigue |
-| ⚠️ deprecado | Superado por otro ADR (se indica cuál) |
-| ❌ rechazado | Evaluado y descartado, se documenta por qué |
-
----
-
-## Convención de nombres
-
-```
-ADR-NNN-titulo-kebab-case.md
-```
-
-- Numeración correlativa, nunca reutilizar un número
-- Si una decisión cambia → nuevo ADR con referencia al anterior
-- Un ADR = una decisión. Si hay dos decisiones → dos ADRs
+| # | Título | Estado | Fecha |
+|---|---|---|---|
+| [ADR-001](./ADR-001-platform-stack.md) | Platform Stack | ✅ Vigente | 2026-07-05 |
+| [ADR-002](./ADR-002-seguridad-ecosistema.md) | Seguridad Ecosistema | ✅ Vigente | 2026-07-05 |
+| [ADR-003](./ADR-003-ia-local-rag.md) | IA Local RAG | ✅ Vigente | 2026-07-05 |
+| [ADR-004](./ADR-004-agentes-mcp.md) | Agentes MCP | ✅ Vigente | 2026-07-05 |
+| [ADR-005](./ADR-005-gobierno-ecosistema.md) | Gobierno del Ecosistema a Escala | ✅ Vigente | 2026-07-09 |
 
 ---
 
-_Actualizado: 2026-07-09 · Perplexity-MCP — añadidos ADR-005 y ADR-006_
+## Cuándo crear un ADR
+
+- Decisión que afecta >1 repo o isla
+- Cambio de herramienta o tecnología principal
+- Nuevo modelo de trabajo o gobierno
+- Decisión que alguien podría cuestionar en el futuro
+
+## Formato
+
+Usar `docs/canon/PLANTILLA-HAL.md` como base.
+Nombrar: `ADR-NNN-titulo-kebab-case.md`
+
+---
+
+_Actualizado: 2026-07-09 23:25 CEST · Perplexity-MCP_
