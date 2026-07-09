@@ -2,7 +2,7 @@
 tipo: dashboard
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-07-06
-actualizado: 2026-07-06
+actualizado: 2026-07-09 15:53 CEST
 ruta: DASHBOARD.md
 tags: [dashboard, planes, estado, navegacion]
 status: vigente
@@ -11,7 +11,7 @@ status: vigente
 # 👁️ Dashboard — Ecosistema Yggdrasil
 
 > Una página. Todo el contexto. Actualizar la columna `Fase actual` al avanzar.
-> Última verificación en vivo: 2026-07-06 noche (Claude + Perplexity MCP)
+> Última verificación en vivo: 2026-07-09 15:53 CEST (Perplexity MCP)
 
 ---
 
@@ -19,58 +19,77 @@ status: vigente
 
 | Plan | Qué resuelve | Fase actual | Próxima acción |
 |---|---|---|---|
-| [PLAN-ALINEACION-2026-07.md](./PLAN-ALINEACION-2026-07.md) | Estructura Dew + WIKI | ⚠️ **CASI completo** — ADR-005/006 sin indexar | Añadir ADR-005/006 a `INDICE-ADR.md` |
-| [PLAN-ALINEACION-SECOPS-2026-07.md](./PLAN-ALINEACION-SECOPS-2026-07.md) | Estructura secops + colisión IDs | 🔴 Fase 0 pendiente | Poner secops en **privado** |
-| [PLAN-DEUDA-TECNICA-2026-07.md](./PLAN-DEUDA-TECNICA-2026-07.md) | Token, puertos, logging, tests | 🔴 Tier 1+2 urgentes | Rotar **token Telegram** |
+| [PLAN-ALINEACION-2026-07.md](./PLAN-ALINEACION-2026-07.md) | Estructura Dew + WIKI | ⚠️ CASI completo — ADR-005/006 sin indexar | Añadir ADR-005/006 a `INDICE-ADR.md` |
+| [PLAN-ALINEACION-SECOPS-2026-07.md](./PLAN-ALINEACION-SECOPS-2026-07.md) | Estructura secops + colisión IDs | 🟠 En progreso — rutas y symlinks resueltos | Poner secops en **privado** (clic manual) |
+| [PLAN-DEUDA-TECNICA-2026-07.md](./PLAN-DEUDA-TECNICA-2026-07.md) | Token, puertos, logging, tests | 🟠 Tier 1 parcial — token THDORA rotado ✅ | smartctl HDD + watchdog logs |
 | [docs/canon/FASE6-MANTENIMIENTO.md](./docs/canon/FASE6-MANTENIMIENTO.md) | Mantenimiento permanente | ♾️ Activo siempre | Ritual cierre de sesión |
 
 ---
 
-## Mañana — en este orden
+## Sesión actual 2026-07-09 — completado hoy ✅
 
-- [ ] **1. Rotar token Telegram THDORA** — BotFather → Revoke → nuevo token en `.env` de Madre — [Tier 1](./PLAN-DEUDA-TECNICA-2026-07.md)
-- [ ] **2. `yggdrasil-secops` → privado** — GitHub Settings → Danger Zone — contiene IPs reales expuestas
-- [ ] **3. `smartctl -a /dev/sdX`** en Madre — HAL-005 HDD en riesgo
-- [ ] **4. `docker logs yggdrasil_watchdog`** + restart — unhealthy 4 días
-- [ ] **5. Añadir ADR-005/006 a `INDICE-ADR.md`** — confirmar con: `grep -E 'ADR-00[5-6]' docs/canon/INDICE-ADR.md`
-- [ ] **6. Verificar WIKI `docs/adr/`** — `ls ~/WIKI---PERSONAL/docs/adr/ 2>/dev/null || echo limpio`
-  - Si limpio → mover `PLAN-ALINEACION-2026-07.md` a `docs/completados/`
-- [ ] **7. SSH/FTP/Ollama** — [Tier 2](./PLAN-DEUDA-TECNICA-2026-07.md)
+- [x] Token Telegram THDORA rotado — BotFather revoke + nuevo token en `.env` + stack recreado
+- [x] Symlink `~/repos/thdora` → `/home/varopc/Projects/thdora` creado
+- [x] Symlink `~/repos/yggdrasil-secops` → `/home/varopc/yggdrasil-secops` creado
+- [x] Archivos basura 0-bytes THDORA limpiados
+- [x] Rutas físicas reales de THDORA y secops verificadas con `docker inspect`
+- [x] `ownership-matrix.md` actualizado con rutas reales + columna capa Docker
+- [x] `MAPA-REPOS-MADRE.md` en WIKI actualizado con sección secops completa
+- [x] `docs/auditorias/thdora-personal.md` creada
+- [x] `docs/auditorias/yggdrasil-secops.md` creada
+- [x] `docs/canon/PLANTILLA-REPO-ONBOARDING.md` creada
+- [x] Diario 2026-07-09 documentado con incidentes, pérdida de datos y lecciones
 
 ---
 
-## Pendientes confirmados en vivo esta noche (Claude)
+## Pendiente — continuar esta sesión
 
-| ID | Problema | Estado verificado |
+- [ ] **1. `yggdrasil-secops` → privado** — GitHub web → Settings → Danger Zone (clic manual tuyo)
+- [ ] **2. `sudo smartctl -a /dev/sda`** en Madre — HAL-005 HDD en riesgo
+- [ ] **3. `docker logs --tail 300 yggdrasil_watchdog`** + restart
+- [ ] **4. Abrir HAL nuevo** — tercera exposición secretos THDORA
+- [ ] **5. Añadir ADR-005/006 a `INDICE-ADR.md`**
+- [ ] **6. Verificar `/home/varopc/docker-compose.yml` raíz** — qué servicios define
+- [ ] **7. SSH/FTP/Ollama** — Tier 2 deuda técnica
+
+---
+
+## Incidentes activos
+
+| ID | Problema | Estado |
 |---|---|---|
-| HAL-001 | Token Telegram THDORA en historial git | 🔴 Sin rotar — mañana Tier 1 |
-| HAL-001💥 | Colisión: HAL-001 = Telegram en Dew Y FTP en secops | 🔴 Sin resolver — Fase 1 secops |
-| — | `yggdrasil-secops` público con IP real router `79.116.247.44` | 🔴 Sin hacer privado |
-| — | ADR-005/006 creados en WIKI pero no en `INDICE-ADR.md` de Dew | ⚠️ Mañana paso 5 |
+| HAL-001/003 | Token Telegram THDORA expuesto | ✅ Rotado 2026-07-09 |
+| HAL nuevo | Tercera exposición secretos — `.env` completo en chat | 🔴 Sin abrir aún |
+| HAL-001💥 | Colisión: HAL-001 = Telegram en Dew Y FTP en secops | 🔴 Sin resolver |
+| — | `yggdrasil-secops` público con IP real router | 🔴 Sin hacer privado |
+| — | ADR-005/006 sin indexar en `INDICE-ADR.md` | ⚠️ Pendiente |
+| — | `docs/pentesting/` y `docs/seguridad/` perdidos en secops | 🟡 Documentado — irrecuperable |
 | — | `docs/hallazgos/SEC-001-ref.md` en secops apunta a ruta inexistente | 🟡 Fase 1 secops |
-| — | Conflicto merge `docs/diario-2026-07-06.md` | ✅ Resuelto — rebase OK + push |
 
 ---
 
-## Sin prisa (próximas sesiones largas)
+## Sin prisa (próximas sesiones)
 
+- Documentar internamente `thdora-personal` y `yggdrasil-secops` (README/CONTEXT/AGENT/ECOSYSTEM)
+- Auditoría Dew + WIKI con Claude — análisis Grok pendiente de revisar
 - Fase 2 secops: purga duplicados internos
 - Fase 3 secops: alinear gobernanza con Dew
-- Fase 4 secops: automatización cruzada
 - Tier 3: logging estructurado Thdora
 - Tier 4: BATS testing scripts críticos
 - Tier 5: Ansible en Acer para Madre
+- Workflow sync automático WIKI←Dew
+- MCP Server de Madre
 
 ---
 
 ## Herramientas de verificación
 
-| Herramienta | Qué hace | Cómo ejecutar |
-|---|---|---|
-| `check-ecosistema.py` | Detecta colisiones de IDs HAL/ADR entre repos | `python3 check-ecosistema.py` en Madre |
-| CI `validate-canon.yml` | Secretos, IPs, emails, frontmatter | Automático en cada push |
-| CI `gitleaks.yml` | Secretos en historial | Automático en cada push |
-| `docs/canon/RUNBOOKS.md` | Procedimientos ante incidencias conocidas | Consultar antes de improvisar |
+| Herramienta | Cómo ejecutar |
+|---|---|
+| `check-ecosistema.py` | `python3 check-ecosistema.py` en Madre |
+| CI `validate-canon.yml` | Automático en cada push |
+| CI `gitleaks.yml` | Automático en cada push |
+| `docs/canon/RUNBOOKS.md` | Consultar antes de improvisar |
 
 ---
 
@@ -82,4 +101,4 @@ status: vigente
 
 ---
 
-_Actualizado: 2026-07-06 22:52 CEST · Verificación en vivo Claude + Perplexity-MCP_
+_Actualizado: 2026-07-09 15:53 CEST · Perplexity-MCP · sesión 2026-07-09_
