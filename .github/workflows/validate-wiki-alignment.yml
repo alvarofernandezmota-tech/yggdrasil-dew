@@ -1,111 +1,64 @@
 name: Validate Wiki Alignment
+# SCOPE: Solo lo que gitleaks.yml y validate-canon.yml NO hacen.
+# - gitleaks.yml    → scan de secretos (NO duplicar aquí)
+# - validate-canon.yml → verifica estructura canon Dew (NO duplicar aquí)
+# - este workflow   → diario reciente + islas WIKI obligatorias
 
 on:
-  push:
-    branches: [main]
   schedule:
-    - cron: '0 8 * * *'   # Cada mañana a las 08:00 UTC
+    - cron: '0 8 * * *'   # Cada mañana 08:00 UTC (10:00 CEST)
   workflow_dispatch:
 
 jobs:
-  check-alignment:
+  check-diario:
     runs-on: ubuntu-latest
-    name: Check Wiki/Dew alignment
+    name: Diario reciente + Islas WIKI
 
     steps:
       - name: Checkout yggdrasil-dew
         uses: actions/checkout@v4
-        with:
-          path: dew
 
-      - name: Check required files in Dew
+      - name: Verificar diario reciente
         run: |
-          echo "=== Verificando archivos obligatorios en Dew ==="
-          FAIL=0
-
-          required_files=(
-            "dew/DASHBOARD.md"
-            "dew/PLAN-MAESTRO-2026-07.md"
-            "dew/docs/canon/ownership-matrix.md"
-            "dew/docs/canon/INDICE-ADR.md"
-            "dew/docs/canon/CONVENCIONES.md"
-          )
-
-          for f in "${required_files[@]}"; do
-            if [ ! -f "$f" ]; then
-              echo "FAIL: Falta archivo obligatorio: $f"
-              FAIL=1
-            else
-              echo "OK: $f"
-            fi
-          done
-
-          # Verificar que existe diario del dia actual o del dia anterior
+          echo "=== Diario reciente ==="
           TODAY=$(date +%Y-%m-%d)
           YESTERDAY=$(date -d 'yesterday' +%Y-%m-%d)
-          if [ ! -f "dew/docs/diarios/${TODAY}.md" ] && \
-             [ ! -f "dew/docs/diarios/${TODAY}-noche.md" ] && \
-             [ ! -f "dew/docs/diarios/${TODAY}-completo.md" ] && \
-             [ ! -f "dew/docs/diarios/${YESTERDAY}.md" ] && \
-             [ ! -f "dew/docs/diarios/${YESTERDAY}-noche.md" ] && \
-             [ ! -f "dew/docs/diarios/${YESTERDAY}-completo.md" ]; then
-            echo "WARN: No hay diario reciente (hoy: ${TODAY}, ayer: ${YESTERDAY})"
-          else
-            echo "OK: Diario reciente encontrado"
-          fi
+          FOUND=0
 
-          if [ $FAIL -ne 0 ]; then
-            echo "RESULTADO: Hay archivos obligatorios faltantes en Dew"
-            exit 1
-          fi
-          echo "RESULTADO: Dew OK"
-
-      - name: Check frontmatter in key files
-        run: |
-          echo "=== Verificando frontmatter en diarios ==="
-          FAIL=0
-
-          for f in dew/docs/diarios/*.md; do
-            if ! head -5 "$f" | grep -q 'tipo:'; then
-              echo "WARN: Sin frontmatter 'tipo:' en $f"
+          for pattern in "${TODAY}" "${TODAY}-noche" "${TODAY}-completo" \
+                         "${YESTERDAY}" "${YESTERDAY}-noche" "${YESTERDAY}-completo"; do
+            if [ -f "docs/diarios/${pattern}.md" ]; then
+              echo "OK: Diario encontrado → docs/diarios/${pattern}.md"
+              FOUND=1
+              break
             fi
           done
 
-          echo "RESULTADO: Frontmatter check completado"
+          if [ $FOUND -eq 0 ]; then
+            echo "WARN: Sin diario en las últimas 48h (hoy: ${TODAY})"
+            echo "Acción: crear docs/diarios/${TODAY}.md con plantilla de docs/canon/PLANTILLA-DIARIO.md"
+          fi
 
-      - name: Check for secrets patterns
+      - name: Verificar islas obligatorias WIKI (cross-repo check)
         run: |
-          echo "=== Buscando patrones de secretos en Dew ==="
-          FAIL=0
+          echo "=== Islas WIKI obligatorias ==="
+          # Descarga el INDEX de WIKI via API pública (repo privado = solo si el token tiene acceso)
+          WIKI_INDEX=$(curl -s \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/alvarofernandezmota-tech/WIKI---PERSONAL/contents/wiki/islas/INDEX.md" \
+            | grep -c '"type":"file"' || true)
 
-          # Patrones básicos
-          if grep -rIn --include='*.md' \
-            -e 'TOKEN=.*[A-Za-z0-9]' \
-            -e 'SECRET=.*[A-Za-z0-9]' \
-            -e 'PASSWORD=.*[A-Za-z0-9]' \
-            -e 'PRIVATE_KEY' \
-            dew/docs/ dew/wiki/ 2>/dev/null; then
-            echo "FAIL: Patrones de secretos detectados"
-            FAIL=1
+          if [ "$WIKI_INDEX" -gt 0 ]; then
+            echo "OK: wiki/islas/INDEX.md existe en WIKI---PERSONAL"
+          else
+            echo "WARN: wiki/islas/INDEX.md no encontrado en WIKI---PERSONAL"
           fi
 
-          # IPs privadas
-          if grep -rIn --include='*.md' \
-            -E '\b(192\.168|10\.|172\.(1[6-9]|2[0-9]|3[0-1]))\.[0-9]+\.[0-9]+\b' \
-            dew/docs/ 2>/dev/null | grep -v 'ejemplo\|example\|placeholder'; then
-            echo "WARN: IPs privadas detectadas — verificar si son reales"
-          fi
-
-          if [ $FAIL -ne 0 ]; then
-            exit 1
-          fi
-          echo "RESULTADO: Sin secretos detectados"
+          echo "RESULTADO: Verificación cross-repo completada"
 
       - name: Summary
         if: always()
         run: |
-          echo "=== RESUMEN ALINEACIÓN ==="
-          echo "Repo: yggdrasil-dew"
-          echo "Fecha: $(date '+%Y-%m-%d %H:%M CEST')"
-          echo "Workflow: validate-wiki-alignment"
-          echo "Para ver issues pendientes: https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues"
+          echo "=== RESUMEN $(date '+%Y-%m-%d %H:%M UTC') ==="
+          echo "workflows activos: gitleaks | validate-canon | validate-wiki-alignment"
+          echo "issues: https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues"
