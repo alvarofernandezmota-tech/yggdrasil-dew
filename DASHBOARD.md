@@ -2,7 +2,7 @@
 tipo: dashboard
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-07-06
-actualizado: 2026-07-09 15:53 CEST
+actualizado: 2026-07-09 16:36 CEST
 ruta: DASHBOARD.md
 tags: [dashboard, planes, estado, navegacion]
 status: vigente
@@ -10,68 +10,61 @@ status: vigente
 
 # 👁️ Dashboard — Ecosistema Yggdrasil
 
-> Una página. Todo el contexto. Actualizar la columna `Fase actual` al avanzar.
-> Última verificación en vivo: 2026-07-09 15:53 CEST (Perplexity MCP)
+> Una página. Todo el contexto.
+> Las tareas viven en GitHub Issues. Este documento es contexto de fases, no lista de to-dos.
+
+---
+
+## 🎯 Tablero de tareas (fuente de verdad)
+
+**[→ GitHub Project: Yggdrasil](https://github.com/users/alvarofernandezmota-tech/projects/5/views/1)**
+
+Todas las tareas activas, su estado y prioridad están ahí.
+Los Issues se crean, actualizan y cierran desde GitHub o via MCP — nunca editando este archivo.
 
 ---
 
 ## Planes activos
 
-| Plan | Qué resuelve | Fase actual | Próxima acción |
-|---|---|---|---|
-| [PLAN-ALINEACION-2026-07.md](./PLAN-ALINEACION-2026-07.md) | Estructura Dew + WIKI | ⚠️ CASI completo — ADR-005/006 sin indexar | Añadir ADR-005/006 a `INDICE-ADR.md` |
-| [PLAN-ALINEACION-SECOPS-2026-07.md](./PLAN-ALINEACION-SECOPS-2026-07.md) | Estructura secops + colisión IDs | 🟠 En progreso — rutas y symlinks resueltos | Poner secops en **privado** (clic manual) |
-| [PLAN-DEUDA-TECNICA-2026-07.md](./PLAN-DEUDA-TECNICA-2026-07.md) | Token, puertos, logging, tests | 🟠 Tier 1 parcial — token THDORA rotado ✅ | smartctl HDD + watchdog logs |
-| [docs/canon/FASE6-MANTENIMIENTO.md](./docs/canon/FASE6-MANTENIMIENTO.md) | Mantenimiento permanente | ♾️ Activo siempre | Ritual cierre de sesión |
-
----
-
-## Sesión actual 2026-07-09 — completado hoy ✅
-
-- [x] Token Telegram THDORA rotado — BotFather revoke + nuevo token en `.env` + stack recreado
-- [x] Symlink `~/repos/thdora` → `/home/varopc/Projects/thdora` creado
-- [x] Symlink `~/repos/yggdrasil-secops` → `/home/varopc/yggdrasil-secops` creado
-- [x] Archivos basura 0-bytes THDORA limpiados
-- [x] Rutas físicas reales de THDORA y secops verificadas con `docker inspect`
-- [x] `ownership-matrix.md` actualizado con rutas reales + columna capa Docker
-- [x] `MAPA-REPOS-MADRE.md` en WIKI actualizado con sección secops completa
-- [x] `docs/auditorias/thdora-personal.md` creada
-- [x] `docs/auditorias/yggdrasil-secops.md` creada
-- [x] `docs/canon/PLANTILLA-REPO-ONBOARDING.md` creada
-- [x] Diario 2026-07-09 documentado con incidentes, pérdida de datos y lecciones
-
----
-
-## Pendiente — continuar esta sesión
-
-- [ ] **1. `yggdrasil-secops` → privado** — GitHub web → Settings → Danger Zone (clic manual tuyo)
-- [ ] **2. `sudo smartctl -a /dev/sda`** en Madre — HAL-005 HDD en riesgo
-- [ ] **3. `docker logs --tail 300 yggdrasil_watchdog`** + restart
-- [ ] **4. Abrir HAL nuevo** — tercera exposición secretos THDORA
-- [ ] **5. Añadir ADR-005/006 a `INDICE-ADR.md`**
-- [ ] **6. Verificar `/home/varopc/docker-compose.yml` raíz** — qué servicios define
-- [ ] **7. SSH/FTP/Ollama** — Tier 2 deuda técnica
-
----
-
-## Incidentes activos
-
-| ID | Problema | Estado |
+| Plan | Qué resuelve | Fase actual |
 |---|---|---|
-| HAL-001/003 | Token Telegram THDORA expuesto | ✅ Rotado 2026-07-09 |
-| HAL nuevo | Tercera exposición secretos — `.env` completo en chat | 🔴 Sin abrir aún |
-| HAL-001💥 | Colisión: HAL-001 = Telegram en Dew Y FTP en secops | 🔴 Sin resolver |
-| — | `yggdrasil-secops` público con IP real router | 🔴 Sin hacer privado |
-| — | ADR-005/006 sin indexar en `INDICE-ADR.md` | ⚠️ Pendiente |
-| — | `docs/pentesting/` y `docs/seguridad/` perdidos en secops | 🟡 Documentado — irrecuperable |
-| — | `docs/hallazgos/SEC-001-ref.md` en secops apunta a ruta inexistente | 🟡 Fase 1 secops |
+| [PLAN-ALINEACION-2026-07.md](./PLAN-ALINEACION-2026-07.md) | Estructura Dew + WIKI | ⚠️ CASI completo — ADR-005/006 sin indexar → Issue [#33](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/33) |
+| [PLAN-ALINEACION-SECOPS-2026-07.md](./PLAN-ALINEACION-SECOPS-2026-07.md) | Estructura secops + colisión IDs | ✅ Rutas resueltas · ✅ secops en privado |
+| [PLAN-DEUDA-TECNICA-2026-07.md](./PLAN-DEUDA-TECNICA-2026-07.md) | Token, puertos, logging, tests | 🟠 Tier 1 parcial — ver Issues [#30](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/30) [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) [#32](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/32) |
+| [docs/canon/FASE6-MANTENIMIENTO.md](./docs/canon/FASE6-MANTENIMIENTO.md) | Mantenimiento permanente | ♾️ Activo siempre |
+
+---
+
+## Incidentes activos (HAL)
+
+| ID | Problema | Issue | Estado |
+|---|---|---|---|
+| HAL-001/003 | Token Telegram THDORA expuesto | — | ✅ Rotado 2026-07-09 |
+| HAL-006 | Tercera exposición secretos — `.env` completo | [#30](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/30) | 🔴 Pendiente |
+| HAL-001💥 | Colisión IDs: HAL-001 en Dew Y en secops | — | 🔴 Sin resolver |
+| HAL-005 | HDD Madre 28k+ horas — riesgo fallo | [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) | 🔴 Pendiente |
+| — | `docs/pentesting/` y `docs/seguridad/` perdidos en secops | — | 🟡 Irrecuperable — documentado |
+
+---
+
+## Completado sesión 2026-07-09 ✅
+
+- [x] Token Telegram THDORA rotado
+- [x] Symlinks `~/repos/thdora` y `~/repos/yggdrasil-secops` creados
+- [x] Archivos basura 0-bytes THDORA limpiados
+- [x] `ownership-matrix.md` actualizado
+- [x] `MAPA-REPOS-MADRE.md` actualizado
+- [x] Fichas de auditoría `thdora-personal.md` y `yggdrasil-secops.md` creadas
+- [x] `PLANTILLA-REPO-ONBOARDING.md` creada
+- [x] `yggdrasil-secops` → privado ✅ [Issue #29](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/29)
+- [x] GitHub Project `Yggdrasil` creado — Issues migrados al tablero
+- [x] `DASHBOARD.md` migrado a modelo empresa (Issues como fuente de verdad)
 
 ---
 
 ## Sin prisa (próximas sesiones)
 
 - Documentar internamente `thdora-personal` y `yggdrasil-secops` (README/CONTEXT/AGENT/ECOSYSTEM)
-- Auditoría Dew + WIKI con Claude — análisis Grok pendiente de revisar
 - Fase 2 secops: purga duplicados internos
 - Fase 3 secops: alinear gobernanza con Dew
 - Tier 3: logging estructurado Thdora
@@ -95,10 +88,10 @@ status: vigente
 
 ## Regla de oro
 
-> Si no está en este dashboard o en uno de los 3 planes, no existe como tarea.
-> Si surge algo nuevo → añadir aquí primero, luego al plan correspondiente.
-> No abrir un cuarto plan sin cerrar los que ya existen.
+> Las tareas viven en GitHub Issues — no en este archivo.
+> Si surge algo nuevo → abrir Issue primero.
+> El Project es el dashboard real. Este documento es el mapa de fases.
 
 ---
 
-_Actualizado: 2026-07-09 15:53 CEST · Perplexity-MCP · sesión 2026-07-09_
+_Actualizado: 2026-07-09 16:36 CEST · Perplexity-MCP · migración a GitHub Project_
