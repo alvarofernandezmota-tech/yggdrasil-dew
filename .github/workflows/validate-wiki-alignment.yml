@@ -1,0 +1,111 @@
+name: Validate Wiki Alignment
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 8 * * *'   # Cada mañana a las 08:00 UTC
+  workflow_dispatch:
+
+jobs:
+  check-alignment:
+    runs-on: ubuntu-latest
+    name: Check Wiki/Dew alignment
+
+    steps:
+      - name: Checkout yggdrasil-dew
+        uses: actions/checkout@v4
+        with:
+          path: dew
+
+      - name: Check required files in Dew
+        run: |
+          echo "=== Verificando archivos obligatorios en Dew ==="
+          FAIL=0
+
+          required_files=(
+            "dew/DASHBOARD.md"
+            "dew/PLAN-MAESTRO-2026-07.md"
+            "dew/docs/canon/ownership-matrix.md"
+            "dew/docs/canon/INDICE-ADR.md"
+            "dew/docs/canon/CONVENCIONES.md"
+          )
+
+          for f in "${required_files[@]}"; do
+            if [ ! -f "$f" ]; then
+              echo "FAIL: Falta archivo obligatorio: $f"
+              FAIL=1
+            else
+              echo "OK: $f"
+            fi
+          done
+
+          # Verificar que existe diario del dia actual o del dia anterior
+          TODAY=$(date +%Y-%m-%d)
+          YESTERDAY=$(date -d 'yesterday' +%Y-%m-%d)
+          if [ ! -f "dew/docs/diarios/${TODAY}.md" ] && \
+             [ ! -f "dew/docs/diarios/${TODAY}-noche.md" ] && \
+             [ ! -f "dew/docs/diarios/${TODAY}-completo.md" ] && \
+             [ ! -f "dew/docs/diarios/${YESTERDAY}.md" ] && \
+             [ ! -f "dew/docs/diarios/${YESTERDAY}-noche.md" ] && \
+             [ ! -f "dew/docs/diarios/${YESTERDAY}-completo.md" ]; then
+            echo "WARN: No hay diario reciente (hoy: ${TODAY}, ayer: ${YESTERDAY})"
+          else
+            echo "OK: Diario reciente encontrado"
+          fi
+
+          if [ $FAIL -ne 0 ]; then
+            echo "RESULTADO: Hay archivos obligatorios faltantes en Dew"
+            exit 1
+          fi
+          echo "RESULTADO: Dew OK"
+
+      - name: Check frontmatter in key files
+        run: |
+          echo "=== Verificando frontmatter en diarios ==="
+          FAIL=0
+
+          for f in dew/docs/diarios/*.md; do
+            if ! head -5 "$f" | grep -q 'tipo:'; then
+              echo "WARN: Sin frontmatter 'tipo:' en $f"
+            fi
+          done
+
+          echo "RESULTADO: Frontmatter check completado"
+
+      - name: Check for secrets patterns
+        run: |
+          echo "=== Buscando patrones de secretos en Dew ==="
+          FAIL=0
+
+          # Patrones básicos
+          if grep -rIn --include='*.md' \
+            -e 'TOKEN=.*[A-Za-z0-9]' \
+            -e 'SECRET=.*[A-Za-z0-9]' \
+            -e 'PASSWORD=.*[A-Za-z0-9]' \
+            -e 'PRIVATE_KEY' \
+            dew/docs/ dew/wiki/ 2>/dev/null; then
+            echo "FAIL: Patrones de secretos detectados"
+            FAIL=1
+          fi
+
+          # IPs privadas
+          if grep -rIn --include='*.md' \
+            -E '\b(192\.168|10\.|172\.(1[6-9]|2[0-9]|3[0-1]))\.[0-9]+\.[0-9]+\b' \
+            dew/docs/ 2>/dev/null | grep -v 'ejemplo\|example\|placeholder'; then
+            echo "WARN: IPs privadas detectadas — verificar si son reales"
+          fi
+
+          if [ $FAIL -ne 0 ]; then
+            exit 1
+          fi
+          echo "RESULTADO: Sin secretos detectados"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "=== RESUMEN ALINEACIÓN ==="
+          echo "Repo: yggdrasil-dew"
+          echo "Fecha: $(date '+%Y-%m-%d %H:%M CEST')"
+          echo "Workflow: validate-wiki-alignment"
+          echo "Para ver issues pendientes: https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues"
