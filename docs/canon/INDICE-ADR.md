@@ -3,7 +3,7 @@ title: Índice de ADRs — Ecosistema Yggdrasil
 tipo: indice
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-07-06
-actualizado: 2026-07-06
+actualizado: 2026-07-09
 ruta: docs/canon/INDICE-ADR.md
 tags: [indice, adr, canon, arquitectura]
 status: vigente
@@ -28,6 +28,8 @@ status: vigente
 | [ADR-002](./ADR-002-seguridad-ecosistema.md) | Modelo de Seguridad del Ecosistema | ✅ vigente | 2026-07-06 | yggdrasil-dew |
 | [ADR-003](./ADR-003-ia-local-rag.md) | Estrategia IA Local y RAG | ✅ vigente | 2026-07-06 | yggdrasil-dew |
 | [ADR-004](./ADR-004-agentes-mcp.md) | Arquitectura de Agentes y MCP | ✅ vigente | 2026-07-06 | yggdrasil-dew |
+| [ADR-005](./ADR-005-ssh-github-sin-passphrase.md) | Clave SSH GitHub sin passphrase | ✅ vigente | 2026-06-25 | WIKI---PERSONAL |
+| [ADR-006](./ADR-006-seguridad-privilege-explosion.md) | Seguridad — privilege explosion | ✅ vigente | 2026-06-25 | WIKI---PERSONAL |
 
 ---
 
@@ -54,4 +56,4 @@ ADR-NNN-titulo-kebab-case.md
 
 ---
 
-_Actualizado: 2026-07-06 · Perplexity-MCP_
+_Actualizado: 2026-07-09 · Perplexity-MCP — añadidos ADR-005 y ADR-006_
