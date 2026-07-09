@@ -2,7 +2,7 @@
 tipo: dashboard
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-07-06
-actualizado: 2026-07-09 16:36 CEST
+actualizado: 2026-07-09 23:04 CEST
 ruta: DASHBOARD.md
 tags: [dashboard, planes, estado, navegacion]
 status: vigente
@@ -28,7 +28,7 @@ Los Issues se crean, actualizan y cierran desde GitHub o via MCP — nunca edita
 
 | Plan | Qué resuelve | Fase actual |
 |---|---|---|
-| [PLAN-ALINEACION-2026-07.md](./PLAN-ALINEACION-2026-07.md) | Estructura Dew + WIKI | ⚠️ CASI completo — ADR-005/006 sin indexar → Issue [#33](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/33) |
+| [PLAN-MAESTRO-2026-07.md](./PLAN-MAESTRO-2026-07.md) | Todo el ecosistema — 6 fases | 🟠 Fase 1 ✅ · Fase 2 pendiente · Fases 3-6 pendientes |
 | [PLAN-ALINEACION-SECOPS-2026-07.md](./PLAN-ALINEACION-SECOPS-2026-07.md) | Estructura secops + colisión IDs | ✅ Rutas resueltas · ✅ secops en privado |
 | [PLAN-DEUDA-TECNICA-2026-07.md](./PLAN-DEUDA-TECNICA-2026-07.md) | Token, puertos, logging, tests | 🟠 Tier 1 parcial — ver Issues [#30](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/30) [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) [#32](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/32) |
 | [docs/canon/FASE6-MANTENIMIENTO.md](./docs/canon/FASE6-MANTENIMIENTO.md) | Mantenimiento permanente | ♾️ Activo siempre |
@@ -47,7 +47,19 @@ Los Issues se crean, actualizan y cierran desde GitHub o via MCP — nunca edita
 
 ---
 
-## Completado sesión 2026-07-09 ✅
+## ✅ Completado sesión 2026-07-09 NOCHE
+
+- [x] WIKI---PERSONAL → **privado** ✅
+- [x] `inbox/` WIKI borrada completamente ✅
+- [x] `docs/` WIKI borrada completamente ✅
+- [x] Stubs y duplicados `wiki/` eliminados (6 archivos) ✅
+- [x] `diario-2026-07-06.md` movido a `docs/diarios/` en Dew ✅
+- [x] Issues #24 (AUDIT-001) y #12 (inbox) cerradas ✅
+- [x] 5 nuevas issues de auditoría creadas (#38-#42) ✅
+- [x] PLAN-MAESTRO-2026-07.md creado en Dew ✅
+- [x] ADR-005 y ADR-006 indexados ✅
+
+## ✅ Completado sesión 2026-07-09 TARDE
 
 - [x] Token Telegram THDORA rotado
 - [x] Symlinks `~/repos/thdora` y `~/repos/yggdrasil-secops` creados
@@ -56,21 +68,40 @@ Los Issues se crean, actualizan y cierran desde GitHub o via MCP — nunca edita
 - [x] `MAPA-REPOS-MADRE.md` actualizado
 - [x] Fichas de auditoría `thdora-personal.md` y `yggdrasil-secops.md` creadas
 - [x] `PLANTILLA-REPO-ONBOARDING.md` creada
-- [x] `yggdrasil-secops` → privado ✅ [Issue #29](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/29)
-- [x] GitHub Project `Yggdrasil` creado — Issues migrados al tablero
-- [x] `DASHBOARD.md` migrado a modelo empresa (Issues como fuente de verdad)
+- [x] `yggdrasil-secops` → privado ✅
+- [x] GitHub Project `Yggdrasil` creado
+- [x] `DASHBOARD.md` migrado a modelo empresa
 
 ---
 
-## Sin prisa (próximas sesiones)
+## 🔴 Pendiente próxima sesión (por prioridad)
 
-- Documentar internamente `thdora-personal` y `yggdrasil-secops` (README/CONTEXT/AGENT/ECOSYSTEM)
-- Fase 2 secops: purga duplicados internos
-- Fase 3 secops: alinear gobernanza con Dew
+| # | Tarea | Prioridad |
+|---|---|---|
+| [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) | Puerto 21 FTP cerrar | 🔴 Crítica |
+| [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) | HDD Madre smartctl | 🔴 Crítica |
+| [#30](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/30) | HAL-006 secretos .env | 🔴 Crítica |
+| Fase 2 WIKI | README/HOME → INDEX.md | 🟡 Alta |
+| [#38](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/38) | CI secret-scan IPv4/email | 🟡 Alta |
+| [#39](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/39) | Gitleaks en push | 🟡 Alta |
+| [#35](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/35) | AUDIT-002 Dew completo | 🟠 Media |
+| [#42](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/42) | AUDIT-005 agentes/MCP | 🟠 Media |
+| [#41](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/41) | Diagrama C4 Mermaid | 🟠 Media |
+| [#40](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/40) | Ownership matrix completa | 🟠 Media |
+| [#36](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/36) | AUDIT-003 thdora-personal | 🔵 Baja |
+| [#37](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/37) | AUDIT-004 secops Fase 1 | 🔵 Baja |
+| [#19](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/19) | Stack Wazuh/Suricata/Pihole | 🔵 Baja |
+
+---
+
+## Sin prisa (futuras sesiones)
+
+- VIDAPERSONAL repo — auditar y alinear
+- Fase 3 WIKI: purga 279 archivos (Fase 3 Plan Maestro)
 - Tier 3: logging estructurado Thdora
 - Tier 4: BATS testing scripts críticos
 - Tier 5: Ansible en Acer para Madre
-- Workflow sync automático WIKI←Dew
+- Script `check-ecosistema.py` — Fase 6 Plan Maestro
 - MCP Server de Madre
 
 ---
@@ -79,7 +110,7 @@ Los Issues se crean, actualizan y cierran desde GitHub o via MCP — nunca edita
 
 | Herramienta | Cómo ejecutar |
 |---|---|
-| `check-ecosistema.py` | `python3 check-ecosistema.py` en Madre |
+| `check-ecosistema.py` | `python3 check-ecosistema.py` en Madre (pendiente crear) |
 | CI `validate-canon.yml` | Automático en cada push |
 | CI `gitleaks.yml` | Automático en cada push |
 | `docs/canon/RUNBOOKS.md` | Consultar antes de improvisar |
@@ -94,4 +125,4 @@ Los Issues se crean, actualizan y cierran desde GitHub o via MCP — nunca edita
 
 ---
 
-_Actualizado: 2026-07-09 16:36 CEST · Perplexity-MCP · migración a GitHub Project_
+_Actualizado: 2026-07-09 23:04 CEST · Perplexity-MCP · sesión noche completa_
