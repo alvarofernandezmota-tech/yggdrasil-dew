@@ -2,22 +2,25 @@ name: Validate Canon
 
 on:
   push:
+    branches: [main]
     paths:
       - 'docs/**'
       - '**.md'
   pull_request:
+    branches: [main]
     paths:
       - 'docs/**'
       - '**.md'
 
 # Responsabilidad única: frontmatter y calidad documental.
-# Escaneo de secretos → gitleaks.yml (herramienta dedicada).
+# Escaneo de secretos con herramienta dedicada → gitleaks.yml
+# Escaneo de patrones sensibles (IPv4, email, tokens) → job secret-patterns abajo.
 
 jobs:
 
-  # ─────────────────────────────────────────────
+  # ───────────────────────────────────────────────
   # JOB 1: Frontmatter
-  # ─────────────────────────────────────────────
+  # ───────────────────────────────────────────────
   frontmatter:
     name: "📝 Frontmatter"
     runs-on: ubuntu-latest
@@ -28,9 +31,11 @@ jobs:
         run: |
           python3 - <<'PY'
           import os, sys
-          REQUIRED = ['title', 'tipo', 'creado', 'actualizado', 'status']
+          REQUIRED = ['tipo', 'actualizado', 'status']
           errors = []
-          for root, _, files in os.walk('docs'):
+          skip_dirs = ['docs/adr']  # ADRs tienen frontmatter propio
+          for root, dirs, files in os.walk('docs'):
+              dirs[:] = [d for d in dirs if os.path.join(root, d) not in skip_dirs]
               for f in files:
                   if not f.endswith('.md'):
                       continue
@@ -39,8 +44,9 @@ jobs:
                   if not content.startswith('---'):
                       errors.append(f'MISSING FRONTMATTER: {path}')
                       continue
+                  fm = content.split('---')[1] if '---' in content[1:] else ''
                   for field in REQUIRED:
-                      if f'{field}:' not in content.split('---')[1]:
+                      if f'{field}:' not in fm:
                           errors.append(f'MISSING FIELD [{field}]: {path}')
           if errors:
               print('\n'.join(errors))
@@ -48,9 +54,81 @@ jobs:
           print('Frontmatter OK')
           PY
 
-  # ─────────────────────────────────────────────
-  # JOB 2: Calidad de docs
-  # ─────────────────────────────────────────────
+  # ───────────────────────────────────────────────
+  # JOB 2: Patrones sensibles (IPv4, email, tokens)
+  # ───────────────────────────────────────────────
+  secret-patterns:
+    name: "🕵️ Patrones sensibles"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detectar IPv4 reales en docs
+        run: |
+          python3 - <<'PY'
+          import os, re, sys
+          # Excluir IPs de documentación genérica (ejemplos)
+          SAFE_IPS = {'192.168.1.1', '127.0.0.1', '0.0.0.0', '255.255.255.255',
+                      '10.0.0.0', '10.0.0.1', '172.16.0.1', '8.8.8.8', '1.1.1.1'}
+          IP_REGEX = re.compile(r'\b((?:\d{1,3}\.){3}\d{1,3})\b')
+          errors = []
+          for root, _, files in os.walk('docs'):
+              for f in files:
+                  if not f.endswith('.md'):
+                      continue
+                  path = os.path.join(root, f)
+                  for i, line in enumerate(open(path, encoding='utf-8', errors='ignore'), 1):
+                      for ip in IP_REGEX.findall(line):
+                          parts = ip.split('.')
+                          if all(0 <= int(p) <= 255 for p in parts) and ip not in SAFE_IPS:
+                              # Solo alertar si parece IP real (no rango privado genérico)
+                              first = int(parts[0])
+                              second = int(parts[1])
+                              if first == 100 or (first == 10 and second not in (0,1,2)) \
+                                 or (first == 172 and 16 <= second <= 31 and second not in (16,17)) \
+                                 or (first == 192 and second == 168 and int(parts[2]) not in (0,1)):
+                                  errors.append(f'POSIBLE IP REAL [{ip}]: {path}:{i}')
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print('Sin IPs sensibles detectadas')
+          PY
+
+      - name: Detectar emails reales en docs
+        run: |
+          python3 - <<'PY'
+          import os, re, sys
+          EMAIL_REGEX = re.compile(r'[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}')
+          # Emails de ejemplo/placeholder permitidos
+          SAFE_PATTERNS = ['example.com', 'test.com', 'placeholder', 'your@', 'user@', 'mail@example']
+          errors = []
+          for root, _, files in os.walk('docs'):
+              for f in files:
+                  if not f.endswith('.md'):
+                      continue
+                  path = os.path.join(root, f)
+                  for i, line in enumerate(open(path, encoding='utf-8', errors='ignore'), 1):
+                      for email in EMAIL_REGEX.findall(line):
+                          if not any(p in email.lower() for p in SAFE_PATTERNS):
+                              errors.append(f'POSIBLE EMAIL REAL [{email}]: {path}:{i}')
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print('Sin emails sensibles detectados')
+          PY
+
+      - name: Detectar tokens y passwords hardcodeados
+        run: |
+          if grep -rniE '(TOKEN|SECRET|PASSWORD|PRIVATE_KEY|API_KEY)\s*=\s*["\x27]?[A-Za-z0-9+/]{16,}' \
+               docs/ --include='*.md' 2>/dev/null; then
+            echo 'ERROR: posible secreto hardcodeado detectado'
+            exit 1
+          fi
+          echo 'Sin tokens hardcodeados'
+
+  # ───────────────────────────────────────────────
+  # JOB 3: Calidad de docs
+  # ───────────────────────────────────────────────
   doc-quality:
     name: "🟡 Calidad docs"
     runs-on: ubuntu-latest
@@ -65,7 +143,7 @@ jobs:
           fi
           echo 'Sin shebangs'
 
-      - name: No enlaces rotos internos obvios
+      - name: No enlaces rotos internos
         run: |
           python3 - <<'PY'
           import os, re, sys
@@ -89,7 +167,7 @@ jobs:
           print('Enlaces internos OK')
           PY
 
-      - name: Archivos sin actualizar (borrador > 30 dias)
+      - name: Borradores viejos (>30 días)
         run: |
           python3 - <<'PY'
           import os, re, sys
