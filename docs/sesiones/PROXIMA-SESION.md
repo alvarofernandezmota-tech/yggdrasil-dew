@@ -1,80 +1,88 @@
 ---
 tipo: sesion
 author: Alvaro Fernandez Mota
-actualizado: 2026-07-10T00:50 CEST
+actualizado: 2026-07-13T15:45 CEST
 ruta: docs/sesiones/PROXIMA-SESION.md
-tags: [sesion, proxima, plan, domingo]
+tags: [sesion, proxima, plan, martes]
 status: vigente
 ---
 
-# Próxima sesión — Domingo 2026-07-13
+# Próxima sesión — Martes 2026-07-14
 
-> Archivo SSOT de dónde lo dejamos. Actualizar al inicio de cada sesión.
-> Última actualización: **2026-07-10 00:50 CEST** (cierre sesión 2026-07-09/10)
-
----
-
-## Punto de continuación
-
-Sesión anterior cerrada con todo documentado:
-- ✅ 10 islas WIKI creadas
-- ✅ 4 issues críticos Madre abiertos (#43, #44, #45, #46)
-- ✅ VIDAPERSONAL estructura canónica definida (Issue #14)
-- ✅ Diarios migrados y archivados
-- ⚡ Telegram token pendiente de revocar ANTES DE DORMIR
+> Archivo SSOT de dónde lo dejamos. Leer esto al inicio de cada sesión antes de cualquier otra cosa.
+> Última actualización: **2026-07-13 15:45 CEST** (cierre sesión completa 12-13 julio)
 
 ---
 
-## Plan domingo — 5 bloques (~2h)
+## Estado al cierre
 
-### Bloque 0 — ANTES DE DORMIR (5 min)
-- [ ] BotFather → revocar TELEGRAM_BOT_TOKEN
-- [ ] Anotar el nuevo token para el domingo
+- ✅ Tridente DEW ↔ Wiki ↔ VIDAPERSONAL alineado al 100%
+- ✅ 7 issues cerrados hoy: #38 #39 #41 #42 #44 #45 #46
+- ✅ ADR 001–010 creados y consolidados
+- ✅ 25 islas Wiki verificadas
+- ✅ DRP, secrets.md, inventario-madre.md como nuevas fuentes de verdad
+- ✅ 4 zombis raíz eliminados
+- ⚠️ Posibles duplicados a revisar: `ECOSYSTEM-ARCHITECTURE.md` vs `ARQUITECTURA-C4.md` · `NORMAS.md` vs `CONVENCIONES.md`
 
-### Bloque 1 — Fix .env Madre (30 min)
-Issue [#44](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/44)
+---
+
+## Plan martes 14 julio — por bloques
+
+### Bloque 0 — Contexto (5 min)
+```
+1. Leer este archivo
+2. git log --oneline -5 en DEW
+3. Leer DASHBOARD.md
+```
+
+### Bloque 1 — Terminal Madre (30 min) 🔴 PRIMERO
+Issue [#36](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/36) · [#49](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/49) · [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31)
 ```bash
 ssh varopc@varpc.taileb8343.ts.net
-cp /home/varopc/.env /home/varopc/.env.bak-2026-07-10
-nano /home/varopc/.env
-chmod 600 /home/varopc/.env
-docker compose -f /home/varopc/docker-compose.yml config > /dev/null && echo OK
+# 1. local_tripwire healthy?
+docker ps | grep -E 'tripwire|guardian'
+# 2. Cerrar puerto 21
+sudo ufw deny 21 && sudo ufw status
+# 3. HDD check
+sudo smartctl -a /dev/sda | grep -E 'Power_On|Reallocated|Pending|Uncorrectable|Temp'
+# 4. Puerto 21 desde red externa (no Tailscale)
+nmap -p 21 <IP-PUBLICA-MADRE>
 ```
 
-### Bloque 2 — Fix crash loop (20 min)
-Issue [#46](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/46)
-```bash
-docker logs --tail 200 log_guardian_bot 2>&1
-docker restart log_guardian_bot local_tripwire
-docker ps | grep -E 'log_guardian|tripwire'
-```
+### Bloque 2 — Duplicados DEW (15 min)
+- Leer `ECOSYSTEM-ARCHITECTURE.md` vs `docs/canon/ARQUITECTURA-C4.md` — decidir cuál es SSOT
+- Leer `NORMAS.md` vs `CONVENCIONES.md` + `CONVENCIONES-SEGURIDAD.md` — fusionar o eliminar
 
-### Bloque 3 — IaC madre-config (30 min)
-Issue [#43](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/43)
-```bash
-find /home/varopc -name 'docker-compose*.yml' 2>/dev/null
-# copiar a madre-config/docker/ con estructura
-```
+### Bloque 3 — AUDIT-002 DEW (20 min)
+Issue [#35](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/35)
+- Auditoría completa de DEW: estructura, archivos huérfanos, canon vs operativo
 
-### Bloque 4 — Diarios (20 min)
-- Diario 2026-07-10 (viernes)
-- Retrospectiva S28 en VIDAPERSONAL
+### Bloque 4 — Gobernanza (20 min)
+Issue [#18](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/18)
+- Labels estándar + issue templates GitHub en DEW
 
-### Bloque 5 — Limpieza VIDAPERSONAL (30 min)
-Issue [#14](https://github.com/alvarofernandezmota-tech/VIDAPERSONAL/issues/14)
-```bash
-cd ~/VIDAPERSONAL
-git mv 03_proyectos _archivo/03_proyectos
-git mv 03_reflexiones _archivo/03_reflexiones
-# ... (comandos completos en el issue)
-```
+### Bloque 5 — VIDAPERSONAL (15 min)
+- Actualizar `00_yo/` con hitos de julio
+- Actualizar `00_sistema/CONTEXT-PERPLEXITY.md`
+- Pendiente git mv local: Issue [#14](https://github.com/alvarofernandezmota-tech/VIDAPERSONAL/issues/14)
 
 ---
 
-## NO tocar el domingo
+## NO tocar el martes
 
-- Issues #35-#42 (auditorías y gobernanza) — para sesiones de la semana
-- Issue #19 (Wazuh + Suricata) — proyecto mayor, no urgente
-- Issue #41 (diagrama C4) — backlog
+- Issue #43 (IaC docker-compose) — requiere sesión dedicada con terminal
+- Issues #19 (Wazuh + Suricata) — proyecto mayor
+- Issue #56 (islas formacion + impresion3d) — requiere input Álvaro
+- Issue #50 (GOB-001 filosofía) — requiere input Álvaro
 
-_Actualizado: 2026-07-10 00:50 CEST · Perplexity-MCP_
+---
+
+## Prompt de arranque
+
+```
+Contexto: Estoy en sesión con yggdrasil-dew. Ayer cerramos 7 issues (#38 #39 #41 #42 #44 #45 #46),
+creamos ADR 001-010, alineamos el tridente al 100% y eliminamos 4 zombis de raíz.
+Lee PROXIMA-SESION.md y DASHBOARD.md antes de cualquier acción. Empezamos por Bloque 1 (terminal).
+```
+
+_Actualizado: 2026-07-13 15:45 CEST · Perplexity-MCP_
