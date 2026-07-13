@@ -12,6 +12,7 @@ status: vigente
 
 > Toda decisión de arquitectura tiene un ADR.
 > Si una decisión no está aquí, no es oficial.
+> Cómo crear un ADR: `docs/canon/PROTOCOLO-ADR.md`
 
 ---
 
@@ -28,11 +29,12 @@ status: vigente
 | [ADR-009](ADR-009-repo-scripts-separado.md) | Repo scripts separado | ✅ Vigente | 2026-07-13 |
 | [ADR-010](ADR-010-evaluacion-arquitectura-post-plan.md) | Evaluación arquitectura post-plan | ✅ Vigente | 2026-07-13 |
 | [ADR-011](ADR-011-separacion-tracking-formacion.md) | Separación VIDAPERSONAL en tracking + formacion | ✅ Vigente | 2026-07-13 |
+| [ADR-012](ADR-012-protocolo-cierre-sesion.md) | Protocolo formal de cierre de sesión | ✅ Vigente | 2026-07-13 |
 
 ---
 
-## Próximo ADR libre: ADR-012
+## Próximo ADR libre: ADR-013
 
 ---
 
-_Actualizado: 2026-07-13 · 11 ADRs vigentes · Perplexity MCP_
+_Actualizado: 2026-07-13 · 12 ADRs vigentes · Perplexity MCP_

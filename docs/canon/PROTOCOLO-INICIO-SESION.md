@@ -12,15 +12,45 @@ adr: ADR-012
 # 🟢 Protocolo de Inicio de Sesión
 
 > Toda sesión de trabajo empieza con este protocolo.
-> Objetivo: contexto completo antes del primer commit. Nunca ejecutar sin leer primero.
+> Objetivo: contexto completo + verificar que el cierre anterior fue correcto.
 > Tiempo estimado: 5–10 minutos.
 > Simétrico a: `PROTOCOLO-CIERRE-SESION.md`
 
 ---
 
+## Paso 0 — Introspcción del cierre anterior
+
+> Antes de leer el estado actual, verificar que la sesión anterior quedó bien cerrada.
+> Es el checklist del cierre en modo lectura/verificación.
+> Si algo faltó → corregirlo ahora antes de arrancar.
+
+### yggdrasil-dew — verificar
+
+- [ ] `docs/diarios/YYYY-MM-DD.md` (fecha de la última sesión) — ¿existe y tiene bloque de cierre?
+- [ ] `MASTER-PENDIENTES.md` — ¿la fecha de actualización corresponde a la última sesión?
+- [ ] `docs/canon/ESTADO-SISTEMA.md` — ¿los números cuadran con lo que recuerdas?
+- [ ] `docs/canon/ownership-matrix.md` — ¿servicio caído sin issue HAL abierto?
+- [ ] `docs/adr/INDEX.md` — ¿el número de ADRs cuadra?
+- [ ] Raíz dew — ¿hay archivos zombi que no deberían estar?
+- [ ] Issues — ¿alguno resuelto en el diario pero aún abierto en GitHub?
+
+### yggdrasil-wiki — verificar
+
+- [ ] `wiki/islas/INDEX.md` — ¿número de islas y estados cuadran?
+- [ ] Islas tocadas en la última sesión — ¿están actualizadas?
+
+### Resultado
+
+| ¿Todo correcto? | Acción |
+|---|---|
+| ✅ Sí | Continuar a Fase 1 |
+| ❌ Falta algo | Corregirlo ahora → luego Fase 1 |
+
+---
+
 ## Fase 1 — Lectura obligatoria archivo por archivo
 
-Orden estricto. No saltar pasos. No editar todavía — solo leer.
+Orden estricto. No editar todavía — solo leer.
 
 ### 1.1 — Estado del ecosistema (yggdrasil-dew)
 
@@ -37,11 +67,11 @@ Orden estricto. No saltar pasos. No editar todavía — solo leer.
 
 | Archivo | Ruta | Qué buscar |
 |---|---|---|
-| Índice ADRs | `docs/adr/INDEX.md` | Último ADR, próximo número libre |
+| Índice ADRs | `docs/adr/INDEX.md` | Último ADR vigente, próximo número libre |
 | Plan maestro | `docs/canon/PLAN-MAESTRO-FASES.md` | Fases del plan, dónde estamos en el roadmap |
 | ADR relevante | `docs/adr/ADR-0XX-nombre.md` | Solo si la sesión toca un área con ADR reciente |
 
-### 1.3 — Estado de islas (yggdrasil-dew) — leer las relevantes para la sesión
+### 1.3 — Estado de islas (yggdrasil-dew) — las relevantes para la sesión
 
 | ESTADO-ISLA | Ruta | Leer si la sesión toca... |
 |---|---|---|
@@ -62,22 +92,22 @@ Orden estricto. No saltar pasos. No editar todavía — solo leer.
 | Archivo | Ruta | Qué buscar |
 |---|---|---|
 | Índice islas | `wiki/islas/INDEX.md` | Estado de todas las islas, números totales |
-| Isla específica | `wiki/islas/NOMBRE.md` | Concepto, repo asociado, estado — solo las relevantes |
+| Isla específica | `wiki/islas/NOMBRE.md` | Concepto, repo, estado — solo las relevantes |
 
 ### 1.5 — Issues (GitHub — yggdrasil-dew)
 
 | Prioridad | Qué revisar antes de arrancar |
 |---|---|
-| 🔴🔴 | Seguridad o hardware crítico → van siempre primero, bloquean el resto |
+| 🔴🔴 | Seguridad o hardware crítico → bloquean el resto, van siempre primero |
 | 🔴 | Bloqueantes funcionales → resolver antes de cualquier otra cosa |
-| 🟠 | Requieren terminal → agrupar, ejecutar todos juntos |
+| 🟠 | Requieren terminal → agrupar y ejecutar juntos |
 | 🟡 | MCP puede ejecutar sin terminal → candidatos para esta sesión |
 
 ---
 
 ## Fase 2 — Declarar el objetivo de la sesión
 
-Antes del primer commit, definir y decir en voz alta (o escribir):
+Antes del primer commit, definir:
 
 ```
 Sesión: YYYY-MM-DD HH:MM
@@ -95,25 +125,24 @@ No entrar en: [qué queda fuera de esta sesión]
 
 ## Fase 3 — Verificación de consistencia (solo si +24h sin sesión)
 
-- [ ] `docs/adr/INDEX.md` — número de ADRs cuadra con lo que recuerdas
+- [ ] `docs/adr/INDEX.md` — número de ADRs cuadra
 - [ ] `wiki/islas/INDEX.md` — número de islas cuadra
 - [ ] `docs/canon/ESTADO-SISTEMA.md` — fecha de actualización reciente
 - [ ] `MASTER-PENDIENTES.md` — refleja la última sesión
 - [ ] Raíz dew — sin archivos zombi
-- [ ] `docs/canon/ownership-matrix.md` — servicio caído sin issue → crear HAL-XXX ahora
 
 ---
 
 ## 4 preguntas de inicio — el agente hace estas al arrancar
 
 1. **¿Cuánto tiempo tienes y tienes terminal?** → Define alcance y tipo de issues
-2. **¿Algún servicio caído desde la última sesión?** → Sí: HAL-XXX primero
+2. **¿Algún servicio caído o cambio desde la última sesión?** → Sí: HAL-XXX primero
 3. **¿Se decidió algo fuera de sesión?** → Sí: documentar antes de ejecutar
 4. **¿Hay algo urgente sin issue todavía?** → Sí: crear issue con label ahora
 
 ---
 
-## Mapa de repos — cuándo abrir cada uno al inicio
+## Mapa de repos — cuándo abrir cada uno
 
 | Repo | Abrir si... |
 |---|---|
@@ -135,9 +164,8 @@ No entrar en: [qué queda fuera de esta sesión]
 ## Regla de oro
 
 > **Nunca ejecutar sin contexto. Nunca asumir que el estado es igual que ayer.**
-> Un commit sin lectura previa genera deuda documental y archivos colgados.
-> 5–10 minutos de lectura evitan 30 minutos de correcciones.
+> El Paso 0 garantiza que el cierre anterior fue completo antes de seguir adelante.
 
 ---
 
-_Creado: 2026-07-13 · v2 — archivo x archivo · 12 ESTADO-ISLA · ADR-012 · Perplexity MCP_
+_Creado: 2026-07-13 · v3 — Paso 0 introspeción cierre · archivo x archivo · ADR-012 · Perplexity MCP_
