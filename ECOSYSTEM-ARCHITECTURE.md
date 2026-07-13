@@ -2,7 +2,7 @@
 tipo: arquitectura
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-06-01 00:00 CEST
-actualizado: 2026-07-05 13:27 CEST
+actualizado: 2026-07-13 18:15 CEST
 ruta: ECOSYSTEM-ARCHITECTURE.md
 tags: [arquitectura, ecosistema, reglas, yggdrasil, mapa]
 status: vigente
@@ -12,9 +12,8 @@ status: vigente
 
 > Documento raíz. Define la estructura completa, las reglas y cómo se relacionan todas las piezas.
 > Todo repo del ecosistema hereda estas reglas. Ninguno las puede contradecir.
-> Para el mapa conceptual visual completo → ver `WIKI---PERSONAL/MAPA-ISLAS.md`
 
-Última actualización: 2026-07-05
+Última actualización: 2026-07-13
 
 ---
 
@@ -25,18 +24,20 @@ status: vigente
 │  ECOSISTEMA YGGDRASIL — Álvaro Fernández Mota                          │
 │                                                                         │
 │  🧠 CEREBRO                                                             │
-│  └── yggdrasil-dew        → ley máxima, diarios, arquitectura          │
-│  └── alvarofernandezmota  → perfil público GitHub                      │
+│  ├── yggdrasil-dew        → ley máxima, arquitectura, roadmap          │
+│  ├── yggdrasil-wiki       → second brain, conocimiento, agente IA      │
+│  └── alvarofernandezmota-tech → perfil público GitHub                  │
 │                                                                         │
-│  🗺️ CONOCIMIENTO PERSONAL                                              │
-│  ├── WIKI---PERSONAL      → mapa conceptual, hardware, contexto        │
-│  └── VIDAPERSONAL         → vida personal, finanzas, gym, salud        │
+│  📓 VIDA PERSONAL & TRACKING                                           │
+│  └── yggdrasil-tracking   → diarios 2026, metas, reflexiones,         │
+│                              filosofía, curiosidad, contenido, inbox   │
+│      ⚠️  yggdrasil-formacion- DEPRECADO → migrado a yggdrasil-tracking │
 │                                                                         │
 │  📚 FORMACIÓN & I+D                                                    │
 │  ├── formacion-tech       → apuntes y estado de cada área técnica      │
 │  └── investigacion-ia     → PoCs, experimentos, arquitecturas IA       │
 │                                                                         │
-│  🖥️ INFRAESTRUCTURA — MADRE                                            │
+│  🖥️ INFRAESTRUCTURA — DISPOSITIVOS                                     │
 │  ├── madre-config         → servidor HP Ubuntu + Dockers + seguridad   │
 │  └── acer-config          → dotfiles Acer, Arch Linux, Hyprland, zsh  │
 │                                                                         │
@@ -51,10 +52,15 @@ status: vigente
 │  ├── yggdrasil-secops     → hallazgos, blue team, seguridad ecosistema │
 │  └── osint-stack          → herramientas OSINT, Spiderfoot, pipelines  │
 │                                                                         │
+│  ⚙️ AUTOMATIZACIÓN                                                      │
+│  └── yggdrasil-scripts    → scripts mantenimiento, workflows, actions  │
+│                                                                         │
 │  🧪 LABS                                                                │
 │  └── dev-labs             → sandbox, prototipos, experimentos código   │
 │                                                                         │
-│  📦 ARCHIVADOS (activos pero fuera del mapa activo)                    │
+│  📦 ARCHIVADOS                                                          │
+│  ├── yggdrasil-formacion- → ⚠️ DEPRECADO — contenido migrado a        │
+│  │                           yggdrasil-tracking (2026-07-13)           │
 │  ├── thea-ia              → delegado en THDORA-PERSONAL                │
 │  ├── ai-toolkit           → delegado en ollama-stack                   │
 │  ├── image-calculator     → proyecto cerrado                           │
@@ -71,10 +77,10 @@ status: vigente
 
 | Repo | Capa | Función | Visibilidad |
 |---|---|---|---|
-| `yggdrasil-dew` | 🧠 Cerebro | Arquitectura, diarios, roadmap, ley máxima | 🌐 Público |
+| `yggdrasil-dew` | 🧠 Cerebro | Arquitectura, roadmap, ley máxima | 🌐 Público |
+| `yggdrasil-wiki` | 🧠 Cerebro | Second brain, conocimiento, agente IA local | 🔒 Privado |
 | `alvarofernandezmota-tech` | 🧠 Cerebro | Profile README público | 🌐 Público |
-| `WIKI---PERSONAL` | 🗺️ Conocimiento | Mapa conceptual, hardware, contexto personal | 🔒 Privado |
-| `VIDAPERSONAL` | 🗺️ Conocimiento | Vida personal, finanzas, gym, salud | 🔒 Privado |
+| `yggdrasil-tracking` | 📓 Tracking | Diarios 2026, metas, reflexiones, filosofía | 🔒 Privado |
 | `formacion-tech` | 📚 Formación | Apuntes técnicos, estado de aprendizaje | 🔒 Privado |
 | `investigacion-ia` | 📚 Formación | PoCs, experimentos, I+D IA | 🔒 Privado |
 | `madre-config` | 🖥️ Infra | Servidor HP, Docker, configs, seguridad | 🔒 Privado |
@@ -84,7 +90,9 @@ status: vigente
 | `THDORA-PERSONAL` | 🦾 Thdora | Bot Telegram personal, FastAPI, IA | 🌐 Público |
 | `yggdrasil-secops` | 🛡️ Seguridad | Hallazgos, blue team, auditorías | 🔒 Privado |
 | `osint-stack` | 🛡️ Seguridad | OSINT ofensivo, Spiderfoot, pipelines | 🔒 Privado |
+| `yggdrasil-scripts` | ⚙️ Automatización | Scripts mantenimiento, workflows, actions | 🔒 Privado |
 | `dev-labs` | 🧪 Labs | Sandbox, prototipos, experimentos | 🔒 Privado |
+| `yggdrasil-formacion-` | 📦 **DEPRECADO** | Migrado a yggdrasil-tracking (2026-07-13) | 🔒 Privado |
 | `thea-ia` | 📦 Archivado | Delegado en THDORA-PERSONAL | 🌐 Público |
 | `ai-toolkit` | 📦 Archivado | Delegado en ollama-stack | 🌐 Público |
 | `image-calculator` | 📦 Archivado | Proyecto cerrado | 🌐 Público |
@@ -95,17 +103,19 @@ status: vigente
 ## 3. DÓNDE VA CADA COSA
 
 ```
-¿Es un diario de sesión?           → yggdrasil-dew/docs/diarios/
-¿Es arquitectura del ecosistema?   → yggdrasil-dew/ECOSYSTEM-ARCHITECTURE.md
-¿Es una tarea pendiente global?    → yggdrasil-dew/MASTER-PENDIENTES.md
-¿Es config del servidor Madre?     → madre-config/
-¿Es un hallazgo de seguridad?      → yggdrasil-secops/hallazgos/HAL-XXX
-¿Es un apunte técnico?             → formacion-tech/<área>/
-¿Es un experimento IA?             → investigacion-ia/
-¿Es config del Acer?               → acer-config/
-¿Es contexto personal/hardware?    → WIKI---PERSONAL/
-¿Es vida personal?                 → VIDAPERSONAL/
-¿Es un prototipo sin repo propio?  → dev-labs/
+¿Es arquitectura del ecosistema?      → yggdrasil-dew/ECOSYSTEM-ARCHITECTURE.md
+¿Es conocimiento / second brain?      → yggdrasil-wiki/
+¿Es una tarea pendiente global?       → yggdrasil-dew/MASTER-PENDIENTES.md
+¿Es diario personal / reflexión?      → yggdrasil-tracking/diarios/
+¿Son metas, filosofía, yo?            → yggdrasil-tracking/ (metas/, reflexiones/, filosofia/, yo/)
+¿Es curiosidad o contenido?           → yggdrasil-tracking/04_curiosidad/ o 05_contenido/
+¿Es config del servidor Madre?        → madre-config/
+¿Es un hallazgo de seguridad?         → yggdrasil-secops/hallazgos/HAL-XXX
+¿Es un apunte técnico?                → formacion-tech/<área>/
+¿Es un experimento IA?                → investigacion-ia/
+¿Es config del Acer?                  → acer-config/
+¿Es un script de mantenimiento?       → yggdrasil-scripts/
+¿Es un prototipo sin repo propio?     → dev-labs/
 ```
 
 ---
@@ -115,13 +125,14 @@ status: vigente
 ### Por capa
 | Label | Descripción |
 |---|---|
-| `capa:cerebro` | yggdrasil-dew, arquitectura global |
-| `capa:conocimiento` | WIKI, VIDAPERSONAL |
+| `capa:cerebro` | yggdrasil-dew, yggdrasil-wiki, arquitectura global |
+| `capa:tracking` | yggdrasil-tracking, vida personal |
 | `capa:formacion` | formacion-tech, investigacion-ia |
 | `capa:infra` | madre-config, acer-config |
 | `capa:ia-local` | ollama-stack, local-brain |
 | `capa:thdora` | THDORA-PERSONAL |
 | `capa:seguridad` | yggdrasil-secops, osint-stack |
+| `capa:automatizacion` | yggdrasil-scripts |
 | `capa:labs` | dev-labs |
 
 ### Por tipo
@@ -168,9 +179,9 @@ NIVEL 0 — ECOSISTEMA
 ## 6. ESCALADO: SCRIPT → ACTION → BOT
 
 ```
-NIVEL 1 — SCRIPT (.sh)       → ejecuta en Madre, estado local
-NIVEL 2 — GITHUB ACTION      → corre en nube, sin estado local
-NIVEL 3 — BOT (THDORA)       → memoria + IA + interfaz Telegram
+NIVEL 1 — SCRIPT (.sh)       → yggdrasil-scripts/, ejecuta en Madre, estado local
+NIVEL 2 — GITHUB ACTION      → yggdrasil-scripts/.github/workflows/, corre en nube
+NIVEL 3 — BOT (THDORA)       → THDORA-PERSONAL, memoria + IA + interfaz Telegram
 ```
 
 ---
@@ -190,4 +201,21 @@ NIVEL 3 — BOT (THDORA)       → memoria + IA + interfaz Telegram
 
 ---
 
-_Actualizado: 2026-07-05 13:27 CEST · Perplexity-MCP_
+## 8. ESTADO DE REPOS — JULIO 2026
+
+| Repo | Estado | Última actividad |
+|---|---|---|
+| `yggdrasil-dew` | ✅ Activo | 2026-07-13 |
+| `yggdrasil-wiki` | ✅ Activo | 2026-07-13 |
+| `yggdrasil-tracking` | ✅ Activo (nuevo) | 2026-07-13 |
+| `yggdrasil-scripts` | ✅ Activo (nuevo) | 2026-07-13 |
+| `yggdrasil-secops` | ✅ Activo | 2026-07-12 |
+| `madre-config` | ✅ Activo | 2026-07-05 |
+| `local-brain` | ✅ Activo | 2026-06-24 |
+| `ollama-stack` | ✅ Activo | 2026-06-24 |
+| `THDORA-PERSONAL` | 🟡 Mantenimiento | 2026-07-03 |
+| `yggdrasil-formacion-` | ⛔ DEPRECADO | 2026-07-13 → migrado |
+
+---
+
+_Actualizado: 2026-07-13 18:15 CEST · Perplexity-MCP_
