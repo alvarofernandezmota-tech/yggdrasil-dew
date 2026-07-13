@@ -1,3 +1,13 @@
+---
+tipo: canon
+author: Alvaro Fernandez Mota
+creado: 2026-07-06
+actualizado: 2026-07-13
+ruta: NORMAS.md
+tags: [normas, canon, tridente, ecosistema]
+status: vigente
+---
+
 # NORMAS DEL ECOSISTEMA — Separacion canonica
 
 > Fuente de verdad centralizada en `yggdrasil-dew`.
@@ -9,21 +19,20 @@
 ## Repos del ecosistema
 
 | Repo | Capa | Visibilidad | Proposito |
-|---|---|---|---|
+|---|---|---|
 | [yggdrasil-dew](https://github.com/alvarofernandezmota-tech/yggdrasil-dew) | Cerebro | Publico | Constitucion tecnica, ADRs, diarios, roadmap |
-| [alvarofernandezmota-tech](https://github.com/alvarofernandezmota-tech/alvarofernandezmota-tech) | Cerebro | Publico | Profile README |
-| [WIKI---PERSONAL](https://github.com/alvarofernandezmota-tech/WIKI---PERSONAL) | Conocimiento | Privado | Mapa conceptual personal, islas |
-| [VIDAPERSONAL](https://github.com/alvarofernandezmota-tech/VIDAPERSONAL) | Conocimiento | Privado | Vida personal |
-| [formacion-tech](https://github.com/alvarofernandezmota-tech/formacion-tech) | Formacion | Publico | Apuntes tecnicos por area |
-| [investigacion-ia](https://github.com/alvarofernandezmota-tech/investigacion-ia) | Formacion | Publico | Investigacion y experimentos IA |
+| [yggdrasil-wiki](https://github.com/alvarofernandezmota-tech/yggdrasil-wiki) | Conocimiento | Privado | Base de conocimiento, mapas, islas |
+| [yggdrasil-tracking](https://github.com/alvarofernandezmota-tech/yggdrasil-tracking) | Vida personal | Privado | Diarios, metas, filosofía, reflexiones |
+| [yggdrasil-formacion-](https://github.com/alvarofernandezmota-tech/yggdrasil-formacion-) | Formacion | Privado | Aprendizaje tecnico, cursos, recursos |
+| [yggdrasil-scripts](https://github.com/alvarofernandezmota-tech/yggdrasil-scripts) | Orquestacion | Privado | Scripts transversales, GitHub Actions |
+| [yggdrasil-secops](https://github.com/alvarofernandezmota-tech/yggdrasil-secops) | Seguridad | Privado | Hallazgos, auditorias, herramientas defensivas |
 | [madre-config](https://github.com/alvarofernandezmota-tech/madre-config) | Infra | Privado | Config y scripts de Madre (servidor) |
 | [acer-config](https://github.com/alvarofernandezmota-tech/acer-config) | Infra | Privado | Config del portatil Acer |
 | [ollama-stack](https://github.com/alvarofernandezmota-tech/ollama-stack) | IA Local | Privado | Stack Ollama + modelos locales |
-| [local-brain](https://github.com/alvarofernandezmota-tech/local-brain) | IA Local | Privado | RAG y agentes locales |
 | [THDORA-PERSONAL](https://github.com/alvarofernandezmota-tech/THDORA-PERSONAL) | Thdora | Privado | Bot Telegram personal |
-| [yggdrasil-secops](https://github.com/alvarofernandezmota-tech/yggdrasil-secops) | Seguridad | Privado | Hallazgos, auditorias, herramientas defensivas |
 | [osint-stack](https://github.com/alvarofernandezmota-tech/osint-stack) | Seguridad | Privado | Herramientas OSINT |
 | [dev-labs](https://github.com/alvarofernandezmota-tech/dev-labs) | Labs | Privado | Prototipos sin repo propio aun |
+| [alvarofernandezmota-tech](https://github.com/alvarofernandezmota-tech/alvarofernandezmota-tech) | Perfil | Publico | Profile README |
 
 ---
 
@@ -51,7 +60,59 @@ Si un archivo explica conceptos, relaciones y decisiones -> NO es un repo operat
 
 ---
 
-## WIKI---PERSONAL — que va aqui
+## Regla de duplicados
+
+1. Cada concepto existe en **un unico repo canonico**.
+2. Otro repo que necesite referenciarlo -> **stub de redirect** con `tipo: redirect` y link al canonico.
+3. Nunca dos archivos con el mismo contenido en repos distintos.
+
+---
+
+## Regla de secretos
+
+- Ningun token, contrasena, clave privada o API key en ningun repo, nunca.
+- Secretos -> Vaultwarden o `.env` con `.gitignore`.
+- Si se commitio un secreto -> rotar inmediatamente + `git filter-repo` para purgar historial.
+
+---
+
+## Regla de zombis
+
+- **Ningun archivo vacio o stub sin contenido real** puede existir en un repo del ecosistema.
+- Si se crea un archivo placeholder -> debe tener al menos frontmatter + proposito en una linea.
+- Revision de zombis: en cada sesion de cierre, verificar raiz del repo y purgar.
+- Un archivo con 0 bytes o solo titulo es un zombi -> borrar o completar en la misma sesion.
+
+---
+
+## Regla de nueva isla
+
+- **Ningun repo nuevo entra al ecosistema sin completar el checklist de NORMA-ENTRADA-NUEVA-ISLA.md**
+- Ver: [`docs/canon/NORMA-ENTRADA-NUEVA-ISLA.md`](./docs/canon/NORMA-ENTRADA-NUEVA-ISLA.md)
+- Checklist minimo: ESTADO-ISLA en dew + fila en MAPA + README del repo con enlace a dew.
+- Sin ese checklist la isla **no existe** para el ecosistema — puede existir el repo pero no esta integrado.
+
+---
+
+## Regla de sesion
+
+- **Toda sesion de trabajo con MCP genera diario** en `docs/diarios/YYYY-MM-DD.md`.
+- El diario recoge: decisiones tomadas, issues cerrados, estado al cierre, proxima sesion.
+- Si la sesion no tiene diario, las decisiones se pierden — el agente **siempre** cierra con diario.
+- **Nunca cerrar sesion sin:** diario actualizado + MASTER-PENDIENTES al dia.
+
+---
+
+## Regla de fronteras personales/tecnicas
+
+- **Vida personal, diarios personales, filosofía, metas** -> `yggdrasil-tracking` (privado).
+- **Formacion tecnica, cursos, apuntes** -> `yggdrasil-formacion-` (privado).
+- **Nunca mezclar contenido personal con tecnico en el mismo repo.**
+- Si un repo contiene mezcla -> separar en migracion dedicada antes de continuar trabajando en el.
+
+---
+
+## WIKI (yggdrasil-wiki) — que va aqui
 
 **Si:**
 - Islas tematicas: descripcion conceptual de cada dominio
@@ -91,12 +152,13 @@ tags: [lista, de, tags]
 - `docs/canon/` — DICCIONARIO, ARBOL-AGENTES, MAPA-SYNC, NORMAS
 - `docs/diarios/` — diario de cada sesion (decisiones, contexto, aprendizajes)
 - `docs/hallazgos/` — hallazgos tecnicos con evidencia y resolucion
+- `docs/islas/` — ESTADO-ISLA-*.md y MAPA-ISLAS-DEPENDENCIAS.md
 - Arquitectura tecnica del ecosistema
 - ADRs (Architecture Decision Records)
 - Documentacion transversal que afecta a varios repos
 
 **No:**
-- Scripts ejecutables (van en el repo del servicio o en madre-config)
+- Scripts ejecutables (van en yggdrasil-scripts o repo del servicio)
 - Tokens ni secretos
 - Mapas conceptuales o relaciones entre islas (eso es WIKI)
 - Configuraciones de servicios
@@ -146,20 +208,4 @@ status: vigente | borrador | deprecado
 
 ---
 
-## Regla de duplicados
-
-1. Cada concepto existe en **un unico repo canonico**.
-2. Otro repo que necesite referenciarlo -> **stub de redirect** con `tipo: redirect` y link al canonico.
-3. Nunca dos archivos con el mismo contenido en repos distintos.
-
----
-
-## Regla de secretos
-
-- Ningun token, contrasena, clave privada o API key en ningun repo, nunca.
-- Secretos -> Vaultwarden o `.env` con `.gitignore`.
-- Si se commitio un secreto -> rotar inmediatamente + `git filter-repo` para purgar historial.
-
----
-
-_Ultima actualizacion: 2026-07-06 · Fase 4 Plan de Alineacion · Perplexity-MCP_
+_Ultima actualizacion: 2026-07-13 · Sesion tarde · +4 reglas nuevas · Perplexity MCP_
