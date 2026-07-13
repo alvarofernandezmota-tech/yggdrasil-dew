@@ -1,45 +1,38 @@
 ---
-tipo: indice
-author: Alvaro Fernandez Mota
+tipo: canon
+author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
+creado: 2026-07-06
 actualizado: 2026-07-13
-tags: [adr, indice, decisiones]
+ruta: docs/adr/INDEX.md
+tags: [adr, indice, canon]
+status: vigente
 ---
 
-# Índice de ADRs — Yggdrasil
+# 📐 Índice ADRs — Architecture Decision Records
 
-> Toda decisión arquitectural o de gobernanza tiene su ADR aquí.
-> Un ADR nunca se borra — si cambia, se marca `superado` y se crea uno nuevo.
-
----
-
-## ADRs activos
-
-| ID | Título | Fecha | Estado | Principio |
-|----|--------|-------|--------|-----------|
-| [ADR-001](ADR-001-estructura-ecosistema.md) | Estructura del ecosistema multi-repo | 2026-07-02 | ✅ Aceptado | Soberanía digital |
-| [ADR-002](ADR-002-triangulo-dew-wiki-vida.md) | Triángulo DEW ↔ Wiki ↔ VIDAPERSONAL | 2026-07-05 | ✅ Aceptado | Un solo punto de verdad |
-| [ADR-003](ADR-003-convencion-islas.md) | Convención de islas en la Wiki | 2026-07-09 | ✅ Aceptado | Sistemas que perduran |
-| [ADR-004](ADR-004-mcp-como-capa-infraestructura.md) | MCP como capa de infraestructura | 2026-07-13 | ✅ Aceptado | Automatizar lo repetible |
-| [ADR-005](ADR-005-normas-tridente-dew-wiki-vidapersonal.md) | Normas del Tridente — qué va en cada vértice | 2026-07-13 | ✅ Aceptado | Un solo punto de verdad |
-| [ADR-006](ADR-006-sesion-log-como-artefacto.md) | Logs de sesión como artefactos de primer nivel | 2026-07-13 | ✅ Aceptado | Transparencia interna |
-| [ADR-007](ADR-007-isla-mcp-propia.md) | MCP tiene isla propia en la Wiki | 2026-07-13 | ✅ Aceptado | Un solo punto de verdad |
-| [ADR-008](ADR-008-adr-obligatorio-por-decision.md) | Toda decisión arquitectural requiere ADR | 2026-07-13 | ✅ Aceptado | Transparencia interna |
-| [ADR-009](ADR-009-repo-scripts-separado.md) | yggdrasil-scripts como repo separado | 2026-07-13 | ✅ Aceptado | Automatizar lo repetible |
-| [ADR-010](ADR-010-evaluacion-arquitectura-post-plan.md) | Evaluación arquitectura post-plan (tridente vs alternativas) | 2026-07-13 | ⏳ Pendiente evaluación Q3 2026 | Sistemas que perduran |
+> Toda decisión de arquitectura tiene un ADR.
+> Si una decisión no está aquí, no es oficial.
 
 ---
 
-## Principios fundacionales
-
-| Principio | ADRs que lo materializan |
-|-----------|-------------------------|
-| Soberanía digital | ADR-001 |
-| Un solo punto de verdad | ADR-002, ADR-005, ADR-007 |
-| Transparencia interna | ADR-006, ADR-008 |
-| Automatizar lo repetible | ADR-004, ADR-009 |
-| Sistemas que perduran | ADR-003, ADR-010 |
-| Deuda visible | (pendiente ADR-011: gestión HALs) |
+| # | Título | Estado | Fecha |
+|---|---|---|---|
+| [ADR-001](ADR-001-estructura-ecosistema.md) | Estructura del ecosistema Yggdrasil | ✅ Vigente | 2026-07-06 |
+| [ADR-002](ADR-002-triangulo-dew-wiki-vida.md) | El triángulo DEW + WIKI + vida personal | ✅ Vigente (actualizado ADR-011) | 2026-07-06 |
+| [ADR-003](ADR-003-convencion-islas.md) | Convención de islas en la wiki | ✅ Vigente | 2026-07-06 |
+| [ADR-004](ADR-004-mcp-como-capa-infraestructura.md) | MCP como capa de infraestructura | ✅ Vigente | 2026-07-06 |
+| [ADR-005](ADR-005-normas-tridente-dew-wiki-vidapersonal.md) | Normas del Tridente | ✅ Vigente (actualizado ADR-011) | 2026-07-06 |
+| [ADR-006](ADR-006-sesion-log-como-artefacto.md) | Sesión-log como artefacto | ✅ Vigente | 2026-07-06 |
+| [ADR-007](ADR-007-isla-mcp-propia.md) | Isla MCP propia en la wiki | ✅ Vigente | 2026-07-06 |
+| [ADR-008](ADR-008-adr-obligatorio-por-decision.md) | ADR obligatorio por decisión | ✅ Vigente | 2026-07-06 |
+| [ADR-009](ADR-009-repo-scripts-separado.md) | Repo scripts separado | ✅ Vigente | 2026-07-13 |
+| [ADR-010](ADR-010-evaluacion-arquitectura-post-plan.md) | Evaluación arquitectura post-plan | ✅ Vigente | 2026-07-13 |
+| [ADR-011](ADR-011-separacion-tracking-formacion.md) | Separación VIDAPERSONAL en tracking + formacion | ✅ Vigente | 2026-07-13 |
 
 ---
 
-_Actualizado: 2026-07-13 · 10 ADRs · Perplexity-MCP_
+## Próximo ADR libre: ADR-012
+
+---
+
+_Actualizado: 2026-07-13 · 11 ADRs vigentes · Perplexity MCP_
