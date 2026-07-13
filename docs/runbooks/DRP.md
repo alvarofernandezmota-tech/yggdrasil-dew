@@ -1,154 +1,173 @@
 ---
-titulo: DRP — Disaster Recovery Plan
+title: DRP — Disaster Recovery Plan — Yggdrasil
 tipo: runbook
 author: Alvaro Fernandez Mota
 creado: 2026-07-13
 actualizado: 2026-07-13
-tags: [runbook, drp, recuperacion, desastres, madre, homelab]
-status: esqueleto — rellenar con datos reales
-fuente: investigacion-gemini-2026-07-13
+ruta: docs/runbooks/DRP.md
+tags: [drp, recovery, runbook, emergencia]
+status: esqueleto — completar con datos reales
 ---
 
-# 🚨 DRP — Yggdrasil Disaster Recovery Plan
+# 🚨 DRP — Disaster Recovery Plan
 
-> **ESTADO:** Esqueleto inicial. Completar con rutas reales, IPs y credenciales (estas últimas NUNCA aquí — referencia al vault/gestor).
-> Este archivo vive en GitHub privado. No contiene secretos.
+> **RTO objetivo: < 2 horas** para recuperación completa del stack.
+> **RPO objetivo: < 24 horas** (frecuencia mínima de backup de volúmenes Docker).
+>
+> ⚠️ Este documento tiene datos de estructura. Completar las secciones marcadas con `[COMPLETAR]`
+> con valores reales de Madre antes del 2026-07-20.
 
 ---
 
 ## 1. Identidad del sistema
 
 | Campo | Valor |
-|-------|-------|
+|---|---|
+| Nodo primario | Madre (PC torre fija) |
+| Nodo secundario | varpc (portátil) |
 | Repositorio maestro | `yggdrasil-dew` |
-| Nodo principal | Madre (Torre) |
-| Estado persistente Docker | `/var/lib/docker/volumes/` |
-| Secretos | Gestor externo — NO en este repo |
-| Backup principal | TODO: definir destino y frecuencia |
-| Backup RAG/VectorDB | TODO: definir ruta de volumen Chroma/Qdrant |
+| Gestor de secretos | Vaultwarden (en Madre) |
+| Red privada | Tailscale |
+| Dirección Tailscale Madre | `[COMPLETAR]` |
+| Dirección LAN Madre | `[COMPLETAR]` |
+| Usuario SSH | `[COMPLETAR]` |
 
 ---
 
-## 2. Escenarios de fallo
+## 2. Inventario de volúmenes críticos
 
-### Escenario A — `.env` corrupto o perdido
-
-**Síntoma:** todos los servicios Docker fallan al arrancar.  
-**RTO objetivo:** < 15 min
-
+Ejecutar en Madre para obtener la lista real:
 ```bash
-# 1. Recuperar .env desde backup seguro (NO desde Git)
-cp /ruta/backup/.env /home/varopc/.env
-
-# 2. Validar antes de levantar
-./scripts/env-checker.sh .env.template .env
-
-# 3. Levantar stack
-docker-compose up -d
-
-# 4. Verificar
-docker ps
+docker volume ls --format 'table {{.Name}}\t{{.Driver}}'
 ```
 
-### Escenario B — Madre no arranca (fallo hardware/OS)
+| Volumen | Servicio | Contenido crítico |
+|---|---|---|
+| `[COMPLETAR]` | Ollama | Modelos LLM descargados |
+| `[COMPLETAR]` | Open WebUI | Historial de conversaciones + RAG |
+| `[COMPLETAR]` | n8n | Flujos y credenciales |
+| `[COMPLETAR]` | LiteLLM | Configuración y logs |
+| `[COMPLETAR]` | Vaultwarden | Secretos cifrados |
 
-**RTO objetivo:** < 2h  
-**Requiere:** hardware alternativo con Arch Linux
+---
 
-1. **Provisionar OS:** Instalar Arch Linux + `docker` + `docker-compose`
-2. **Clonar repos base:**
-   ```bash
-   git clone git@github.com:alvarofernandezmota-tech/yggdrasil-dew.git
-   git clone git@github.com:alvarofernandezmota-tech/madre-config.git  # cuando exista
-   ```
-3. **Restaurar volúmenes Docker:**
-   ```bash
-   rsync -avz /backup/volumes/ /var/lib/docker/volumes/
-   ```
-4. **Restaurar `.env`** desde gestor de secretos externo
-5. **Levantar stack:**
-   ```bash
-   cd ~/yggdrasil-dew
-   ./scripts/env-checker.sh .env.template .env
-   docker-compose up -d
-   ```
-6. **Verificar servicios críticos:**
-   ```bash
-   docker ps
-   # Comprobar: Ollama, LiteLLM, n8n, Wazuh, log_guardian
-   curl http://localhost:11434/api/tags  # Ollama
-   ```
+## 3. Procedimiento de reconstrucción completa
 
-### Escenario C — RAG/VectorDB perdido
-
-**Síntoma:** IA responde sin contexto del ecosistema.  
-**RTO objetivo:** < 30 min si hay backup reciente
+### Paso 1: Provisionar OS (30 min)
 
 ```bash
-# TODO: definir ruta exacta del volumen Chroma/Qdrant
-# rsync -avz /backup/rag-volume/ /var/lib/docker/volumes/[nombre-volumen]/
-# Reiniciar contenedor de IA con contexto
+# Instalar Arch Linux en nuevo hardware
+# Instalar dependencias base
+pacman -S docker docker-compose git curl
+systemctl enable --now docker
 ```
 
-### Escenario D — Token expuesto (como #45)
-
-**Acción inmediata (< 5 min):**
-
-1. Telegram: BotFather → `/mybots` → seleccionar bot → `API Token` → `Revoke`
-2. LiteLLM: entrar al dashboard → regenerar API key
-3. Actualizar `.env` con nuevos tokens
-4. Reiniciar servicios afectados: `docker restart [servicio]`
-5. **Verificar historial Git:** `git log --all --full-history -- '*env*'`
-   Si hay tokens en historial → ejecutar `git filter-repo` para limpiarlos
-
----
-
-## 3. Servicios críticos y sus healthchecks
-
-| Servicio | Puerto | Check |
-|----------|--------|-------|
-| Ollama | 11434 | `curl http://localhost:11434/api/tags` |
-| LiteLLM | TODO | `curl http://localhost:[puerto]/health` |
-| n8n | TODO | `curl http://localhost:[puerto]/healthz` |
-| Open WebUI | TODO | `curl http://localhost:[puerto]/health` |
-| log_guardian_bot | TODO | `curl http://localhost:[puerto]/health` |
-
-> **TODO:** completar puertos reales y añadir healthchecks en `docker-compose.yml`
-
----
-
-## 4. Contactos y recursos críticos
-
-- **Telegram BotFather:** `@BotFather` en Telegram
-- **LiteLLM dashboard:** TODO — añadir URL
-- **Tailscale (acceso remoto):** TODO — IP de Madre en Tailscale
-- **Router (cerrar puerto 21):** issue [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15)
-
----
-
-## 5. Checklist post-recuperación
+### Paso 2: Clonar repos y configurar red (15 min)
 
 ```bash
-# Verificar repos privados siguen privados
-curl -sI https://raw.githubusercontent.com/alvarofernandezmota-tech/WIKI---PERSONAL/main/README.md | head -1
-curl -sI https://raw.githubusercontent.com/alvarofernandezmota-tech/yggdrasil-secops/main/README.md | head -1
-# Ambos deben dar 404
+# Configurar Tailscale
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
 
-# Verificar Docker
-docker ps --format 'table {{.Names}}\t{{.Status}}'
+# Clonar repos del Tridente
+git clone git@github.com:alvarofernandezmota-tech/yggdrasil-dew.git
+git clone git@github.com:alvarofernandezmota-tech/WIKI---PERSONAL.git
+# yggdrasil-secops: clonar separado por ser privado
+```
 
-# Verificar HDD
-sudo smartctl -a /dev/[disco-madre]  # issue #31
+### Paso 3: Restaurar secretos (10 min)
+
+```bash
+# 1. Restaurar .env desde backup cifrado o Vaultwarden
+# NUNCA desde un repo Git
+cp /backup/.env.bak ~/.env
+# Verificar que .env tiene todas las variables
+# (cuando env-checker.sh exista):
+# ./scripts/env-checker.sh .env.template .env
+```
+
+### Paso 4: Restaurar volúmenes Docker (30-60 min según tamaño)
+
+```bash
+# Opción A: desde backup en disco externo
+rsync -avz /backup/docker-volumes/ /var/lib/docker/volumes/
+
+# Opción B: re-descargar modelos Ollama (más lento)
+docker run --rm -v ollama:/root/.ollama ollama pull [COMPLETAR: lista de modelos]
+```
+
+### Paso 5: Levantar stack (10 min)
+
+```bash
+# Validar .env antes de levantar
+docker compose -f ~/docker-compose.maestro.yml config > /dev/null && echo "✅ config OK"
+
+# Levantar
+docker compose -f ~/docker-compose.maestro.yml up -d
+
+# Verificar
+docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
+```
+
+### Paso 6: Verificación post-recovery
+
+```bash
+# Todos los contenedores healthy
+docker ps | grep -v "healthy\|Up"
+# Si hay algo en estado distinto → ver logs:
+docker logs --tail 50 [nombre_contenedor]
+
+# Verificar Open WebUI accesible
+curl -s http://localhost:[COMPLETAR: puerto]/health
+
+# Verificar LiteLLM
+curl -s http://localhost:[COMPLETAR: puerto]/health
+
+# Verificar Thdora-bot activo en Telegram
+# Enviar /ping al bot y esperar respuesta
 ```
 
 ---
 
-## 6. Relación con el Plan Maestro
+## 4. Contactos y tokens críticos
 
-- Este runbook cubre la operabilidad que faltaba (ver Fase 7 del Plan Maestro)
-- Issues directamente relacionados: [#44](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/44) [#45](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/45) [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31)
-- Para completar este DRP necesitas acceso a terminal en Madre
+| Servicio | Dónde revocar/regenerar | Notas |
+|---|---|---|
+| Telegram Bot Token | BotFather → /mybots → Revoke | Rotar PRIMERO antes de levantar el bot |
+| LiteLLM Master Key | Dashboard LiteLLM | Necesaria para que los agentes conecten |
+| Tailscale Auth Key | dashboard.tailscale.com | Puede expirar — verificar |
+| SSH keys | `~/.ssh/` | Hacer backup de `id_rsa` + `authorized_keys` |
 
 ---
 
-_Creado: 2026-07-13 · Fuente: investigación Gemini 2026-07-13 · Estado: esqueleto_
+## 5. Backup preventivo (a implementar — F7.5)
+
+```bash
+# Script de backup diario de volúmenes críticos
+# [PENDIENTE]: crear scripts/backup-volumes.sh
+# Objetivo: backup diario a disco externo + snapshot semanal
+
+# Verificar integridad HDD (relacionado con #31)
+sudo smartctl -a /dev/sda | grep -i 'reallocated\|pending\|uncorrectable'
+
+# btrfs scrub semanal (si filesystem es btrfs)
+sudo btrfs scrub start /
+```
+
+---
+
+## 6. Checklist rápido de emergencia
+
+```
+☐ 1. ¿El problema es hardware o software?
+☐ 2. Si es hardware → ir a Paso 1-6 arriba
+☐ 3. Si es software → docker logs [servicio]
+☐ 4. ¿Se tocó algo en producción sin PR? → git log --oneline -10 en madre-config
+☐ 5. ¿El .env está corrupto? → restaurar desde backup
+☐ 6. ¿Token expuesto? → ir a docs/secrets.md → Procedimiento de rotación
+☐ 7. Documentar el incidente como HAL-XXX en yggdrasil-secops
+```
+
+---
+
+_Creado: 2026-07-13 · Perplexity-MCP · F7.2 del Plan Maestro · Estado: ESQUELETO — completar antes 2026-07-20_
