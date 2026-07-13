@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-09
-actualizado: 2026-07-13T10:07:00+02:00
+actualizado: 2026-07-13T15:58:00+02:00
 ruta: docs/canon/ESTADO-SISTEMA.md
 tags: [canon, estado, sistema, auditoria]
 status: vigente
@@ -21,8 +21,8 @@ status: vigente
 
 | Repo | Propósito | Estado | Issues |
 |------|-----------|--------|--------|
-| [yggdrasil-dew](https://github.com/alvarofernandezmota-tech/yggdrasil-dew) | Plan, ADRs, issues, trazabilidad | ✅ Activo · 10 ADRs | 27 abiertos |
-| [yggdrasil-wiki](https://github.com/alvarofernandezmota-tech/yggdrasil-wiki) | Conocimiento, 24 islas | ✅ Activo | 0 |
+| [yggdrasil-dew](https://github.com/alvarofernandezmota-tech/yggdrasil-dew) | Plan, ADRs, issues, trazabilidad | ✅ Activo · 10 ADRs | 23 abiertos |
+| [yggdrasil-wiki](https://github.com/alvarofernandezmota-tech/yggdrasil-wiki) | Conocimiento, 25 islas | ✅ Activo · 25 islas | 0 |
 | [VIDAPERSONAL](https://github.com/alvarofernandezmota-tech/VIDAPERSONAL) | Vida, diario, metas | ✅ Activo · canónico | 2 |
 
 ### Infraestructura y Operaciones
@@ -37,14 +37,14 @@ status: vigente
 
 | Repo | Propósito | Estado | Issues |
 |------|-----------|--------|--------|
-| [yggdrasil-secops](https://github.com/alvarofernandezmota-tech/yggdrasil-secops) | Blue team, tripwires, canary | 🟡 Bot caído #46 | 6 |
+| [yggdrasil-secops](https://github.com/alvarofernandezmota-tech/yggdrasil-secops) | Blue team, tripwires, canary | 🟡 local_tripwire — verificar al arrancar | 6 |
 | [osint-stack](https://github.com/alvarofernandezmota-tech/osint-stack) | Spiderfoot, pipelines OSINT | ⚪ Sin auditar | 0 |
 
 ### IA y Automatización
 
 | Repo | Propósito | Estado | Issues |
 |------|-----------|--------|--------|
-| [THDORA-PERSONAL](https://github.com/alvarofernandezmota-tech/THDORA-PERSONAL) | Bot Telegram + FastAPI + Ollama | 🔴 Caído #44 #45 | 10 |
+| [THDORA-PERSONAL](https://github.com/alvarofernandezmota-tech/THDORA-PERSONAL) | Bot Telegram + FastAPI + Ollama | 🟡 Healthy — verificar local_tripwire | 10 |
 | [ollama-stack](https://github.com/alvarofernandezmota-tech/ollama-stack) | LLM local, LiteLLM, Qdrant | 🟡 Sin auditar | 0 |
 | [local-brain](https://github.com/alvarofernandezmota-tech/local-brain) | RAG, embeddings, pgvector | ⚪ Sin auditar | 0 |
 | [investigacion-ia](https://github.com/alvarofernandezmota-tech/investigacion-ia) | PoCs IA, agentes, arquitecturas | ⚪ Sin auditar | 0 |
@@ -68,18 +68,6 @@ status: vigente
 
 ---
 
-## 🔴 Bloqueantes activos (requieren terminal)
-
-| Issue | Descripción | Impacto | Tiempo est. |
-|-------|-------------|---------|-------------|
-| [#44](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/44) | Fix .env malformado | Bloquea blue team + docker compose | 5 min |
-| [#45](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/45) | Rotar token Telegram | THDORA sin bot funcional | 2 min |
-| [#46](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/46) | Restart log_guardian + local_tripwire | Blue team inactivo | 3 min |
-| [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) | smartctl HDD 28.000h | Disco en riesgo crítico | 5 min |
-| [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) | Puerto 21 FTP abierto | Seguridad perimetral | 10 min |
-
----
-
 ## ✅ Completado esta semana (2026-07-09 al 2026-07-13)
 
 | Tarea | Issue | Cuándo |
@@ -87,13 +75,31 @@ status: vigente
 | Plan Maestro por Fases creado | — | 2026-07-13 |
 | Diagrama C4 (Context + Container) | #41 ✅ | 2026-07-13 |
 | AUDIT-005 — isla MCP consolidada | #42 ✅ | 2026-07-13 |
-| 19 islas Wiki (5 nuevas hoy) | — | 2026-07-13 |
+| CI secret-scanning + markdownlint | #38 ✅ #39 ✅ | 2026-07-13 |
+| Fix .env malformado Madre | #44 ✅ | 2026-07-13 |
+| Rotación secretos Telegram + LiteLLM | #45 ✅ | 2026-07-13 |
+| log_guardian_bot + local_tripwire restartados | #46 ✅ | 2026-07-13 |
+| 25 islas Wiki verificadas | — | 2026-07-13 |
 | ADR-001 a ADR-010 creados | — | 2026-07-13 |
-| NORMAS-TRIDENTE.md canon | — | 2026-07-13 |
-| yggdrasil-scripts repo + CI | ADR-009 | 2026-07-13 |
-| Auditoría 19 repos — mapa completo | — | 2026-07-13 |
-| Issues de auditoría todos los repos satélite | — | 2026-07-13 |
-| ESTADO-SISTEMA alineado con ecosistema real | — | 2026-07-13 |
+| DRP documentado | — | 2026-07-13 |
+| secrets.md + inventario-madre.md creados | — | 2026-07-13 |
+| 4 zombis raíz eliminados | — | 2026-07-13 |
+| Tridente alineado al 100% | — | 2026-07-13 |
+
+**Total issues cerrados esta semana: 7 (#38 #39 #41 #42 #44 #45 #46)**
+
+---
+
+## 🔴 Pendiente — terminal (Alvaro) — próxima sesión martes
+
+| Issue | Descripción | Tiempo est. |
+|-------|-------------|-------------|
+| [#36](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/36) | Verificar puerto 21 desde red externa | 10 min |
+| [#49](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/49) | local_tripwire health check | 5 min |
+| [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) | smartctl HDD 28.000h | 5 min |
+| [#43](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/43) | IaC: versionar 16 servicios docker-compose | sesión dedicada |
+| [#32](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/32) | Watchdog restart | 5 min |
+| [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) | Puerto 21 FTP | 10 min |
 
 ---
 
@@ -101,32 +107,18 @@ status: vigente
 
 | Issue | Descripción |
 |-------|-------------|
-| [#57](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/57) | isla filosofia.md — bloque perfil Alvaro (input Alvaro) |
-| [#56](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/56) | Islas formacion.md + impresion3d.md (input Alvaro) |
-| [#50](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/50) | Gobernanza filosofía — validar 6 principios (input Alvaro) |
-| [#35](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/35) | AUDIT-002 — auditoría DEW profunda con Claude/Grok |
+| [#35](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/35) | AUDIT-002 — auditoría DEW profunda |
 | [#18](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/18) | Gobernanza — labels + templates GitHub |
+| [#57](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/57) | isla filosofia.md — bloque perfil Álvaro |
+| [#56](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/56) | Islas formacion.md + impresion3d.md |
+| [#50](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/50) | Gobernanza filosofía — validar 6 principios |
 | ADR-011 | Decisión sobre thea-ia: archivar o integrar |
+| — | Revisar duplicados: ECOSYSTEM-ARCHITECTURE vs ARQUITECTURA-C4 |
+| — | Revisar duplicados: NORMAS.md vs CONVENCIONES.md |
 
 ---
 
-## ⚪ Pendiente terminal (Alvaro)
-
-| Issue | Descripción | Comandos |
-|-------|-------------|----------|
-| [#44](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/44) | Fix .env | `nano /home/varopc/.env` |
-| [#45](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/45) | Rotar Telegram token | BotFather → Revoke |
-| [#46](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/46) | Restart blue team | `docker restart log_guardian_bot local_tripwire` |
-| [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) | smartctl HDD | `sudo smartctl -a /dev/sda` |
-| [#32](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/32) | Watchdog restart | `docker restart yggdrasil_watchdog` |
-| [#34](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/34) | docker-compose.yml raíz | `docker compose config` |
-| [#43](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/43) | IaC: versionar 16 servicios | madre-config setup |
-| [#13](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/13) | Limpieza git (APK, .obsidian) | BFG + git rm |
-| [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) | Puerto 21 FTP | Router → cerrar port 21 |
-
----
-
-## Ecosistema en números — 2026-07-13 10:07 CEST
+## Ecosistema en números — 2026-07-13 15:58 CEST
 
 | Métrica | Valor |
 |---------|-------|
@@ -134,15 +126,14 @@ status: vigente
 | Repos núcleo activo | 7 |
 | Repos sin auditar | 6 |
 | ADRs | 10 (ADR-001 → ADR-010) |
-| Islas Wiki | 24 |
-| Issues abiertos DEW | 27 |
-| Issues cerrados esta semana | 2 (#41, #42) |
-| Scripts operativos | 3 (check-docker, check-env, rotate-logs) |
-| CI activo | ShellCheck en yggdrasil-scripts |
+| Islas Wiki | 25 |
+| Issues abiertos DEW | ~23 |
+| Issues cerrados esta semana | 7 (#38 #39 #41 #42 #44 #45 #46) |
+| CI activo | gitleaks + validate-canon + markdownlint + ShellCheck |
 | Servicios Docker Madre | 16 |
-| Diarios VIDAPERSONAL | Activo desde 2026-07-10 |
-| Bloqueantes terminales | 5 (44, 45, 46, 31, 15) |
+| Bloqueantes terminales próxima sesión | 4 (#36 #49 #31 #15) |
+| Tridente | ✅ DEW ↔ Wiki ↔ VIDAPERSONAL alineado al 100% |
 
 ---
 
-_Actualizado: 2026-07-13 10:07 CEST · Perplexity-MCP · Auditoría completa 19 repos_
+_Actualizado: 2026-07-13 15:58 CEST · Perplexity-MCP · cierre sesión completa 12-13 julio_
