@@ -24,20 +24,22 @@ tags: [adr, indice, decisiones]
 | [ADR-006](ADR-006-sesion-log-como-artefacto.md) | Logs de sesión como artefactos de primer nivel | 2026-07-13 | ✅ Aceptado | Transparencia interna |
 | [ADR-007](ADR-007-isla-mcp-propia.md) | MCP tiene isla propia en la Wiki | 2026-07-13 | ✅ Aceptado | Un solo punto de verdad |
 | [ADR-008](ADR-008-adr-obligatorio-por-decision.md) | Toda decisión arquitectural requiere ADR | 2026-07-13 | ✅ Aceptado | Transparencia interna |
+| [ADR-009](ADR-009-repo-scripts-separado.md) | yggdrasil-scripts como repo separado | 2026-07-13 | ✅ Aceptado | Automatizar lo repetible |
+| [ADR-010](ADR-010-evaluacion-arquitectura-post-plan.md) | Evaluación arquitectura post-plan (tridente vs alternativas) | 2026-07-13 | ⏳ Pendiente evaluación Q3 2026 | Sistemas que perduran |
 
 ---
 
-## Principios fundacionales relacionados
+## Principios fundacionales
 
 | Principio | ADRs que lo materializan |
 |-----------|-------------------------|
 | Soberanía digital | ADR-001 |
 | Un solo punto de verdad | ADR-002, ADR-005, ADR-007 |
 | Transparencia interna | ADR-006, ADR-008 |
-| Automatizar lo repetible | ADR-004 |
-| Sistemas que perduran | ADR-003 |
-| Deuda visible | (pendiente: ADR sobre gestibn de HALs) |
+| Automatizar lo repetible | ADR-004, ADR-009 |
+| Sistemas que perduran | ADR-003, ADR-010 |
+| Deuda visible | (pendiente ADR-011: gestión HALs) |
 
 ---
 
-_Actualizado: 2026-07-13 · Perplexity-MCP_
+_Actualizado: 2026-07-13 · 10 ADRs · Perplexity-MCP_
