@@ -3,7 +3,7 @@ title: Plan Maestro de Alineación — Ecosistema Yggdrasil
 tipo: plan
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-07-09
-actualizado: 2026-07-09
+actualizado: 2026-07-13
 ruta: PLAN-MAESTRO-2026-07.md
 tags: [plan, maestro, alineacion, unico]
 status: vigente
@@ -15,6 +15,7 @@ fuentes:
   - Auditoría en vivo 2026-07-09 (Claude)
   - docs/auditorias/analisis-claude-2026-07-05.md
   - docs/auditorias/analisis-perplexity-2026-07-05.md
+  - Investigación Gemini 2026-07-13
 ---
 
 # 🎯 Plan Maestro — Ecosistema Yggdrasil
@@ -132,6 +133,47 @@ curl -sI https://raw.githubusercontent.com/alvarofernandezmota-tech/yggdrasil-se
 
 ---
 
+## Fase 7 — GitOps Real + Operabilidad (nuevo — backlog Gemini 2026-07-13)
+
+> Ninguno de estos puntos está ejecutado todavía. Son propuestas validadas, no hechos.
+> Ver análisis completo en `docs/diarios/2026-07-13-dew.md` → sección Investigación Gemini.
+
+### 7.1 — Secretos como contratos de estado (no ficheros estáticos)
+
+- [ ] Crear `.env.template` con todas las variables obligatorias (sin valores)
+- [ ] Crear `scripts/env-checker.sh` — valida `.env` contra `.env.template` antes de `docker-compose up`
+  ```bash
+  alias ygg-check="cd ~/yggdrasil-dew && ./scripts/env-checker.sh .env.template .env"
+  ```
+- [ ] Evaluar `sops` + age key para cifrado de secretos en reposo
+- [ ] Crear `docs/secrets.md` — política de rotación de tokens (sin valores reales)
+
+### 7.2 — Runbooks y DRP
+
+- [x] Esqueleto `docs/runbooks/DRP.md` creado — 2026-07-13
+- [ ] Completar DRP con rutas reales, IPs, nombres de volúmenes Docker
+- [ ] Crear `docs/runbooks/ollama-recovery.md` — reconstruir stack Ollama sin perder RAG
+
+### 7.3 — Healthchecks en docker-compose
+
+- [ ] Añadir `healthcheck` + `restart: unless-stopped` a servicios críticos:
+  - `log_guardian_bot` (relacionado con #46)
+  - `ollama`, `litellm`, `n8n`, `open-webui`
+- [ ] Verificar que todos los servicios tienen `restart: unless-stopped` o `always`
+
+### 7.4 — GitOps estricto (norma permanente)
+
+- [ ] **Norma:** ningún cambio en producción sin PR. SSH solo para emergencias documentadas.
+- [ ] Crear workflow GitHub Actions `validate-env.yml` — bloquea PR si `.env.template` no es coherente
+- [ ] Relacionado con issue #43 (IaC docker-compose drift)
+
+### 7.5 — Observabilidad (backlog largo plazo)
+
+- [ ] Evaluar Promtail + Loki para agregación de logs de todos los servicios Docker
+- [ ] Implementar `btrfs scrub` semanal automatizado en cron de Madre (relacionado con #31)
+
+---
+
 ## Infraestructura crítica (en paralelo, no depende de nada de lo anterior)
 
 - [ ] #31 — smartctl HDD Madre, disco en riesgo
@@ -142,13 +184,17 @@ curl -sI https://raw.githubusercontent.com/alvarofernandezmota-tech/yggdrasil-se
 ## Orden de ejecución final
 
 1. **Ahora:** WIKI privado (Fase 0)
-2. **Hoy, 10 min:** Fase 1 (2 filas en índice ADR)
-3. **Hoy, 10 min:** Fase 2 (unificar índices de islas)
-4. **En paralelo, sin esperar:** #31 y #15 (críticas de infra)
-5. **Próxima sesión larga:** Fase 3 (purga real, la que más tarda)
-6. **Cuando toque:** Fase 4 (MCP/agentes) y Fase 5 (CI)
-7. **Para siempre:** Fase 6, con el paso 0 de verificación de visibilidad no negociable
+2. **Hoy con terminal:** #44 + #45 + #46 (25 min)
+3. **Hoy, 10 min por MCP:** Fase 1 (2 filas en índice ADR)
+4. **Hoy, 10 min por MCP:** Fase 2 (unificar índices de islas)
+5. **En paralelo, sin esperar:** #31 y #15 (críticas de infra)
+6. **MCP próxima sesión:** completar `docs/runbooks/DRP.md` + crear `docs/secrets.md`
+7. **Terminal próxima sesión:** `.env.template` + `env-checker.sh` + healthchecks en docker-compose
+8. **Próxima sesión larga:** Fase 3 (purga real, la que más tarda)
+9. **Cuando toque:** Fase 4 (MCP/agentes) y Fase 5 (CI)
+10. **Para siempre:** Fase 6, con el paso 0 de verificación de visibilidad no negociable
 
 ---
 
-_Creado: 2026-07-09 · Consolida y sustituye los 3 planes anteriores_
+_Creado: 2026-07-09 · Actualizado: 2026-07-13 · Consolida y sustituye los 3 planes anteriores_
+_Fuentes adicionales: Investigación Gemini 2026-07-13 (ver docs/diarios/2026-07-13-dew.md)_
