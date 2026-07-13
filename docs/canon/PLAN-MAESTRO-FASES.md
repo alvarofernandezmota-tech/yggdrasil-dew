@@ -16,7 +16,7 @@ status: vigente
 
 ---
 
-## Estado global — 2026-07-13
+## Estado global — 2026-07-13 (actualizado 09:52 CEST)
 
 | Bloque | Estado | Issues |
 |--------|--------|--------|
@@ -24,13 +24,39 @@ status: vigente
 | ✅ **F0 — Repos privados** | Completado | — |
 | ✅ **F1 — ADRs indexados** | Completado | — |
 | ✅ **F5 — CI completo** | Completado 2026-07-13 | #38 #39 cerrados |
+| ✅ **F4 — Gobernanza C4** | Completado 2026-07-13 | #40 #41 cerrados |
+| ✅ **AUDIT-005 MCP** | Completado 2026-07-13 | #42 cerrado |
 | 🟡 **F2 — Auditoría Madre** | Bloqueado por #44 #45 | #31 #32 #34 #43 |
-| 🟡 **F3 — Purga WIKI** | En progreso | #24 #42 |
-| 🟡 **F4 — Gobernanza C4** | Parcial — C4 creado | #18 #40 #41 |
-| 🟡 **F6 — Islas** | Fichas creadas, auditorías pendientes | #49–#55 |
+| 🟡 **F3 — Purga WIKI** | En progreso | #24 |
+| 🟡 **F6 — Islas** | 8 islas auditadas, 2 pendientes input | #49–#56 |
 | ⚪ **F7 — Seguridad blue team** | Bloqueado por #44 #45 | #15 #19 #37 |
 | ⚪ **F8 — IaC Madre** | Pendiente terminal | #13 #43 |
-| ⚪ **F9 — VIDAPERSONAL** | Pendiente terminal | #48 |
+| ⚪ **F9 — VIDAPERSONAL** | Parcial — canon ok, limpieza pendiente | #48 |
+
+---
+
+## LOG DE SESIÓN — 2026-07-13
+
+### Commits realizados por Perplexity-MCP
+
+| Hora | Repo | Commit | Qué |
+|------|------|--------|-----|
+| 09:10 | yggdrasil-dew | `PLAN-MAESTRO-FASES.md` creado | Plan maestro inicial |
+| 09:15 | yggdrasil-dew | `ARQUITECTURA-C4.md` creado | Diagrama C4 Context + Container |
+| 09:20 | yggdrasil-dew | `ownership-matrix.md` actualizada | 16 servicios documentados |
+| 09:35 | yggdrasil-wiki | 6 islas expandidas | acer, thea, labs, thdora, cerebro, seguridad |
+| 09:44 | VIDAPERSONAL | `01_diarios/2026-07-13.md` | Diario — cierre ritual vela blanca |
+| 09:45 | yggdrasil-dew | #41 cerrado | C4 completado |
+| 09:49 | yggdrasil-dew | #56 creado | Islas formacion + impresion3d |
+| 09:51 | yggdrasil-wiki | `wiki/islas/mcp.md` creado | AUDIT-005 consolidado |
+| 09:51 | yggdrasil-dew | #42 cerrado | AUDIT-005 completado |
+
+### Issues cerrados esta sesión
+- ✅ [#41](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/41) — Diagrama C4 Mermaid
+- ✅ [#42](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/42) — AUDIT-005 MCP consolidado
+
+### Issues creados esta sesión
+- 🟡 [#56](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/56) — Islas formacion.md + impresion3d.md (requiere input Alvaro)
 
 ---
 
@@ -96,19 +122,20 @@ docker compose -f /home/varopc/docker-compose.yml ps
 |-------|------|---------------|------|
 | #49 | Orquestador (n8n + THDORA + MCP) | #44 #45 | Parcial |
 | #55 | IA Local (Ollama) | Acceso SSH | No |
-| #42 | AUDIT-005 MCP disperso | — | ✅ Sí |
 | #37 | AUDIT-004 secops | — | ✅ Sí |
 | #36 | AUDIT-003 thdora-personal | #44 #45 | Parcial |
 | #35 | AUDIT-002 dew completa | — | ✅ Sí |
+| #56 | Islas formacion + impresion3d | Input Alvaro | ⚪ Pendiente |
 
 ---
 
-## BLOQUE 3 — Gobernanza y arquitectura (todo por MCP)
+## BLOQUE 3 — Gobernanza y arquitectura
 
 | Issue | Tarea | Estado |
 |-------|-------|--------|
-| #41 | Diagrama C4 Mermaid | ✅ Creado 2026-07-13 |
-| #40 | Ownership matrix completa | 🟡 Actualizada, pendiente verificar con `docker ps` |
+| #41 | Diagrama C4 Mermaid | ✅ Cerrado 2026-07-13 |
+| #42 | AUDIT-005 MCP consolidado | ✅ Cerrado 2026-07-13 |
+| #40 | Ownership matrix completa | 🟡 Actualizada, verificar con `docker ps` |
 | #18 | Gobernanza: labels, templates, convenciones | 🟡 Parcial |
 | #50 | GOB-001 Filosofía: validar principios | ⚪ Pendiente (requiere Alvaro) |
 
@@ -120,19 +147,19 @@ docker compose -f /home/varopc/docker-compose.yml ps
 |-------|-------|---------------|
 | #15 | Puerto 21 FTP cerrar en router | Acceso router |
 | #19 | Levantar Wazuh + Suricata + Pihole + SearXNG | #44 #45 primero |
-| #37 | AUDIT-004 secops Fase 1 | — |
+| #37 | AUDIT-004 secops Fase 1 | — (puedo hacer por MCP) |
 
 ---
 
-## BLOQUE 5 — Auditorías islas menores (requieren terminal o acción manual)
+## BLOQUE 5 — Auditorías islas menores
 
 | Issue | Isla | Acción |
 |-------|------|--------|
 | #51 | Acer | Encender Acer + revisar |
 | #52 | Thea (iPhone) | Revisar apps manualmente |
-| #53 | Impresión 3D | Inventario físico |
-| #54 | Formación | Reflexión + actualización |
-| #48 | VIDAPERSONAL | Terminal + domingo |
+| #53 | Impresión 3D | Inventario físico + input Alvaro |
+| #54 | Formación | Reflexión + input Alvaro |
+| #48 | VIDAPERSONAL | Terminal + limpieza carpetas |
 
 ---
 
@@ -141,7 +168,8 @@ docker compose -f /home/varopc/docker-compose.yml ps
 > Todo lo que puede hacer Perplexity-MCP, lo hace directamente y crea el commit.
 > Todo lo que requiere terminal, sale como issue con los comandos exactos.
 > Nunca una tarea pendiente en un chat. Siempre en un issue.
+> Cada sesión se loguea en este archivo y en el diario VIDAPERSONAL del día.
 
 ---
 
-_Actualizado: 2026-07-13 · Perplexity-MCP_
+_Actualizado: 2026-07-13 09:52 CEST · Perplexity-MCP_
