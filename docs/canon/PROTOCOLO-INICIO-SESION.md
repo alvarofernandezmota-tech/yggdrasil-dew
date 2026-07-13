@@ -6,139 +6,168 @@ actualizado: 2026-07-13
 ruta: docs/canon/PROTOCOLO-INICIO-SESION.md
 tags: [canon, inicio, sesion, protocolo, ritual]
 status: vigente
+version: 4
 adr: ADR-012
 ---
 
 # 🟢 Protocolo de Inicio de Sesión
 
-> Toda sesión de trabajo empieza con este protocolo.
-> Objetivo: contexto completo + verificar que el cierre anterior fue correcto.
-> Tiempo estimado: 5–10 minutos.
+> Toda sesión de trabajo empieza ejecutando este protocolo.  
+> Objetivo: contexto completo en menos de 10 minutos, sin asumir nada del estado anterior.  
 > Simétrico a: `PROTOCOLO-CIERRE-SESION.md`
 
 ---
 
-## Paso 0 — Introspcción del cierre anterior
+## CONTRATO AGENTE IA — lectura obligatoria antes de actuar
 
-> Antes de leer el estado actual, verificar que la sesión anterior quedó bien cerrada.
-> Es el checklist del cierre en modo lectura/verificación.
-> Si algo faltó → corregirlo ahora antes de arrancar.
+> **El agente NO ejecuta ninguna acción hasta completar esta fase.**  
+> El agente lee estos archivos en este orden exacto. Sin excepciones.
 
-### yggdrasil-dew — verificar
+```
+ORDEN DE LECTURA OBLIGATORIA AL INICIO DE SESIÓN:
 
-- [ ] `docs/diarios/YYYY-MM-DD.md` (fecha de la última sesión) — ¿existe y tiene bloque de cierre?
-- [ ] `MASTER-PENDIENTES.md` — ¿la fecha de actualización corresponde a la última sesión?
-- [ ] `docs/canon/ESTADO-SISTEMA.md` — ¿los números cuadran con lo que recuerdas?
-- [ ] `docs/canon/ownership-matrix.md` — ¿servicio caído sin issue HAL abierto?
-- [ ] `docs/adr/INDEX.md` — ¿el número de ADRs cuadra?
-- [ ] Raíz dew — ¿hay archivos zombi que no deberían estar?
-- [ ] Issues — ¿alguno resuelto en el diario pero aún abierto en GitHub?
+[1] Issue de apertura (label: apertura-sesion) — el más reciente abierto
+    → Contexto exacto: dónde quedamos, qué toca hoy, repos tocados, bloqueos
+    → Si no existe → avisar a Álvaro antes de continuar
 
-### yggdrasil-wiki — verificar
+[2] ESTADO-SISTEMA.md (raíz dew)
+    → Números actuales: repos, ADRs, islas, issues abiertos, servicios caídos
+    → Si hay 🔴 en servicios → HAL activo → va antes que todo
 
+[3] MASTER-PENDIENTES.md (raíz dew)
+    → Fases del plan, prioridad de esta sesión, qué está bloqueado
+
+[4] docs/canon/ownership-matrix.md
+    → Solo si hay servicio en estado 🔴 o sesión toca infra
+
+ARCHIVOS DE CONTEXTO SECUNDARIO — solo si la sesión los necesita:
+[5] docs/diarios/YYYY-MM-DD.md (fecha última sesión) — leer si +24h sin sesión
+[6] docs/islas/ESTADO-ISLA-*.md — solo los relevantes para los objetivos de hoy
+[7] docs/adr/INDEX.md — solo si la sesión toca decisiones de arquitectura
+```
+
+**Regla de oro del agente:**
+> Nunca asumir que el estado es igual que ayer.  
+> Nunca actuar sin haber leído el issue de apertura.  
+> Si hay contradicción entre archivos → preguntar a Álvaro antes de resolver.
+
+---
+
+## Paso 0 — Verificar que el cierre anterior fue correcto
+
+Antes de arrancar, comprobar que la sesión anterior quedó bien cerrada.  
+Si algo faltó → **corregirlo ahora, antes de declarar objetivos de hoy.**
+
+### Checklist de verificación del cierre anterior
+
+**yggdrasil-dew:**
+- [ ] `docs/diarios/YYYY-MM-DD.md` (última sesión) — ¿existe y tiene bloque de cierre con issues cerrados?
+- [ ] `MASTER-PENDIENTES.md` — ¿fecha de actualización corresponde a la última sesión?
+- [ ] `ESTADO-SISTEMA.md` — ¿números cuadran con lo que recuerdas?
+- [ ] `docs/adr/INDEX.md` — ¿número de ADRs cuadra?
+- [ ] Issues GitHub — ¿alguno resuelto en diario pero aún abierto?
+- [ ] Raíz dew — ¿hay archivos zombi o sin clasificar?
+
+**yggdrasil-wiki:**
 - [ ] `wiki/islas/INDEX.md` — ¿número de islas y estados cuadran?
-- [ ] Islas tocadas en la última sesión — ¿están actualizadas?
 
-### Resultado
+**Repos operativos tocados en última sesión:**
+- [ ] ¿Todos tienen `git push` hecho? (madre-config, scripts, tracking, secops...)
 
-| ¿Todo correcto? | Acción |
+| Resultado | Acción |
 |---|---|
-| ✅ Sí | Continuar a Fase 1 |
+| ✅ Todo correcto | Continuar a Fase 1 |
 | ❌ Falta algo | Corregirlo ahora → luego Fase 1 |
+| ❓ No recuerdo | Leer último diario y reconstruir |
 
 ---
 
-## Fase 1 — Lectura obligatoria archivo por archivo
+## Fase 1 — Lectura de contexto (orden estricto, no editar todavía)
 
-Orden estricto. No editar todavía — solo leer.
+### 1.1 — Núcleo de estado (siempre)
 
-### 1.1 — Estado del ecosistema (yggdrasil-dew)
-
-| Archivo | Ruta | Qué buscar |
+| Archivo | Ruta | Qué extraer |
 |---|---|---|
-| Estado del sistema | `docs/canon/ESTADO-SISTEMA.md` | Números: repos, ADRs, islas, issues abiertos, servicios caídos |
-| Pendientes maestros | `MASTER-PENDIENTES.md` | Estado fases, pendientes, prioridad de esta sesión |
-| Último diario | `docs/diarios/YYYY-MM-DD.md` | Dónde quedamos, qué sigue, issues cerrados |
-| Ownership matrix | `docs/canon/ownership-matrix.md` | ¿Servicio Docker caído? → Si 🔴 → va antes que todo |
-| Normas vigentes | `NORMAS.md` | Reglas activas — leer si +48h sin sesión |
-| Normas Tridente | `docs/canon/NORMAS-TRIDENTE.md` | Qué va en cada repo — leer si hay duda |
+| Issue apertura | GitHub — label `apertura-sesion` | Objetivo sesión, repos a tocar, bloqueos, contexto exacto |
+| Estado sistema | `ESTADO-SISTEMA.md` | Números: repos, ADRs, islas, issues, servicios caídos |
+| Pendientes | `MASTER-PENDIENTES.md` | Fases activas, prioridad sesión, bloqueados |
+| Ownership | `docs/canon/ownership-matrix.md` | Si hay 🔴 → HAL urgente antes que todo |
 
-### 1.2 — Decisiones y arquitectura (yggdrasil-dew)
+### 1.2 — Decisiones vigentes (si la sesión toca arquitectura)
 
-| Archivo | Ruta | Qué buscar |
+| Archivo | Ruta | Qué extraer |
 |---|---|---|
-| Índice ADRs | `docs/adr/INDEX.md` | Último ADR vigente, próximo número libre |
-| Plan maestro | `docs/canon/PLAN-MAESTRO-FASES.md` | Fases del plan, dónde estamos en el roadmap |
-| ADR relevante | `docs/adr/ADR-0XX-nombre.md` | Solo si la sesión toca un área con ADR reciente |
+| Índice ADRs | `docs/adr/INDEX.md` | Último ADR, próximo número libre |
+| ADR relevante | `docs/adr/ADR-0XX.md` | Solo el que afecta a los objetivos de hoy |
+| Plan maestro | `docs/canon/PLAN-MAESTRO-FASES.md` | Fase actual del roadmap |
 
-### 1.3 — Estado de islas (yggdrasil-dew) — las relevantes para la sesión
+### 1.3 — Islas afectadas (solo las relevantes para hoy)
 
-| ESTADO-ISLA | Ruta | Leer si la sesión toca... |
-|---|---|---|
-| Infra | `docs/islas/ESTADO-ISLA-INFRA.md` | Madre, Docker, servicios, IaC |
-| Seguridad | `docs/islas/ESTADO-ISLA-SEGURIDAD.md` | SecOps, HAL, vulnerabilidades, tripwires |
-| THDORA | `docs/islas/ESTADO-ISLA-THDORA.md` | Bot Telegram, THDORA-PERSONAL, FastAPI |
-| IA Local | `docs/islas/ESTADO-ISLA-IA-LOCAL.md` | Ollama, RAG, Qdrant, LiteLLM, Open-WebUI |
-| Scripts | `docs/islas/ESTADO-ISLA-SCRIPTS.md` | CI, Actions, scripts bash, yggdrasil-scripts |
-| Tracking | `docs/islas/ESTADO-ISLA-TRACKING.md` | Vida personal, diarios, metas, filosofía |
-| Formación | `docs/islas/ESTADO-ISLA-FORMACION.md` | Cursos, apuntes técnicos, HTB |
-| Acer | `docs/islas/ESTADO-ISLA-ACER.md` | Laptop, dotfiles, Arch, Hyprland |
-| Labs | `docs/islas/ESTADO-ISLA-LABS.md` | dev-labs, experimentos, PoCs |
-| Cerebro | `docs/islas/ESTADO-ISLA-CEREBRO.md` | local-brain, embeddings, pgvector |
-| Mapa deps | `docs/islas/MAPA-ISLAS-DEPENDENCIAS.md` | Relaciones entre islas, entrada/salida repos |
-
-### 1.4 — Wiki (yggdrasil-wiki)
-
-| Archivo | Ruta | Qué buscar |
-|---|---|---|
-| Índice islas | `wiki/islas/INDEX.md` | Estado de todas las islas, números totales |
-| Isla específica | `wiki/islas/NOMBRE.md` | Concepto, repo, estado — solo las relevantes |
-
-### 1.5 — Issues (GitHub — yggdrasil-dew)
-
-| Prioridad | Qué revisar antes de arrancar |
+| ESTADO-ISLA | Cuándo leerlo |
 |---|---|
-| 🔴🔴 | Seguridad o hardware crítico → bloquean el resto, van siempre primero |
-| 🔴 | Bloqueantes funcionales → resolver antes de cualquier otra cosa |
-| 🟠 | Requieren terminal → agrupar y ejecutar juntos |
-| 🟡 | MCP puede ejecutar sin terminal → candidatos para esta sesión |
+| `ESTADO-ISLA-INFRA.md` | Sesión toca Madre, Docker, IaC, servicios |
+| `ESTADO-ISLA-SEGURIDAD.md` | Sesión toca SecOps, HAL, vulnerabilidades |
+| `ESTADO-ISLA-THDORA.md` | Sesión toca bot Telegram o THDORA-PERSONAL |
+| `ESTADO-ISLA-IA-LOCAL.md` | Sesión toca Ollama, RAG, LiteLLM, Qdrant |
+| `ESTADO-ISLA-TRACKING.md` | Sesión toca vida personal, diarios, metas |
+| `ESTADO-ISLA-SCRIPTS.md` | Sesión toca CI, Actions, scripts bash |
+
+### 1.4 — Wiki (solo si hay isla que consultar o actualizar)
+
+| Archivo | Ruta |
+|---|---|
+| Índice islas | `wiki/islas/INDEX.md` |
+| Isla específica | `wiki/islas/NOMBRE.md` |
 
 ---
 
-## Fase 2 — Declarar el objetivo de la sesión
+## Fase 2 — Declarar objetivo de la sesión (antes del primer commit)
 
-Antes del primer commit, definir:
+El agente hace estas **4 preguntas siempre**:
+
+1. **¿Cuánto tiempo tienes disponible y tienes terminal?**  
+   → Define alcance: larga (+1h) / corta (30min) / emergencia  
+   → Sin terminal: solo MCP. Con terminal: terminal + MCP
+
+2. **¿Algún servicio caído o cambio crítico desde la última sesión?**  
+   → Sí: HAL-XXX primero, antes de cualquier otra cosa  
+   → No: continuar
+
+3. **¿Se tomó alguna decisión fuera de sesión que no está documentada?**  
+   → Sí: crear ADR o issue antes de ejecutar  
+   → No: continuar
+
+4. **¿El objetivo de hoy tiene issue abierto con label correcto?**  
+   → No: crear el issue antes de empezar  
+   → Sí: continuar
+
+### Plantilla de declaración de sesión
 
 ```
-Sesión: YYYY-MM-DD HH:MM
-Tipo: Larga (+1h) / Corta (30min) / Emergencia / Formación
-Terminal disponible: Sí / No
-
-Objetivo 1: [issue #N o fase FX] — [acción concreta medible]
-Objetivo 2: [issue #N o fase FX] — [acción concreta medible]
-Objetivo 3: [issue #N o fase FX] — [acción concreta medible]
-
-No entrar en: [qué queda fuera de esta sesión]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SESIÓN: YYYY-MM-DD HH:MM CEST
+TIPO: Larga (+1h) / Corta (30min) / Emergencia / Formación
+TERMINAL: Sí / No
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OBJETIVO 1: [issue #N] — [acción concreta y medible]
+OBJETIVO 2: [issue #N] — [acción concreta y medible]
+OBJETIVO 3: [issue #N] — [acción concreta y medible] (opcional)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+NO ENTRAR EN: [qué queda explícitamente fuera de esta sesión]
+REPOS QUE SE VAN A TOCAR: [lista]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ---
 
-## Fase 3 — Verificación de consistencia (solo si +24h sin sesión)
+## Fase 3 — Verificación de consistencia (solo si +48h sin sesión)
 
-- [ ] `docs/adr/INDEX.md` — número de ADRs cuadra
-- [ ] `wiki/islas/INDEX.md` — número de islas cuadra
-- [ ] `docs/canon/ESTADO-SISTEMA.md` — fecha de actualización reciente
-- [ ] `MASTER-PENDIENTES.md` — refleja la última sesión
-- [ ] Raíz dew — sin archivos zombi
-
----
-
-## 4 preguntas de inicio — el agente hace estas al arrancar
-
-1. **¿Cuánto tiempo tienes y tienes terminal?** → Define alcance y tipo de issues
-2. **¿Algún servicio caído o cambio desde la última sesión?** → Sí: HAL-XXX primero
-3. **¿Se decidió algo fuera de sesión?** → Sí: documentar antes de ejecutar
-4. **¿Hay algo urgente sin issue todavía?** → Sí: crear issue con label ahora
+- [ ] `docs/adr/INDEX.md` — número de ADRs cuadra con archivos reales en `docs/adr/`
+- [ ] `wiki/islas/INDEX.md` — número de islas cuadra con archivos reales
+- [ ] `ESTADO-SISTEMA.md` — fecha de actualización no tiene más de 48h de antigüedad
+- [ ] `MASTER-PENDIENTES.md` — refleja el estado real del backlog GitHub
+- [ ] Raíz dew — sin archivos zombi o sin clasificar
+- [ ] Issues con label `bloqueado` — ¿siguen bloqueados o se desbloquearon?
 
 ---
 
@@ -146,14 +175,14 @@ No entrar en: [qué queda fuera de esta sesión]
 
 | Repo | Abrir si... |
 |---|---|
-| `yggdrasil-dew` | Siempre — punto de entrada obligatorio |
-| `yggdrasil-wiki` | Hay isla que consultar o actualizar |
+| `yggdrasil-dew` | **Siempre** — punto de entrada obligatorio |
+| `WIKI---PERSONAL` | Hay isla que consultar o actualizar |
 | `yggdrasil-tracking` | Hay algo personal o vital que registrar |
-| `yggdrasil-formacion-` | La sesión incluye aprendizaje técnico |
+| `yggdrasil-formacion` | La sesión incluye aprendizaje técnico |
 | `madre-config` | Cambio en servicios Docker de Madre |
 | `yggdrasil-scripts` | Script o Action nuevo o modificado |
 | `yggdrasil-secops` | Hallazgo de seguridad o HAL nuevo |
-| `THDORA-PERSONAL` | Trabajo en bot Telegram o prompts |
+| `THDORA-PERSONAL` | Trabajo en bot Telegram o prompts IA |
 | `ollama-stack` | LLM local, RAG, modelos Ollama |
 | `acer-config` | Dotfiles o config Arch/Hyprland |
 | `dev-labs` | Experimentos o sandbox |
@@ -161,11 +190,16 @@ No entrar en: [qué queda fuera de esta sesión]
 
 ---
 
-## Regla de oro
+## Priorización de issues al inicio
 
-> **Nunca ejecutar sin contexto. Nunca asumir que el estado es igual que ayer.**
-> El Paso 0 garantiza que el cierre anterior fue completo antes de seguir adelante.
+| Prioridad | Cuándo | Acción |
+|---|---|---|
+| 🔴🔴 Crítico | Seguridad o hardware (puerto abierto, disco, secreto expuesto) | **Bloquea todo lo demás — resolver primero** |
+| 🔴 Alta | Servicio caído, bot inoperativo, bloquea otras tareas | Resolver en esta sesión si hay terminal |
+| 🟠 Media-terminal | Requiere SSH a Madre, comandos locales | Agrupar y ejecutar juntos |
+| 🟡 Media-MCP | MCP puede ejecutar sin terminal | Candidatos principales de la sesión |
+| ⚪ Baja | No bloquea nada | Solo si sobra tiempo |
 
 ---
 
-_Creado: 2026-07-13 · v3 — Paso 0 introspeción cierre · archivo x archivo · ADR-012 · Perplexity MCP_
+_Creado: 2026-07-13 · v4 — contrato agente + issue apertura + orden lectura explícito · ADR-012 · Perplexity MCP_

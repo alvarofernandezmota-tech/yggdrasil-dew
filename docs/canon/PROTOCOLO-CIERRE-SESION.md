@@ -6,197 +6,279 @@ actualizado: 2026-07-13
 ruta: docs/canon/PROTOCOLO-CIERRE-SESION.md
 tags: [canon, cierre, sesion, protocolo, ritual]
 status: vigente
+version: 4
 adr: ADR-012
 ---
 
 # 🔴 Protocolo de Cierre de Sesión
 
-> Toda sesión de trabajo termina ejecutando este protocolo.
-> Objetivo: dejar el ecosistema consistente, sin archivos colgados, con toda decisión trazada.
-> Tiempo estimado: 5–15 minutos.
+> Toda sesión termina ejecutando este protocolo.  
+> Objetivo: estado limpio, documentado y pusheado. La siguiente sesión arranca en 30 segundos.  
 > Simétrico a: `PROTOCOLO-INICIO-SESION.md`
 
 ---
 
-## Árbol de decisiones — ¿dónde va exactamente cada cosa?
+## CONTRATO AGENTE IA — cierre orquestado
+
+> **El agente NO declara "sesión cerrada" hasta que todas las fases están completadas.**  
+> El agente ejecuta las fases en orden. Sin atajos. Sin cerrar el issue-cierre antes de tiempo.
 
 ```
-¿Qué tipo de contenido generaste hoy?
-│
-├── Decisión de arquitectura o cambio estructural
-│   ├── → docs/adr/ADR-0XX-nombre.md          (nuevo)
-│   ├── → docs/adr/INDEX.md                    (actualizar tabla + próximo libre)
-│   └── → ADRs existentes relacionados         (añadir nota de actualización)
-│
-├── Registro de lo que se hizo
-│   └── → docs/diarios/YYYY-MM-DD.md            (crear o añadir sección)
-│
-├── Norma nueva del ecosistema
-│   ├── → NORMAS.md                             (sección ## Regla de XXX)
-│   ├── → docs/canon/NORMAS-TRIDENTE.md         (si afecta al Tridente)
-│   └── → ADR si la norma es decisión estructural
-│
-├── Tarea pendiente / bug accionable
-│   ├── → Issue en yggdrasil-dew (o repo afectado)
-│   └── → MASTER-PENDIENTES.md                 (tabla fases + próxima sesión)
-│
-├── Estado del ecosistema cambió
-│   ├── → docs/canon/ESTADO-SISTEMA.md          (números: repos, ADRs, islas, issues)
-│   └── → docs/canon/ownership-matrix.md        (si cambió servicio, puerto o SLA)
-│
-├── Estado de una isla específica cambió
-│   ├── → docs/islas/ESTADO-ISLA-NOMBRE.md      (estado operativo + deuda)
-│   ├── → wiki/islas/NOMBRE.md                  (concepto/repo si cambia)
-│   └── → wiki/islas/INDEX.md                   (columna Estado + números)
-│
-├── Nueva isla / nuevo repo al ecosistema
-│   ├── → docs/islas/ESTADO-ISLA-NOMBRE.md      (obligatorio — 5 pasos NORMA-ENTRADA)
-│   ├── → wiki/islas/NOMBRE.md                  (isla nueva)
-│   ├── → wiki/islas/INDEX.md                   (fila nueva + actualizar números)
-│   ├── → docs/islas/MAPA-ISLAS-DEPENDENCIAS.md (nodo nuevo)
-│   ├── → docs/canon/ESTADO-SISTEMA.md          (repo nuevo en tabla)
-│   └── → ADR si la creación fue una decisión
-│
-├── Hallazgo técnico (bug, incidente, vulnerabilidad)
-│   ├── → docs/hallazgos/HAL-XXX.md             (evidencia + impacto + resolución)
-│   └── → Issue en yggdrasil-secops si es seguridad
-│
-├── Cambio en servicio Docker de Madre
-│   ├── → madre-config/ (commit en ese repo)
-│   └── → docs/canon/ownership-matrix.md        (actualizar estado del servicio)
-│
-├── Script o Action nuevo/modificado
-│   └── → yggdrasil-scripts/ (commit en ese repo)
-│
-├── Vida personal, diario, reflexión, meta
-│   └── → yggdrasil-tracking
-└── Aprendizaje técnico, curso, apuntes
-    └── → yggdrasil-formacion-
+ORDEN DE EJECUCIÓN DEL CIERRE:
+
+[1] Reconstruir lo hecho → lista de cambios con issue #N por cada acción
+[2] Actualizar ESTADO-SISTEMA.md → números actuales
+[3] Actualizar MASTER-PENDIENTES.md → reflejar estado real del backlog
+[4] Actualizar islas afectadas → ESTADO-ISLA-*.md relevantes
+[5] Crear diario del día → docs/diarios/YYYY-MM-DD.md
+[6] Cerrar issues resueltos en GitHub → con comentario de cierre
+[7] Verificar git push de TODOS los repos tocados
+[8] Crear issue-cierre → label apertura-sesion → body = template
+[9] Declarar sesión cerrada
+```
+
+**Regla del agente:**
+> Si no hay terminal disponible → ejecutar fases 1-6 y 8-9 con MCP.  
+> Si hay terminal → ejecutar las 9 fases completas.  
+> Si se interrumpe el cierre → el issue-cierre queda SIN CERRAR hasta completar.
+
+---
+
+## Fase 1 — Reconstruir lo hecho
+
+El agente genera la lista de cambios de la sesión:
+
+```
+CAMBIOS DE LA SESIÓN YYYY-MM-DD:
+
+Repos tocados:
+  - yggdrasil-dew: [qué se cambió]
+  - [repo]: [qué se cambió]
+
+Issues resueltos: #N, #N, #N
+Issues creados: #N, #N
+ADRs nuevos: ADR-0XX (si aplica)
+Islas actualizadas: [nombre]
 ```
 
 ---
 
-## Checklist de cierre — archivo por archivo, orden obligatorio
+## Fase 2 — Actualizar ESTADO-SISTEMA.md
 
-### 1️⃣ yggdrasil-dew — Cerebro (siempre primero)
+Actualizar SIEMPRE los siguientes campos:
 
-#### Registro de sesión
-- [ ] `docs/diarios/YYYY-MM-DD.md`
-  - Qué bloques se trabajaron
-  - Decisiones tomadas (con ADR si aplica)
-  - Issues cerrados con número y título
-  - Estado al cierre (números clave)
-  - Próxima sesión: objetivos + prioridades
+```yaml
+# Campos que actualizar en ESTADO-SISTEMA.md:
+ultima_sesion: YYYY-MM-DD HH:MM CEST
+issues_abiertos: N          # contar en GitHub
+issues_cerrados_hoy: N      # los de esta sesión
+adrs_totales: N             # contar en docs/adr/
+repos_activos: N            # si cambió
+# servicios: actualizar estado 🟢/🟡/🔴 si alguno cambió
+```
 
-#### Canon y normas
-- [ ] `NORMAS.md` — ¿regla nueva? → añadir
-- [ ] `docs/canon/NORMAS-TRIDENTE.md` — ¿cambia filosofía del Tridente?
-- [ ] `docs/canon/PROTOCOLO-INICIO-SESION.md` — ¿cambió algo que afecte al inicio?
+---
 
-#### Decisiones
-- [ ] `docs/adr/ADR-0XX-nombre.md` — crear si hay decisión estructural
-- [ ] `docs/adr/INDEX.md` — actualizar si hay ADR nuevo (tabla + próximo libre)
-- [ ] ADRs existentes relacionados — añadir nota si los afecta
+## Fase 3 — Actualizar MASTER-PENDIENTES.md
 
-#### Estado del sistema
-- [ ] `docs/canon/ESTADO-SISTEMA.md` — números al día (repos, ADRs, islas, issues abiertos)
-- [ ] `docs/canon/ownership-matrix.md` — si cambió estado/puerto/SLA de algún servicio
+- Mover issues resueltos de "En progreso" / "Pendiente" a sección completada
+- Añadir issues nuevos a la prioridad correcta
+- Si se crearon ADRs → referenciarlos
+- Fecha de actualización al final del archivo
 
-#### Islas y mapa
-- [ ] `docs/islas/ESTADO-ISLA-NOMBRE.md` — crear/actualizar para cada isla tocada
-- [ ] `docs/islas/MAPA-ISLAS-DEPENDENCIAS.md` — si entró o salió una isla
+---
 
-#### Pendientes
-- [ ] `MASTER-PENDIENTES.md` — estado fases + tabla próxima sesión
-- [ ] Issues — cerrar resueltos · crear nuevos detectados con label correcto
-- [ ] Zombis — 0 archivos vacíos en raíz dew
+## Fase 4 — Actualizar ESTADO-ISLA-*.md afectados
 
-### 2️⃣ yggdrasil-wiki — Conocimiento (segundo)
+Solo actualizar los que la sesión tocó realmente.
 
-- [ ] `wiki/islas/NOMBRE.md` — actualizar concepto/estado de cada isla tocada
-- [ ] `wiki/islas/INDEX.md` — columna Estado al día + números totales
-- [ ] Islas deprecadas — status: deprecado en frontmatter + redirect visible
+Por isla, actualizar:
+- Estado actual: 🟢 Operativa / 🟡 Parcial / 🔴 Caída / 🔧 En obras
+- Última actualización: YYYY-MM-DD
+- Cambios de esta sesión: lista breve
+- Próximo paso: issue #N
 
-### 3️⃣ Repos operativos (solo los tocados en la sesión)
+---
 
-| Repo | Qué comprobar |
+## Fase 5 — Crear diario del día
+
+Ruta: `docs/diarios/YYYY-MM-DD.md`
+
+```markdown
+---
+fecha: YYYY-MM-DD
+sesion_inicio: HH:MM CEST
+sesion_fin: HH:MM CEST
+tipo: Larga / Corta / Emergencia / Formación
+repos_tocados: [lista]
+issues_resueltos: [#N, #N]
+issues_creados: [#N, #N]
+adrs_nuevos: [ADR-0XX] o ninguno
+---
+
+# Diario YYYY-MM-DD
+
+## Qué se hizo
+
+[Lista de cambios concretos. Un punto por issue o acción relevante.]
+
+## Decisiones tomadas
+
+[Solo decisiones que afectan arquitectura, normas o ecosistema. Si no hay → "Ninguna."]
+
+## Bloqueos encontrados
+
+[Problemas encontrados durante la sesión. Si no hay → "Ninguno."]
+
+## Próxima sesión
+
+- [ ] [Issue #N] — [qué falta o sigue]
+- [ ] [Issue #N] — [qué falta o sigue]
+
+## Estado al cerrar
+
+> Todos los repos tocados tienen git push hecho: [Sí / No — motivo si No]
+```
+
+---
+
+## Fase 6 — Cerrar issues en GitHub
+
+Por cada issue resuelto en la sesión:
+
+```
+Acción: Cerrar issue #N con comentario
+
+Comentario de cierre estándar:
+✅ Resuelto en sesión YYYY-MM-DD.
+[Una línea de qué se hizo exactamente.]
+Diario: docs/diarios/YYYY-MM-DD.md
+```
+
+---
+
+## Fase 7 — Verificar git push (requiere terminal)
+
+Comprobar TODOS los repos tocados:
+
+```bash
+# Por cada repo tocado en la sesión:
+cd ~/ygg/[repo]
+git status          # debe estar limpio
+git log --oneline -3  # verificar commits de la sesión
+git push            # si no está pusheado
+```
+
+**Checklist de verificación por repo tocado:**
+
+| Repo | git status limpio | commits ok | pushed |
+|---|---|---|---|
+| yggdrasil-dew | [ ] | [ ] | [ ] |
+| [repo] | [ ] | [ ] | [ ] |
+
+> ⚠️ Si no hay terminal disponible: documentar en el issue-cierre qué repos faltan por push
+> y abrir sub-tarea para primera acción de la próxima sesión.
+
+---
+
+## Fase 8 — Crear issue-cierre (SSOT de la próxima sesión)
+
+Crear issue en `yggdrasil-dew` con:
+
+```
+Título: [cierre] YYYY-MM-DD — [resumen 1 línea de lo hecho]
+Label:  apertura-sesion
+```
+
+Body del issue:
+
+```markdown
+## Contexto para la próxima sesión
+
+> Este issue es la fuente de verdad para el inicio de la siguiente sesión.
+> El agente lo leerá PRIMERO antes de cualquier acción.
+
+### Estado al cerrar — YYYY-MM-DD HH:MM CEST
+
+**Repos tocados hoy:**
+- `[repo]` — [qué se hizo]
+- `[repo]` — [qué se hizo]
+
+**Issues resueltos:** #N, #N, #N
+**Issues creados:** #N, #N
+**ADRs nuevos:** ADR-0XX / Ninguno
+
+**Git push completado:**
+- [ ] `yggdrasil-dew` — ✅ / ⚠️ pendiente
+- [ ] `[repo]` — ✅ / ⚠️ pendiente
+
+---
+
+### Objetivos de la próxima sesión (por prioridad)
+
+1. [Issue #N] — [acción concreta] — Prioridad: 🔴 / 🟠 / 🟡
+2. [Issue #N] — [acción concreta] — Prioridad: 🔴 / 🟠 / 🟡
+3. [Issue #N] — [acción concreta] — Prioridad: 🔴 / 🟠 / 🟡
+
+**NO entrar en:**
+- [Qué queda explícitamente fuera]
+
+---
+
+### Bloqueos activos
+
+| Issue | Bloqueo | Desbloqueo |
+|---|---|---|
+| #N | [descripción] | [qué necesita] |
+
+---
+
+### Estado rápido del ecosistema
+
+| Componente | Estado |
 |---|---|
-| `madre-config` | ¿cambió algún docker-compose o .env? → commit |
-| `yggdrasil-scripts` | ¿script o Action nuevo/modificado? → commit |
-| `yggdrasil-secops` | ¿hallazgo nuevo HAL-XXX? → issue + docs/hallazgos/ |
-| `yggdrasil-tracking` | ¿algo personal que registrar? → diario personal |
-| `yggdrasil-formacion-` | ¿aprendizaje técnico de hoy? → apuntes |
-| `THDORA-PERSONAL` | ¿cambio en bot o prompts? → commit |
-| `ollama-stack` | ¿modelo nuevo o config cambiada? → commit |
-
----
-
-## 5 preguntas de cierre — el agente hace estas siempre
-
-1. **¿Se tomó alguna decisión estructural hoy?**
-   - Sí → ADR nuevo · No → continuar
-2. **¿Algún archivo quedó colgado entre repos?**
-   - Sí → propagar según árbol · No → continuar
-3. **¿Algún issue resuelto sin cerrar en GitHub?**
-   - Sí → cerrar con nota de resolución · No → continuar
-4. **¿Algún hallazgo de seguridad o hardware detectado?**
-   - Sí → HAL-XXX + issue secops · No → continuar
-5. **¿El ESTADO-SISTEMA y MASTER-PENDIENTES reflejan la realidad ahora mismo?**
-   - No → actualizar antes de cerrar · Sí → sesión cerrada ✅
-
----
-
-## Regla de propagación entre repos
-
-```
-Decisión tomada
-  ↓
-[1] yggdrasil-dew
-    ADR + diario + MASTER-PENDIENTES + ESTADO-SISTEMA
-  ↓
-[2] yggdrasil-wiki
-    isla afectada + INDEX
-  ↓
-[3] Repo operativo afectado
-    madre-config / secops / scripts / tracking / formacion
+| Madre (hardware) | 🟢 / 🟡 / 🔴 |
+| Servicios Docker | 🟢 / 🟡 / 🔴 |
+| HAL pendientes | N abiertos |
+| Secretos | ✅ rotados / ⚠️ pendientes |
+| Git repos sin push | ✅ ninguno / ⚠️ [lista] |
 ```
 
-Nunca al revés. Nunca saltar nivel. Nunca actualizar solo el repo operativo.
+---
+
+## Fase 9 — Declarar sesión cerrada
+
+El agente confirma verbalmente:
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ SESIÓN CERRADA — YYYY-MM-DD HH:MM CEST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Issues resueltos: #N, #N, #N
+Repos pusheados: [lista] ✅ | Sin push: [lista] ⚠️
+Diario creado: docs/diarios/YYYY-MM-DD.md ✅
+Issue-cierre: #N abierto ✅
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Próxima sesión: leer issue #N antes de cualquier acción
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
 
 ---
 
-## Mapa completo de archivos canon
+## Checklist rápido de cierre (versión comprimida)
 
-| Archivo | Repo | Actualizar cuando |
-|---|---|---|
-| `docs/diarios/YYYY-MM-DD.md` | dew | Siempre — cada sesión sin excepción |
-| `MASTER-PENDIENTES.md` | dew | Siempre — cada sesión sin excepción |
-| `docs/canon/ESTADO-SISTEMA.md` | dew | Cambia número repos / ADRs / islas / issues |
-| `docs/canon/ownership-matrix.md` | dew | Cambia estado / SLA / puerto de servicio Docker |
-| `NORMAS.md` | dew | Se establece norma nueva |
-| `docs/canon/NORMAS-TRIDENTE.md` | dew | Cambia filosofía del Tridente |
-| `docs/adr/ADR-0XX.md` | dew | Decisión estructural tomada |
-| `docs/adr/INDEX.md` | dew | ADR nuevo (tabla + próximo libre) |
-| `docs/islas/ESTADO-ISLA-NOMBRE.md` | dew | Isla auditada, creada o cambiada |
-| `docs/islas/MAPA-ISLAS-DEPENDENCIAS.md` | dew | Isla entra o sale del ecosistema |
-| `wiki/islas/NOMBRE.md` | wiki | Concepto, repo o filosofía de isla cambia |
-| `wiki/islas/INDEX.md` | wiki | Estado de cualquier isla cambia |
-| `madre-config/` | madre-config | Docker-compose o .env modificado |
-| `yggdrasil-scripts/` | scripts | Script o Action creado o modificado |
-| `docs/hallazgos/HAL-XXX.md` | dew | Incidente, bug crítico o vulnerabilidad |
+```
+[ ] Fase 1 — Lista de cambios reconstruida
+[ ] Fase 2 — ESTADO-SISTEMA.md actualizado
+[ ] Fase 3 — MASTER-PENDIENTES.md actualizado
+[ ] Fase 4 — ESTADO-ISLA-*.md relevantes actualizados
+[ ] Fase 5 — docs/diarios/YYYY-MM-DD.md creado
+[ ] Fase 6 — Issues resueltos cerrados en GitHub con comentario
+[ ] Fase 7 — git push verificado en todos los repos tocados
+[ ] Fase 8 — Issue-cierre creado con label apertura-sesion
+[ ] Fase 9 — Declaración verbal de cierre
+```
 
 ---
 
-## Profundidad según tipo de sesión
-
-| Tipo | Checklist | Mínimo obligatorio |
-|---|---|---|
-| Sesión larga (+1h) | Completo | Todo |
-| Sesión corta (15–30 min) | Parcial | Diario + issues + MASTER-PENDIENTES |
-| Ritual semanal (domingo) | Completo + ESTADO-SISTEMA semanal | Todo |
-| Emergencia / hotfix | Mínimo | HAL-XXX + diario |
-| Sesión de formación | Parcial | Diario + apuntes en formacion- |
-
----
-
-_Creado: 2026-07-13 · v3 — grado profesional · todas las repos · ADR-012 · Perplexity MCP_
+_Creado: 2026-07-13 · v4 — contrato agente + 9 fases + issue-cierre SSOT + verificación push · ADR-012 · Perplexity MCP_
