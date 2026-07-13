@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-09
-actualizado: 2026-07-13
+actualizado: 2026-07-13T10:13:00+02:00
 ruta: docs/canon/PLAN-MAESTRO-FASES.md
 tags: [canon, plan, fases, roadmap, estado]
 status: vigente
@@ -16,53 +16,78 @@ status: vigente
 
 ---
 
-## Estado global — 2026-07-13 (actualizado 09:52 CEST)
+## Estado global — 2026-07-13 (actualizado 10:13 CEST)
 
 | Bloque | Estado | Issues |
 |--------|--------|--------|
-| 🔴 **BLOQUEANTES** | Pendiente terminal | #44 #45 #46 |
+| 🔴 **BLOQUEANTES** | Pendiente terminal | #44 #45 #46 #31 #15 |
 | ✅ **F0 — Repos privados** | Completado | — |
-| ✅ **F1 — ADRs indexados** | Completado | — |
-| ✅ **F5 — CI completo** | Completado 2026-07-13 | #38 #39 cerrados |
-| ✅ **F4 — Gobernanza C4** | Completado 2026-07-13 | #40 #41 cerrados |
-| ✅ **AUDIT-005 MCP** | Completado 2026-07-13 | #42 cerrado |
+| ✅ **F1 — ADRs indexados** | Completado | ADR-001…ADR-010 |
+| ✅ **F4 — Gobernanza C4** | Completado 2026-07-13 | #40 #41 ✅ |
+| ✅ **F5 — CI completo** | Completado 2026-07-13 | #38 #39 ✅ |
+| ✅ **AUDIT-005 MCP** | Completado 2026-07-13 | #42 ✅ |
+| ✅ **Auditoría 19 repos** | Completado 2026-07-13 | issues en todos |
+| ✅ **Wiki 25 islas** | Completado 2026-07-13 | INDEX.md actualizado |
 | 🟡 **F2 — Auditoría Madre** | Bloqueado por #44 #45 | #31 #32 #34 #43 |
-| 🟡 **F3 — Purga WIKI** | En progreso | #24 |
-| 🟡 **F6 — Islas** | 8 islas auditadas, 2 pendientes input | #49–#56 |
+| 🟡 **F3 — Purga WIKI** | Solapamientos detectados | labs≡dev-labs, cerebro≈ia-local |
+| 🟡 **F6 — Islas** | 11 completas, 11 parciales, 3 stubs | #56 |
 | ⚪ **F7 — Seguridad blue team** | Bloqueado por #44 #45 | #15 #19 #37 |
 | ⚪ **F8 — IaC Madre** | Pendiente terminal | #13 #43 |
-| ⚪ **F9 — VIDAPERSONAL** | Parcial — canon ok, limpieza pendiente | #48 |
+| ⚪ **F9 — VIDAPERSONAL** | Parcial | #48 |
 
 ---
 
 ## LOG DE SESIÓN — 2026-07-13
 
-### Commits realizados por Perplexity-MCP
+### Commits por Perplexity-MCP
 
-| Hora | Repo | Commit | Qué |
-|------|------|--------|-----|
-| 09:10 | yggdrasil-dew | `PLAN-MAESTRO-FASES.md` creado | Plan maestro inicial |
-| 09:15 | yggdrasil-dew | `ARQUITECTURA-C4.md` creado | Diagrama C4 Context + Container |
-| 09:20 | yggdrasil-dew | `ownership-matrix.md` actualizada | 16 servicios documentados |
-| 09:35 | yggdrasil-wiki | 6 islas expandidas | acer, thea, labs, thdora, cerebro, seguridad |
-| 09:44 | VIDAPERSONAL | `01_diarios/2026-07-13.md` | Diario — cierre ritual vela blanca |
-| 09:45 | yggdrasil-dew | #41 cerrado | C4 completado |
-| 09:49 | yggdrasil-dew | #56 creado | Islas formacion + impresion3d |
-| 09:51 | yggdrasil-wiki | `wiki/islas/mcp.md` creado | AUDIT-005 consolidado |
-| 09:51 | yggdrasil-dew | #42 cerrado | AUDIT-005 completado |
+| Hora | Repo | Qué |
+|------|------|-----|
+| 09:10 | yggdrasil-dew | PLAN-MAESTRO-FASES.md creado |
+| 09:15 | yggdrasil-dew | ARQUITECTURA-C4.md creado (C4 Context + Container) |
+| 09:20 | yggdrasil-dew | ownership-matrix.md — 16 servicios |
+| 09:35 | yggdrasil-wiki | 6 islas expandidas |
+| 09:44 | VIDAPERSONAL | diario 2026-07-13.md |
+| 09:51 | yggdrasil-wiki | mcp.md creada — AUDIT-005 |
+| 09:51 | yggdrasil-dew | #41, #42 cerrados |
+| 10:07 | yggdrasil-wiki | 5 islas nuevas: ollama-stack, osint, dev-labs, investigacion-ia, scripts |
+| 10:07 | yggdrasil-dew | ESTADO-SISTEMA.md — 19 repos auditados |
+| 10:07 | ollama-stack | #1 AUDIT-013 creado |
+| 10:07 | osint-stack | #1 OSINT-001 creado |
+| 10:07 | investigacion-ia | #1 IA-001 creado |
+| 10:07 | acer-config | #1 ACER-001 creado |
+| 10:07 | local-brain | #1 BRAIN-001 creado |
+| 10:07 | yggdrasil-dew | #58 ADR-011 creado (decisión thea-ia) |
+| 10:13 | yggdrasil-wiki | INDEX.md — 25 islas + desalineaciones documentadas |
+| 10:13 | yggdrasil-dew | PLAN-MAESTRO actualizado (esta entrada) |
 
 ### Issues cerrados esta sesión
-- ✅ [#41](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/41) — Diagrama C4 Mermaid
-- ✅ [#42](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/42) — AUDIT-005 MCP consolidado
+- ✅ [#41](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/41) — Diagrama C4
+- ✅ [#42](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/42) — AUDIT-005 MCP
 
 ### Issues creados esta sesión
-- 🟡 [#56](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/56) — Islas formacion.md + impresion3d.md (requiere input Alvaro)
+- [#56](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/56) — Islas formacion + impresion3d
+- [#57](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/57) — Isla filosofia.md
+- [#58](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/58) — ADR-011 thea-ia
+- [ollama-stack #1](https://github.com/alvarofernandezmota-tech/ollama-stack/issues/1) — AUDIT-013
+- [osint-stack #1](https://github.com/alvarofernandezmota-tech/osint-stack/issues/1) — OSINT-001
+- [investigacion-ia #1](https://github.com/alvarofernandezmota-tech/investigacion-ia/issues/1) — IA-001
+- [acer-config #1](https://github.com/alvarofernandezmota-tech/acer-config/issues/1) — ACER-001
+- [local-brain #1](https://github.com/alvarofernandezmota-tech/local-brain/issues/1) — BRAIN-001
+
+### Desalineaciones detectadas y documentadas
+
+| Problema | Acción pendiente | Prioridad |
+|---------|-----------------|----------|
+| labs.md ≡ dev-labs.md (solapamiento) | Unificar en dev-labs.md, archivar labs.md | 🟡 Media |
+| cerebro.md ≈ ia-local.md (solapamiento) | Unificar en ia-local.md, archivar cerebro.md | 🟡 Media |
+| conocimiento.md ≈ formacion.md | Revisar y separar por scope | ⚪ Baja |
 
 ---
 
 ## BLOQUE 0 — Bloqueantes críticos (requieren terminal)
 
-> Estos 3 issues desbloquean el 80% del resto del plan.
+> Estos issues desbloquean el 80% del resto del plan.
 
 ### #44 — HAL-007: arreglar .env malformado
 ```bash
@@ -77,7 +102,7 @@ docker compose config > /dev/null && echo OK
 ### #45 — HAL-008: rotar token Telegram
 ```bash
 # 1. BotFather → /mybots → bot → API Token → Revoke → copiar nuevo token
-# 2. nano /home/varopc/.env → actualizar TELEGRAM_BOT_TOKEN
+# 2. nano /home/varopc/.env → actualizar TELEGRAM_BOT_TOKEN + LITELLM_MASTER_KEY
 # 3. docker restart thdora_api thdora_bot
 ```
 
@@ -94,10 +119,11 @@ docker ps --format 'table {{.Names}}\t{{.Status}}' | grep -E 'guardian|tripwire'
 
 ## BLOQUE 1 — Infra Madre (requieren terminal)
 
-### #31 — HAL-005: smartctl HDD
+### #31 — HAL-005: smartctl HDD 28.000h
 ```bash
 sudo smartctl -a /dev/sda | grep -E 'Reallocated|Pending|Uncorrectable|Power_On'
 ```
+> ⚠️ URGENTE — disco en riesgo. Hacer hoy.
 
 ### #32 — watchdog restart
 ```bash
@@ -112,32 +138,41 @@ docker compose -f /home/varopc/docker-compose.yml ps
 ```
 
 ### #43 — IaC: versionar 16 servicios en madre-config
-> Estructura objetivo: `madre-config/docker/{ia,dev,monitoring,secops}/`
+> Estructura objetivo:
+```
+madre-config/docker/
+├── ia/          # ollama, litellm, qdrant, open-webui
+├── dev/         # n8n, code-server, thdora
+├── monitoring/  # grafana, prometheus, watchtower
+└── secops/      # wazuh, suricata, pihole, searxng
+```
 
 ---
 
-## BLOQUE 2 — Auditorías isla (mayoría por MCP)
+## BLOQUE 2 — Auditorías satélite (por MCP o parciales)
 
-| Issue | Isla | Bloqueado por | MCP? |
-|-------|------|---------------|------|
-| #49 | Orquestador (n8n + THDORA + MCP) | #44 #45 | Parcial |
-| #55 | IA Local (Ollama) | Acceso SSH | No |
-| #37 | AUDIT-004 secops | — | ✅ Sí |
-| #36 | AUDIT-003 thdora-personal | #44 #45 | Parcial |
-| #35 | AUDIT-002 dew completa | — | ✅ Sí |
-| #56 | Islas formacion + impresion3d | Input Alvaro | ⚪ Pendiente |
+| Issue | Repo | Bloqueado por | Por MCP? |
+|-------|------|---------------|----------|
+| [ollama-stack #1](https://github.com/alvarofernandezmota-tech/ollama-stack/issues/1) | ollama-stack | SSH Madre | Parcial |
+| [osint-stack #1](https://github.com/alvarofernandezmota-tech/osint-stack/issues/1) | osint-stack | SSH Madre | Parcial |
+| [investigacion-ia #1](https://github.com/alvarofernandezmota-tech/investigacion-ia/issues/1) | investigacion-ia | — | ✅ Sí |
+| [acer-config #1](https://github.com/alvarofernandezmota-tech/acer-config/issues/1) | acer-config | Encender Acer | No |
+| [local-brain #1](https://github.com/alvarofernandezmota-tech/local-brain/issues/1) | local-brain | SSH Madre | Parcial |
+| [#35](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/35) | DEW | — | ✅ Sí |
+| [#37](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/37) | secops | — | ✅ Sí |
+| [#56](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/56) | wiki | Input Alvaro | ⚪ |
 
 ---
 
-## BLOQUE 3 — Gobernanza y arquitectura
+## BLOQUE 3 — Wiki purga solapamientos
 
-| Issue | Tarea | Estado |
-|-------|-------|--------|
-| #41 | Diagrama C4 Mermaid | ✅ Cerrado 2026-07-13 |
-| #42 | AUDIT-005 MCP consolidado | ✅ Cerrado 2026-07-13 |
-| #40 | Ownership matrix completa | 🟡 Actualizada, verificar con `docker ps` |
-| #18 | Gobernanza: labels, templates, convenciones | 🟡 Parcial |
-| #50 | GOB-001 Filosofía: validar principios | ⚪ Pendiente (requiere Alvaro) |
+| Acción | Archivo | Prioridad |
+|--------|---------|----------|
+| Unificar labs.md + dev-labs.md → dev-labs.md | labs.md | 🟡 Media |
+| Unificar cerebro.md + ia-local.md → ia-local.md | cerebro.md | 🟡 Media |
+| Revisar conocimiento.md vs formacion.md | conocimiento.md | ⚪ Baja |
+| Completar formacion.md stub | formacion.md | Input Alvaro |
+| Completar impresion3d.md stub | impresion3d.md | Input Alvaro |
 
 ---
 
@@ -145,31 +180,31 @@ docker compose -f /home/varopc/docker-compose.yml ps
 
 | Issue | Tarea | Bloqueado por |
 |-------|-------|---------------|
-| #15 | Puerto 21 FTP cerrar en router | Acceso router |
-| #19 | Levantar Wazuh + Suricata + Pihole + SearXNG | #44 #45 primero |
-| #37 | AUDIT-004 secops Fase 1 | — (puedo hacer por MCP) |
+| [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) | Puerto 21 FTP cerrar | Acceso router |
+| [#19](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/19) | Wazuh + Suricata + Pihole + SearXNG | #44 #45 |
+| [#37](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/37) | AUDIT-004 secops | — (MCP) |
 
 ---
 
-## BLOQUE 5 — Auditorías islas menores
+## BLOQUE 5 — Islas pendientes input Alvaro
 
-| Issue | Isla | Acción |
-|-------|------|--------|
-| #51 | Acer | Encender Acer + revisar |
-| #52 | Thea (iPhone) | Revisar apps manualmente |
-| #53 | Impresión 3D | Inventario físico + input Alvaro |
-| #54 | Formación | Reflexión + input Alvaro |
-| #48 | VIDAPERSONAL | Terminal + limpieza carpetas |
+| Issue | Isla | Qué necesito |
+|-------|------|-------------|
+| [#56](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/56) | formacion.md | ¿Qué estás estudiando? ¿Estructura? |
+| [#56](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/56) | impresion3d.md | ¿Modelos actuales? ¿Proyectos? |
+| [#50](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/50) | filosofia.md | Validar 6 principios de gobernanza |
+| [#58](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/58) | thea-ia | ¿Archivar, integrar o mantener como showcase? |
 
 ---
 
 ## Regla de oro
 
-> Todo lo que puede hacer Perplexity-MCP, lo hace directamente y crea el commit.
-> Todo lo que requiere terminal, sale como issue con los comandos exactos.
+> Todo lo que puede hacer Perplexity-MCP, lo hace directamente.
+> Todo lo que requiere terminal, sale como issue con comandos exactos.
 > Nunca una tarea pendiente en un chat. Siempre en un issue.
 > Cada sesión se loguea en este archivo y en el diario VIDAPERSONAL del día.
+> El plan es el único lugar donde vive la decisión. La wiki vive el conocimiento.
 
 ---
 
-_Actualizado: 2026-07-13 09:52 CEST · Perplexity-MCP_
+_Actualizado: 2026-07-13 10:13 CEST · Perplexity-MCP · Sesión matinal completa_
