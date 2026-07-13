@@ -25,7 +25,7 @@ jobs:
     name: "📝 Frontmatter"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Validar frontmatter en docs/
         run: |
@@ -61,7 +61,7 @@ jobs:
     name: "🕵️ Patrones sensibles"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Detectar IPv4 reales en docs
         run: |
@@ -133,7 +133,7 @@ jobs:
     name: "🟡 Calidad docs"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: No shebangs en markdown
         run: |
