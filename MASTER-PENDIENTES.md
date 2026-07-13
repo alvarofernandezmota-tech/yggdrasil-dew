@@ -1,117 +1,78 @@
 ---
-tipo: backlog
+tipo: pendientes
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
-creado: 2026-06-01 00:00 CEST
-actualizado: 2026-07-13 10:46 CEST
+creado: 2026-07-05
+actualizado: 2026-07-13 14:15 CEST
 ruta: MASTER-PENDIENTES.md
-tags: [backlog, pendientes, tareas]
+tags: [pendientes, backlog]
 status: vigente
 ---
 
-# 📋 MASTER PENDIENTES
+# 📋 MASTER DE PENDIENTES — 2026-07-13
 
-> Backlog priorizado del ecosistema Yggdrasil.
-> Fuente de verdad: `PLAN-MAESTRO-2026-07.md` para el plan completo.
-> Actualizar al inicio y cierre de cada sesión.
+> Fuente única de verdad para todo lo pendiente. Ordenado por prioridad real.
 
 ---
 
-## 🔴 URGENTE — REQUIEREN TERMINAL EN MADRE (solo Alvaro)
+## 🔴 INMEDIATO (tú, terminal Madre)
 
-- [ ] **#45** — Rotar `TELEGRAM_BOT_TOKEN` + `LITELLM_API_KEY` en `.env` (expuestos en chat)
-- [ ] **#44** — Validar `.env` con `docker compose config` · fix malformación
-- [ ] **#46** — `docker restart log_guardian_bot local_tripwire yggdrasil_watchdog`
-- [ ] Recrear `thdora-bot` → `cd /home/varopc/Projects/thdora && docker compose up -d`
-- [ ] **#43** — Versionar los 16 docker-compose de Madre en `madre-config` via PR
-- [ ] **#15** — Cerrar puerto 21 FTP en router Digi (panel de administración)
-- [ ] Verificar Ollama `:11434` no expuesto a internet pública
-- [ ] **#31** — `sudo smartctl -a /dev/sda` → revisar horas + sectores reasignados
+- [ ] Confirmar `local_tripwire` está `healthy` (quedó en `health: starting`)
+- [ ] Cerrar puerto 21 FTP en router Digi — issue [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15)
+- [ ] Verificar Ollama `:11434` — confirmar no expuesto a internet
+- [ ] Verificar SSH puerto 22 — confirmar no expuesto a internet
 
 ---
 
-## 🟠 PRÓXIMA SESIÓN — POR MCP (sin terminal)
+## 🟠 ALTA — Esta semana (MCP puede hacer)
 
-- [ ] Completar `docs/runbooks/DRP.md` con rutas reales, IPs y nombres de volúmenes Docker
-- [ ] Crear `docs/secrets.md` — política de rotación de tokens sin valores reales
-- [ ] Añadir ADR-005 y ADR-006 a índice ADR (verificar ubicación real del índice)
-- [ ] Unificar índices de islas — sustituir tablas en `README.md` y `HOME.md` del WIKI por puntero a `wiki/islas/INDEX.md` (Fase 2 Plan Maestro)
-- [ ] Auditar repo `formacion-tech` — estructura actual vs esperada
-- [ ] Completar isla `thea.md` en WIKI — decidir archivar o integrar
-- [ ] Completar isla `ollama-stack.md` con IaC detallado
-
----
-
-## 🟡 GOBERNANZA Y DOCUMENTACIÓN
-
-- [ ] Verificar visibilidad `WIKI---PERSONAL` sigue privado (paso 0 ritual semanal)
-- [ ] Ampliar `validate-canon.yml` para detectar IPv4 y emails (Fase 5 Plan Maestro)
-- [ ] Consolidar 6 ficheros MCP dispersos en `wiki/islas/mcp.md` (Fase 4)
-- [ ] Purga `docs/` WIKI: bajar de 279 a menos de 80 archivos (Fase 3 — sesión larga)
-- [ ] Resolver colisión HAL-001 (Telegram en Dew vs FTP en secops)
-- [ ] Crear `scripts/env-checker.sh` — valida `.env` contra `.env.template` antes de deploy
-- [ ] Crear `.env.template` con variables obligatorias (sin valores)
-- [ ] Añadir `healthcheck` + `restart: unless-stopped` a servicios críticos en docker-compose
-- [ ] Implementar `btrfs scrub` semanal por cron en Madre (#31)
-- [ ] Mover `GRAFO-ECOSISTEMA.md` a raíz Wiki como `index.md` (recomendación Gemini)
+- [ ] Cerrar issues #44, #45, #46 en GitHub con resumen del fix real
+- [ ] Actualizar AUDIT-003 (#36) — prereq #44+#45 ya cumplido, listo para ejecutar
+- [ ] Actualizar AUDIT-007 (#49) — thdora-bot healthy, listo para auditar
+- [ ] Completar `docs/runbooks/DRP.md` con datos reales (IPs, rutas, contactos)
+- [ ] Crear `docs/secrets.md` — ciclo de vida de tokens (rotar, cuándo, cómo)
+- [ ] F1: Indexar ADR-005 y ADR-006 en índice canon WIKI
+- [ ] F2: Unificar índices de islas WIKI (README + HOME → INDEX)
+- [ ] F4: Consolidar ficheros MCP/agentes (6 → 1)
 
 ---
 
-## 🟢 PRÓXIMAMENTE
+## 🟡 MEDIA — Este mes
 
-- [ ] Evaluar Promtail + Loki para agregación de logs de Docker
-- [ ] Evaluar `sops` + age key para cifrado de secretos en reposo
-- [ ] Limpiar historial Git con `git filter-repo` si quedan tokens viejos (HAL-001/003)
-- [ ] Auditoría AUDIT-002 — yggdrasil-dew (#35)
-- [ ] Auditoría AUDIT-003 — thdora-personal (#36)
-- [ ] Auditoría AUDIT-004 — yggdrasil-secops (#37)
-- [ ] Auditoría AUDIT-005 — agentes/MCP (#42)
-- [ ] Auditoría AUDIT-006 — VIDAPERSONAL (#48)
-- [ ] Ampliar CI gitleaks: detección de IPs públicas y emails (#38 #39)
-- [ ] Fase 2 secops: purga duplicados internos
-- [ ] Fase 3 secops: alinear gobernanza con Dew
-- [ ] Tier 3: logging estructurado Thdora
-- [ ] Tier 5: Ansible en Acer para Madre
-- [ ] Instalar Obsidian Git plugin
-- [ ] MCP Server de Madre (mcp-terminal o Desktop Commander MCP)
-- [ ] THDORA Fase 10 multi-usuario
+- [ ] F3: Purga `docs/` WIKI (279 → <80 archivos) — sesión larga
+- [ ] F5: CI enforcement — añadir detección IPv4 y emails en `validate-canon`
+- [ ] F7: Healthchecks en docker-compose de `log_guardian_bot`, `local_tripwire`, `thdora-bot`
+- [ ] F7: Configurar Promtail + Loki para agregación de logs
+- [ ] F7: Crear alias `ygg-check` en `.bashrc` Madre
+- [ ] `git filter-repo` — limpiar historial de tokens expuestos en repos THDORA y DEW
+- [ ] GitHub Secret scanning — revisar histórico en Settings > Security
+- [ ] #43 IaC: Versionar los 16 `docker-compose` de Madre en `madre-config`
+- [ ] #43 IaC: Versionar los `.env` de cada proyecto (sin secretos, solo template)
 
 ---
 
-## ✅ COMPLETADO — 2026-07-13 (sesión mañana)
+## 🔵 BAJA — Backlog (requieren tu input)
 
-- [x] Tridente DEW + Wiki + VIDAPERSONAL documentado y alineado
-- [x] 25 islas Wiki totales con scope, conexiones y status
-- [x] GRAFO-ECOSISTEMA.md creado — 19 repos mapeados con dependencias
-- [x] C4 arquitectura creado (`ARQUITECTURA-C4.md`)
-- [x] ESTADO-SISTEMA.md actualizado
-- [x] Issues de auditoría creados en los 6 repos con 0 issues
-- [x] Plan Maestro consolidado — sustituye 3 planes anteriores
-- [x] `docs/runbooks/DRP.md` creado — esqueleto DRP
-- [x] Investigación Gemini documentada en diario + Plan Maestro Fase 7
-- [x] MASTER-PENDIENTES.md actualizado con estado real
-- [x] Diario 2026-07-13-dew.md cerrado y actualizado
-
-## ✅ COMPLETADO — 2026-07-09
-
-- [x] Token Telegram THDORA rotado — BotFather revoke + nuevo token `.env` + stack recreado
-- [x] Symlinks `~/repos/thdora` y `~/repos/yggdrasil-secops` creados
-- [x] Archivos basura 0-bytes THDORA limpiados
-- [x] Rutas físicas reales verificadas con `docker inspect`
-- [x] `ownership-matrix.md` actualizado — rutas reales + columna capa Docker
-- [x] `MAPA-REPOS-MADRE.md` WIKI actualizado — sección secops completa
-- [x] `docs/auditorias/thdora-personal.md` y `yggdrasil-secops.md` creadas
-- [x] `docs/canon/PLANTILLA-REPO-ONBOARDING.md` creada
-- [x] Diario 2026-07-09 documentado
-
-## ✅ COMPLETADO — 2026-07-06
-
-- [x] Fases 0–5 Plan de Alineación Dew/WIKI
-- [x] Branch protection en Dew + WIKI + secops
-- [x] CI validate-canon + gitleaks activos en los 3 repos
-- [x] DASHBOARD.md + enlace en README
-- [x] ADR-005/006 creados en WIKI
-- [x] `docs/adr/` de WIKI purgada
+- [ ] [#51](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/51) Isla Acer — contenido
+- [ ] [#52](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/52) Isla Thea — contenido
+- [ ] [#53](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/53) Isla Impresión 3D — contenido
+- [ ] [#54](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/54) Isla Formación — contenido
+- [ ] [#57](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/57) WIKI-001 Filosofía — Bloque 2 requiere input
+- [ ] [#58](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/58) ADR-011 thea-ia — decidir opción A/B/C
+- [ ] `acer-config` — estructurar repo vacío
+- [ ] `ollama-stack` — estructurar repo
+- [ ] `local-brain` — estructurar repo
+- [ ] `investigacion-ia` — crear estructura
 
 ---
 
-_Actualizado: 2026-07-13 10:46 CEST · Perplexity-MCP · Sesión mañana_
+## ✅ CERRADO — Esta semana
+
+- [x] **2026-07-13** #44 HAL-007 — `.env` THDORA malformado → corregido
+- [x] **2026-07-13** #45 HAL-008 — Token Telegram expuesto → rotado y actualizado en `.env` real
+- [x] **2026-07-13** #46 HAL-009 — `thdora-bot` crash loop → recreado con `force-recreate`, healthy
+- [x] **2026-07-13** Investigación Gemini → registrada como investigación técnica en diario Dew
+- [x] **2026-07-13** Inventario real de contenedores Madre → documentado en `docs/inventario-madre.md`
+
+---
+
+_Actualizado: 2026-07-13 14:15 CEST · cierre sesión tarde · #44 #45 #46 CERRADOS_
