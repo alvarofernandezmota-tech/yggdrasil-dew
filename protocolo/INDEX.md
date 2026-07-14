@@ -1,142 +1,113 @@
 ---
 tipo: indice
-author: Alvaro Fernandez Mota
-creado: 2026-07-13
-actualizado: 2026-07-13
-tags: [protocolo, index, gobernanza]
+author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
+actualizado: 2026-07-14
+ruta: protocolo/INDEX.md
 status: vigente
+version: 3.0
 ---
 
-# Índice de Protocolos — Ecosistema Yggdrasil
+# 📚 ÍNDICE DE PROTOCOLOS — ECOSISTEMA YGGDRASIL
 
-> Este archivo es el punto de entrada a todos los protocolos del ecosistema.
-> Cada protocolo cubre **una sola cosa** y está nombrado para que se entienda sin abrirlo.
->
-> Los protocolos viven en `yggdrasil-dew/protocolo/` porque DEW es el canon técnico y de gobernanza.
-> Son la capa operativa que conecta DEW + WIKI + tracking + formacion + Madre + hardware.
-
----
-
-## Nivel 0 — Sesión (uso diario)
-
-> Los que tocas en cada sesión de trabajo con IA o en el ecosistema.
-
-| Protocolo | Para qué | Cuándo usarlo |
-|---|---|---|
-| [PROTOCOLO-APERTURA-SESION](./PROTOCOLO-APERTURA-SESION.md) | Cómo empezar una sesión con IA correctamente | Al inicio de cada sesión |
-| [PROTOCOLO-CIERRE-SESION](./PROTOCOLO-CIERRE-SESION.md) | Cómo cerrar una sesión — issues, diario, commits | Al final de cada sesión |
-| [PROTOCOLO-IA](./PROTOCOLO-IA.md) | Reglas de uso de agentes IA en el ecosistema | Siempre que trabajas con Perplexity, Claude, TOKI |
+> Registro maestro de todos los protocolos del ecosistema.  
+> **Regla:** Todo protocolo nuevo se registra aquí antes de hacer push.  
+> **Regla:** Cuando un protocolo sube de nivel (manual → script → action → bot), se actualiza la columna "Nivel".
 
 ---
 
-## Nivel 1 — Gobernanza (uso ocasional)
+## 🔵 CONTEXTO — leer antes de actuar
 
-> Los que definen cómo crece y se mantiene el ecosistema.
-
-| Protocolo | Para qué | Cuándo usarlo |
-|---|---|---|
-| [PROTOCOLO-NUEVO-REPO](./PROTOCOLO-NUEVO-REPO.md) | Checklist al crear un repo nuevo | Al crear un repo |
-| [PROTOCOLO-NOMBRES](./PROTOCOLO-NOMBRES.md) | Nombres canónicos de repos, archivos, ramas | Cuando hay duda sobre cómo nombrar algo |
-| [PROTOCOLO-ADR](./PROTOCOLO-ADR.md) | Cómo redactar y registrar una ADR | Al tomar una decisión técnica importante |
-| [PROTOCOLO-ISSUE](./PROTOCOLO-ISSUE.md) | Cómo abrir, gestionar y cerrar issues bien | Al abrir cualquier issue en DEW |
-| [PROTOCOLO-NUEVA-ISLA](./PROTOCOLO-NUEVA-ISLA.md) | Cómo crear una isla nueva en WIKI---PERSONAL | Al añadir conocimiento nuevo a la wiki |
+| Protocolo | Propósito | Audiencia | Nivel | Versión |
+|-----------|-----------|-----------|-------|---------|
+| [PROTOCOLO-CONTEXTO-ECOSISTEMA.md](PROTOCOLO-CONTEXTO-ECOSISTEMA.md) | Contexto global del ecosistema. Ejecutar al inicio de sesión multi-repo | Humano + Agente | 0 — Manual | 1.0 |
+| [PROTOCOLO-CONTEXTO-REPO.md](PROTOCOLO-CONTEXTO-REPO.md) | Contexto específico de un repo antes de operar en él | Humano + Agente | 0 — Manual | 1.0 |
+| [PROTOCOLO-CONTEXTO-ROADMAP.md](PROTOCOLO-CONTEXTO-ROADMAP.md) | Mapa vivo de todos los context-packs pendientes | Humano + Agente | 0 — Manual | 1.0 |
 
 ---
 
-## Nivel 2 — Operacional / Infraestructura (uso técnico)
+## 🟢 SESIÓN — apertura y cierre
 
-> Los que cubren el día a día de Madre y sus servicios.
-
-| Protocolo | Para qué | Cuándo usarlo |
-|---|---|---|
-| [PROTOCOLO-DOCKER-DEPLOY](./PROTOCOLO-DOCKER-DEPLOY.md) | Cómo hacer cambios en servicios Docker de Madre | Antes de cualquier `docker compose up` en prod |
-| [PROTOCOLO-NUEVO-SERVICIO](./PROTOCOLO-NUEVO-SERVICIO.md) | Checklist al añadir un servicio nuevo a Madre | Al levantar un servicio nuevo |
-| [PROTOCOLO-NUEVA-MAQUINA](./PROTOCOLO-NUEVA-MAQUINA.md) | Onboarding de hardware nuevo al ecosistema | Al añadir Madre 2, Thea 2, SBC, etc. |
-| [PROTOCOLO-BACKUP](./PROTOCOLO-BACKUP.md) | Qué se hace backup, cuándo, y DRP si Madre muere | Semanal + antes de cambios grandes |
+| Protocolo | Propósito | Audiencia | Nivel | Versión |
+|-----------|-----------|-----------|-------|---------|
+| [PROTOCOLO-APERTURA-SESION.md](PROTOCOLO-APERTURA-SESION.md) | Abrir sesión con contexto completo y objetivo declarado | Humano + Agente | 0 — Manual | 2.0 |
+| [PROTOCOLO-CIERRE-SESION.md](PROTOCOLO-CIERRE-SESION.md) | Cerrar sesión con 9 fases, push verificado e issue de apertura creado | Humano + Agente | 0 — Manual | 2.0 |
+| [PROTOCOLO-SEMANAL.md](PROTOCOLO-SEMANAL.md) | Revisión semanal del ecosistema | Humano | 0 — Manual | 1.0 |
+| [PROTOCOLO-CIERRE-MES.md](PROTOCOLO-CIERRE-MES.md) | Cierre mensual | Humano | 0 — Manual | 1.0 |
 
 ---
 
-## Nivel 3 — Seguridad (uso crítico)
+## 🔴 SEGURIDAD — secretos y vulnerabilidades
 
-> Los que protegen el ecosistema. Prioridad máxima si algo falla.
-
-| Protocolo | Para qué | Cuándo usarlo |
-|---|---|---|
-| [PROTOCOLO-SECRETOS](./PROTOCOLO-SECRETOS.md) | Reglas absolutas para no exponer `.env` ni tokens | Siempre — es una regla permanente |
-| [PROTOCOLO-ROTACION-SECRETOS](./PROTOCOLO-ROTACION-SECRETOS.md) | Calendario y procedimiento de rotación periódica | Cada 3-6 meses según el secreto |
-| [PROTOCOLO-INCIDENTE](./PROTOCOLO-INCIDENTE.md) | Respuesta a incidentes HAL — diagnóstico y cierre | Cuando cae un servicio o hay anomalía |
+| Protocolo | Propósito | Audiencia | Nivel | Versión |
+|-----------|-----------|-----------|-------|---------|
+| [PROTOCOLO-SECRETOS.md](PROTOCOLO-SECRETOS.md) | Gestión, almacenamiento y clasificación de secretos | Humano + Agente | 0 — Manual | 2.0 |
+| [PROTOCOLO-ROTACION-SECRETOS.md](PROTOCOLO-ROTACION-SECRETOS.md) | Procedimiento de rotación tras exposición | Humano | 0 — Manual | 1.0 |
 
 ---
 
-## Nivel 4 — Auditoría (uso periódico)
+## 🔍 AUDITORÍA — calidad y mantenimiento
 
-> Los que garantizan que el ecosistema no se deteriora con el tiempo.
-
-| Protocolo | Para qué | Cuándo usarlo |
-|---|---|---|
-| [PROTOCOLO-AUDITORIA-DEW](./PROTOCOLO-AUDITORIA-DEW.md) | Auditar el estado de DEW — issues, ADRs, protocolos | Mensual |
-| [PROTOCOLO-AUDITORIA-WIKI](./PROTOCOLO-AUDITORIA-WIKI.md) | Auditar el estado de WIKI---PERSONAL | Mensual |
-| [PROTOCOLO-AUDITORIA-ECOSISTEMA](./PROTOCOLO-AUDITORIA-ECOSISTEMA.md) | Auditoría completa de los 4 repos + hardware | Trimestral |
-| [PROTOCOLO-MANTENIMIENTO](./PROTOCOLO-MANTENIMIENTO.md) | Mantenimiento preventivo de Madre | Semanal / mensual |
-| [PROTOCOLO-SEMANAL](./PROTOCOLO-SEMANAL.md) | Revisión semanal del ecosistema | Cada lunes |
-| [PROTOCOLO-CIERRE-MES](./PROTOCOLO-CIERRE-MES.md) | Cierre mensual — estado, métricas, planificación | Último día del mes |
+| Protocolo | Propósito | Audiencia | Nivel | Versión |
+|-----------|-----------|-----------|-------|---------|
+| [PROTOCOLO-AUDITORIA-PROYECTO.md](PROTOCOLO-AUDITORIA-PROYECTO.md) | Auditoría interna de un repo: secretos, naming, docs, integridad | Humano + Agente | 0 — Manual | 1.0 |
+| [PROTOCOLO-AUDITORIA-ECOSISTEMA.md](PROTOCOLO-AUDITORIA-ECOSISTEMA.md) | Auditoría de relaciones y coherencia entre todos los repos | Humano + Agente | 0 — Manual | 1.0 |
+| [PROTOCOLO-AUDITORIA-DEW.md](PROTOCOLO-AUDITORIA-DEW.md) | Auditoría específica del repo yggdrasil-dew | Humano + Agente | 0 — Manual | 1.0 |
+| [PROTOCOLO-AUDITORIA-WIKI.md](PROTOCOLO-AUDITORIA-WIKI.md) | Auditoría específica de yggdrasil-wiki | Humano + Agente | 0 — Manual | 1.0 |
 
 ---
 
-## Nivel 5 — Sistemas avanzados (en desarrollo)
+## 📛 CONVENCIONES — naming y estándares
 
-> Protocolos que dependen de componentes del ecosistema aún en construcción.
-
-| Protocolo | Para qué | Estado |
-|---|---|---|
-| [PROTOCOLO-LOCAL-BRAIN](./PROTOCOLO-LOCAL-BRAIN.md) | Indexación RAG del ecosistema en Qdrant | 🟡 Borrador — depende de issue #67 |
-
----
-
-## Mapa de dependencias
-
-```
-Nivel 0 (Sesión)
-  └── APERTURA → IA → CIERRE
-
-Nivel 1 (Gobernanza)
-  ├── NUEVO-REPO → NOMBRES
-  ├── ADR (decisiones técnicas)
-  ├── ISSUE (trazabilidad)
-  └── NUEVA-ISLA (wiki)
-
-Nivel 2 (Operacional)
-  ├── NUEVA-MAQUINA → NUEVO-SERVICIO → DOCKER-DEPLOY
-  └── BACKUP (protege todo lo anterior)
-
-Nivel 3 (Seguridad)
-  ├── SECRETOS (regla permanente)
-  ├── ROTACION-SECRETOS (periódico)
-  └── INCIDENTE (reactivo)
-
-Nivel 4 (Auditoría)
-  ├── SEMANAL → CIERRE-MES
-  ├── AUDITORIA-DEW + AUDITORIA-WIKI
-  ├── AUDITORIA-ECOSISTEMA (trimestral)
-  └── MANTENIMIENTO
-
-Nivel 5 (Avanzado)
-  └── LOCAL-BRAIN (pendiente #67)
-```
+| Protocolo | Propósito | Audiencia | Nivel | Versión |
+|-----------|-----------|-----------|-------|---------|
+| [PROTOCOLO-NOMBRES.md](PROTOCOLO-NOMBRES.md) | Convenciones de nomenclatura para todo el ecosistema | Humano + Agente | 0 — Manual | 2.0 |
+| [PROTOCOLO-ADR.md](PROTOCOLO-ADR.md) | Cómo documentar decisiones arquitectónicas | Humano + Agente | 0 — Manual | 1.0 |
 
 ---
 
-## Stats
+## 🏗️ INFRAESTRUCTURA Y OPERACIONES
 
-- **Total protocolos**: 21
-- **Vigentes**: 20
-- **En borrador**: 1 (LOCAL-BRAIN)
-- **Última actualización**: 2026-07-13
+| Protocolo | Propósito | Audiencia | Nivel | Versión |
+|-----------|-----------|-----------|-------|---------|
+| [PROTOCOLO-NUEVA-ISLA.md](PROTOCOLO-NUEVA-ISLA.md) | Crear un nuevo repo/isla en el ecosistema | Humano + Agente | 0 — Manual | 1.0 |
+| [PROTOCOLO-NUEVO-REPO.md](PROTOCOLO-NUEVO-REPO.md) | Inicializar un nuevo repo con estructura estándar | Humano | 0 — Manual | 1.0 |
+| [PROTOCOLO-NUEVA-MAQUINA.md](PROTOCOLO-NUEVA-MAQUINA.md) | Configurar una nueva máquina en el ecosistema | Humano | 0 — Manual | 1.0 |
+| [PROTOCOLO-NUEVO-SERVICIO.md](PROTOCOLO-NUEVO-SERVICIO.md) | Añadir un nuevo servicio a la infraestructura | Humano | 0 — Manual | 1.0 |
+| [PROTOCOLO-DOCKER-DEPLOY.md](PROTOCOLO-DOCKER-DEPLOY.md) | Despliegue con Docker | Humano | 0 — Manual | 1.0 |
+| [PROTOCOLO-BACKUP.md](PROTOCOLO-BACKUP.md) | Proceso de backup del ecosistema | Humano | 0 — Manual | 1.0 |
+| [PROTOCOLO-MANTENIMIENTO.md](PROTOCOLO-MANTENIMIENTO.md) | Mantenimiento rutinario de la infraestructura | Humano | 0 — Manual | 1.0 |
+| [PROTOCOLO-LOCAL-BRAIN.md](PROTOCOLO-LOCAL-BRAIN.md) | Gestión del RAG/brain local | Humano + Agente | 0 — Manual | 1.0 |
 
 ---
 
-> Para crear un protocolo nuevo → seguir `PROTOCOLO-ISSUE.md` y abrir un issue con label `docs`.
-> Commit de nuevo protocolo: `docs: nuevo PROTOCOLO-<NOMBRE>.md`
+## 🤖 IA Y AGENTES
+
+| Protocolo | Propósito | Audiencia | Nivel | Versión |
+|-----------|-----------|-----------|-------|---------|
+| [PROTOCOLO-IA.md](PROTOCOLO-IA.md) | Reglas de operación del agente IA en el ecosistema | Agente | 0 — Manual | 1.0 |
 
 ---
-_Creado: 2026-07-13 · Perplexity MCP_
+
+## 🚨 INCIDENTES
+
+| Protocolo | Propósito | Audiencia | Nivel | Versión |
+|-----------|-----------|-----------|-------|---------|
+| [PROTOCOLO-INCIDENTE.md](PROTOCOLO-INCIDENTE.md) | Gestión de incidentes en el ecosistema | Humano + Agente | 0 — Manual | 1.0 |
+| [PROTOCOLO-ISSUE.md](PROTOCOLO-ISSUE.md) | Cómo crear y gestionar issues | Humano + Agente | 0 — Manual | 1.0 |
+
+---
+
+## 📊 ESTADO DEL ECOSISTEMA DE PROTOCOLOS
+
+| Métrica | Valor |
+|---------|-------|
+| Total protocolos | 23 |
+| Versión 2.0+ (nivel ingeniero) | 6 |
+| Solo nivel 0 (manual) | 23 |
+| Candidatos a script (nivel 1) | 8 |
+| Candidatos a GitHub Action (nivel 2) | 4 |
+| Candidatos a bot THDORA (nivel 3) | 4 |
+
+---
+
+_Actualizado: 2026-07-14 · v3.0 — upgrade masivo de 6 protocolos_
