@@ -1,158 +1,267 @@
 ---
 tipo: protocolo
-subtipo: sesion
-author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
-creado: 2026-01-01
+author: Alvaro Fernandez Mota
+creado: 2026-07-13
 actualizado: 2026-07-14
-ruta: protocolo/PROTOCOLO-CIERRE-SESION.md
-tags: [protocolo, sesion, cierre, agente-ia, contexto, git]
+version: 3.0
+tags: [sesion, cierre, push, diario, ecosistema]
 status: vigente
-version: 2.0
-audiencia: [humano, agente-ia]
-nivel-escalado: 0 — Manual
-candidato-a: 1 — Script
 ---
 
-# 🔴 PROTOCOLO DE CIERRE DE SESIÓN v2
+# PROTOCOLO-CIERRE-SESION v3
 
-> **Propósito:** Cerrar cada sesión de trabajo sin deuda técnica, con el estado documentado y el contexto transferido a la siguiente sesión.
-> **Cuándo ejecutar:** Al terminar cualquier sesión de trabajo, antes de cerrar el editor o el chat.
-> **Contrato:** El agente NO puede declarar cierre hasta que las 9 fases pasen. Si alguna falla, se reporta antes de cerrar.
+> El agente NO declara cierre hasta completar las 9 fases en orden.
+> Saltarse una fase es un incidente. Si no se puede completar una fase, se documenta el motivo.
+> Este protocolo cierra el bucle: diario → repos → estado → issue → próxima sesión.
 
 ---
 
-## 👤 PARA EL HUMANO
+## CONTRATO DEL AGENTE
 
-### El cierre mínimo viable (si tienes < 5 min)
-
-1. `git add . && git commit -m "wip: checkpoint sesión" && git push` en cada repo tocado
-2. Actualizar `ESTADO-SISTEMA.md` con una línea de lo que cambió
-3. Abrir un issue con título `[APERTURA] [fecha] — [lo que queda pendiente]`
-
-### El cierre completo (recomendado)
-
-Siguir las 9 fases del agente. Aplican igual para ti.
-
----
-
-## 🤖 PARA EL AGENTE IA — 9 FASES OBLIGATORIAS
-
-> **CONTRATO:** Ejecutar en orden. No saltar fases. Si una fase no se puede completar, reportar y esperar confirmación del usuario antes de continuar.
-
-### FASE 1 — Inventario de repos tocados
-
-Listar todos los repos modificados en la sesión:
 ```
-Repos tocados esta sesión:
-- [nombre-repo-1]: [qué se hizo]
-- [nombre-repo-2]: [qué se hizo]
+No declaro "sesión cerrada" hasta que:
+  1. El diario de hoy en yggdrasil-tracking está cerrado con resumen.
+  2. Todos los repos tocados tienen sus cambios pusheados.
+  3. ESTADO-SISTEMA.md y MASTER-PENDIENTES.md reflejan el estado real.
+  4. Existe un issue de apertura para la próxima sesión.
 ```
 
-### FASE 2 — Verificación de commits
+---
 
-Para cada repo tocado, verificar:
-- [ ] Todos los cambios tienen commit (no hay `git status` sucio)
-- [ ] El mensaje de commit sigue Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`...)
-- [ ] No hay archivos staged a medias
+## FASE 1 — Inventario de repos tocados
 
-Si hay uncommitted changes → hacer commit antes de continuar.
+Listar todos los repos modificados en esta sesión:
 
-### FASE 3 — Verificación de push
+```
+REPOS TOCADOS EN ESTA SESIÓN:
+  [ ] yggdrasil-dew
+  [ ] yggdrasil-wiki
+  [ ] yggdrasil-tracking
+  [ ] formacion-tech
+  [ ] investigacion-ia
+  [ ] madre-config
+  [ ] acer-config
+  [ ] ollama-stack
+  [ ] local-brain
+  [ ] THDORA-PERSONAL
+  [ ] yggdrasil-secops
+  [ ] yggdrasil-scripts
+  [ ] dev-labs
+```
 
-⚠️ **Esta fase es la más olvidada. Es obligatoria.**
+---
 
-Para cada repo tocado:
-- [ ] `git push` ejecutado y confirmado
-- [ ] Sin errores de push (conflictos, auth, etc.)
+## FASE 2 — Cerrar el diario del día
 
-Si hay error de push → reportar al usuario con el error exacto antes de continuar.
+**Repo:** `yggdrasil-tracking`
+**Archivo:** `diarios/YYYY/YYYY-MM-DD.md`
 
-### FASE 4 — Actualizar ESTADO-SISTEMA.md
-
-Actualizar la sección del repo correspondiente con:
-- Estado actual (✅ / 🟡 / 🔴)
-- Qué cambió en esta sesión (una línea)
-- Nuevas deudas técnicas generadas (si las hay)
-- Fecha de actualización
-
-### FASE 5 — Actualizar MASTER-PENDIENTES.md
-
-- Marcar como ✅ los pendientes completados
-- Añadir nuevos pendientes descubiertos durante la sesión
-- Actualizar prioridades si algo cambió
-
-### FASE 6 — Verificar integridad del ecosistema
-
-Comprobar que los cambios de esta sesión no rompieron referencias cruzadas:
-- [ ] Si se añadió/renombró un archivo referenciado por otros → actualizar referencias
-- [ ] Si se cambió una estructura de directorio → actualizar `ECOSYSTEM-ARCHITECTURE.md`
-- [ ] Si se deprecó un protocolo → actualizar `protocolo/INDEX.md`
-
-### FASE 7 — Documentar decisiones arquitectónicas
-
-Si durante la sesión se tomó alguna decisión de diseño importante (nueva estructura, cambio de tecnología, nuevo patrón):
-→ Crear un ADR en `docs/adr/` siguiendo `PROTOCOLO-ADR.md`
-
-Si no hay decisiones que documentar → omitir.
-
-### FASE 8 — Crear issue de apertura de próxima sesión
-
-Crear issue en `yggdrasil-dew` con:
-- **Título:** `[APERTURA] [YYYY-MM-DD] — [objetivo próxima sesión o contexto heredado]`
-- **Label:** `apertura-sesion`
-- **Cuerpo:**
+Completar la sección `## Cierre` del diario de hoy:
 
 ```markdown
-## Estado al cierre de sesión [YYYY-MM-DD HH:MM]
-
-### Repos tocados
-- [repo]: [estado]
-
-### Completado esta sesión
-- [item]
-
-### Pendiente para próxima sesión
-- [item] — [prioridad]
-
-### Bloqueos activos
-- [bloqueo o NINGUNO]
-
-### Notas para el agente
-[contexto especial, advertencias, cosas a no olvidar]
+## Cierre
+- Hora fin: HH:MM CEST
+- Status: cerrado
+- Repos tocados: [lista]
+- Logros principales:
+  - [logro 1]
+  - [logro 2]
+- Pendientes que quedan abiertos:
+  - [pendiente 1]
+- Bloqueos encontrados:
+  - [bloqueo o "ninguno"]
+- Notas para mañana:
+  - [nota o "ninguna"]
 ```
 
-### FASE 9 — Declaración de cierre
+**Estado del frontmatter:** Cambiar `status: abierto` → `status: cerrado`
+
+---
+
+## FASE 3 — Verificar commits (Conventional Commits)
+
+Para cada repo tocado, verificar que los commits siguen el formato:
+
+```
+tipo(alcance): descripción en minúsculas
+
+tipos válidos: feat, fix, docs, refactor, chore, test, ci, perf
+```
+
+**Referencia:** `CONVENCIONES.md` en `yggdrasil-dew`
+
+```
+¿Algún commit incumple el formato?
+  SÍ → Amend del último commit o nota en el diario como deuda técnica.
+  NO → Continuar.
+```
+
+---
+
+## FASE 4 — Verificar push (la más crítica)
+
+**Para CADA repo tocado, confirmar que el push se hizo:**
+
+| Repo | ¿Pusheado? | Último commit |
+|---|---|---|
+| `yggdrasil-dew` | ✅/❌ | [SHA] |
+| `yggdrasil-tracking` | ✅/❌ | [SHA] |
+| [otros repos tocados] | ✅/❌ | [SHA] |
+
+```
+¿Algún repo tiene commits locales sin pushear?
+  SÍ → PUSH INMEDIATO antes de continuar. Esto no es opcional.
+  NO → Continuar.
+```
+
+**Regla:** Si no se puede hacer push (sin conexión, sin permisos), documentarlo en el diario
+y crear una tarea en `MASTER-PENDIENTES.md` con `prioridad:alta`.
+
+---
+
+## FASE 5 — Actualizar ESTADO-SISTEMA.md
+
+**Repo:** `yggdrasil-dew`
+**Archivo:** `ESTADO-SISTEMA.md`
+
+Actualizar:
+- Última actividad de cada repo tocado hoy
+- Estado (✅/🟡/🔴) si cambió
+- Fecha de actualización del documento
+
+**Repos activos a revisar:**
+
+```
+yggdrasil-dew       → ✅/🟡/🔴
+yggdrasil-wiki      → ✅/🟡/🔴
+yggdrasil-tracking  → ✅/🟡/🔴
+formacion-tech      → ✅/🟡/🔴
+investigacion-ia    → ✅/🟡/🔴
+madre-config        → ✅/🟡/🔴
+acer-config         → ✅/🟡/🔴
+ollama-stack        → ✅/🟡/🔴
+local-brain         → ✅/🟡/🔴
+THDORA-PERSONAL     → ✅/🟡/🔴
+yggdrasil-secops    → ✅/🟡/🔴
+yggdrasil-scripts   → ✅/🟡/🔴
+dev-labs            → ✅/🟡/🔴
+```
+
+---
+
+## FASE 6 — Actualizar MASTER-PENDIENTES.md
+
+**Repo:** `yggdrasil-dew`
+**Archivo:** `MASTER-PENDIENTES.md`
+
+- Marcar como ✅ DONE las tareas completadas hoy
+- Añadir nuevas tareas detectadas durante la sesión
+- Reclasificar prioridades si cambió el contexto
+- Mover a `_archivo/` las tareas DONE con más de 7 días
+
+---
+
+## FASE 7 — Integridad del ecosistema
+
+Verificar que el trabajo de hoy no rompió referencias cruzadas:
+
+```
+¿Se renombró algún archivo que otros documentos referencian?
+  SÍ → Actualizar todas las referencias. Buscar con grep en todos los repos tocados.
+  NO → Continuar.
+
+¿Se creó un nuevo repo, isla o componente?
+  SÍ → Actualizar ECOSYSTEM-ARCHITECTURE.md + ESTADO-SISTEMA.md.
+  NO → Continuar.
+
+¿Se deprecó algo?
+  SÍ → Marcarlo en ECOSYSTEM-ARCHITECTURE.md con ⚠️ DEPRECADO + fecha.
+  NO → Continuar.
+```
+
+---
+
+## FASE 8 — ADR si hubo decisión arquitectónica
+
+```
+¿Se tomó alguna decisión que afecte a más de un repo?
+  SÍ → Crear ADR siguiendo PROTOCOLO-ADR.md en protocolo/
+       Ruta: docs/adr/ADR-NNN-descripcion.md en yggdrasil-dew
+  NO → Continuar.
+```
+
+---
+
+## FASE 9 — Crear issue de apertura para la próxima sesión
+
+**Repo:** `yggdrasil-dew`
+**Label:** `tipo:sesion` + `prioridad:alta`
+
+**Template obligatorio:**
+
+```markdown
+# [APERTURA] Sesión YYYY-MM-DD — [objetivo en una frase]
+
+## Contexto de la sesión anterior
+[Resumen de lo que se hizo hoy]
+
+## Objetivo principal
+[Lo más importante a hacer en la próxima sesión]
+
+## Repos a tocar (en orden)
+1. [repo 1] — [por qué]
+2. [repo 2] — [por qué]
+
+## Bloqueos conocidos
+- [bloqueo o "ninguno"]
+
+## NO tocar en la próxima sesión
+- [lista o "ninguna restricción"]
+
+## Estado del ecosistema al cerrar
+- Repos con 🔴: [lista o "ninguno"]
+- Pendientes urgentes: [lista]
+
+## Link al diario de hoy
+yggdrasil-tracking: diarios/YYYY/YYYY-MM-DD.md
+```
+
+---
+
+## FASE 10 — Declaración de cierre
 
 ```
 [SESIÓN CERRADA]
-Fecha: YYYY-MM-DD HH:MM
-Duración estimada: Xh Ymin
-Repos con push confirmado: [lista]
-ESTADO-SISTEMA actualizado: ✅ / ❌
-MASTER-PENDIENTES actualizado: ✅ / ❌
-Issue de apertura creado: #[número] o ❌
-Decisiones arquitectónicas: [N ADRs creados o NINGUNA]
-Resumen: [una frase de lo logrado]
+Fecha: YYYY-MM-DD HH:MM CEST
+Duración: [X horas Y minutos]
+Diario cerrado: ✅ yggdrasil-tracking/diarios/YYYY/YYYY-MM-DD.md
+Push verificado:
+  yggdrasil-dew      → ✅ [SHA]
+  yggdrasil-tracking → ✅ [SHA]
+  [otros repos]      → ✅ [SHA]
+ESTADO-SISTEMA actualizado: ✅
+MASTER-PENDIENTES actualizado: ✅
+Issue de apertura: ✅ #[N] en yggdrasil-dew
+ADR creado: ✅/N/A
+
+Logros principales:
+  - [logro 1]
+  - [logro 2]
+
+Pendientes para mañana:
+  - [pendiente 1]
 ```
 
 ---
 
-## 🔄 ESCALADO
+## ESCALADO
 
-| Nivel | Forma | Estado |
-|-------|-------|--------|
-| 0 — Manual | Este archivo | ✅ vigente |
-| 1 — Script | `scripts/cierre-sesion.sh` | 🔲 pendiente |
-| 2 — GitHub Action | `.github/workflows/cierre.yml` | 🔲 pendiente |
-| 3 — Bot THDORA | Comando `/cierre` en Telegram | 🔲 pendiente |
+| Nivel | Forma | Cuándo |
+|---|---|---|
+| Script | `scripts/cierre.sh` | Cuando exista en `yggdrasil-scripts` |
+| GitHub Action | `cierre.yml` | Automatización futura |
+| Bot THDORA | Comando `/cierre` en Telegram | Cuando THDORA esté en producción |
 
 ---
 
-## 📋 MANTENIMIENTO
-
-Actualizar este protocolo cuando:
-- Se añada un nuevo archivo de estado global
-- Cambie la estructura del issue de apertura
-- Se automatice alguna de las fases (actualizar tabla de escalado)
-
-_Actualizado: 2026-07-14 · v2.0_
+_v3.0 · 2026-07-14 · 10 fases · Milimétrico al ecosistema Yggdrasil real_

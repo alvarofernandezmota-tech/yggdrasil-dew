@@ -1,196 +1,118 @@
 ---
 tipo: protocolo
-subtipo: contexto
-author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
+author: Alvaro Fernandez Mota
 creado: 2026-07-13
-actualizado: 2026-07-13
-ruta: protocolo/PROTOCOLO-CONTEXTO-ECOSISTEMA.md
-tags: [protocolo, contexto, ecosistema, agente-ia, sesion]
+actualizado: 2026-07-14
+version: 3.0
+tags: [contexto, ecosistema, arquitectura, repos]
 status: vigente
-version: 1.0
-audiencia: [humano, agente-ia]
-fuentes:
-  - https://learn.github.com/well-architected/architecture/recommendations/implementing-polyrepo-engineering
-  - https://docs.aws.amazon.com/prescriptive-guidance/latest/architectural-decision-records/adr-process.html
-  - https://github.com/topics/repo-navigation
 ---
 
-# 🧠 PROTOCOLO DE CONTEXTO — ECOSISTEMA YGGDRASIL
+# PROTOCOLO-CONTEXTO-ECOSISTEMA v3
 
-> **Propósito:** Dar contexto total sobre el ecosistema en el mínimo número de lecturas posible.  
-> **Cuándo ejecutar:** Al inicio de cualquier sesión que toque más de un repo, o cuando el agente/humano no tenga contexto fresco del ecosistema.  
-> **Tiempo estimado (agente):** ~2 min de lectura. **Tiempo estimado (humano):** ~5 min.
+> Protocolo de lectura de la arquitectura del ecosistema Yggdrasil.
+> Milimétrico a los archivos y repos que realmente existen.
 
 ---
 
-## 👤 PARA EL HUMANO
+## FUENTE PRIMARIA
 
-Este protocolo existe porque el ecosistema Yggdrasil tiene **15+ repos activos** que se relacionan entre sí. Sin contexto, cualquier sesión de trabajo —tuya o del agente— parte desde cero y pierde tiempo reorientándose.
+**Archivo:** `ECOSYSTEM-ARCHITECTURE.md` · `yggdrasil-dew` · [Ley máxima del ecosistema]
 
-Ejecútalo tú mismo cuando:
-- Llevas varios días sin tocar el ecosistema
-- Vas a iniciar una sesión larga multi-repo
-- Quieres revisar el estado global antes de priorizar
-
-**Lectura en 3 pasos:**
-1. `ECOSYSTEM-ARCHITECTURE.md` → el mapa completo (quién es quién)
-2. `ESTADO-SISTEMA.md` → qué está roto, activo, en pausa
-3. `MASTER-PENDIENTES.md` → qué hay que hacer globalmente
-
-Si hay un **issue de apertura de sesión** abierto → léelo primero. Contiene el contexto de la sesión anterior.
+Este archivo contiene:
+- Mapa ASCII de todos los repos y su capa
+- Tabla completa de repos (activos + deprecados)
+- Sección 3: dónde va cada tipo de contenido
+- Sección 4: sistema de etiquetas GitHub
+- Sección 5: jerarquía de reglas NIVEL 0 → NIVEL 3
+- Sección 6: escalado SCRIPT → ACTION → BOT
+- Sección 7: compatibilidad de dispositivos (regla COMPAT-BLINK)
+- Sección 8: estado de repos julio 2026
 
 ---
 
-## 🤖 PARA EL AGENTE IA
+## LECTURA ESTRUCTURADA
 
-> **INSTRUCCIÓN:** Lee esta sección antes de actuar. No actúes hasta completar los pasos 1-5.
+### Paso 1 — Mapa de repos activos
 
-### PASO 1 — Leer el mapa del ecosistema
+Leer sección 2 de `ECOSYSTEM-ARCHITECTURE.md` y construir esta tabla en memoria:
 
-Archivo: [`ECOSYSTEM-ARCHITECTURE.md`](../ECOSYSTEM-ARCHITECTURE.md)  
-Extraer y retener:
-- Lista de repos activos y su función
-- Tabla "dónde va cada cosa"
-- Jerarquía de reglas (Nivel 0 → Nivel 3)
-- Dispositivos disponibles y sus capacidades (COMPAT-BLINK)
-
-### PASO 2 — Leer el estado actual
-
-Archivo: [`ESTADO-SISTEMA.md`](../ESTADO-SISTEMA.md)  
-Extraer y retener:
-- Repos en estado 🔴 CRÍTICO o 🟡 ADVERTENCIA
-- Deudas técnicas activas
-- Última fecha de actualización (si > 7 días: estado puede estar desactualizado)
-
-### PASO 3 — Leer pendientes globales
-
-Archivo: [`MASTER-PENDIENTES.md`](../MASTER-PENDIENTES.md)  
-Extraer y retener:
-- Pendientes 🔴 ALTA prioridad
-- Pendientes bloqueados y su razón
-- Si el objetivo de la sesión actual está ya registrado aquí
-
-### PASO 4 — Leer normas de operación
-
-Archivo: [`NORMAS.md`](../NORMAS.md)  
-Extraer y retener:
-- Reglas de commits (Conventional Commits)
-- Regla COMPAT-BLINK (scripts deben funcionar en iPhone/Blink)
-- Qué NO hacer sin confirmación explícita del usuario
-
-### PASO 5 — Declarar contexto cargado
-
-Antes de actuar, el agente declara en una sola frase:  
-```
-[CONTEXTO CARGADO] Repos activos: N | Estado crítico: X | Pendientes alta prioridad: Y | Objetivo sesión: [objetivo o PENDIENTE DE DEFINIR]
-```
-
-Si el objetivo no está claro → preguntar antes de actuar.
-
----
-
-## 🗺️ GRAFO DE DEPENDENCIAS ENTRE REPOS
-
-```
-yggdrasil-dew (LEY MÁXIMA)
-│
-├── yggdrasil-wiki          ← second brain, referencia cruzada con dew
-│
-├── yggdrasil-tracking      ← vida personal, diarios, metas
-│   └── NO tiene dependencias hacia otros repos. Solo recibe.
-│
-├── madre-config            ← infra física
-│   └── requiere: ollama-stack, local-brain estén configurados
-│
-├── THDORA-PERSONAL         ← orquestador Telegram
-│   ├── depende de: madre-config (infra), local-brain (RAG)
-│   └── consume: yggdrasil-wiki (conocimiento)
-│
-├── yggdrasil-secops        ← seguridad
-│   └── documenta hallazgos que pueden afectar a madre-config
-│
-└── formacion-tech          ← aprendizaje
-    └── puede generar experimentos en → investigacion-ia → dev-labs
-```
-
-**Regla de propagación:** Si cambias algo en `yggdrasil-dew`, revisa si afecta a los repos que lo heredan. Si cambias `madre-config`, verifica `THDORA-PERSONAL` y `ollama-stack`.
-
----
-
-## 📋 CONTEXTO POR DOMINIO
-
-Cada dominio del ecosistema tiene o tendrá su propio CONTEXT-PACK. El agente debe leer el CONTEXT-PACK del repo antes de operar en él:
-
-| Repo | CONTEXT-PACK | Estado |
-|------|-------------|--------|
-| `yggdrasil-dew` | Este archivo es el maestro | ✅ vigente |
-| `yggdrasil-wiki` | `protocolo/CONTEXT-PACK-WIKI.md` | 🔲 pendiente |
-| `yggdrasil-tracking` | `protocolo/CONTEXT-PACK-TRACKING.md` | 🔲 pendiente |
-| `madre-config` | `protocolo/CONTEXT-PACK-INFRA.md` | 🔲 pendiente |
-| `THDORA-PERSONAL` | `protocolo/CONTEXT-PACK-THDORA.md` | 🔲 pendiente |
-| `yggdrasil-secops` | `protocolo/CONTEXT-PACK-SECOPS.md` | 🔲 pendiente |
-| `formacion-tech` | `protocolo/CONTEXT-PACK-FORMACION.md` | 🔲 pendiente |
-
----
-
-## ⚡ ESCALADO: PROTOCOLO → SCRIPT → ACTION → BOT
-
-Todo protocolo puede evolucionar. La escala es:
-
-```
-NIVEL 0 — PROTOCOLO MANUAL (.md)
-  → El humano o el agente lo ejecuta leyendo el archivo
-  → Ubicación: protocolo/
-
-NIVEL 1 — SCRIPT (.sh)
-  → El protocolo se automatiza como script ejecutable
-  → Ubicación: scripts/ (yggdrasil-dew) o yggdrasil-scripts/
-  → Requiere: funcionar en Blink (COMPAT-BLINK)
-
-NIVEL 2 — GITHUB ACTION (.yml)
-  → El script se programa como workflow automático
-  → Ubicación: .github/workflows/
-  → Se dispara por evento (push, schedule, issue)
-
-NIVEL 3 — BOT / ORQUESTADOR (THDORA)
-  → La action se convierte en comportamiento del bot
-  → THDORA ejecuta el protocolo bajo demanda vía Telegram
-  → Tiene memoria, contexto persistente y puede encadenar protocolos
-```
-
-**Este protocolo está en NIVEL 0.** Candidato a NIVEL 1 cuando se estabilice.
-
----
-
-## 🔄 MANTENIMIENTO DE ESTE PROTOCOLO
-
-| Cuándo actualizar | Quién | Qué hacer |
+| Repo | Capa | Estado (julio 2026) |
 |---|---|---|
-| Se añade un repo activo | Humano o agente | Añadir al grafo de dependencias y a la tabla de CONTEXT-PACKs |
-| Cambia la jerarquía de repos | Humano | Actualizar grafo + `ECOSYSTEM-ARCHITECTURE.md` |
-| Se depreca un repo | Humano o agente | Moverlo a sección archivados en el grafo |
-| Se crea un CONTEXT-PACK nuevo | Agente | Actualizar tabla de CONTEXT-PACKs (🔲 → ✅) |
+| `yggdrasil-dew` | 🧠 Cerebro | ✅ Activo |
+| `yggdrasil-wiki` | 🧠 Cerebro | ✅ Activo |
+| `alvarofernandezmota-tech` | 🧠 Cerebro | ✅ Activo |
+| `yggdrasil-tracking` | 📓 Tracking | ✅ Activo (nuevo 2026-07-13) |
+| `formacion-tech` | 📚 Formación | ✅ Activo |
+| `investigacion-ia` | 📚 Formación | ✅ Activo |
+| `madre-config` | 🖥️ Infra | ✅ Activo |
+| `acer-config` | 🖥️ Infra | ✅ Activo |
+| `ollama-stack` | 🤖 IA Local | ✅ Activo |
+| `local-brain` | 🤖 IA Local | ✅ Activo |
+| `THDORA-PERSONAL` | 🦾 Thdora | 🟡 Mantenimiento |
+| `yggdrasil-secops` | 🛡️ Seguridad | ✅ Activo |
+| `osint-stack` | 🛡️ Seguridad | ✅ Activo |
+| `yggdrasil-scripts` | ⚙️ Auto | ✅ Activo (nuevo 2026-07-13) |
+| `dev-labs` | 🧪 Labs | ✅ Activo |
+| `yggdrasil-formacion-` | 📦 **DEPRECADO** | ⛔ Migrado 2026-07-13 |
 
-**Frecuencia mínima de revisión:** una vez por mes, en el cierre mensual.
+### Paso 2 — Jerarquía de reglas
+
+Interiorizar la jerarquía (sección 5):
+
+```
+NIVEL 0: ECOSYSTEM-ARCHITECTURE.md + CONVENCIONES.md  ← LEY MÁXIMA
+NIVEL 1: <repo>/README.md
+NIVEL 2: <carpeta>/README.md
+NIVEL 3: frontmatter en cada .md / docstring en cada .py/.sh
+```
+
+**Regla absoluta:** Un archivo de nivel 3 nunca puede contradecir al nivel 0.
+
+### Paso 3 — Dónde va cada cosa
+
+Antes de crear cualquier archivo, verificar la sección 3 de `ECOSYSTEM-ARCHITECTURE.md`:
+
+```
+Arquitectura del ecosistema  → yggdrasil-dew/ECOSYSTEM-ARCHITECTURE.md
+Conocimiento / second brain  → yggdrasil-wiki/
+Tarea pendiente global       → yggdrasil-dew/MASTER-PENDIENTES.md
+Diario personal / reflexión  → yggdrasil-tracking/diarios/
+Metas, filosofía, yo         → yggdrasil-tracking/ (metas/, reflexiones/, filosofia/, yo/)
+Curiosidad o contenido       → yggdrasil-tracking/04_curiosidad/ o 05_contenido/
+Config del servidor Madre    → madre-config/
+Hallazgo de seguridad        → yggdrasil-secops/hallazgos/HAL-XXX
+Apunte técnico               → formacion-tech/<área>/
+Experimento IA               → investigacion-ia/
+Config del Acer              → acer-config/
+Script de mantenimiento      → yggdrasil-scripts/
+Prototipo sin repo propio    → dev-labs/
+```
+
+### Paso 4 — Regla COMPAT-BLINK
+
+Si se van a crear scripts, verificar sección 7:
+
+```
+Los scripts de sesión deben funcionar en Blink (iPhone).
+Prohibido: set -euo pipefail, arrays avanzados bash.
+Permitido: git push, MCP, SSH via Tailscale.
+```
 
 ---
 
-## 📚 REFERENCIAS Y FUENTES
+## SALIDA OBLIGATORIA
 
-Este protocolo se basa en patrones reales de la industria:
-
-- **Integration Layer / Meta-repo pattern** — GitHub Well-Architected, polyrepo engineering  
-  → https://learn.github.com/well-architected/architecture/recommendations/implementing-polyrepo-engineering
-
-- **ADR (Architecture Decision Records)** — AWS Prescriptive Guidance  
-  → https://docs.aws.amazon.com/prescriptive-guidance/latest/architectural-decision-records/adr-process.html
-
-- **Navigation contract para agentes IA** — GitHub Topics: repo-navigation  
-  → https://github.com/topics/repo-navigation
-
-- **Cross-repo context awareness** — GitHub Community Discussion #189213  
-  → https://github.com/orgs/community/discussions/189213
+```
+[CONTEXTO-ECOSISTEMA CARGADO]
+Repos activos: 15 (incluyendo mantenimiento)
+Deprecados: 1 (yggdrasil-formacion-)
+Ley máxima: ECOSYSTEM-ARCHITECTURE.md ✅ leído
+Jerarquía: NIVEL 0 interiorizado
+Dónde va cada cosa: ✅ mapeado
+REGLA COMPAT-BLINK: [aplica/no aplica según el trabajo de hoy]
+```
 
 ---
 
-_Creado: 2026-07-13 · Perplexity-MCP · v1.0_
+_v3.0 · 2026-07-14 · Milimétrico a ECOSYSTEM-ARCHITECTURE.md real_

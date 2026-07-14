@@ -1,118 +1,187 @@
 ---
 tipo: protocolo
-subtipo: sesion
-author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
-creado: 2026-01-01
+author: Alvaro Fernandez Mota
+creado: 2026-07-13
 actualizado: 2026-07-14
-ruta: protocolo/PROTOCOLO-APERTURA-SESION.md
-tags: [protocolo, sesion, apertura, agente-ia, contexto]
+version: 3.0
+tags: [sesion, apertura, contexto, dew-sesiones]
 status: vigente
-version: 2.0
-audiencia: [humano, agente-ia]
-nivel-escalado: 0 — Manual
-candidato-a: 1 — Script
 ---
 
-# 🟢 PROTOCOLO DE APERTURA DE SESIÓN v2
+# PROTOCOLO-APERTURA-SESION v3
 
-> **Propósito:** Garantizar que cada sesión de trabajo —propia o del agente— parte con contexto completo, objetivo declarado y sin deuda de información.
-> **Cuándo ejecutar:** Al inicio de cualquier sesión de trabajo en el ecosistema.
-> **Tiempo estimado (agente):** ~3 min. **Tiempo estimado (humano):** ~5 min.
+> Protocolo de apertura milimétrico al ecosistema Yggdrasil.
+> El agente NO actúa sobre ningún repo hasta completar los 6 pasos en orden.
+> Cada paso referencia archivos reales que existen en el ecosistema.
 
 ---
 
-## 👤 PARA EL HUMANO
+## CONTRATO DEL AGENTE
 
-### ¿Por qué este protocolo existe?
-
-Cada sesión que empieza sin contexto pierde los primeros 20 minutos reorientándose. Este protocolo convierte la apertura en un ritual de 5 minutos que da contexto total antes de tocar nada.
-
-### Pasos para el humano
-
-1. **Busca el issue de apertura** — el cierre de la sesión anterior crea un issue con el estado exacto donde lo dejaste. Si existe, léelo primero.
-2. **Lee `ESTADO-SISTEMA.md`** — ¿hay algo roto o bloqueado que cambie tu plan?
-3. **Lee `MASTER-PENDIENTES.md`** — ¿cuál es el pendiente de mayor prioridad hoy?
-4. **Define tu objetivo** — escríbelo en una frase antes de empezar. Sin objetivo declarado, no abras ningún editor.
-5. **Declara qué NO vas a tocar hoy** — opcional pero muy útil para evitar scope creep.
-
-### Cuándo NO seguir este protocolo
-
-- Sesiones de < 15 minutos con un objetivo muy acotado y conocido
-- Emergencias (usar PROTOCOLO-INCIDENTE.md directamente)
-
----
-
-## 🤖 PARA EL AGENTE IA
-
-> **CONTRATO:** No ejecutes ninguna acción sobre el ecosistema hasta completar los pasos 1-6 y haber declarado el contexto. Si un paso falla (archivo no encontrado, estado incierto), detente y reporta al usuario antes de continuar.
-
-### PASO 1 — Buscar issue de apertura
-
-Buscar en el repo activo un issue abierto con label `apertura-sesion` o título que empiece por `[APERTURA]`.
-
-- **Si existe:** leerlo completo. Contiene: estado anterior, objetivo, repos tocados, bloqueos y notas.
-- **Si no existe:** registrar como primer contexto conocido = vacío. Continuar.
-
-### PASO 2 — Leer el mapa del ecosistema
-
-Archivo: [`ECOSYSTEM-ARCHITECTURE.md`](../ECOSYSTEM-ARCHITECTURE.md)  
-Retener: repos activos, jerarquía de reglas, tabla "dónde va cada cosa", dispositivos disponibles.
-
-### PASO 3 — Leer estado del sistema
-
-Archivo: [`ESTADO-SISTEMA.md`](../ESTADO-SISTEMA.md)  
-Retener: repos en 🔴 CRÍTICO, deudas técnicas activas, última fecha de actualización.  
-⚠️ Si fecha > 7 días: advertir al usuario que el estado puede estar desactualizado.
-
-### PASO 4 — Leer pendientes globales
-
-Archivo: [`MASTER-PENDIENTES.md`](../MASTER-PENDIENTES.md)  
-Retener: pendientes 🔴 ALTA, bloqueos activos, si el objetivo actual ya está registrado.
-
-### PASO 5 — Leer normas de operación
-
-Archivo: [`NORMAS.md`](../NORMAS.md)  
-Retener: reglas de commits (Conventional Commits), regla COMPAT-BLINK, qué NO hacer sin confirmación.
-
-### PASO 6 — Confirmar objetivo de sesión
-
-Si el usuario no ha declarado el objetivo explícitamente → preguntar:
 ```
-¿Cuál es el objetivo de esta sesión? (Si tienes el issue de apertura, puedo leerlo primero)
+Antes de tocar cualquier repo, debo completar los 6 pasos.
+Si me salto uno, declaro el motivo explícitamente.
+No asumo contexto de sesiones anteriores — siempre leo el estado real.
 ```
 
-No actuar hasta tener objetivo declarado.
+---
 
-### DECLARACIÓN DE APERTURA (obligatoria)
+## PASO 1 — Leer issue de apertura (si existe)
+
+**Repositorio:** `yggdrasil-dew`
+**Dónde buscar:** Issues abiertos con título `[APERTURA]` o `[SESION]`
+
+```
+¿Hay issue de apertura creado en el cierre anterior?
+  SÍ → Leer el issue completo. Contiene: contexto, objetivo, repos críticos, bloqueos.
+  NO → Continuar desde PASO 2 sin issue de apertura.
+```
+
+**Si hay issue de apertura, extraer:**
+- Objetivo declarado de la sesión anterior
+- Repos que quedaron con trabajo pendiente
+- Bloqueos conocidos
+- Notas especiales del agente anterior
+
+---
+
+## PASO 2 — Contexto macro del ecosistema
+
+**Invocar:** `PROTOCOLO-CONTEXTO-MACRO.md` (ejecución completa)
+
+Leer en este orden exacto:
+
+| Orden | Archivo | Repo | Qué extrae |
+|---|---|---|---|
+| 1 | `ECOSYSTEM-ARCHITECTURE.md` | `yggdrasil-dew` | Mapa completo, repos activos, jerarquía |
+| 2 | `ESTADO-SISTEMA.md` | `yggdrasil-dew` | Estado actual de cada isla |
+| 3 | `DASHBOARD.md` | `yggdrasil-dew` | Vista rápida de métricas y alertas |
+| 4 | `MASTER-PENDIENTES.md` | `yggdrasil-dew` | Tareas pendientes por repo y prioridad |
+| 5 | `PLAN-MAESTRO-2026-07.md` | `yggdrasil-dew` | Roadmap del mes en curso |
+| 6 | `NORMAS.md` | `yggdrasil-dew` | Reglas que aplican a esta sesión |
+
+**Salida obligatoria:**
+```
+[ECOSISTEMA LEÍDO]
+Repos activos: 10
+Críticos hoy: [lista]
+Pendientes urgentes: [lista]
+Roadmap mes: [objetivo principal julio 2026]
+```
+
+---
+
+## PASO 3 — Verificar DEW-SESIONES (diario del día)
+
+**Repositorio objetivo:** `yggdrasil-tracking`
+**Ruta esperada:** `diarios/YYYY/YYYY-MM-DD.md` o estructura equivalente
+
+```
+¿Existe entrada de diario para HOY (2026-07-14)?
+  SÍ + sin cerrar → La sesión anterior no cerró. Revisar qué quedó abierto.
+  SÍ + cerrado    → Leer resumen del cierre para contexto.
+  NO              → CREAR entrada de diario de hoy antes de continuar.
+```
+
+**Si hay que CREAR el diario de hoy, usar esta plantilla:**
+
+```markdown
+---
+fecha: YYYY-MM-DD
+status: abierto
+sesion_inicio: HH:MM CEST
+---
+
+# Diario YYYY-MM-DD
+
+## Apertura
+- Hora inicio: HH:MM
+- Objetivo declarado: [a completar en PASO 6]
+- Contexto previo: [resumen del issue de apertura o "primera sesión del día"]
+
+## Trabajo realizado
+<!-- El agente completa esto durante la sesión -->
+
+## Cierre
+<!-- El agente completa esto en PROTOCOLO-CIERRE-SESION -->
+```
+
+---
+
+## PASO 4 — Identificar repos a tocar hoy
+
+**Fuente:** Resultado del PASO 2 (MASTER-PENDIENTES + issue apertura)
+
+Para cada repo candidato, verificar:
+- ¿Tiene trabajo pendiente en `MASTER-PENDIENTES.md`?
+- ¿Hay issues abiertos con `prioridad:alta`?
+- ¿El `ESTADO-SISTEMA.md` lo marca con 🔴 o 🟡?
+
+**Tabla de repos activos del ecosistema:**
+
+| Repo | Capa | Estado esperado | Archivo de estado |
+|---|---|---|---|
+| `yggdrasil-dew` | 🧠 Cerebro | ✅ Activo | `ESTADO-SISTEMA.md` |
+| `yggdrasil-wiki` | 🧠 Cerebro | ✅ Activo | `ESTADO-ISLA-WIKI.md` |
+| `yggdrasil-tracking` | 📓 Tracking | ✅ Activo | `ESTADO-ISLA-TRACKING.md` |
+| `formacion-tech` | 📚 Formación | ✅ Activo | `README.md` |
+| `investigacion-ia` | 📚 Formación | ✅ Activo | `README.md` |
+| `madre-config` | 🖥️ Infra | ✅ Activo | `README.md` |
+| `acer-config` | 🖥️ Infra | ✅ Activo | `README.md` |
+| `ollama-stack` | 🤖 IA Local | ✅ Activo | `README.md` |
+| `local-brain` | 🤖 IA Local | ✅ Activo | `README.md` |
+| `THDORA-PERSONAL` | 🦾 Thdora | 🟡 Mantenimiento | `README.md` |
+| `yggdrasil-secops` | 🛡️ Seguridad | ✅ Activo | `README.md` |
+| `yggdrasil-scripts` | ⚙️ Auto | ✅ Activo | `README.md` |
+| `dev-labs` | 🧪 Labs | ✅ Activo | `README.md` |
+
+---
+
+## PASO 5 — Declarar objetivo y límites de sesión
+
+Antes de actuar, declarar explícitamente:
+
+```
+[OBJETIVO SESIÓN YYYY-MM-DD]
+Objetivo principal: [qué se va a hacer]
+Repos que se van a tocar: [lista]
+Repos que NO se tocarán hoy: [lista]
+Bloqueos conocidos: [lista o "ninguno"]
+Tiempo estimado: [estimación]
+```
+
+**Regla:** Si el objetivo no cabe en una frase, está mal definido.
+
+---
+
+## PASO 6 — Declaración de apertura
+
+Una vez completados los 5 pasos anteriores, declarar:
 
 ```
 [SESIÓN ABIERTA]
-Fecha: YYYY-MM-DD HH:MM
-Contexto cargado: ECOSYSTEM-ARCHITECTURE ✅ | ESTADO-SISTEMA ✅ | MASTER-PENDIENTES ✅ | NORMAS ✅
-Repos críticos: [lista o NINGUNO]
-Pendientes alta prioridad: N
-Objetivo declarado: [objetivo en una frase]
-NO tocar hoy: [lista o NO DEFINIDO]
+Fecha: YYYY-MM-DD HH:MM CEST
+Contexto cargado: ✅
+Diario: ✅ (creado/verificado en yggdrasil-tracking)
+Ecosistema: 10 repos activos leídos
+Críticos: [N repos con alertas]
+Objetivo: [frase]
+Repos hoy: [lista]
+NO tocar: [lista]
+
+PRIMERA ACCIÓN: [la primera cosa concreta a hacer]
 ```
 
 ---
 
-## 🔄 ESCALADO
+## ESCALADO
 
-| Nivel | Forma | Estado |
-|-------|-------|--------|
-| 0 — Manual | Este archivo | ✅ vigente |
-| 1 — Script | `scripts/apertura-sesion.sh` | 🔲 pendiente |
-| 2 — GitHub Action | `.github/workflows/apertura.yml` | 🔲 pendiente |
-| 3 — Bot THDORA | Comando `/apertura` en Telegram | 🔲 pendiente |
+| Nivel | Forma | Cuándo |
+|---|---|---|
+| Script | `scripts/apertura.sh` | Cuando exista en `yggdrasil-scripts` |
+| GitHub Action | `yggdrasil-scripts/.github/workflows/apertura.yml` | Automatización futura |
+| Bot THDORA | Comando `/apertura` en Telegram | Cuando THDORA esté en producción |
 
 ---
 
-## 📋 MANTENIMIENTO
-
-Actualizar este protocolo cuando:
-- Cambie la estructura de archivos de contexto obligatorios
-- Se añada un nuevo tipo de issue de apertura
-- El ecosistema supere los 20 repos activos (revisar pasos)
-
-_Actualizado: 2026-07-14 · v2.0_
+_v3.0 · 2026-07-14 · Milimétrico al ecosistema Yggdrasil real_
