@@ -3,7 +3,7 @@ title: Estado Isla Tracking
 tipo: estado-isla
 author: Alvaro Fernandez Mota
 creado: 2026-07-13
-actualizado: 2026-07-13
+actualizado: 2026-07-16
 ruta: docs/islas/ESTADO-ISLA-TRACKING.md
 tags: [isla, tracking, vida-personal, estado]
 status: activa
@@ -11,7 +11,7 @@ status: activa
 
 # 📓 Estado Isla Tracking
 
-> Isla de vida personal, metas, reflexiones y filosofía. Creada el 13-07-2026 como migración y consolidación de yggdrasil-formacion- (contenido personal) y VIDAPERSONAL.
+> Isla de vida personal, metas, reflexiones y filosofía. Creada el 13-07-2026 como migración y consolidación del contenido personal de VIDAPERSONAL y yggdrasil-formacion (antes yggdrasil-formacion-).
 > Fuente de verdad: [yggdrasil-tracking](https://github.com/alvarofernandezmota-tech/yggdrasil-tracking)
 
 ---
@@ -65,8 +65,8 @@ yggdrasil-tracking/
 
 ## Origen
 
-Migración desde `yggdrasil-formacion-` (contenido personal) realizada el 2026-07-13.
-El contenido técnico/formación queda en `yggdrasil-formacion-` (ver ESTADO-ISLA-FORMACION.md).
+Migración desde `yggdrasil-formacion` (antes `yggdrasil-formacion-`, contenido personal) realizada el 2026-07-13.
+El contenido técnico/formación queda en `yggdrasil-formacion` (ver ESTADO-ISLA-FORMACION.md).
 
 ---
 
@@ -79,4 +79,4 @@ El contenido técnico/formación queda en `yggdrasil-formacion-` (ver ESTADO-ISL
 
 ---
 
-_Creado: 2026-07-13 · Sesión migración tracking · Perplexity MCP_
+_Actualizado: 2026-07-16 · fix #65 · nombre corregido a yggdrasil-formacion (sin guión) · Perplexity MCP_
