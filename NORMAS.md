@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-06
-actualizado: 2026-07-13
+actualizado: 2026-07-16
 ruta: NORMAS.md
 tags: [normas, canon, tridente, ecosistema]
 status: vigente
@@ -23,7 +23,7 @@ status: vigente
 | [yggdrasil-dew](https://github.com/alvarofernandezmota-tech/yggdrasil-dew) | Cerebro | Publico | Constitucion tecnica, ADRs, diarios, roadmap |
 | [yggdrasil-wiki](https://github.com/alvarofernandezmota-tech/yggdrasil-wiki) | Conocimiento | Privado | Base de conocimiento, mapas, islas |
 | [yggdrasil-tracking](https://github.com/alvarofernandezmota-tech/yggdrasil-tracking) | Vida personal | Privado | Diarios, metas, filosofía, reflexiones |
-| [yggdrasil-formacion-](https://github.com/alvarofernandezmota-tech/yggdrasil-formacion-) | Formacion | Privado | Aprendizaje tecnico, cursos, recursos |
+| [yggdrasil-formacion](https://github.com/alvarofernandezmota-tech/yggdrasil-formacion) | Formacion | Privado | Aprendizaje tecnico, cursos, recursos |
 | [yggdrasil-scripts](https://github.com/alvarofernandezmota-tech/yggdrasil-scripts) | Orquestacion | Privado | Scripts transversales, GitHub Actions |
 | [yggdrasil-secops](https://github.com/alvarofernandezmota-tech/yggdrasil-secops) | Seguridad | Privado | Hallazgos, auditorias, herramientas defensivas |
 | [madre-config](https://github.com/alvarofernandezmota-tech/madre-config) | Infra | Privado | Config y scripts de Madre (servidor) |
@@ -106,7 +106,7 @@ Si un archivo explica conceptos, relaciones y decisiones -> NO es un repo operat
 ## Regla de fronteras personales/tecnicas
 
 - **Vida personal, diarios personales, filosofía, metas** -> `yggdrasil-tracking` (privado).
-- **Formacion tecnica, cursos, apuntes** -> `yggdrasil-formacion-` (privado).
+- **Formacion tecnica, cursos, apuntes** -> `yggdrasil-formacion` (privado).
 - **Nunca mezclar contenido personal con tecnico en el mismo repo.**
 - Si un repo contiene mezcla -> separar en migracion dedicada antes de continuar trabajando en el.
 
@@ -208,4 +208,4 @@ status: vigente | borrador | deprecado
 
 ---
 
-_Ultima actualizacion: 2026-07-13 · Sesion tarde · +4 reglas nuevas · Perplexity MCP_
+_Ultima actualizacion: 2026-07-16 · fix #65 consistencia nombres · yggdrasil-formacion sin guion · Perplexity MCP_
