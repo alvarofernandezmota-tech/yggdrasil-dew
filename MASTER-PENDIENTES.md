@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-06
-actualizado: 2026-07-16 15:45 CEST
+actualizado: 2026-07-16 16:21 CEST
 ruta: MASTER-PENDIENTES.md
 tags: [pendientes, fases, alineacion, roadmap]
 status: vigente
@@ -10,7 +10,7 @@ status: vigente
 
 # MASTER-PENDIENTES — Ecosistema Yggdrasil
 
-> Estado real al 2026-07-16 15:45 CEST.
+> Estado real al 2026-07-16 16:21 CEST.
 > Actualizar al inicio y cierre de cada sesion.
 
 ---
@@ -45,10 +45,11 @@ status: vigente
 | **F15** | Sistema completo de protocolos | ✅ CERRADA | 36 protocolos + INDEX v4.0 + 5 atomos + ACTUALIZACION x4 + DOCUMENTACION 2026-07-16 |
 | **F16** | Islas de contenido personal | ⚪ CONCEPTUAL | Hip Hop / Whisky / Vida |
 | **F17** | Protocolos emergentes + auditoria | 🔵 EN PROGRESO | EMERGENCIA + RITUAL-SEMANAL + RENOMBRAR-REPO creados. Pendiente: NUEVO-DIARIO-TRACKING |
+| **F18** | Auditoria Madre completa | ✅ CERRADA | SSH + 23 contenedores + islas actualizadas 2026-07-16 tarde |
 
 ---
 
-## Canon de protocolos — estado real 2026-07-16 (post-F17)
+## Canon de protocolos — estado real 2026-07-16
 
 ### NIVEL 1 — Globales (14)
 
@@ -111,11 +112,11 @@ status: vigente
 
 ## Bloqueantes criticos (requieren terminal)
 
-| Issue | Titulo | Urgencia |
-|---|---|---|
-| [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) | HAL-005 HDD Madre 28.000h | 🔴 Alta |
-| [#45](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/45) | HAL-008 Token Telegram | 🔴 Alta |
-| [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) | Puerto 21 FTP abierto | 🔴 Alta |
+| Issue | Titulo | Urgencia | Nota 2026-07-16 |
+|---|---|---|---|
+| [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) | HAL-005 HDD Madre 28.000h | 🟡 Media | SMART PASSED hoy — monitorizar |
+| [#45](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/45) | HAL-008 Token Telegram | 🔴 Alta | Pendiente |
+| [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) | Puerto 21 FTP abierto | 🟡 Media | NO en Madre — es router Digi |
 
 ---
 
@@ -125,6 +126,8 @@ status: vigente
 |---|---|---|
 | [#69](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/69) | F17 NUEVO-DIARIO-TRACKING | 🟡 Media |
 | [#59](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/59) | F3 purga WIKI | 🟡 Media |
+| [#70](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/70) | HAL-006 yggdrasil-mcp puerto 3000 | 🔴 Alta |
+| [#71](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/71) | qdrant telemetria falso positivo | 🟡 Baja |
 | [#60](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/60) | F7 healthchecks + Loki | 🔵 Baja |
 
 ---
@@ -156,7 +159,9 @@ status: vigente
 | check-nombres.sh | Automatizar PROTOCOLO-NOMBRES |
 | Auditoria ecosistema completa | Primer domingo agosto 2026 |
 | Renombrar WIKI---PERSONAL -> yggdrasil-wiki en Madre | PROTOCOLO-RENOMBRAR-REPO listo |
+| Fix yggdrasil-mcp puerto 3000 | Cambiar a 3001 en compose |
+| Fix qdrant telemetria | QDRANT__TELEMETRY_DISABLED=true |
 
 ---
 
-_Actualizado: 2026-07-16 15:45 CEST - F17 en progreso - 43 protocolos - INDEX v5.0 - Perplexity MCP_
+_Actualizado: 2026-07-16 16:21 CEST - F17 en progreso - F18 CERRADA - 43 protocolos - INDEX v5.0 - Perplexity MCP_

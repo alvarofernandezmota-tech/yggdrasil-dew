@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-06
-actualizado: 2026-07-16 15:45 CEST
+actualizado: 2026-07-16 16:21 CEST
 ruta: docs/canon/ESTADO-SISTEMA.md
 tags: [estado, sistema, ecosistema, canon]
 status: vigente
@@ -12,7 +12,7 @@ status: vigente
 
 > Fuente de verdad del estado operativo actual.
 > Actualizar en cada cierre de sesion que cambie algo estructural.
-> Ultima actualizacion: 2026-07-16 15:45 CEST
+> Ultima actualizacion: 2026-07-16 16:21 CEST
 
 ---
 
@@ -49,11 +49,25 @@ status: vigente
 |---|---|
 | F0 Seguridad | ⚪ Parcial |
 | F1-F5 | ✅ CERRADAS |
-| F6 Ritual semanal | ✅ CERRADA (PROTOCOLO-RITUAL-SEMANAL v1.0) |
+| F6 Ritual semanal | ✅ CERRADA |
 | F7 GitOps | 🔵 PARCIAL |
 | F8-F15 | ✅ CERRADAS |
 | F16 Islas personales | ⚪ CONCEPTUAL |
 | F17 Protocolos emergentes | 🔵 EN PROGRESO (pendiente: NUEVO-DIARIO-TRACKING) |
+| F18 Auditoria Madre | ✅ CERRADA (sesion 2026-07-16 tarde) |
+
+---
+
+## Madre — estado verificado 2026-07-16
+
+| Campo | Valor |
+|---|---|
+| Hostname | `varpc` |
+| OS | Arch Linux kernel 7.0.9-arch2-1 |
+| SSH canonico | `ssh varopc@100.91.112.32` |
+| Contenedores | 23 total · 19 healthy · 2 unhealthy (falsos positivos) · 1 error |
+| SMART /dev/sda | PASSED 2026-07-16 |
+| RAM | 7/15 Gi usados |
 
 ---
 
@@ -64,17 +78,19 @@ status: vigente
 | Primera ejecucion RITUAL-SEMANAL | Domingo 2026-07-19 |
 | Primera auditoria mensual completa | Primer domingo agosto 2026 |
 | Renombrar WIKI---PERSONAL en Madre | Proxima sesion con terminal |
+| Fix yggdrasil-mcp (puerto 3000) | Proxima sesion |
 
 ---
 
 ## Bloqueantes criticos
 
-| Issue | Urgencia |
-|---|---|
-| #31 HDD Madre 28.000h | 🔴 Alta |
-| #45 Token Telegram | 🔴 Alta |
-| #15 Puerto 21 FTP | 🔴 Alta |
+| Issue | Urgencia | Nota 2026-07-16 |
+|---|---|---|
+| #31 HDD Madre 28.000h | 🟡 Media | SMART PASSED hoy |
+| #45 Token Telegram | 🔴 Alta | Pendiente |
+| #15 Puerto 21 FTP | 🟡 Media | En router Digi, no en Madre |
+| #70 yggdrasil-mcp puerto 3000 | 🔴 Alta | grafana ocupa 3000, fix = cambiar a 3001 |
 
 ---
 
-_Actualizado: 2026-07-16 15:45 CEST - F17 en progreso - 43 protocolos - Perplexity MCP_
+_Actualizado: 2026-07-16 16:21 CEST - F17 en progreso - F18 CERRADA - Perplexity MCP_

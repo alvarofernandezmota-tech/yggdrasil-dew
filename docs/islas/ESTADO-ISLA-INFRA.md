@@ -3,7 +3,7 @@ title: Estado Isla Infra
 tipo: estado-isla
 author: Alvaro Fernandez Mota
 creado: 2026-07-12
-actualizado: 2026-07-16 16:15 CEST
+actualizado: 2026-07-16 16:21 CEST
 ruta: docs/islas/ESTADO-ISLA-INFRA.md
 tags: [isla, infra, estado, madre, ssh, docker]
 status: auditada
@@ -11,8 +11,8 @@ status: auditada
 
 # 🏗️ Estado Isla Infra
 
-> Auditada en sesion 2026-07-16 via SSH directo a Madre + analisis de logs.
-> Fuente de verdad: issues en [madre-config](https://github.com/alvarofernandezmota-tech/madre-config) + `docs/inventario-madre.md`
+> Auditada en sesion 2026-07-16 via SSH directo a Madre + analisis completo de logs.
+> Fuente de verdad: `docs/inventario-madre.md` + [madre-config](https://github.com/alvarofernandezmota-tech/madre-config)
 
 ---
 
@@ -27,7 +27,7 @@ status: auditada
 | **Home** | `/home/varopc/` |
 | **Proyectos** | `/home/varopc/Projects/` |
 | **Estado general** | ✅ Operativo |
-| **Ultima auditoria** | 2026-07-16 16:15 CEST |
+| **Ultima auditoria** | 2026-07-16 16:21 CEST |
 
 ---
 
@@ -38,7 +38,7 @@ ssh varopc@100.91.112.32
 ```
 
 > Puerto 22 estandar activo (sshd pid=889).
-> Puerto 2222 expuesto via docker-proxy — pertenece a Gitea SSH.
+> Puerto 2222 = Gitea SSH (docker-proxy).
 
 ---
 
@@ -49,7 +49,7 @@ ssh varopc@100.91.112.32
 | **Mem** | 15 Gi | 7.0 Gi | 298 Mi | 8.6 Gi |
 | **Swap** | 19 Gi | 5.7 Gi | 13 Gi | — |
 
-> Swap con 5.7 Gi usados — sistema bajo presion de memoria. Monitorizar.
+> Swap con 5.7 Gi usados. Sistema bajo presion de memoria. Monitorizar.
 
 ---
 
@@ -59,7 +59,7 @@ ssh varopc@100.91.112.32
 |---|---|
 | **SMART overall-health** | ✅ PASSED |
 | **Riesgo inmediato** | 🟢 No |
-| **Issue asociado** | [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) HAL-005 HDD ~28.000h — monitorizar |
+| **Issue asociado** | [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) HAL-005 ~28.000h — monitorizar |
 
 ---
 
@@ -67,62 +67,84 @@ ssh varopc@100.91.112.32
 
 | Check | Resultado |
 |---|---|
-| `ss -tlnp \| grep :21` | ✅ Sin output — puerto 21 NO escucha en Madre |
-| **Conclusion** | Issue [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) es a nivel router Digi, no Madre |
+| `ss -tlnp \| grep :21` | ✅ Sin output — NO escucha en Madre |
+| **Conclusion** | Issue [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) es a nivel router Digi |
 
 ---
 
-## Contenedores Docker — estado verificado 2026-07-16
+## Mapa de puertos activos — verificado 2026-07-16
 
-| Contenedor | Estado | Imagen | Isla |
+| Puerto | Servicio | Contenedor | Notas |
 |---|---|---|---|
-| `thdora` | ✅ Up 2d healthy | thdora-thdora | THDORA |
-| `thdora-bot` | 🟡 health: starting (reiniciado) | thdora-bot | THDORA |
-| `local_tripwire` | 🟡 health: starting (reiniciado) | yggdrasil-secops | Seguridad |
-| `radar_backup` | ✅ Up 2d | alpine:latest | Seguridad |
-| `guardian_bot` | ✅ Up 2d healthy | yggdrasil-secops | Seguridad |
-| `yggdrasil_watchdog` | ✅ Up 2d healthy | yggdrasil-secops | Seguridad |
-| `network_radar` | ✅ Up 2d healthy | yggdrasil-secops | Seguridad |
-| `log_guardian_bot` | ✅ Up 2d healthy | yggdrasil-secops | Seguridad |
-| `tailscale_monitor` | ✅ Up 2d healthy | yggdrasil-secops | Seguridad |
-| `grafana` | ✅ Up 2d | grafana/grafana:10.4.2 | Infra |
-| `prometheus` | ✅ Up 2d | prom/prometheus:v2.51.2 | Infra |
-| `yggdrasil-mcp` | 🔴 Created — ERROR | mcp-server | MCP |
-| `open-webui` | 🟡 unhealthy (falso positivo) | open-webui:main | IA-Local |
-| `qdrant` | 🟡 unhealthy (falso positivo) | qdrant/qdrant:latest | IA-Local |
-| `ollama` | ✅ Up 2d healthy | ollama/ollama:latest | IA-Local |
-| `ollama-embeddings` | ✅ Up 2d healthy | ollama/ollama:latest | IA-Local |
-| `kali-pentest` | ✅ Up 2d | kasmweb/kali-rolling-desktop:1.16.0 | Labs |
-| `spiderfoot` | ✅ Up 2d | spiderfoot | Labs |
-| `code-server` | ✅ Up 2d | linuxserver/code-server:latest | Infra |
-| `n8n` | ✅ Up 2d | n8nio/n8n:latest | Infra |
-| `gitea` | ✅ Up 2d | gitea/gitea:latest | Infra |
-| `uptime-kuma` | ✅ Up 2d healthy | louislam/uptime-kuma:1 | Infra |
-| `portainer` | ✅ Up 2d | portainer/portainer-ce:latest | Infra |
-
-**Total: 23 contenedores** · 18 healthy/up · 2 unhealthy (falsos positivos) · 2 health:starting · 1 error critico
+| 22 | SSH | sshd (host) | Acceso SSH Madre |
+| 2222 | Gitea SSH | gitea | docker-proxy |
+| 3000 | Grafana UI | grafana | **OCUPA puerto que necesita yggdrasil-mcp** |
+| 3003 | Gitea Web | gitea | Gitea HTTP |
+| 21 | FTP | — | ✅ No escucha en Madre |
 
 ---
 
-## yggdrasil-mcp — ERROR CRITICO documentado
+## Contenedores Docker — estado final 2026-07-16
+
+| Contenedor | Estado final | Isla |
+|---|---|---|
+| `thdora` | ✅ healthy | THDORA |
+| `thdora-bot` | ✅ healthy (verificado 16:21) | THDORA |
+| `local_tripwire` | 🟡 health: starting (8min) | Seguridad |
+| `radar_backup` | ✅ Up 2d | Seguridad |
+| `guardian_bot` | ✅ healthy | Seguridad |
+| `yggdrasil_watchdog` | ✅ healthy | Seguridad |
+| `network_radar` | ✅ healthy | Seguridad |
+| `log_guardian_bot` | ✅ healthy | Seguridad |
+| `tailscale_monitor` | ✅ healthy | Seguridad |
+| `grafana` | ✅ Up 2d | Infra |
+| `prometheus` | ✅ Up 2d | Infra |
+| `yggdrasil-mcp` | 🔴 Created/Error | MCP — [#70](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/70) |
+| `open-webui` | 🟡 unhealthy (falso positivo) | IA-Local |
+| `qdrant` | 🟡 unhealthy (falso positivo) | IA-Local — [#71](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/71) |
+| `ollama` | ✅ healthy | IA-Local |
+| `ollama-embeddings` | ✅ healthy | IA-Local |
+| `kali-pentest` | ✅ Up 2d | Labs |
+| `spiderfoot` | ✅ Up 2d | Labs |
+| `code-server` | ✅ Up 2d | Infra |
+| `n8n` | ✅ Up 2d | Infra |
+| `gitea` | ✅ Up 2d | Infra |
+| `uptime-kuma` | ✅ healthy | Infra |
+| `portainer` | ✅ Up 2d | Infra |
+
+**Total: 23** · 19 healthy/up · 2 unhealthy (falsos positivos) · 1 starting · 1 error
+
+---
+
+## yggdrasil-mcp — ERROR documentado
 
 | Campo | Valor |
 |---|---|
-| **Status** | `created` — nunca arrancado |
-| **ExitCode** | `128` |
 | **Error** | `Bind for 0.0.0.0:3000 failed: port is already allocated` |
-| **Causa** | El puerto 3000 ya esta ocupado por otro contenedor |
-| **Issue** | [#71](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/71) |
+| **Causa** | `grafana` ocupa el puerto 3000 |
+| **Fix** | Cambiar puerto yggdrasil-mcp a 3001 (u otro libre) en su compose |
+| **Issue** | [#70](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/70) |
 
-**Diagnostico — identificar quien usa el puerto 3000:**
 ```bash
-sudo ss -tlnp | grep :3000
-docker ps --format "table {{.Names}}\t{{.Ports}}" | grep 3000
+# Fix rapido — cambiar mapeo de puerto en compose de yggdrasil-mcp:
+# ports:
+#   - "3001:3000"   # era 3000:3000
 ```
 
-**Fix — opciones:**
-1. Cambiar el puerto de `yggdrasil-mcp` en su compose (ej: `3001:3000`)
-2. Liberar el puerto 3000 si el servicio que lo ocupa no es necesario
+---
+
+## Mapa de rutas compose verificado 2026-07-16
+
+| Stack | Ruta compose |
+|---|---|
+| thdora | `/home/varopc/Projects/thdora/docker-compose.yml` |
+| yggdrasil-secops | `/home/varopc/yggdrasil-secops/docker-compose.maestro.yml` |
+| secops blue-team | `/home/varopc/yggdrasil-secops/docker-compose.blue-team.yml` |
+| spiderfoot | `/home/varopc/spiderfoot/docker-compose.yml` |
+| batcueva-nueva | `/home/varopc/docker/batcueva-nueva/docker-compose.yml` |
+| raiz | `/home/varopc/docker-compose.yml` |
+
+> Pendiente: localizar compose de grafana/prometheus/gitea/n8n/ollama/open-webui/qdrant — issue [#43](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/43)
 
 ---
 
@@ -130,11 +152,12 @@ docker ps --format "table {{.Names}}\t{{.Ports}}" | grep 3000
 
 | Issue | Descripcion | Estado |
 |---|---|---|
-| [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) | HAL-005 HDD Madre ~28.000h | 🟡 SMART PASSED — monitorizar |
-| [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) | Puerto 21 FTP | 🟡 No en Madre — esta en router Digi |
+| [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) | HAL-005 HDD ~28.000h | 🟡 SMART PASSED — monitorizar |
+| [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) | Puerto 21 FTP | 🟡 En router Digi, no en Madre |
 | [#43](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/43) | Mapear stacks restantes | 🔵 Pendiente |
-| [#71](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/71) | yggdrasil-mcp puerto 3000 conflicto | 🔴 Bloqueante |
+| [#70](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/70) | HAL-006 yggdrasil-mcp puerto 3000 | 🔴 Pendiente fix |
+| [#71](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/71) | qdrant telemetria bloqueada | 🟡 Fix pendiente |
 
 ---
 
-_Actualizado: 2026-07-16 16:15 CEST · Auditoria SSH + analisis logs · Perplexity MCP_
+_Actualizado: 2026-07-16 16:21 CEST · Auditoria SSH completa · Perplexity MCP_
