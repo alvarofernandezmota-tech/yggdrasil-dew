@@ -3,7 +3,7 @@ title: Mapa de Islas y Dependencias
 tipo: mapa
 author: Alvaro Fernandez Mota
 creado: 2026-07-12
-actualizado: 2026-07-13
+actualizado: 2026-07-16
 ruta: docs/islas/MAPA-ISLAS-DEPENDENCIAS.md
 tags: [islas, dependencias, orquestacion, mapa]
 status: vigente
@@ -20,7 +20,7 @@ status: vigente
 
 | Isla | Repo principal | Estado | Issues abiertos | Última auditoría |
 |---|---|---|---|---|
-| 🧠 **Cerebro** | [yggdrasil-dew](https://github.com/alvarofernandezmota-tech/yggdrasil-dew) | ⚪ Pendiente | 23 | — |
+| 🧠 **Cerebro** | [yggdrasil-dew](https://github.com/alvarofernandezmota-tech/yggdrasil-dew) | ⚪ Pendiente | 33 | — |
 | 📖 **Wiki** | [yggdrasil-wiki](https://github.com/alvarofernandezmota-tech/yggdrasil-wiki) | ⚪ Pendiente | — | — |
 | 📓 **Tracking** | [yggdrasil-tracking](https://github.com/alvarofernandezmota-tech/yggdrasil-tracking) | 🟡 Activa — recién migrada | 0 | 2026-07-13 |
 | ⚙️ **Scripts** | [yggdrasil-scripts](https://github.com/alvarofernandezmota-tech/yggdrasil-scripts) | 🟡 Activa — recién creada | 0 | 2026-07-13 |
@@ -31,7 +31,7 @@ status: vigente
 | 🔬 **Labs** | [dev-labs](https://github.com/alvarofernandezmota-tech/dev-labs) | ⚪ Pendiente | 0 | — |
 | 🕵️ **OSINT** | [osint-stack](https://github.com/alvarofernandezmota-tech/osint-stack) | ⚪ Pendiente | 0 | — |
 | 💻 **Acer** | [acer-config](https://github.com/alvarofernandezmota-tech/acer-config) | ⚪ Pendiente | — | — |
-| 📚 **Formación** | [yggdrasil-formacion-](https://github.com/alvarofernandezmota-tech/yggdrasil-formacion-) | ⚪ Pendiente post-migración | — | 2026-07-13 |
+| 📚 **Formación** | [yggdrasil-formacion](https://github.com/alvarofernandezmota-tech/yggdrasil-formacion) | ⚪ Pendiente post-migración | — | 2026-07-13 |
 
 ---
 
@@ -75,4 +75,4 @@ status: vigente
 
 ---
 
-_Actualizado: 2026-07-13 · Sesión migración tracking + creación scripts · Perplexity MCP_
+_Actualizado: 2026-07-16 · fix #65 · nombre yggdrasil-formacion sin guión · Perplexity MCP_
