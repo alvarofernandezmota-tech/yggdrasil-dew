@@ -3,16 +3,16 @@ title: Estado Isla IA Local
 tipo: estado-isla
 author: Alvaro Fernandez Mota
 creado: 2026-07-12
-actualizado: 2026-07-12
+actualizado: 2026-07-16 16:06 CEST
 ruta: docs/islas/ESTADO-ISLA-IA-LOCAL.md
-tags: [isla, ia-local, estado, ollama]
-status: pendiente-auditoria
+tags: [isla, ia-local, ollama, qdrant, open-webui, estado]
+status: auditada
 ---
 
-# 🧬 Estado Isla IA Local
+# 🧠 Estado Isla IA Local
 
-> Pendiente de auditoría. Sin issues abiertos conocidos.
-> Fuente de verdad: issues en [ollama-stack](https://github.com/alvarofernandezmota-tech/ollama-stack)
+> Auditada en sesión 2026-07-16 vía SSH directo a Madre.
+> Stack IA local: Ollama + Open-WebUI + Qdrant + ollama-embeddings.
 
 ---
 
@@ -20,30 +20,53 @@ status: pendiente-auditoria
 
 | Campo | Valor |
 |---|---|
-| **Estado** | ⚪ Pendiente de auditoría |
+| **Estado** | 🟡 Parcialmente operativa |
 | **Repo principal** | [ollama-stack](https://github.com/alvarofernandezmota-tech/ollama-stack) |
-| **Repos secundarios** | [local-brain](https://github.com/alvarofernandezmota-tech/local-brain) |
-| **Issues abiertos** | 0 |
-| **Última auditoría** | — |
+| **Ruta física en Madre** | `/home/varopc/Projects/ollama-stack` (verificar) |
+| **Última auditoría** | 2026-07-16 16:06 CEST |
 
 ---
 
-## Servicios conocidos
+## Servicios — estado real verificado 2026-07-16
 
-| Servicio | Estado | Notas |
+| Servicio | Estado real | Imagen | Notas |
+|---|---|---|---|
+| `ollama` | ✅ Up 2d healthy | ollama/ollama:latest | Operativo |
+| `ollama-embeddings` | ✅ Up 2d healthy | ollama/ollama:latest | Operativo |
+| `open-webui` | 🔴 Up 2d unhealthy | open-webui:main | ⚠️ Requiere diagnóstico |
+| `qdrant` | 🔴 Up 2d unhealthy | qdrant/qdrant:latest | ⚠️ Requiere diagnóstico |
+
+---
+
+## Issues activos
+
+| Descripción | Prioridad | Acción |
 |---|---|---|
-| `ollama` | ⚪ Sin auditar | — |
-| `open-webui` | ⚪ Sin auditar | — |
+| `open-webui` unhealthy 2d+ | 🟡 Media | `docker logs open-webui` — diagnosticar |
+| `qdrant` unhealthy 2d+ | 🟡 Media | `docker logs qdrant` — diagnosticar |
+
+> Ambos llevan 2 días unhealthy. Pueden seguir funcionando (healthcheck mal configurado) o tener un problema real. Verificar logs.
 
 ---
 
-## Checklist de auditoría (rellenar en sesión)
+## Comandos de diagnóstico
 
-- [ ] Verificar modelos cargados en Ollama
-- [ ] Verificar Open WebUI accesible solo via Tailscale
-- [ ] Auditar local-brain (RAG, pgvector, embeddings)
-- [ ] Documentar rutas físicas en Madre
+```bash
+docker logs --tail 50 open-webui
+docker logs --tail 50 qdrant
+docker inspect open-webui | grep -A5 Health
+docker inspect qdrant | grep -A5 Health
+```
 
 ---
 
-_Creado: 2026-07-12 · Pendiente de sesión de auditoría · Perplexity MCP_
+## Dependencias con otras islas
+
+| Dependencia | Isla destino | Tipo |
+|---|---|---|
+| RAG futuro sobre canon Yggdrasil | DEW | Largo plazo |
+| THDORA consumirá Ollama como LLM local | THDORA | Futuro |
+
+---
+
+_Actualizado: 2026-07-16 16:06 CEST · Auditoría SSH directa · Perplexity MCP_

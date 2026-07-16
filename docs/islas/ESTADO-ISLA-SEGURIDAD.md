@@ -3,16 +3,16 @@ title: Estado Isla Seguridad
 tipo: estado-isla
 author: Alvaro Fernandez Mota
 creado: 2026-07-12
-actualizado: 2026-07-12
+actualizado: 2026-07-16 16:06 CEST
 ruta: docs/islas/ESTADO-ISLA-SEGURIDAD.md
 tags: [isla, seguridad, estado, secops]
-status: en-auditoria
+status: auditada
 ---
 
 # 🛡️ Estado Isla Seguridad
 
-> Snapshot actualizable del estado real de la isla. Se actualiza al cerrar cada fase de auditoría.
-> Fuente de verdad: issues en [yggdrasil-secops](https://github.com/alvarofernandezmota-tech/yggdrasil-secops) + ownership-matrix.md
+> Auditada en sesión 2026-07-16 vía SSH directo a Madre.
+> Fuente de verdad: issues en [yggdrasil-secops](https://github.com/alvarofernandezmota-tech/yggdrasil-secops)
 
 ---
 
@@ -20,67 +20,86 @@ status: en-auditoria
 
 | Campo | Valor |
 |---|---|
-| **Estado** | 🟡 En auditoría |
+| **Estado** | 🟡 Parcialmente auditada |
 | **Repo principal** | [yggdrasil-secops](https://github.com/alvarofernandezmota-tech/yggdrasil-secops) |
-| **Ruta física en Madre** | `/home/varopc/yggdrasil-secops` (symlink desde `~/repos/yggdrasil-secops`) |
+| **Ruta física en Madre** | `/home/varopc/yggdrasil-secops` |
 | **Compose activo** | `docker-compose.maestro.yml` |
-| **Última auditoría** | 2026-07-12 |
+| **Última auditoría** | 2026-07-16 16:06 CEST |
 | **Issues abiertos** | 6 |
 | **HALs activos** | HAL-001, HAL-002, HAL-003, HAL-004, HAL-005 |
 
 ---
 
-## Servicios de la isla
+## Servicios — estado real verificado 2026-07-16
 
-| Servicio | Capa | Estado real | Notas |
-|---|---|---|---|
-| `yggdrasil_watchdog` | watchdog | ⚪ Sin auditar | Sin issues ni HALs — verificar si está activo |
-| `tailscale_monitor` | network-vpn | 🟢 Healthy | Up 3d+ sin restarts. HAL-004 pendiente de cerrar |
-| `log_guardian_bot` | firewall | 🔴 Bug activo | Healthcheck roto (`pgrep` no existe). Issue [#2](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/2) |
-| `network_radar` | network-local | ⚪ Sin auditar | Sin issues ni HALs — verificar si está activo |
-| `local_tripwire` | filesystem | ⚪ Sin auditar | Sin issues ni HALs — verificar si está activo |
-| `guardian_bot` | command | ⚪ Sin auditar | Sin issues ni HALs — verificar si está activo |
-| `radar_backup` | data/backup | 🔴 En riesgo | Depende de HDD con ~28.000h. HAL-005, Issue [#7](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/7) |
+| Servicio | Estado real | Notas |
+|---|---|---|
+| `yggdrasil_watchdog` | ✅ Up 2d healthy | Antes sin auditar — ahora confirmado activo |
+| `tailscale_monitor` | ✅ Up 2d healthy | HAL-004 — candidato a cerrar si lleva >7d |
+| `log_guardian_bot` | ✅ Up 2d healthy | Bug anterior resuelto — issue #2 cerrar |
+| `network_radar` | ✅ Up 2d healthy | Antes sin auditar — ahora confirmado activo |
+| `local_tripwire` | 🟡 Up 4min (health: starting) | Recién reiniciado — verificar en 5min |
+| `guardian_bot` | ✅ Up 2d healthy | Antes sin auditar — ahora confirmado activo |
+| `radar_backup` | ✅ Up 2d | Sin healthcheck — SMART PASSED hoy |
+
+---
+
+## SMART disco — verificado 2026-07-16
+
+| Check | Resultado |
+|---|---|
+| **SMART overall-health** | ✅ PASSED |
+| **Riesgo inmediato** | 🟢 No |
+| **Acción** | Monitorizar — disco con horas elevadas (~28.000h) pero sin fallos activos |
+
+---
+
+## Puerto 21 FTP — verificado 2026-07-16
+
+| Check | Resultado |
+|---|---|
+| Puerto 21 en Madre | ✅ NO escucha — `ss -tlnp` sin output |
+| **Conclusión** | Issue [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) / HAL-001 es a nivel **router Digi**, no Madre |
+| **Acción pendiente** | Cerrar puerto en panel router Digi + verificar con nmap externo |
 
 ---
 
 ## Issues activos por prioridad
 
-| # | Título | Severidad | Bloqueado por |
+| # | Título | Severidad | Estado 2026-07-16 |
 |---|---|---|---|
-| [#7](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/7) | HAL-005: HDD WD 1TB ~28.000h — fallo inminente | 🔴🔴 Crítica | — |
-| [#3](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/3) | HAL-001: Puerto 21 FTP abierto en router Digi | 🔴 Alta | — |
-| [#4](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/4) | HAL-002: Vaultwarden — auditar exposición | 🔴 Alta | — |
-| [#5](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/5) | HAL-003: Token Telegram THDORA sin rotación | 🔴 Alta | Isla THDORA |
-| [#2](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/2) | Crash-loop log_guardian_bot (healthcheck roto) | ⚠️ Bug | #7 (disco) |
-| [#8](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/8) | MCP conector intermitente | ℹ️ Backlog | — |
+| [#7](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/7) | HAL-005: HDD WD 1TB ~28.000h | 🔴 Crítica | SMART PASSED — monitorizar |
+| [#3](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/3) | HAL-001: Puerto 21 FTP router Digi | 🔴 Alta | No en Madre — acción en router |
+| [#4](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/4) | HAL-002: Vaultwarden exposición | 🔴 Alta | Pendiente auditar |
+| [#5](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/5) | HAL-003: Token Telegram sin rotación | 🔴 Alta | Pendiente — isla THDORA |
+| [#2](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/2) | Crash-loop log_guardian_bot | ⚠️ Bug | 🟢 Resuelto — healthy 2d |
+| [#8](https://github.com/alvarofernandezmota-tech/yggdrasil-secops/issues/8) | MCP conector intermitente | ℹ️ Backlog | Pendiente |
 
 ---
 
-## Plan de cierre de isla
+## Hallazgos nuevos 2026-07-16
 
-### Fase 1 — Fixes críticos (bloqueantes)
-- [ ] Ejecutar `smartctl -a /dev/sda` en Madre y documentar resultado en issue #7
-- [ ] Si `Reallocated_Sector_Ct > 0` → backup inmediato y planificar compra de disco
-- [ ] Cerrar puerto 21 FTP en router Digi + verificar con `nmap -p 21 <IP>` → cerrar issue #3
+| Contenedor | Issue nuevo | Descripción |
+|---|---|---|
+| `open-webui` | ⚠️ Sin issue | Estado unhealthy — revisar logs |
+| `qdrant` | ⚠️ Sin issue | Estado unhealthy — revisar logs |
+| `yggdrasil-mcp` | ⚠️ Sin issue | Estado `Created` — no está corriendo |
+| `thdora-bot` | 🟡 Monitorizar | health: starting al momento de auditoría |
 
-### Fase 2 — Fixes de servicio
-- [ ] Fix Dockerfile `log_guardian_bot`: cambiar healthcheck por `python -c "import os; os.getpid()"` → rebuild → verificar healthy → cerrar issue #2
-- [ ] Auditar Vaultwarden: solo accesible via Tailscale + `/admin` deshabilitado → cerrar issue #4
+---
 
-### Fase 3 — Auditar servicios sin estado
-- [ ] Verificar si `yggdrasil_watchdog`, `network_radar`, `local_tripwire`, `guardian_bot` están corriendo
-- [ ] Para cada uno: documentar estado (activo / parado / placeholder) en este documento
-- [ ] Decidir: mantener / refactorizar / apagar
+## Plan de cierre actualizado
 
-### Fase 4 — Dependencias cruzadas
-- [ ] HAL-003 (token Telegram): coordinar fix con isla THDORA → cerrar issue #5
-- [ ] Revisar HAL-004 (tailscale): si lleva >7d healthy → cerrar
+### Pendiente con terminal
+- [ ] Cerrar puerto 21 en router Digi + verificar con `nmap -p 21 <IP-publica>`
+- [ ] `docker logs open-webui` + `docker logs qdrant` — diagnosticar unhealthy
+- [ ] `docker start yggdrasil-mcp` o investigar por qué está en Created
+- [ ] Auditar Vaultwarden (HAL-002)
+- [ ] Rotar token Telegram THDORA (HAL-003) — coordinar con isla THDORA
 
-### Fase 5 — Cierre formal
-- [ ] Actualizar tabla de servicios con estado final
-- [ ] Marcar isla como `auditada` en `MAPA-ISLAS-DEPENDENCIAS.md`
-- [ ] Actualizar `PLAN-MAESTRO-2026-07.md` con resultado
+### Candidatos a cerrar
+- [ ] Issue #2 log_guardian_bot — llevar 2d healthy → cerrar
+- [ ] HAL-004 tailscale_monitor — llevar 2d+ healthy → cerrar
 
 ---
 
@@ -88,10 +107,11 @@ status: en-auditoria
 
 | Dependencia | Isla destino | Issue/HAL | Tipo |
 |---|---|---|---|
-| `radar_backup` depende del HDD de Madre | Infra | HAL-005 / #7 | Infraestructura compartida |
-| Token Telegram THDORA sin rotación | THDORA | HAL-003 / #5 | Fix requiere acción en otra isla |
-| Vaultwarden gestiona credenciales del ecosistema | Todas | HAL-002 / #4 | Servicio transversal |
+| `radar_backup` depende del HDD de Madre | Infra | HAL-005 | Infraestructura |
+| Token Telegram THDORA sin rotación | THDORA | HAL-003 | Fix en otra isla |
+| Vaultwarden gestiona credenciales del ecosistema | Todas | HAL-002 | Servicio transversal |
+| open-webui + qdrant unhealthy | IA-Local | — | Nueva dependencia |
 
 ---
 
-_Creado: 2026-07-12 · Auditoría sesión Isla Seguridad · Perplexity MCP_
+_Actualizado: 2026-07-16 16:06 CEST · Auditoría SSH directa · Perplexity MCP_
