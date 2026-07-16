@@ -2,49 +2,59 @@
 tipo: indice
 author: Alvaro Fernandez Mota
 creado: 2026-07-13
-actualizado: 2026-07-16
+actualizado: 2026-07-16 15:22 CEST
 ruta: protocolo/INDEX.md
 tags: [protocolo, indice, canon]
 status: vigente
+version: 3.0
 ---
 
 # Indice de Protocolos - Ecosistema Yggdrasil
 
 > Inventario completo de todos los protocolos vigentes.
-> Actualizar cada vez que se crea, versiona o depreca un protocolo
-> (TIPO E del PROTOCOLO-ACTUALIZACION-ECOSISTEMA).
+> Actualizar cada vez que se crea, versiona o depreca un protocolo.
+> (TIPO E del PROTOCOLO-ACTUALIZACION-ECOSISTEMA)
 
 ---
 
 ## Arquitectura del sistema de protocolos
 
 ```
-NIVEL 0 - TU
-  pregunta / instruccion
+NIVEL 0 - ALVARO
+  pregunta / instruccion / tarea
         |
-NIVEL 1 - PROTOCOLOS GLOBALES (orquestan todo)
-  APERTURA -> CONTEXTO-ECOSISTEMA -> [trabajo] -> SINCRONIZACION -> CIERRE
+NIVEL 1 - GLOBALES (orquestan todo el ecosistema)
+  APERTURA-SESION
+    -> CONTEXTO-ECOSISTEMA (si sesion global)
+    -> CONTEXTO-<REPO>     (si sesion en repo concreto)
+  [trabajo con atomos: ADR / ISLA / APUNTE / TRACKING / PROTOCOLO / DIARIO]
+    -> ACTUALIZACION-ECOSISTEMA (si cambia algo estructural)
+  CIERRE-SESION
+    -> SINCRONIZACION-ECOSISTEMA (global)
+    -> SINCRONIZACION-<REPO>     (repos tocados)
         |
-        | si hay cambio estructural:
-        v
-  ACTUALIZACION-ECOSISTEMA
+  AUDITORIA-ECOSISTEMA  (mensual / revision profunda)
         |
-        | si hay revision profunda:
-        v
-  AUDITORIA-ECOSISTEMA
+NIVEL 2 - POR REPO (zoom a un repo concreto)
+  APERTURA-<REPO>         carga el repo al inicio
+  SINCRONIZACION-<REPO>   verifica consistencia interna al cerrar
+  AUDITORIA-<REPO>        revision profunda mensual
         |
-NIVEL 2 - PROTOCOLOS POR REPO (zoom a un repo concreto)
-  CONTEXTO-DEW/WIKI/TRACKING/FORMACION         (carga el repo)
-  SINCRONIZACION-DEW/WIKI/TRACKING/FORMACION   (verifica consistencia interna)
-  AUDITORIA-DEW/WIKI/TRACKING/FORMACION        (revision profunda)
+NIVEL 3 - ATOMOS (protocolo para cada tipo de contenido nuevo)
+  NUEVO-ADR               cada decision arquitectural
+  NUEVA-ISLA              cada nuevo dominio en el ecosistema
+  NUEVO-APUNTE            cada apunte en FORMACION
+  ENTRADA-TRACKING        cada diario personal
+  NUEVO-DIARIO-DEW        cada diario tecnico de sesion
+  NUEVO-PROTOCOLO         cada protocolo nuevo (este ciclo)
         |
-NIVEL 3 - PLANTILLAS (docs/canon/PLANTILLA-*.md)
+NIVEL 4 - PLANTILLAS (docs/canon/PLANTILLA-*.md)
   Garantizan frontmatter correcto en todo archivo nuevo
 ```
 
 ---
 
-## Protocolos de sesion (globales)
+## NIVEL 1 - Protocolos de sesion (globales)
 
 | Protocolo | Version | Cuando ejecutar | Estado |
 |---|---|---|---|
@@ -54,19 +64,30 @@ NIVEL 3 - PLANTILLAS (docs/canon/PLANTILLA-*.md)
 
 ---
 
-## Protocolos de cambio (globales)
+## NIVEL 1 - Protocolos de cambio (globales)
 
 | Protocolo | Version | Cuando ejecutar | Estado |
 |---|---|---|---|
 | [PROTOCOLO-ACTUALIZACION-ECOSISTEMA](./PROTOCOLO-ACTUALIZACION-ECOSISTEMA.md) | v1.0 | Cada cambio estructural | Vigente |
 | [PROTOCOLO-SINCRONIZACION-ECOSISTEMA](./PROTOCOLO-SINCRONIZACION-ECOSISTEMA.md) | v1.0 | Cierre sesion / mensual | Vigente |
-| [PROTOCOLO-AUDITORIA-ECOSISTEMA](./PROTOCOLO-AUDITORIA-ECOSISTEMA.md) | v1.0 | Mensual / revision profunda | Vigente |
-| [PROTOCOLO-NOMBRES](./PROTOCOLO-NOMBRES.md) | v2.0 | Al renombrar | Vigente |
-| [PROTOCOLO-BORRADO](./PROTOCOLO-BORRADO.md) | v1.0 | Al borrar archivos | Vigente |
+| [PROTOCOLO-AUDITORIA-ECOSISTEMA](./PROTOCOLO-AUDITORIA-ECOSISTEMA.md) | v1.0 | Mensual | Pendiente verificar |
+| [PROTOCOLO-NOMBRES](./PROTOCOLO-NOMBRES.md) | v2.0 | Al renombrar | Pendiente verificar |
+| [PROTOCOLO-BORRADO](./PROTOCOLO-BORRADO.md) | v1.0 | Al borrar archivos | Pendiente verificar |
 
 ---
 
-## Protocolos de contexto (por repo)
+## NIVEL 2 - Apertura por repo
+
+| Protocolo | Version | Repo | Estado |
+|---|---|---|---|
+| [PROTOCOLO-APERTURA-DEW](./PROTOCOLO-APERTURA-DEW.md) | v1.0 | yggdrasil-dew | Vigente |
+| [PROTOCOLO-APERTURA-WIKI](./PROTOCOLO-APERTURA-WIKI.md) | v1.0 | yggdrasil-wiki | Vigente |
+| [PROTOCOLO-APERTURA-TRACKING](./PROTOCOLO-APERTURA-TRACKING.md) | v1.0 | yggdrasil-tracking | Vigente |
+| [PROTOCOLO-APERTURA-FORMACION](./PROTOCOLO-APERTURA-FORMACION.md) | v1.0 | yggdrasil-formacion | Vigente |
+
+---
+
+## NIVEL 2 - Contexto por repo
 
 | Protocolo | Version | Repo | Estado |
 |---|---|---|---|
@@ -77,38 +98,51 @@ NIVEL 3 - PLANTILLAS (docs/canon/PLANTILLA-*.md)
 
 ---
 
-## Protocolos de sincronizacion (por repo)
+## NIVEL 2 - Sincronizacion por repo
 
-| Protocolo | Version | Repo | Cuando | Estado |
-|---|---|---|---|---|
-| [PROTOCOLO-SINCRONIZACION-DEW](./PROTOCOLO-SINCRONIZACION-DEW.md) | v1.0 | yggdrasil-dew | Cierre sesion DEW | Vigente |
-| [PROTOCOLO-SINCRONIZACION-WIKI](./PROTOCOLO-SINCRONIZACION-WIKI.md) | v1.0 | yggdrasil-wiki | Cierre sesion WIKI | Vigente |
-| [PROTOCOLO-SINCRONIZACION-TRACKING](./PROTOCOLO-SINCRONIZACION-TRACKING.md) | v1.0 | yggdrasil-tracking | Cierre sesion TRACKING | Vigente |
-| [PROTOCOLO-SINCRONIZACION-FORMACION](./PROTOCOLO-SINCRONIZACION-FORMACION.md) | v1.0 | yggdrasil-formacion | Cierre sesion FORMACION | Vigente |
-
----
-
-## Protocolos de auditoria (por repo)
-
-| Protocolo | Version | Repo | Frecuencia | Estado |
-|---|---|---|---|---|
-| [PROTOCOLO-AUDITORIA-DEW](./PROTOCOLO-AUDITORIA-DEW.md) | v1.0 | yggdrasil-dew | Mensual | Vigente |
-| [PROTOCOLO-AUDITORIA-WIKI](./PROTOCOLO-AUDITORIA-WIKI.md) | v1.0 | yggdrasil-wiki | Mensual | Vigente |
-| [PROTOCOLO-AUDITORIA-TRACKING](./PROTOCOLO-AUDITORIA-TRACKING.md) | v1.0 | yggdrasil-tracking | Mensual | Vigente |
-| [PROTOCOLO-AUDITORIA-FORMACION](./PROTOCOLO-AUDITORIA-FORMACION.md) | v1.0 | yggdrasil-formacion | Mensual | Vigente |
+| Protocolo | Version | Cuando | Estado |
+|---|---|---|---|
+| [PROTOCOLO-SINCRONIZACION-DEW](./PROTOCOLO-SINCRONIZACION-DEW.md) | v1.0 | Cierre sesion DEW | Vigente |
+| [PROTOCOLO-SINCRONIZACION-WIKI](./PROTOCOLO-SINCRONIZACION-WIKI.md) | v1.0 | Cierre sesion WIKI | Vigente |
+| [PROTOCOLO-SINCRONIZACION-TRACKING](./PROTOCOLO-SINCRONIZACION-TRACKING.md) | v1.0 | Cierre sesion TRACKING | Vigente |
+| [PROTOCOLO-SINCRONIZACION-FORMACION](./PROTOCOLO-SINCRONIZACION-FORMACION.md) | v1.0 | Cierre sesion FORMACION | Vigente |
 
 ---
 
-## Pendiente F15
+## NIVEL 2 - Auditoria por repo
 
-| Protocolo | Prioridad | Notas |
+| Protocolo | Version | Frecuencia | Estado |
+|---|---|---|---|
+| [PROTOCOLO-AUDITORIA-DEW](./PROTOCOLO-AUDITORIA-DEW.md) | v1.0 | Mensual | Vigente |
+| [PROTOCOLO-AUDITORIA-WIKI](./PROTOCOLO-AUDITORIA-WIKI.md) | v1.0 | Mensual | Vigente |
+| [PROTOCOLO-AUDITORIA-TRACKING](./PROTOCOLO-AUDITORIA-TRACKING.md) | v1.0 | Mensual | Vigente |
+| [PROTOCOLO-AUDITORIA-FORMACION](./PROTOCOLO-AUDITORIA-FORMACION.md) | v1.0 | Mensual | Vigente |
+
+---
+
+## NIVEL 3 - Atomos
+
+| Protocolo | Version | Para que | Estado |
+|---|---|---|---|
+| [PROTOCOLO-NUEVO-ADR](./PROTOCOLO-NUEVO-ADR.md) | v1.0 | Crear ADR nuevo | Vigente |
+| [PROTOCOLO-NUEVA-ISLA](./PROTOCOLO-NUEVA-ISLA.md) | v1.0 | Entrar nuevo dominio al ecosistema | Vigente |
+| [PROTOCOLO-NUEVO-APUNTE](./PROTOCOLO-NUEVO-APUNTE.md) | v1.0 | Crear apunte en FORMACION | Vigente |
+| [PROTOCOLO-ENTRADA-TRACKING](./PROTOCOLO-ENTRADA-TRACKING.md) | v1.0 | Crear diario personal | Vigente |
+| [PROTOCOLO-NUEVO-DIARIO-DEW](./PROTOCOLO-NUEVO-DIARIO-DEW.md) | v1.0 | Crear/completar diario tecnico | Vigente |
+| [PROTOCOLO-NUEVO-PROTOCOLO](./PROTOCOLO-NUEVO-PROTOCOLO.md) | v1.0 | Crear protocolo nuevo | Vigente |
+
+---
+
+## Pendiente F15 (verificar existencia)
+
+| Protocolo | Prioridad | Estado |
 |---|---|---|
-| PROTOCOLO-AUDITORIA-ECOSISTEMA | Alta | Verificar si existe / recrear |
+| PROTOCOLO-AUDITORIA-ECOSISTEMA | Alta | Verificar si existe |
 | PROTOCOLO-NOMBRES v2.0 | Alta | Verificar si existe en protocolo/ |
 | PROTOCOLO-BORRADO v1.0 | Alta | Verificar si existe en protocolo/ |
-| PROTOCOLO-DOCUMENTACION-ECOSISTEMA | Media | Entrada formal de elementos nuevos |
-| PROTOCOLO-SECRETOS | Media | Pendiente desde issue #68 |
+| PROTOCOLO-SECRETOS | Media | Pendiente issue #68 |
+| PROTOCOLO-DOCUMENTACION-ECOSISTEMA | Media | Pendiente |
 
 ---
 
-_Actualizado: 2026-07-16 v2.0 F15 - sistema completo de protocolos por nivel Perplexity MCP_
+_Actualizado: 2026-07-16 15:22 CEST v3.0 - 4 niveles completos - atomos incluidos - F15 Perplexity MCP_
