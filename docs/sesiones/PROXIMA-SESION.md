@@ -1,99 +1,88 @@
 ---
-fecha-actualizacion: 2026-07-16
-sesion-origen: 2026-07-16-cierre-sesion
+tipo: sesion
+author: Alvaro Fernandez Mota
+actualizado: 2026-07-16 18:53 CEST
+ruta: docs/sesiones/PROXIMA-SESION.md
+tags: [sesion, proxima, pendientes]
 ---
 
-# PRÓXIMA SESIÓN — briefing de arranque
+# ⏭️ PRÓXIMA SESIÓN
 
-> Este archivo es el **primer archivo a leer** al inicio de cada sesión.
-> Se actualiza en cada cierre. No contiene historial — solo el estado actual y los próximos pasos.
+> Leer esto al inicio de cada sesión ANTES de actuar.  
+> Después seguir `docs/canon/PROTOCOLO-INICIO-SESION.md`.
 
----
-
-## 📍 Contexto al momento de este cierre
-
-**Fecha:** 2026-07-16 ~18:45 CEST  
-**Última sesión:** tarde del 2026-07-16  
-**Foco de la sesión:** diagnóstico estructural — plantillas, orquestador, backlog
-
----
-
-## 🎯 BLOQUE 0 — Ejecutar PRIMERO (aprobado, listo para MCP)
-
-> La purga de wiki fue **aprobada explícitamente** el 2026-07-16. Ejecutar sin confirmar de nuevo.
-
-### Borrar (3 archivos deprecados)
-- [ ] `wiki/islas/VIDAPERSONAL.md` — deprecado, solo tiene redirect
-- [ ] `wiki/islas/cerebro.md` — archivado, absorbido por `ia-local.md`
-- [ ] `wiki/islas/labs.md` — archivado, absorbido por `dev-labs.md`
-
-### Actualizar (3 mapas desalineados)
-- [ ] `wiki/00-mapa.md` — corregir nombres de repos (yggdrasil-wiki→WIKI---PERSONAL, etc.) + fecha
-- [ ] `wiki/mapa-islas.md` — eliminar fila `agentes.md` (no existe), añadir islas reales, corregir repo thdora
-- [ ] `wiki/islas/INDEX.md` — eliminar filas de los 3 borrados, actualizar conteo 26→23
+**Última actualización:** 2026-07-16 18:53 CEST  
+**Estado del ecosistema:** ✅ ESTABLE — alineación completa ejecutada
 
 ---
 
-## 🎯 BLOQUE 1 — Plantillas canónicas (decisión tomada el 2026-07-16)
+## 🎯 Primera acción al arrancar
 
-> `AGENT.md` y `CONTEXT.md` son **plantillas instanciables**. Cada repo deriva su versión de estas.
+> Borrar los 3 archivos deprecados de `WIKI---PERSONAL` que quedaron pendientes por error de SHA:
+> - `wiki/islas/VIDAPERSONAL.md`
+> - `wiki/islas/cerebro.md`
+> - `wiki/islas/labs.md`
 
-- [ ] Crear `wiki/plantillas/AGENT-template.md` — variables: `{{REPO_NAME}}`, `{{REPO_PURPOSE}}`, `{{PROTOCOLO_INICIO}}`, `{{PROTOCOLO_CIERRE}}`
-- [ ] Crear `wiki/plantillas/CONTEXT-template.md` — variables: `{{ECOSISTEMA}}`, `{{ISLA_PRINCIPAL}}`, `{{REPOS_RELACIONADOS}}`
-- [ ] Crear `wiki/plantillas/README.md` — explica el sistema de plantillas
-- [ ] Verificar que `yggdrasil-dew/AGENT.md` y `yggdrasil-wiki/AGENT.md` existen y están alineados con la plantilla
-
----
-
-## 🎯 BLOQUE 2 — Isla Orquestador (nueva — decisión tomada el 2026-07-16)
-
-> El orquestador define el **protocolo de inicio y cierre de sesión** para cualquier agente en el ecosistema.
-
-- [ ] Crear `wiki/islas/orquestador.md` con:
-  - Protocolo de inicio de sesión (pasos 1-N que todo agente debe ejecutar)
-  - Protocolo de cierre de sesión (pasos 1-N)
-  - Mapa de archivos clave por repo
-  - Referencias a plantillas del Bloque 1
+**Hacerlo con:** `mcp_tool_github_mcp_direct_delete_file` con SHA fresco de cada archivo.
 
 ---
 
-## 🎯 BLOQUE 3 — Issues críticos de infra (requieren SSH Madre)
+## 📚 Bloque 1 — URGENTE (primera sesión)
 
-> Ejecutar en orden — hay dependencias.
+### 1.1 Borrar deprecados WIKI (requiere SHA fresco)
+- [ ] Borrar `wiki/islas/VIDAPERSONAL.md` — deprecado 2026-07-13
+- [ ] Borrar `wiki/islas/cerebro.md` — archivado 2026-07-13
+- [ ] Borrar `wiki/islas/labs.md` — archivado 2026-07-13
 
-1. **#45 PRIMERO** — Rotar secretos: Telegram BotFather + n8n + LiteLLM + code-server
-2. **#70** — Identificar qué ocupa puerto 3000: `sudo ss -tlnp | grep :3000` → cambiar puerto yggdrasil-mcp
-3. **#71** — Fix Qdrant: añadir `QDRANT__TELEMETRY_DISABLED=true` en compose → recrear contenedor
-4. **#46** — Tras cerrar #45: restart log_guardian_bot + local_tripwire
+### 1.2 Instanciar AGENT.md y CONTEXT.md en repos pendientes
+- [ ] `yggdrasil-tracking` — AGENT.md + CONTEXT.md en raíz
+- [ ] `THDORA-PERSONAL` — AGENT.md + CONTEXT.md en raíz
 
----
-
-## 🎯 BLOQUE 4 — Ejecutables MCP puros (sin SSH, cuando haya energía)
-
-- [ ] ADR-012: `local-brain` como orquestador RAG — issue #67
-- [ ] GitHub Action detector nombres inconsistentes — issue #66
-- [ ] `filosofia.md` Bloques 1 y 3 (el 2 requiere input tuyo) — issue #57
-
----
-
-## ⚠️ Lo que NO hacer al arrancar
-
-- ❌ No empezar con auditorías de baja prioridad (#51-#56) sin cerrar los bloques 0-2
-- ❌ No tocar #46 sin haber cerrado #45 antes
-- ❌ No crear más archivos sueltos sin plantilla de origen
+### 1.3 Actualizar wiki/islas/INDEX.md
+- [ ] Eliminar filas de los 3 archivos borrados
+- [ ] Actualizar conteo total de islas
+- [ ] Verificar que todos los estados son correctos
 
 ---
 
-## 📊 Backlog actual
+## 📚 Bloque 2 — Siguiente fase
 
-| Estado | Cantidad |
+### 2.1 Isla orquestador (issue #58)
+- [ ] Crear `wiki/islas/orquestador.md` usando `PLANTILLA-ISLA-WIKI.md`
+- [ ] Añadir a `INDEX.md` y `mapa-islas.md`
+
+### 2.2 Verificar `wiki/islas/INDEX.md` completamente
+- [ ] Conteo real de archivos vs conteo declarado
+- [ ] Todos los estados actualizados
+
+---
+
+## ❌ Lo que NO hacer al arrancar
+
+- No empezar nada nuevo sin completar el Bloque 1 primero
+- No crear islas sin seguir la norma de entrada
+- No actualizar INDEX.md sin actualizar mapa-islas.md en el mismo commit
+
+---
+
+## 📋 Lo que quedó hecho en la sesión 2026-07-16
+
+| Ítem | Estado |
 |---|---|
-| Issues abiertos DEW | 25 |
-| Críticos bloqueantes | 4 (#45, #70, #71, #46) |
-| Ejecutables MCP | 6 |
-| Requieren SSH | 6 |
-| Baja prioridad / input tuyo | 9 |
+| `PROTOCOLO-CIERRE-SESION.md` creado | ✅ |
+| `PROTOCOLO-AUDITORIA.md` creado | ✅ |
+| `PROTOCOLO-ALINEACION.md` creado | ✅ |
+| `AGENT-template.md` creado | ✅ |
+| `CONTEXT-template.md` creado | ✅ |
+| `AGENT.md` instanciado en DEW | ✅ |
+| `CONTEXT.md` instanciado en DEW | ✅ |
+| `AGENT.md` instanciado en WIKI | ✅ |
+| `CONTEXT.md` instanciado en WIKI | ✅ |
+| `wiki/00-mapa.md` corregido (nombres canónicos) | ✅ |
+| `ESTADO-SISTEMA.md` actualizado | ✅ |
+| Deprecados WIKI borrados | ⚠️ pendiente (error SHA) |
+| AGENT.md tracking + THDORA | ⚠️ pendiente |
 
 ---
 
-_Actualizado: 2026-07-16 18:45 CEST · Perplexity-MCP_
+_Actualizado: 2026-07-16 18:53 CEST · Perplexity MCP_
