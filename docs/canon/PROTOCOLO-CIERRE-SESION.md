@@ -4,162 +4,114 @@ author: Alvaro Fernandez Mota
 creado: 2026-07-16
 actualizado: 2026-07-16
 ruta: docs/canon/PROTOCOLO-CIERRE-SESION.md
-tags: [canon, cierre, sesion, protocolo, ritual]
+tags: [canon, cierre, sesion, protocolo]
 status: vigente
-version: 1
-adr: ADR-012
+version: 2
 ---
 
 # 🔴 Protocolo de Cierre de Sesión
 
-> Toda sesión de trabajo termina ejecutando este protocolo.  
-> Objetivo: dejar el ecosistema en estado conocido y la próxima sesión preparada.  
+> Toda sesión termina ejecutando este protocolo.  
+> Objetivo: dejar el ecosistema en estado conocido y verificado para la próxima sesión.  
 > Simétrico a: `PROTOCOLO-INICIO-SESION.md`
+
+**Tiempo estimado:** 3–5 min sesión normal · 8–10 min si hubo muchos cambios
 
 ---
 
-## CONTRATO AGENTE IA — obligatorio antes de cerrar
+## CONTRATO AGENTE IA
 
-> **El agente NO declara la sesión cerrada hasta completar todos los pasos.**  
-> Cada paso tiene criterio de éxito binario: ✅ hecho / ❌ pendiente.
+> **El agente NO declara la sesión cerrada hasta completar todos los pasos.**
 
 ---
 
 ## Paso 1 — Documentar lo ejecutado
 
-### 1.1 Crear/actualizar diario de sesión
-
-Ruta: `docs/sesiones/YYYY-MM-DD-[turno]-sesion.md`  
-(turno: `manana` / `tarde` / `noche` / `cierre`)
-
-**Contenido mínimo obligatorio:**
-```markdown
-## Qué se hizo
-- [acción concreta ejecutada] → [resultado]
-
-## Issues cerrados esta sesión
-- #N — [título]
-
-## Issues abiertos esta sesión
-- #N — [título]
-
-## Decisiones tomadas
-- [decisión] → derivar ADR si aplica
-
-## Estado del ecosistema al cierre
-| Componente | Estado |
-|---|---|
-| [repo/servicio] | ✅/⚠️/🔴 |
-
-## Primera acción de la próxima sesión
-> [frase exacta, accionable]
-```
-
-### 1.2 Actualizar PROXIMA-SESION.md
-
-Ruta: `docs/sesiones/PROXIMA-SESION.md`
-
-- [ ] Bloques de trabajo ordenados por prioridad
-- [ ] Primer bloque ejecutable sin contexto adicional
-- [ ] Issues críticos con número y dependencias
-- [ ] Sección "Lo que NO hacer al arrancar"
-- [ ] Fecha de actualización al pie
-
----
-
-## Paso 2 — Cerrar issues resueltos
-
-Por cada tarea completada esta sesión:
-- [ ] Issue cerrado en GitHub con estado `completed` o `not_planned`
-- [ ] Si el issue estaba bloqueando otros → verificar que los bloqueados se pueden desbloquear
-- [ ] Si surgió trabajo nuevo → issue abierto antes de cerrar la sesión
-
----
-
-## Paso 3 — Actualizar archivos de estado
-
-### 3.1 ESTADO-SISTEMA.md (`docs/canon/ESTADO-SISTEMA.md`)
-- [ ] Números actualizados: repos, ADRs, islas, issues abiertos
-- [ ] Servicios: cambiar 🔴→✅ si se resolvió algún HAL
-- [ ] Fecha de actualización al pie
-
-### 3.2 MASTER-PENDIENTES.md (raíz DEW)
-- [ ] Fases avanzadas marcadas
-- [ ] Ítem completado tachado o eliminado
-- [ ] Fecha de actualización al pie
-
-### 3.3 Islas afectadas (solo las tocadas en esta sesión)
-- [ ] `wiki/islas/INDEX.md` — si se añadió/borró/cambió estado de isla
-- [ ] `docs/islas/ESTADO-ISLA-[X].md` — si se tocó esa isla
-
----
-
-## Paso 4 — Verificar repos limpios
-
-Por cada repo tocado en la sesión:
-- [ ] `git status` limpio (no hay cambios sin commit)
-- [ ] `git push` hecho — nada local sin subir
-- [ ] No hay archivos zombi o temporales en raíz
-
-**Repos que siempre hay que verificar:**
-
-| Repo | Verificar si... |
-|---|---|
-| `yggdrasil-dew` | Siempre |
-| `WIKI---PERSONAL` | Se tocó alguna isla o mapa |
-| `yggdrasil-tracking` | Se creó/editó diario personal |
-| `madre-config` | Se cambió algún compose o script |
-| `THDORA-PERSONAL` | Se modificó bot o prompts |
-
----
-
-## Paso 5 — Protocolos especiales (solo si aplica)
-
-| Situación | Protocolo adicional |
-|---|---|
-| Se expuso un secreto | Crear HAL urgente + rotar antes de cerrar |
-| Se tomó decisión arquitectónica | Crear ADR antes de cerrar |
-| Se tocó infra de Madre | Actualizar `docs/canon/ownership-matrix.md` |
-| Se añadió isla nueva | Seguir `docs/canon/NORMA-ENTRADA-NUEVA-ISLA.md` |
-| Sesión +3h | Crear issue de revisión de energía (no forzar más) |
-
----
-
-## Paso 6 — Declaración de cierre
-
-El agente escribe esta declaración al final del diario de sesión:
+### 1.1 Crear o actualizar el diario del día
 
 ```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-CIERRE: YYYY-MM-DD HH:MM CEST
-SESIÓN: [tipo] — [duración estimada]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-COMPLETADO:
-  ✅ [issue #N] — [qué se hizo]
-  ✅ [acción sin issue] — [qué se hizo]
+Archivo: docs/sesiones/YYYY-MM-DD-diario.md
+→ Si no existe → crearlo desde plantilla (PROTOCOLO-VERIFICACION-COMMITS.md)
+→ Si existe → añadir bloque de esta sesión
+```
 
-ABIERTO HOY:
-  🆕 [issue #N] — [por qué se abrió]
+El diario **debe contener**:
+- Resumen en 2-3 frases de qué se hizo
+- Tabla de commits: repo · SHA · mensaje · archivos afectados
+- Pendientes generados en esta sesión
+- Decisiones tomadas (si aplica)
 
-PENDIENTE PARA PRÓXIMA SESIÓN:
-  ⏳ [issue #N] — [estado actual]
+### 1.2 Verificar commits ↔ documentación
 
-ESTADO ECOSISTEMA: ESTABLE / CON ALERTAS / CRÍTICO
-PRÓXIMA SESIÓN: [primera acción exacta]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+Ejecutar PROTOCOLO-VERIFICACION-COMMITS.md — Fases 2 y 3:
+→ Todo commit de esta sesión → en el diario
+→ Todo archivo mencionado en el diario → existe en el repo
 ```
 
 ---
 
-## Criterio de sesión bien cerrada
+## Paso 2 — Actualizar estado del ecosistema
 
-> La sesión está cerrada cuando:
-> 1. Existe `docs/sesiones/YYYY-MM-DD-*-sesion.md` con declaración de cierre
-> 2. `PROXIMA-SESION.md` está actualizado con bloques listos
-> 3. Todos los repos tocados tienen `git push` limpio
-> 4. `ESTADO-SISTEMA.md` tiene fecha de hoy
-> 5. Issues cerrados en GitHub coinciden con lo documentado
+- [ ] `ESTADO-SISTEMA.md` — actualizar fecha y números si cambiaron
+- [ ] `wiki/islas/INDEX.md` — actualizar estados de islas tocadas
+- [ ] `MASTER-PENDIENTES.md` — mover tareas completadas, añadir nuevas
+- [ ] Issues GitHub — cerrar los resueltos, abrir los nuevos detectados
 
 ---
 
-_Creado: 2026-07-16 · v1 · Simétrico a PROTOCOLO-INICIO-SESION · Perplexity MCP_
+## Paso 3 — Verificar repos tocados
+
+Para cada repo que se tocó en la sesión:
+
+- [ ] ¿Tiene `AGENT.md`? (si no → añadir a PROXIMA-SESION.md como pendiente)
+- [ ] ¿Todos los cambios tienen commit y push?
+- [ ] ¿No hay archivos zombi o sin clasificar en la raíz?
+
+**Repos que requieren AGENT.md — pendientes actuales:**
+- `yggdrasil-tracking` ⚠️
+- `THDORA-PERSONAL` ⚠️
+
+---
+
+## Paso 4 — Actualizar PROXIMA-SESION.md
+
+```
+Archivo: docs/sesiones/PROXIMA-SESION.md
+→ Actualizar con:
+   - Estado verificado de esta sesión (✅/⚠️/🔴)
+   - Pendientes reales para la próxima sesión
+   - Primera acción al arrancar (la más importante)
+   - Tabla de lo ejecutado hoy
+```
+
+**PROXIMA-SESION.md es la fuente de verdad del cierre.**  
+Si este archivo está actualizado, el cierre se hizo bien.
+
+---
+
+## Paso 5 — Checklist final
+
+```
+[ ] Diario del día creado/actualizado con todos los commits
+[ ] Todos los commits documentados en el diario
+[ ] ESTADO-SISTEMA.md actualizado
+[ ] INDEX.md islas actualizado (si se tocó la wiki)
+[ ] MASTER-PENDIENTES.md actualizado
+[ ] Issues cerrados/abiertos correctamente
+[ ] PROXIMA-SESION.md refleja estado real y pendientes exactos
+[ ] No hay archivos zombi en ningún repo tocado
+[ ] Repos tocados tienen AGENT.md (o pendiente documentado)
+```
+
+---
+
+## 🔗 Protocolos relacionados
+
+- [`PROTOCOLO-INICIO-SESION.md`](PROTOCOLO-INICIO-SESION.md)
+- [`PROTOCOLO-VERIFICACION-COMMITS.md`](PROTOCOLO-VERIFICACION-COMMITS.md)
+- [`PROTOCOLO-AUDITORIA.md`](PROTOCOLO-AUDITORIA.md)
+
+---
+
+_v2 · 2026-07-16 · Integrada verificación commits + PROXIMA-SESION como fuente de verdad · Perplexity MCP_
