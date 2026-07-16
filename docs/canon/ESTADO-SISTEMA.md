@@ -1,96 +1,106 @@
 ---
 tipo: canon
 author: Alvaro Fernandez Mota
-creado: 2026-07-06
-actualizado: 2026-07-16 16:21 CEST
+creado: 2026-07-13
+actualizado: 2026-07-16
 ruta: docs/canon/ESTADO-SISTEMA.md
-tags: [estado, sistema, ecosistema, canon]
+tags: [canon, estado, sistema, dashboard]
 status: vigente
+version: 2
 ---
 
-# ESTADO-SISTEMA — Ecosistema Yggdrasil
+# 📊 Estado del Sistema — Yggdrasil
 
-> Fuente de verdad del estado operativo actual.
-> Actualizar en cada cierre de sesion que cambie algo estructural.
-> Ultima actualizacion: 2026-07-16 16:21 CEST
+> Snapshot del ecosistema. Actualizar al cierre de cada sesión.  
+> Si la fecha de actualización tiene más de 48h → verificar antes de actuar.
+
+**Última actualización:** 2026-07-16 18:53 CEST
 
 ---
 
-## Repos del ecosistema
+## Números del ecosistema
 
-| Repo | Funcion | Visibilidad | Estado |
+| Métrica | Valor |
+|---|---|
+| Repos activos | 12 |
+| ADRs registrados | ~13 |
+| Islas wiki | ~23 |
+| Issues abiertos DEW | ~15 (estimado post-sesión 2026-07-16) |
+| Sesiones documentadas | activo desde 2026-07-13 |
+
+---
+
+## Repos canónicos y estado
+
+| Repo | Estado | AGENT.md | CONTEXT.md | Última actividad |
+|---|---|---|---|---|
+| `yggdrasil-dew` | ✅ activo | ✅ | ✅ | 2026-07-16 |
+| `WIKI---PERSONAL` | ✅ activo | ⚠️ pendiente | ⚠️ pendiente | 2026-07-16 |
+| `yggdrasil-tracking` | ✅ activo | ⚠️ pendiente | ⚠️ pendiente | 2026-07-13 |
+| `THDORA-PERSONAL` | ✅ activo | ⚠️ pendiente | ⚠️ pendiente | reciente |
+| `madre-config` | ✅ activo | ❌ no tiene | ❌ no tiene | reciente |
+| `yggdrasil-secops` | ✅ activo | ❌ no tiene | ❌ no tiene | reciente |
+| `local-brain` | ⚠️ standby | ❌ no tiene | ❌ no tiene | - |
+| `yggdrasil-scripts` | ✅ activo | ❌ no tiene | ❌ no tiene | reciente |
+| `yggdrasil-formacion` | ✅ activo | ❌ no tiene | ❌ no tiene | reciente |
+| `acer-config` | ⚠️ standby | ❌ no tiene | ❌ no tiene | - |
+| `dev-labs` | ⚠️ standby | ❌ no tiene | ❌ no tiene | - |
+
+---
+
+## Servicios Docker en Madre
+
+| Servicio | Estado | Puerto | Notas |
 |---|---|---|---|
-| yggdrasil-dew | Cerebro tecnico: canon, ADRs, protocolos, plantillas, diarios | Publico | ✅ Activo |
-| yggdrasil-wiki | Mapa conceptual: islas tematicas | Publico | ✅ Activo |
-| yggdrasil-tracking | Vida personal: diarios, metas, rituales | Privado | ✅ Activo |
-| yggdrasil-formacion | Aprendizaje tecnico: apuntes, HTB, labs | Publico | ✅ Activo |
-| yggdrasil-scripts | Scripts de automatizacion | Publico | 🔵 En construccion |
-| madre-config | Configuracion del servidor Madre | Privado | ✅ Activo |
-| ollama-stack | Stack IA local | Privado | 🔵 En construccion |
-| THDORA | Agente de automatizacion | Privado | ⚪ Futuro |
+| n8n | ✅ | 5678 | Automatización |
+| Qdrant | ✅ | 6333 | Vector DB para RAG |
+| Ollama | ✅ | 11434 | LLM local |
+| LiteLLM | ✅ | 4000 | Proxy LLM |
+| Tailscale | ✅ | - | VPN mesh |
 
 ---
 
-## Sistema de protocolos — 2026-07-16
+## HALs activos
 
-| Nivel | Cantidad | Estado |
+| HAL | Severidad | Estado | Descripción breve |
+|---|---|---|---|
+| *(sin HALs críticos activos en 2026-07-16)* | - | - | - |
+
+---
+
+## Protocolos disponibles en `docs/canon/`
+
+| Protocolo | Archivo | Estado |
 |---|---|---|
-| NIVEL 1 Globales | 14 | ✅ Completo |
-| NIVEL 2 Por repo x4 | 20 | ✅ Completo |
-| NIVEL 3 Atomos | 9 (+1 pendiente) | 🔵 Casi completo |
-| INDEX | v5.0 | ✅ Actualizado |
-| **TOTAL** | **43 + INDEX** | ✅ |
+| Inicio de sesión | `PROTOCOLO-INICIO-SESION.md` | ✅ v4 |
+| Cierre de sesión | `PROTOCOLO-CIERRE-SESION.md` | ✅ v1 (2026-07-16) |
+| Auditoría | `PROTOCOLO-AUDITORIA.md` | ✅ v1 (2026-07-16) |
+| Alineación ecosistema | `PROTOCOLO-ALINEACION.md` | ✅ v1 (2026-07-16) |
+| Entrada nueva isla | `NORMA-ENTRADA-NUEVA-ISLA.md` | ✅ vigente |
+| Normas Tridente | `NORMAS-TRIDENTE.md` | ✅ vigente |
 
 ---
 
-## Estado de fases — 2026-07-16
+## Plantillas disponibles en `docs/canon/`
 
-| Fase | Estado |
-|---|---|
-| F0 Seguridad | ⚪ Parcial |
-| F1-F5 | ✅ CERRADAS |
-| F6 Ritual semanal | ✅ CERRADA |
-| F7 GitOps | 🔵 PARCIAL |
-| F8-F15 | ✅ CERRADAS |
-| F16 Islas personales | ⚪ CONCEPTUAL |
-| F17 Protocolos emergentes | 🔵 EN PROGRESO (pendiente: NUEVO-DIARIO-TRACKING) |
-| F18 Auditoria Madre | ✅ CERRADA (sesion 2026-07-16 tarde) |
-
----
-
-## Madre — estado verificado 2026-07-16
-
-| Campo | Valor |
-|---|---|
-| Hostname | `varpc` |
-| OS | Arch Linux kernel 7.0.9-arch2-1 |
-| SSH canonico | `ssh varopc@100.91.112.32` |
-| Contenedores | 23 total · 19 healthy · 2 unhealthy (falsos positivos) · 1 error |
-| SMART /dev/sda | PASSED 2026-07-16 |
-| RAM | 7/15 Gi usados |
-
----
-
-## Proximos hitos
-
-| Hito | Fecha |
-|---|---|
-| Primera ejecucion RITUAL-SEMANAL | Domingo 2026-07-19 |
-| Primera auditoria mensual completa | Primer domingo agosto 2026 |
-| Renombrar WIKI---PERSONAL en Madre | Proxima sesion con terminal |
-| Fix yggdrasil-mcp (puerto 3000) | Proxima sesion |
-
----
-
-## Bloqueantes criticos
-
-| Issue | Urgencia | Nota 2026-07-16 |
+| Plantilla | Archivo | Estado |
 |---|---|---|
-| #31 HDD Madre 28.000h | 🟡 Media | SMART PASSED hoy |
-| #45 Token Telegram | 🔴 Alta | Pendiente |
-| #15 Puerto 21 FTP | 🟡 Media | En router Digi, no en Madre |
-| #70 yggdrasil-mcp puerto 3000 | 🔴 Alta | grafana ocupa 3000, fix = cambiar a 3001 |
+| AGENT.md | `AGENT-template.md` | ✅ v1 (2026-07-16) |
+| CONTEXT.md | `CONTEXT-template.md` | ✅ v1 (2026-07-16) |
+| ADR | `PLANTILLA-ADR.md` | ✅ vigente |
+| Protocolo | `PLANTILLA-PROTOCOLO.md` | ✅ vigente |
+| Isla wiki | `PLANTILLA-ISLA-WIKI.md` | ✅ vigente |
+| Estado isla | `PLANTILLA-ESTADO-ISLA.md` | ✅ vigente |
+| Diario DEW | `PLANTILLA-DIARIO-DEW.md` | ✅ vigente |
+| Diario tracking | `PLANTILLA-DIARIO-TRACKING.md` | ✅ vigente |
+| Apunte formación | `PLANTILLA-APUNTE-FORMACION.md` | ✅ vigente |
 
 ---
 
-_Actualizado: 2026-07-16 16:21 CEST - F17 en progreso - F18 CERRADA - Perplexity MCP_
+## Próxima acción prioritaria
+
+> Instanciar `AGENT.md` y `CONTEXT.md` en `WIKI---PERSONAL`, `yggdrasil-tracking`, `THDORA-PERSONAL`.
+
+---
+
+_v2 — 2026-07-16 · Actualizado post-sesión alineación completa · Perplexity MCP_

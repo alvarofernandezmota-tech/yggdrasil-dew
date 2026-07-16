@@ -3,81 +3,110 @@ tipo: context
 author: Alvaro Fernandez Mota
 creado: 2026-07-16
 actualizado: 2026-07-16
-repo: yggdrasil-dew
-ecosistema: yggdrasil
+ruta: CONTEXT.md
+tags: [context, ecosistema, canon, dew]
 status: vigente
+version: 1
 ---
 
-# 🌊 CONTEXT.md — yggdrasil-dew
+# CONTEXT.md — yggdrasil-dew
 
-> Estado actual del DEW (Daily Execution Workspace). Este fichero es la fuente de verdad operacional del ecosistema Yggdrasil. Se actualiza al inicio y cierre de cada sesión.
-
----
-
-## ¿Qué es yggdrasil-dew?
-
-El DEW es el repo de trabajo activo del ecosistema. Aquí van:
-- **Issues** — todo el trabajo pendiente, bloqueantes, HALs, AUDITs
-- **Protocolos** — cómo arrancar y cerrar sesiones en cada repo
-- **Estado del ecosistema** — qué está corriendo, qué está roto, qué está pendiente
-
-**Regla fundamental:** Si algo necesita hacerse en el ecosistema, tiene un issue aquí.
+> Contexto del ecosistema Yggdrasil para agentes IA.  
+> Leer junto con `AGENT.md` al inicio de cada sesión.
 
 ---
 
-## Estado del ecosistema (2026-07-16)
+## El ecosistema Yggdrasil
 
-### 🟢 Running
+Yggdrasil es el sistema operativo personal de Álvaro Fernández Mota.  
+No es solo código — es la infraestructura completa de vida técnica y personal.
 
-| Servicio | Host | Puerto | Notas |
-|---|---|---|---|
-| n8n | Madre | 5678 | Running, sin auditar |
-| Ollama | Madre | 11434 | Modelos activos |
-| Qdrant | Madre | 6333 | Vector DB activo |
-| Wazuh | Madre | 443/1515 | SIEM activo |
-| Postgres (THDORA) | Madre | 5432 | Running |
+### Repos canónicos (nombres exactos — no usar aliases)
 
-### 🔴 Caído / Bloqueado
-
-| Servicio | Bloqueante | Issue |
+| Repo | Propósito | Tipo |
 |---|---|---|
-| thdora-bot | HAL-007 .env malformado | [#44](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/44) |
-| thdora-api | HAL-007 mismo bloqueo | [#44](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/44) |
-| Token Telegram | HAL-008 a rotar | [#45](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/45) |
+| `yggdrasil-dew` | Canon técnico, ADRs, decisiones, issues, protocolos | Canon |
+| `WIKI---PERSONAL` | Conocimiento estático, mapas, islas del ecosistema | Wiki |
+| `yggdrasil-tracking` | Vida personal, diarios, metas, hábitos | Personal |
+| `yggdrasil-formacion` | Formación técnica, apuntes, recursos | Formación |
+| `madre-config` | IaC de Madre, docker-compose, scripts | Config |
+| `THDORA-PERSONAL` | Bot Telegram + agente IA personal | Operativo |
+| `yggdrasil-secops` | Seguridad, SecOps, blue team | Operativo |
+| `local-brain` | RAG local, Qdrant, embeddings | IA |
+| `acer-config` | Dotfiles Arch/Hyprland del laptop secundario | Config |
+| `dev-labs` | Sandbox, experimentos, prototipos | Labs |
+| `yggdrasil-scripts` | Scripts bash, GitHub Actions, CI | Scripts |
 
-### 🟡 Pendiente auditar
+### Hardware del ecosistema
 
-| Área | Issue |
+| Nodo | Nombre | Rol |
+|---|---|---|
+| Servidor principal | Madre | Docker, servicios, RAG, n8n |
+| Laptop principal | Theodora | Desarrollo, NixOS |
+| Laptop secundario | Acer | Secundario, Arch/Hyprland |
+| Móvil | Thea | iPhone — apps, Tailscale |
+
+---
+
+## Este repo en el ecosistema
+
+**Repo:** `yggdrasil-dew`  
+**Propósito:** Canon técnico — es el punto de entrada obligatorio de toda sesión  
+**Isla wiki:** `WIKI---PERSONAL/wiki/islas/dew.md`  
+**Posición en el Tridente:** DEW (vértice de decisión y estado)
+
+### Dependencias directas
+
+| Repo | Tipo de dependencia |
 |---|---|
-| Flujos n8n activos | [#36](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/36) AUDIT-003 |
-| Documentación MCP/agentes | [#42](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/42) AUDIT-005 |
-| Alertas FTP Wazuh | [DEW #46](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/46) |
+| `WIKI---PERSONAL` | Isla `dew.md` y mapas globales |
+| Todos los repos | DEW contiene los protocolos que todos siguen |
 
 ---
 
-## Issues bloqueantes (P0)
+## Principios del ecosistema
 
-| Issue | Título | Estado |
+1. **Soberanía digital** — todo en repos propios, nada en SaaS sin alternativa
+2. **Transparencia interna** — toda decisión tiene ADR, toda tarea tiene issue
+3. **Un solo punto de verdad** — DEW es el canon, wiki es el mapa
+4. **Sistemas que perduran** — si no está documentado, no existe
+5. **Automatizar lo repetible** — lo manual se ejecuta una vez y se automatiza
+6. **Deuda visible** — toda deuda técnica tiene issue abierto en DEW
+
+---
+
+## Convenciones de nombres
+
+| Tipo | Formato | Ejemplo |
 |---|---|---|
-| [#44](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/44) | HAL-007 — .env THDORA malformado | 🔴 Abierto |
-| [#45](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/45) | HAL-008 — Rotar token Telegram | 🔴 Abierto |
-
-## Issues activos (P1)
-
-| Issue | Título | Estado |
-|---|---|---|
-| [#36](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/36) | AUDIT-003 — thdora-personal completo | 🟡 Pendiente |
-| [#42](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/42) | AUDIT-005 — MCP/agentes | 🟡 Pendiente |
-| [#49](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/49) | Thea x IA local | 🟡 Pendiente |
+| Archivos markdown | `kebab-case.md` o `MAYUSCULAS.md` | `protocolo-inicio.md` / `AGENT.md` |
+| Commits | `tipo(scope): descripción — closes #N` | `feat(wiki): isla orquestador — closes #58` |
+| Issues prefijo | Tipo + número | `HAL-009`, `AUDIT-012`, `ADR-013` |
+| Ramas | `tipo/descripcion-corta` | `feat/plantillas-canon` |
 
 ---
 
-## Última sesión
+## Flujo de trabajo canónico
 
-**Fecha:** 2026-07-16  
-**Agente:** Perplexity-MCP  
-**Acciones:** Sync completo del ecosistema — estructuración de los 4 repos principales con protocolos de sesión homogéneos.
+```
+Decisión/tarea detectada
+    ↓
+Issue abierto en yggdrasil-dew
+    ↓
+Si es decisión arquitectónica → ADR creado (docs/adr/)
+    ↓
+Ejecutado (MCP / terminal / manual)
+    ↓
+Documentado en docs/sesiones/YYYY-MM-DD-*-sesion.md
+    ↓
+Isla wiki actualizada si aplica
+    ↓
+Issue cerrado en GitHub
+    ↓
+docs/canon/ESTADO-SISTEMA.md actualizado
+```
 
 ---
 
-_Actualizado: 2026-07-16 · Perplexity-MCP_
+_Instanciado desde: `docs/canon/CONTEXT-template.md`_  
+_Última actualización: 2026-07-16_

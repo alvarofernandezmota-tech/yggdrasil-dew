@@ -1,167 +1,112 @@
+---
+tipo: agent
+author: Alvaro Fernandez Mota
+creado: 2026-07-16
+actualizado: 2026-07-16
+ruta: AGENT.md
+tags: [agent, protocolo, canon, dew]
+status: vigente
+version: 1
+---
+
 # AGENT.md — yggdrasil-dew
 
-> **Lee este archivo al inicio de CADA sesión en este repo.**
-> Contiene todo lo que necesitas para trabajar aquí sin preguntar.
-> Si algo cambió estructuralmente, está aquí reflejado.
+> Instrucciones para agentes IA que trabajen en este repo.  
+> Leer este archivo **antes de ejecutar cualquier acción**.
 
 ---
 
-## 📦 Este repo
+## Identidad del repo
 
 | Campo | Valor |
 |---|---|
 | **Nombre** | `yggdrasil-dew` |
-| **Rol** | Canon técnico del ecosistema · decisiones · ADRs · diarios · issues maestras |
-| **Visibilidad** | Privado |
-| **Isla wiki** | [`wiki/islas/ecosistema.md`](https://github.com/alvarofernandezmota-tech/yggdrasil-wiki/blob/main/wiki/islas/ecosistema.md) |
-| **Estado actual** | ✅ Activo · fuente de verdad técnica |
-| **Stack principal** | Markdown · GitHub Issues · GitHub Actions |
+| **Propósito** | Canon técnico del ecosistema: ADRs, decisiones, protocolos, issues, estado |
+| **Tipo** | Canon — fuente única de verdad técnica |
+| **Isla wiki** | `wiki/islas/dew.md` |
+| **ADR principal** | ADR-001 (fundación del ecosistema) |
 
 ---
 
-## 👤 Usuario
+## Protocolo de inicio (obligatorio)
 
-- **Nombre:** Álvaro Fernández Mota
-- **Perfil:** Ingeniero de sistemas autodidacta. Stack: Python, Docker, Linux, IA local, OSINT.
-- **Filosofía:** Producción primero, perfección después. El ritmo importa más que el sprint.
-- **Referencia completa:** [`yggdrasil-wiki/wiki/islas/filosofia.md`](https://github.com/alvarofernandezmota-tech/yggdrasil-wiki/blob/main/wiki/islas/filosofia.md)
+Antes de cualquier acción, leer en este orden:
 
----
-
-## 🖥️ Ecosistema de máquinas
-
-| Máquina | OS | IP Tailscale | Rol |
-|---|---|---|---|
-| Madre | Arch Linux (Omarchy) | `100.91.112.32` | Servidor 24/7 · Docker · Batcueva |
-| Acer (Thdora) | Arch Linux + Hyprland | `100.86.119.102` | Terminal de trabajo · Dev · OSINT |
-| iPhone 11 | iOS | Tailscale activo | Trabajo remoto · Perplexity MCP |
+1. `docs/sesiones/PROXIMA-SESION.md` — estado y bloques pendientes
+2. `CONTEXT.md` — contexto del ecosistema completo
+3. `docs/canon/ESTADO-SISTEMA.md` — estado actual del ecosistema
+4. Issues abiertos con label `bloqueado` o `HAL` — bloqueos activos
+5. `docs/canon/PROTOCOLO-INICIO-SESION.md` — protocolo completo de arranque
 
 ---
 
-## 🗂️ Repos del ecosistema
+## Reglas de este repo
 
-| Repo | Rol |
-|---|---|
-| `yggdrasil-wiki` | Wiki central · mapa conceptual · segundo cerebro |
-| `yggdrasil-dew` | **Este repo** — canon técnico · decisiones · ADRs · issues |
-| `THDORA-PERSONAL` | Bot TOKI · FastAPI · Docker |
-| `madre-config` | Configuración Madre · Docker · servicios |
-| `ollama-stack` | Ollama + modelos locales |
-| `local-brain` | RAG + Qdrant + memoria |
-| `yggdrasil-secops` | Seguridad defensiva |
-| `osint-stack` | Seguridad ofensiva · OSINT · pentest |
-| `yggdrasil-formacion` | Aprendizaje · cursos · Python |
-| `yggdrasil-tracking` | Vida personal · diarios · finanzas |
-| `investigacion-ia` | PoCs de IA |
-| `acer-config` | Configuración Acer · Arch Linux + Hyprland |
-| `dev-labs` | Sandbox antes de crear repo propio |
-| `thea-ia` | Core Python IA (decisión arquitectural pendiente) |
+### ✅ Hacer siempre
+- Toda decisión arquitectónica → ADR en `docs/adr/ADR-0NN.md`
+- Toda tarea → issue en GitHub antes de ejecutar
+- Commit message: `tipo(scope): descripción — closes #N`
+- Push antes de declarar tarea completada
+- Actualizar `docs/canon/ESTADO-SISTEMA.md` al final de cada sesión
+- Actualizar `docs/sesiones/PROXIMA-SESION.md` al cierre
+
+### ❌ Nunca hacer
+- Hardcodear secretos o tokens en ningún archivo
+- Borrar archivos sin issue de respaldo aprobado por Álvaro
+- Cambiar nombres de repos sin actualizar todos los mapas del ecosistema
+- Actuar sin leer el protocolo de inicio primero
+- Crear ADR sin seguir `docs/canon/PLANTILLA-ADR.md`
 
 ---
 
-## 🤖 Agentes del ecosistema
-
-| Agente | Fortaleza | MCP GitHub | Cuándo |
-|---|---|---|---|
-| **Perplexity** | Búsqueda web + gestión repo + docs | ✅ Activo | Principal — todo lo que se pueda |
-| **Grok** | Datos frescos · razonamiento lateral | ❌ | Investigación / noticias |
-| **Gemini** | Código largo · arquitectura · contexto grande | ❌ | Ficheros grandes · refactors |
-| **Claude** | Razonamiento profundo · código calidad | ⏳ posible Cursor | Arquitectura compleja |
-| **OpenCode** | Terminal · local | ✅ local | Cuando esté en Thdora |
-| **TOKI** | Control móvil desde Telegram | ⏳ en desarrollo | Bot propio |
-
----
-
-## 🐛 Issues activas DEW — revisar antes de actuar
-
-| Issue | Título | Prioridad |
-|---|---|---|
-| [#44](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/44) | HAL-007: THDORA `.env` malformado | 🔴 Crítico |
-| [#45](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/45) | HAL-008: Token Telegram revocado | 🔴 Crítico |
-| [#49](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/49) | Decisión arquitectural `thea-ia` | 🟡 Pendiente |
-
-Ver todas: [yggdrasil-dew issues](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues)
-
----
-
-## 📐 Estructura del repo
+## Estructura del repo
 
 ```
 yggdrasil-dew/
-├── AGENT.md                    ← Este fichero
-├── CONTEXT.md                  ← Estado actual (si existe)
-├── DASHBOARD.md                ← Panel de control del ecosistema
-├── ECOSYSTEM-ARCHITECTURE.md   ← Arquitectura completa
-├── ESTADO-SISTEMA.md           ← Estado operativo en tiempo real
-├── MASTER-PENDIENTES.md        ← Lista maestra de tareas
-├── PLAN-MAESTRO-2026-07.md     ← Plan mensual activo
-├── NORMAS.md                   ← Normas del ecosistema
-├── CONVENCIONES.md             ← Convenciones de nombrado
 ├── docs/
-│   ├── adr/                    ← Architecture Decision Records
-│   ├── sesiones/               ← Diarios de sesión
-│   └── hallazgos/              ← Incidentes HAL-XXX
-├── protocolo/                  ← Protocolos de sesión
-├── inbox/                      ← Entrada de items sin procesar
-└── scripts/                    ← Scripts de utilidad
+│   ├── adr/           ← Decision Records (ADR-001, ADR-002...)
+│   ├── canon/         ← Protocolos, plantillas, normas, estado del sistema
+│   ├── islas/         ← Estados de isla (ESTADO-ISLA-*.md)
+│   ├── sesiones/      ← Diarios de sesión y PROXIMA-SESION.md
+│   └── runbooks/      ← Procedimientos de recuperación operativos
+├── AGENT.md           ← este archivo
+├── CONTEXT.md         ← contexto ecosistema
+├── MASTER-PENDIENTES.md ← backlog principal y fases activas
+└── README.md
 ```
 
 ---
 
-## 📋 Reglas del sistema — OBLIGATORIAS
+## Conexiones con el ecosistema
 
-1. **Leer antes de actuar** — `AGENT.md` → `ESTADO-SISTEMA.md` → `NORMAS.md`
-2. **Todo entra por `inbox/`** — nunca sobrescribir ficheros existentes directamente
-3. **Verificar SHA** antes de actualizar cualquier fichero existente
-4. **ESTADO-SISTEMA.md** = estado actual — actualizar al inicio Y al cierre de cada sesión
-5. **Diario de sesión** = obligatorio al cierre en `docs/sesiones/YYYY-MM-DD.md`
-6. **No crear stubs vacíos** — si no hay contenido real, no crear el fichero
-7. **ADRs** = cualquier decisión arquitectural importante va en `docs/adr/ADR-XXX.md`
-8. **HAL-XXX** = cualquier incidente va en `docs/hallazgos/HAL-XXX.md` + issue
-9. **Issues DEW primero** — si existe issue que afecte lo que vas a hacer, menciónala
-10. **Isla wiki sincronizada** — si cambia estado operativo, actualizar `wiki/islas/ecosistema.md`
+| Repo relacionado | Relación |
+|---|---|
+| `WIKI---PERSONAL` | Isla `dew.md` y todos los mapas |
+| `yggdrasil-tracking` | Diarios de vida referenciados desde sesiones |
+| `THDORA-PERSONAL` | Bot consume protocolos y contexto de DEW |
+| Todos los repos | DEW es el punto de entrada — siempre se abre primero |
 
 ---
 
-## 📐 Protocolo de sesión
+## Protocolo de cierre (obligatorio)
 
-```
-┌─────────────────────────────────────────────────┐
-│             INICIO DE SESIÓN                    │
-│  1. Leer AGENT.md (este fichero)                │
-│  2. Leer ESTADO-SISTEMA.md                      │
-│  3. Revisar issues abiertas en DEW              │
-│  4. Leer MASTER-PENDIENTES.md si hay sprint     │
-└───────────────────┬─────────────────────────────┘
-                    ↓
-             Trabajar (inbox/ primero)
-                    ↓
-┌───────────────────┴─────────────────────────────┐
-│             CIERRE DE SESIÓN                    │
-│  1. Escribir sesión en docs/sesiones/           │
-│  2. Actualizar ESTADO-SISTEMA.md               │
-│  3. Actualizar MASTER-PENDIENTES.md             │
-│  4. Abrir issue DEW si hay deuda nueva          │
-│  5. Actualizar isla wiki si cambió estado       │
-│  6. Commit de cierre con mensaje canónico       │
-└─────────────────────────────────────────────────┘
-```
+Antes de terminar cualquier sesión:
+
+1. Seguir `docs/canon/PROTOCOLO-CIERRE-SESION.md` completo
+2. `docs/sesiones/PROXIMA-SESION.md` actualizado
+3. `docs/canon/ESTADO-SISTEMA.md` con fecha de hoy
+4. Issues cerrados en GitHub
+5. `git push` limpio
 
 ---
 
-## 🚦 Estado de fases del ecosistema
+## Contacto y decisiones
 
-| Fase | Nombre | Estado |
-|---|---|---|
-| **0** | Repo limpio + wiki estructurada | ✅ Completado 2026-07-16 |
-| **1** | Tailscale + acceso remoto | ✅ Activo |
-| **2** | SSH hardening completo | 🔴 Pendiente |
-| **3** | Wazuh SIEM | 🟡 En progreso |
-| **4** | Suricata IDS | 🟡 En progreso |
-| **5** | GitHub Actions automatización | 🔴 No iniciado |
-| **6** | Cursor + MCP en Thdora/Acer | 🔴 Pendiente |
-| **7** | Ollama agentes + workflows IA | 🔴 No iniciado |
+- **Dueño:** Álvaro Fernández Mota
+- **Dudas:** abrir issue en este repo con label `pregunta`
+- **Decisiones:** crear ADR en `docs/adr/` siguiendo `docs/canon/PLANTILLA-ADR.md`
 
 ---
 
-_Actualizado: 2026-07-16 · Perplexity-MCP_
+_Instanciado desde: `docs/canon/AGENT-template.md`_  
+_Última actualización: 2026-07-16_
