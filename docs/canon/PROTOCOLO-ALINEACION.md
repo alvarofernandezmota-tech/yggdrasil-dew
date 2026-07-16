@@ -6,7 +6,7 @@ actualizado: 2026-07-16
 ruta: docs/canon/PROTOCOLO-ALINEACION.md
 tags: [canon, alineacion, protocolo, ecosistema, sincronizacion]
 status: vigente
-version: 1
+version: 2
 ---
 
 # 🔄 Protocolo de Alineación del Ecosistema
@@ -35,13 +35,13 @@ Cualquier referencia en cualquier `.md` debe usar exactamente estos nombres:
 | Nombre canónico | Aliases prohibidos |
 |---|---|
 | `yggdrasil-dew` | `dew`, `Dew`, `DEW-repo` |
-| `WIKI---PERSONAL` | `yggdrasil-wiki`, `wiki`, `WIKI` |
+| `yggdrasil-wiki` | `WIKI---PERSONAL`, `wiki`, `WIKI` |
 | `yggdrasil-tracking` | `vidapersonal`, `VIDAPERSONAL`, `vida-personal`, `tracking` |
 | `yggdrasil-formacion` | `yggdrasil-formacion-` *(con guión final)*, `formacion` |
 | `madre-config` | `madre`, `Madre-config` |
 | `THDORA-PERSONAL` | `thdora-personal`, `thdora`, `THDORA` |
 | `yggdrasil-secops` | `secops`, `yggdrasil-security` |
-| `local-brain` | `local_brain`, `localbrain` |
+| `ollama-stack` | `local-brain`, `local_brain`, `localbrain` |
 | `acer-config` | `acer`, `Acer-config` |
 | `dev-labs` | `labs`, `yggdrasil-labs` |
 | `yggdrasil-scripts` | `scripts` |
@@ -54,9 +54,9 @@ Los 3 mapas deben estar sincronizados entre sí y con la realidad:
 
 | Mapa | Ruta | Qué verifica |
 |---|---|---|
-| Mapa general | `WIKI---PERSONAL/wiki/00-mapa.md` | Todos los repos con nombres correctos |
-| Mapa islas | `WIKI---PERSONAL/wiki/mapa-islas.md` | Todas las islas con repos y estados correctos |
-| Índice islas | `WIKI---PERSONAL/wiki/islas/INDEX.md` | Conteo y estado de cada isla |
+| Mapa general | `yggdrasil-wiki/wiki/00-mapa.md` | Todos los repos con nombres correctos |
+| Mapa islas | `yggdrasil-wiki/wiki/mapa-islas.md` | Todas las islas con repos y estados correctos |
+| Índice islas | `yggdrasil-wiki/wiki/islas/INDEX.md` | Conteo y estado de cada isla |
 
 **Checklist por mapa:**
 - [ ] Nombres de repos coinciden con tabla canónica
@@ -71,15 +71,15 @@ Los 3 mapas deben estar sincronizados entre sí y con la realidad:
 
 Cada repo operativo debe tener ambos archivos en raíz:
 
-| Repo | AGENT.md | CONTEXT.md | Plantilla origen |
+| Repo | AGENT.md | CONTEXT.md | Estado |
 |---|---|---|---|
-| `yggdrasil-dew` | ✅ obligatorio | ✅ obligatorio | `docs/canon/AGENT-template.md` |
-| `WIKI---PERSONAL` | ✅ obligatorio | ✅ obligatorio | `docs/canon/AGENT-template.md` |
-| `yggdrasil-tracking` | ✅ obligatorio | ✅ obligatorio | `docs/canon/AGENT-template.md` |
-| `THDORA-PERSONAL` | ✅ obligatorio | ✅ obligatorio | `docs/canon/AGENT-template.md` |
-| `madre-config` | 🟡 recomendado | 🟡 recomendado | `docs/canon/AGENT-template.md` |
-| `yggdrasil-secops` | 🟡 recomendado | 🟡 recomendado | `docs/canon/AGENT-template.md` |
-| `local-brain` | 🟡 recomendado | 🟡 recomendado | `docs/canon/AGENT-template.md` |
+| `yggdrasil-dew` | ✅ obligatorio | ✅ obligatorio | ✅ Hecho |
+| `yggdrasil-wiki` | ✅ obligatorio | ✅ obligatorio | ✅ Hecho |
+| `yggdrasil-tracking` | ✅ obligatorio | ✅ obligatorio | ⚠️ Pendiente |
+| `THDORA-PERSONAL` | ✅ obligatorio | ✅ obligatorio | ⚠️ Pendiente |
+| `madre-config` | 🟡 recomendado | 🟡 recomendado | ❓ Sin verificar |
+| `yggdrasil-secops` | 🟡 recomendado | 🟡 recomendado | ❓ Sin verificar |
+| `ollama-stack` | 🟡 recomendado | 🟡 recomendado | ❓ Sin verificar |
 
 **Checklist por repo:**
 - [ ] `AGENT.md` existe en raíz
@@ -92,11 +92,11 @@ Cada repo operativo debe tener ambos archivos en raíz:
 
 ## Paso 4 — Verificar ESTADO-SISTEMA.md
 
-Ruta: `yggdrasil-dew/docs/canon/ESTADO-SISTEMA.md`
+Ruta: `yggdrasil-dew/ESTADO-SISTEMA.md` *(raíz del repo — no en docs/canon)*
 
 - [ ] Número de repos coincide con repos reales
 - [ ] Número de ADRs coincide con archivos en `docs/adr/`
-- [ ] Número de islas coincide con `wiki/islas/INDEX.md`
+- [ ] Número de islas coincide con `yggdrasil-wiki/wiki/islas/INDEX.md`
 - [ ] Número de issues abiertos aproximado a la realidad
 - [ ] Lista de servicios Docker actualizada
 - [ ] HALs activos listados
@@ -110,6 +110,7 @@ Todos estos archivos deben existir en `yggdrasil-dew/docs/canon/`:
 
 - [ ] `PROTOCOLO-INICIO-SESION.md` ✅
 - [ ] `PROTOCOLO-CIERRE-SESION.md` ✅
+- [ ] `PROTOCOLO-VERIFICACION-COMMITS.md` ✅
 - [ ] `PROTOCOLO-AUDITORIA.md` ✅
 - [ ] `PROTOCOLO-ALINEACION.md` ← este archivo ✅
 - [ ] `AGENT-template.md` ✅
@@ -144,4 +145,4 @@ Estado final: ALINEADO / CON DEUDA / CRÍTICO
 
 ---
 
-_Creado: 2026-07-16 · v1 · Perplexity MCP_
+_v2 · 2026-07-16 · Corregidos nombres canónicos: yggdrasil-wiki, ollama-stack · ESTADO-SISTEMA apunta a raíz · Perplexity MCP_
