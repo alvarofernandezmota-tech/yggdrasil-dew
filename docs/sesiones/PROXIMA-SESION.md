@@ -1,7 +1,7 @@
 ---
 tipo: sesion
 author: Alvaro Fernandez Mota
-actualizado: 2026-07-16 18:53 CEST
+actualizado: 2026-07-16 19:02 CEST
 ruta: docs/sesiones/PROXIMA-SESION.md
 tags: [sesion, proxima, pendientes]
 ---
@@ -11,78 +11,49 @@ tags: [sesion, proxima, pendientes]
 > Leer esto al inicio de cada sesión ANTES de actuar.  
 > Después seguir `docs/canon/PROTOCOLO-INICIO-SESION.md`.
 
-**Última actualización:** 2026-07-16 18:53 CEST  
-**Estado del ecosistema:** ✅ ESTABLE — alineación completa ejecutada
+**Última actualización:** 2026-07-16 19:02 CEST  
+**Estado del ecosistema:** ✅ ESTABLE — verificado al inicio de sesión
 
 ---
 
-## 🎯 Primera acción al arrancar
+## ✅ Verificación de cierre anterior (sesión 2026-07-16 18:53)
 
-> Borrar los 3 archivos deprecados de `WIKI---PERSONAL` que quedaron pendientes por error de SHA:
-> - `wiki/islas/VIDAPERSONAL.md`
-> - `wiki/islas/cerebro.md`
-> - `wiki/islas/labs.md`
-
-**Hacerlo con:** `mcp_tool_github_mcp_direct_delete_file` con SHA fresco de cada archivo.
-
----
-
-## 📚 Bloque 1 — URGENTE (primera sesión)
-
-### 1.1 Borrar deprecados WIKI (requiere SHA fresco)
-- [ ] Borrar `wiki/islas/VIDAPERSONAL.md` — deprecado 2026-07-13
-- [ ] Borrar `wiki/islas/cerebro.md` — archivado 2026-07-13
-- [ ] Borrar `wiki/islas/labs.md` — archivado 2026-07-13
-
-### 1.2 Instanciar AGENT.md y CONTEXT.md en repos pendientes
-- [ ] `yggdrasil-tracking` — AGENT.md + CONTEXT.md en raíz
-- [ ] `THDORA-PERSONAL` — AGENT.md + CONTEXT.md en raíz
-
-### 1.3 Actualizar wiki/islas/INDEX.md
-- [ ] Eliminar filas de los 3 archivos borrados
-- [ ] Actualizar conteo total de islas
-- [ ] Verificar que todos los estados son correctos
+| Ítem | Estado real verificado |
+|---|---|
+| Deprecados borrados (`VIDAPERSONAL`, `cerebro`, `labs`) | ✅ NO existen en disco |
+| `INDEX.md` — 21 islas reales | ✅ Corregido y verificado |
+| `AGENT.md` en yggdrasil-wiki | ✅ Existe |
+| `CONTEXT.md` en yggdrasil-wiki | ✅ Existe |
+| `AGENT.md` en yggdrasil-dew | ✅ Existe |
+| `CONTEXT.md` en yggdrasil-dew | ✅ Existe |
+| Protocolos de sesión en DEW | ✅ 4 protocolos operativos |
+| Plantillas en `wiki/plantillas/` | ✅ AGENT-template + CONTEXT-template + README |
+| `orquestador.md` isla creada | ✅ Existe en `wiki/islas/` |
 
 ---
 
-## 📚 Bloque 2 — Siguiente fase
+## 📋 Pendientes reales — sesión actual
 
-### 2.1 Isla orquestador (issue #58)
-- [ ] Crear `wiki/islas/orquestador.md` usando `PLANTILLA-ISLA-WIKI.md`
-- [ ] Añadir a `INDEX.md` y `mapa-islas.md`
+### P1 — AGENT.md + CONTEXT.md en repos pendientes
+- [ ] `yggdrasil-tracking` — instanciar AGENT.md + CONTEXT.md en raíz
+- [ ] `THDORA-PERSONAL` — instanciar AGENT.md + CONTEXT.md en raíz
 
-### 2.2 Verificar `wiki/islas/INDEX.md` completamente
-- [ ] Conteo real de archivos vs conteo declarado
-- [ ] Todos los estados actualizados
+### P2 — Completar orquestador
+- [ ] Revisar y completar `wiki/islas/orquestador.md` (estado: 🟡 Parcial)
+- [ ] Vincularlo con THDORA y los protocolos de DEW
+
+### P3 — Islas stub (baja prioridad)
+- [ ] `formacion.md` — necesita input Álvaro
+- [ ] `impresion3d.md` — necesita input Álvaro
 
 ---
 
 ## ❌ Lo que NO hacer al arrancar
 
-- No empezar nada nuevo sin completar el Bloque 1 primero
-- No crear islas sin seguir la norma de entrada
+- No crear archivos nuevos sin verificar INDEX.md primero
 - No actualizar INDEX.md sin actualizar mapa-islas.md en el mismo commit
+- No modificar islas sin leer el archivo completo antes
 
 ---
 
-## 📋 Lo que quedó hecho en la sesión 2026-07-16
-
-| Ítem | Estado |
-|---|---|
-| `PROTOCOLO-CIERRE-SESION.md` creado | ✅ |
-| `PROTOCOLO-AUDITORIA.md` creado | ✅ |
-| `PROTOCOLO-ALINEACION.md` creado | ✅ |
-| `AGENT-template.md` creado | ✅ |
-| `CONTEXT-template.md` creado | ✅ |
-| `AGENT.md` instanciado en DEW | ✅ |
-| `CONTEXT.md` instanciado en DEW | ✅ |
-| `AGENT.md` instanciado en WIKI | ✅ |
-| `CONTEXT.md` instanciado en WIKI | ✅ |
-| `wiki/00-mapa.md` corregido (nombres canónicos) | ✅ |
-| `ESTADO-SISTEMA.md` actualizado | ✅ |
-| Deprecados WIKI borrados | ⚠️ pendiente (error SHA) |
-| AGENT.md tracking + THDORA | ⚠️ pendiente |
-
----
-
-_Actualizado: 2026-07-16 18:53 CEST · Perplexity MCP_
+_Actualizado: 2026-07-16 19:02 CEST · Apertura de sesión · Verificación de cierre anterior completa · Perplexity MCP_
