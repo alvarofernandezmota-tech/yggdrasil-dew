@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-06
-actualizado: 2026-07-15 15:39 CEST
+actualizado: 2026-07-16 14:35 CEST
 ruta: MASTER-PENDIENTES.md
 tags: [pendientes, fases, alineacion, roadmap]
 status: vigente
@@ -10,7 +10,7 @@ status: vigente
 
 # 📋 MASTER-PENDIENTES — Ecosistema Yggdrasil
 
-> Estado real al 2026-07-15 15:39 CEST.
+> Estado real al 2026-07-16 14:35 CEST.
 > Actualizar al inicio y cierre de cada sesión.
 
 ---
@@ -18,7 +18,7 @@ status: vigente
 ## 📌 Separación definitiva DEW / Tracking
 
 > **Regla canon desde 2026-07-15:**
-> - `yggdrasil-dew/docs/sesiones/` → diarios de **trabajo técnico**
+> - `yggdrasil-dew/docs/diarios/` → diarios de **trabajo técnico**
 > - `yggdrasil-tracking/diarios/` → diarios **personales** (QUÉ vivo, QUÉ pienso, QUÉ soy)
 > - El protocolo de apertura debe respetar esta separación. Ningún agente la viola.
 
@@ -40,10 +40,15 @@ status: vigente
 | **F9** | Protocolo cierre/inicio/ADR | ✅ CERRADA | 5 protocolos canon vigentes |
 | **F10** | Protocolo de naming + borrado | ✅ CERRADA | PROTOCOLO-NOMBRES v2.0 + PROTOCOLO-BORRADO v1.0 |
 | **F11** | Separación DEW/tracking diarios | ✅ CERRADA | Ejecutado 2026-07-15 · regla canon documentada |
+| **F12** | fix #65 — consistencia nombres repos | 🔵 EN PROGRESO | 7/16 archivos corregidos · sesión 2026-07-16 |
+| **F13** | Protocolos de contexto (4 repos) | ⚪ PENDIENTE | PROTOCOLO-CONTEXTO-DEW/WIKI/TRACKING/FORMACION |
+| **F14** | Protocolos de auditoría (4 repos) | ⚪ PENDIENTE | PROTOCOLO-AUDITORIA-DEW/WIKI/TRACKING/FORMACION |
 
 ---
 
-## Canon de protocolos — estado real en disco
+## Canon de protocolos — estado real
+
+> ⚠️ Estado post-borrado 2026-07-14: se borraron 22 protocolos. Los siguientes se recrearon en sesión 2026-07-15.
 
 | Protocolo | Ruta | Estado |
 |---|---|---|
@@ -52,9 +57,17 @@ status: vigente
 | Nombres / Naming | `protocolo/PROTOCOLO-NOMBRES.md` | ✅ v2.0 |
 | Auditoría ecosistema | `protocolo/PROTOCOLO-AUDITORIA-ECOSISTEMA.md` | ✅ v1.0 |
 | Borrado en cascada | `protocolo/PROTOCOLO-BORRADO.md` | ✅ v1.0 |
-
-**Pendientes de recrear (22 protocolos borrados el 2026-07-14 sin PROTOCOLO-BORRADO):**
-Ver `protocolo/INDEX.md` — sección "🚧 Pendientes de recrear" con prioridades asignadas.
+| CONTEXTO-ECOSISTEMA | `protocolo/PROTOCOLO-CONTEXTO-ECOSISTEMA.md` | ⚪ Pendiente #68 |
+| CONTEXTO-REPOS | `protocolo/PROTOCOLO-CONTEXTO-REPOS.md` | ⚪ Pendiente #68 |
+| AUDITORIA-WIKI | `protocolo/PROTOCOLO-AUDITORIA-WIKI.md` | ⚪ Pendiente #68 |
+| SECRETOS | `protocolo/PROTOCOLO-SECRETOS.md` | ⚪ Pendiente #68 |
+| CONTEXTO-DEW | `protocolo/PROTOCOLO-CONTEXTO-DEW.md` | ⚪ Pendiente F13 |
+| CONTEXTO-WIKI | `protocolo/PROTOCOLO-CONTEXTO-WIKI.md` | ⚪ Pendiente F13 |
+| CONTEXTO-TRACKING | `protocolo/PROTOCOLO-CONTEXTO-TRACKING.md` | ⚪ Pendiente F13 |
+| CONTEXTO-FORMACION | `protocolo/PROTOCOLO-CONTEXTO-FORMACION.md` | ⚪ Pendiente F13 |
+| AUDITORIA-DEW | `protocolo/PROTOCOLO-AUDITORIA-DEW.md` | ⚪ Pendiente F14 |
+| AUDITORIA-TRACKING | `protocolo/PROTOCOLO-AUDITORIA-TRACKING.md` | ⚪ Pendiente F14 |
+| AUDITORIA-FORMACION | `protocolo/PROTOCOLO-AUDITORIA-FORMACION.md` | ⚪ Pendiente F14 |
 
 ---
 
@@ -72,8 +85,8 @@ Ver `protocolo/INDEX.md` — sección "🚧 Pendientes de recrear" con prioridad
 
 | Issue | Descripción | Prioridad |
 |---|---|---|
-| [#68](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/68) | Recrear 4 protocolos alta prioridad | 🔴 Alta |
-| [#65](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/65) | Auditoría consistencia nombres repos | 🟡 Media |
+| [#68](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/68) | Recrear protocolos alta prioridad (CONTEXTO, AUDITORIA-WIKI, SECRETOS) | 🔴 Alta |
+| [#65](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/65) | fix #65 consistencia nombres — 7/16 hecho | 🟡 Media |
 | [#59](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/59) | F3 — purga WIKI | 🟡 Media |
 | [#60](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/60) | F7 — healthchecks + Loki | 🔵 Baja |
 
@@ -86,6 +99,7 @@ Ver `protocolo/INDEX.md` — sección "🚧 Pendientes de recrear" con prioridad
 | `tracking/diarios/2026/07-julio/2026-07-13.md` | ⚠️ Plantilla | Completar: estado personal + ritual vela |
 | `tracking/diarios/2026/07-julio/2026-07-14.md` | ⚠️ Plantilla | Completar: estado personal del martes |
 | `tracking/diarios/2026/07-julio/2026-07-15.md` | ⚠️ Plantilla | Completar: estado personal del miércoles |
+| `tracking/diarios/2026/07-julio/2026-07-16.md` | ⚠️ Pendiente | Completar: estado personal del jueves |
 
 > Volver a tracking en próxima sesión dedicada.
 
@@ -96,10 +110,10 @@ Ver `protocolo/INDEX.md` — sección "🚧 Pendientes de recrear" con prioridad
 | Tarea | Prioridad | Notas |
 |---|---|---|
 | Renombrar `WIKI---PERSONAL` → `yggdrasil-wiki` en Madre | 🔴 Alta | `mv /home/varopc/WIKI---PERSONAL /home/varopc/yggdrasil-wiki` |
-| Verificar/eliminar `yggdrasil-formacion-` de Madre | 🔴 Alta | `git status` primero |
+| Verificar/eliminar `yggdrasil-formacion-` de Madre si existe | 🔴 Alta | `ls -la` primero para confirmar |
 | Clonar repos faltantes en Madre | 🟡 Media | tracking, scripts, madre-config, ollama-stack, THDORA... |
-| Recrear protocolos alta prioridad (4) | 🔴 Alta | CONTEXTO-ECOSISTEMA, CONTEXTO-REPO, AUDITORIA-WIKI, SECRETOS |
-| Actualizar rutas locales en ECOSYSTEM-ARCHITECTURE.md | 🟡 Media | Tras completar clonado en Madre |
+| Recrear protocolos alta prioridad (F13+F14) | 🔴 Alta | CONTEXTO-DEW/WIKI/TRACKING/FORMACION + AUDITORIA x4 |
+| Completar fix #65 — 9 archivos WIKI/TRACKING pendientes | 🔴 Alta | wiki/islas/VIDAPERSONAL, tracking.md, formacion.md |
 | Definir primer proyecto real | 🔴 Alta | Álvaro decide cuál |
 
 ---
@@ -115,4 +129,4 @@ Ver `protocolo/INDEX.md` — sección "🚧 Pendientes de recrear" con prioridad
 
 ---
 
-_Actualizado: 2026-07-15 15:39 CEST · Separación DEW/tracking documentada · Perplexity MCP_
+_Actualizado: 2026-07-16 14:35 CEST · fix #65 en progreso · F13+F14 protocolos contexto pendientes · Perplexity MCP_

@@ -2,7 +2,7 @@
 tipo: adr
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-07-06
-actualizado: 2026-07-13
+actualizado: 2026-07-16
 ruta: docs/adr/ADR-005-normas-tridente-dew-wiki-vidapersonal.md
 tags: [adr, tridente, normas, tracking, formacion]
 status: vigente
@@ -15,7 +15,9 @@ status: vigente
 Convenio formal de qué va en cada vértice del Tridente para evitar duplicados y desalineaciones.
 
 > **Actualización 2026-07-13 (ADR-011):** `VIDAPERSONAL` fue reemplazado por `yggdrasil-tracking` (vida personal)
-> y `yggdrasil-formacion-` (aprendizaje técnico). Las normas aplican igualmente a los dos repos nuevos.
+> y `yggdrasil-formacion` (aprendizaje técnico). Las normas aplican igualmente a los dos repos nuevos.
+>
+> **Nota histórica:** antes del 13-07-2026 el repo de formación se llamaba `yggdrasil-formacion-` (con guión final).
 
 ## Normas
 
@@ -39,7 +41,7 @@ Convenio formal de qué va en cada vértice del Tridente para evitar duplicados 
 - Hábitos y tracking personal
 - Proyectos personales no técnicos
 
-### FORMACIÓN (`yggdrasil-formacion-`)
+### FORMACIÓN (`yggdrasil-formacion`) — antes `yggdrasil-formacion-`
 - Apuntes técnicos por área
 - Cursos y plataformas de aprendizaje
 - HTB, TryHackMe y similares
@@ -63,4 +65,4 @@ Convenio formal de qué va en cada vértice del Tridente para evitar duplicados 
 
 ---
 
-_Creado: 2026-07-06 · Actualizado: 2026-07-13 (ADR-011 — VIDAPERSONAL → tracking+formacion) · Perplexity MCP_
+_Actualizado: 2026-07-16 · fix #65 · yggdrasil-formacion sin guión · Perplexity MCP_

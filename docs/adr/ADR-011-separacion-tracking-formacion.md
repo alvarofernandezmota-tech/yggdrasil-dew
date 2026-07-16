@@ -2,7 +2,7 @@
 tipo: adr
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-07-13
-actualizado: 2026-07-13
+actualizado: 2026-07-16
 ruta: docs/adr/ADR-011-separacion-tracking-formacion.md
 tags: [adr, tracking, formacion, vidapersonal, migracion, arquitectura]
 status: vigente
@@ -18,7 +18,7 @@ status: vigente
 
 Esta mezcla violaba la **Regla de fronteras personales/técnicas** añadida a NORMAS.md el 2026-07-13.
 
-Además existía un repo antiguo `yggdrasil-formacion-` que duplicaba parcialmente el contenido técnico.
+Además existía un repo antiguo `yggdrasil-formacion-` (con guión final) que duplicaba parcialmente el contenido técnico. Ese repo fue renombrado a `yggdrasil-formacion` (sin guión) el mismo 2026-07-13.
 
 ---
 
@@ -29,9 +29,11 @@ Separar en dos islas con fronteras claras:
 | Isla | Repo | Qué contiene |
 |---|---|---|
 | **Tracking** | `yggdrasil-tracking` | Vida personal: diarios, metas, filosofía, reflexiones, hábitos, yo/ |
-| **Formación** | `yggdrasil-formacion-` | Aprendizaje técnico: cursos, apuntes, HTB, plataformas, skills |
+| **Formación** | `yggdrasil-formacion` | Aprendizaje técnico: cursos, apuntes, HTB, plataformas, skills |
 
 El repo `VIDAPERSONAL` queda **deprecado**. Se mantiene con redirect en la wiki.
+
+> **Nota histórica:** el repo de formación se llamaba `yggdrasil-formacion-` (con guión final) antes del 2026-07-13. El nombre canónico vigente es `yggdrasil-formacion` (sin guión).
 
 ---
 
@@ -55,10 +57,11 @@ El repo `VIDAPERSONAL` queda **deprecado**. Se mantiene con redirect en la wiki.
 
 - `wiki/islas/VIDAPERSONAL.md` → redirect deprecado ✅
 - `wiki/islas/tracking.md` → nueva isla activa ✅
-- `wiki/islas/formacion.md` → isla existente, apunta a `yggdrasil-formacion-` ✅
+- `wiki/islas/formacion.md` → isla activa, apunta a `yggdrasil-formacion` ✅
 - NORMAS.md → Regla de fronteras personales/técnicas añadida ✅
 - MAPA-ISLAS-DEPENDENCIAS → actualizado con tracking como isla ✅
-- ADR-002 y ADR-005 → actualizados para referenciar tracking en lugar de VIDAPERSONAL
+- ADR-002 y ADR-005 → actualizados para referenciar tracking en lugar de VIDAPERSONAL ✅
+- fix #65 → todos los archivos del ecosistema corregidos con nombre canónico (2026-07-16) ✅
 
 ---
 
@@ -70,4 +73,4 @@ El repo `VIDAPERSONAL` queda **deprecado**. Se mantiene con redirect en la wiki.
 
 ---
 
-_Fecha: 2026-07-13 · Sesión tarde · Perplexity MCP_
+_Actualizado: 2026-07-16 · fix #65 · nombre canónico yggdrasil-formacion confirmado · Perplexity MCP_

@@ -2,7 +2,7 @@
 tipo: adr
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-07-06
-actualizado: 2026-07-13
+actualizado: 2026-07-16
 ruta: docs/adr/ADR-002-triangulo-dew-wiki-vida.md
 tags: [adr, tridente, triangulo, ecosistema, tracking]
 status: vigente
@@ -38,12 +38,14 @@ conceptos) y aprendizaje)
 | DEW | yggdrasil-dew | ¿Cómo funciona y qué se decidió? |
 | WIKI | yggdrasil-wiki | ¿Qué existe y por qué? |
 | VIDA | yggdrasil-tracking | ¿Quién soy y qué quiero? |
-| FORMACIÓN | yggdrasil-formacion- | ¿Qué aprendo y cómo me formo? |
+| FORMACIÓN | yggdrasil-formacion | ¿Qué aprendo y cómo me formo? |
 
 > **Actualización 2026-07-13 (ADR-011):** El vértice «vida personal» fue separado en dos repos:
 > - `yggdrasil-tracking` para contenido vital/personal
-> - `yggdrasil-formacion-` para contenido técnico/aprendizaje
+> - `yggdrasil-formacion` para contenido técnico/aprendizaje
 > El triángulo pasa a ser un cuadrado operativo pero la filosofía del Tridente se mantiene.
+>
+> **Nota histórica:** antes del 13-07-2026 el repo se llamaba `yggdrasil-formacion-` (con guión final). Renombrado el 2026-07-13.
 
 ## Consecuencias
 
@@ -59,4 +61,4 @@ conceptos) y aprendizaje)
 
 ---
 
-_Creado: 2026-07-06 · Actualizado: 2026-07-13 (ADR-011) · Perplexity MCP_
+_Actualizado: 2026-07-16 · fix #65 · yggdrasil-formacion sin guión · Perplexity MCP_

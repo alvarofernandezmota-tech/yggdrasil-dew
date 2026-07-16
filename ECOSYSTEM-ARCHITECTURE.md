@@ -2,7 +2,7 @@
 tipo: arquitectura
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-06-01 00:00 CEST
-actualizado: 2026-07-13 18:15 CEST
+actualizado: 2026-07-16 14:35 CEST
 ruta: ECOSYSTEM-ARCHITECTURE.md
 tags: [arquitectura, ecosistema, reglas, yggdrasil, mapa]
 status: vigente
@@ -13,7 +13,7 @@ status: vigente
 > Documento raíz. Define la estructura completa, las reglas y cómo se relacionan todas las piezas.
 > Todo repo del ecosistema hereda estas reglas. Ninguno las puede contradecir.
 
-Última actualización: 2026-07-13
+Última actualización: 2026-07-16
 
 ---
 
@@ -31,10 +31,9 @@ status: vigente
 │  📓 VIDA PERSONAL & TRACKING                                           │
 │  └── yggdrasil-tracking   → diarios 2026, metas, reflexiones,         │
 │                              filosofía, curiosidad, contenido, inbox   │
-│      ⚠️  yggdrasil-formacion- DEPRECADO → migrado a yggdrasil-tracking │
 │                                                                         │
 │  📚 FORMACIÓN & I+D                                                    │
-│  ├── formacion-tech       → apuntes y estado de cada área técnica      │
+│  ├── yggdrasil-formacion  → apuntes técnicos, cursos, HTB, skills     │
 │  └── investigacion-ia     → PoCs, experimentos, arquitecturas IA       │
 │                                                                         │
 │  🖥️ INFRAESTRUCTURA — DISPOSITIVOS                                     │
@@ -58,9 +57,7 @@ status: vigente
 │  🧪 LABS                                                                │
 │  └── dev-labs             → sandbox, prototipos, experimentos código   │
 │                                                                         │
-│  📦 ARCHIVADOS                                                          │
-│  ├── yggdrasil-formacion- → ⚠️ DEPRECADO — contenido migrado a        │
-│  │                           yggdrasil-tracking (2026-07-13)           │
+│  📦 ARCHIVADOS / DEPRECADOS                                            │
 │  ├── thea-ia              → delegado en THDORA-PERSONAL                │
 │  ├── ai-toolkit           → delegado en ollama-stack                   │
 │  ├── image-calculator     → proyecto cerrado                           │
@@ -70,6 +67,9 @@ status: vigente
 │  RED: Tailscale · IP Madre: 100.91.112.32 · SSH: ssh madre             │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
+
+> ⚠️ Nota histórica: el repo `yggdrasil-formacion-` (con guión final) fue renombrado a `yggdrasil-formacion`
+> el 2026-07-13. Cualquier referencia al nombre antiguo es incorrecta.
 
 ---
 
@@ -81,7 +81,7 @@ status: vigente
 | `yggdrasil-wiki` | 🧠 Cerebro | Second brain, conocimiento, agente IA local | 🔒 Privado |
 | `alvarofernandezmota-tech` | 🧠 Cerebro | Profile README público | 🌐 Público |
 | `yggdrasil-tracking` | 📓 Tracking | Diarios 2026, metas, reflexiones, filosofía | 🔒 Privado |
-| `formacion-tech` | 📚 Formación | Apuntes técnicos, estado de aprendizaje | 🔒 Privado |
+| `yggdrasil-formacion` | 📚 Formación | Apuntes técnicos, cursos, HTB, skills | 🔒 Privado |
 | `investigacion-ia` | 📚 Formación | PoCs, experimentos, I+D IA | 🔒 Privado |
 | `madre-config` | 🖥️ Infra | Servidor HP, Docker, configs, seguridad | 🔒 Privado |
 | `acer-config` | 🖥️ Infra | Dotfiles Acer, Arch Linux, Hyprland | 🔒 Privado |
@@ -92,7 +92,6 @@ status: vigente
 | `osint-stack` | 🛡️ Seguridad | OSINT ofensivo, Spiderfoot, pipelines | 🔒 Privado |
 | `yggdrasil-scripts` | ⚙️ Automatización | Scripts mantenimiento, workflows, actions | 🔒 Privado |
 | `dev-labs` | 🧪 Labs | Sandbox, prototipos, experimentos | 🔒 Privado |
-| `yggdrasil-formacion-` | 📦 **DEPRECADO** | Migrado a yggdrasil-tracking (2026-07-13) | 🔒 Privado |
 | `thea-ia` | 📦 Archivado | Delegado en THDORA-PERSONAL | 🌐 Público |
 | `ai-toolkit` | 📦 Archivado | Delegado en ollama-stack | 🌐 Público |
 | `image-calculator` | 📦 Archivado | Proyecto cerrado | 🌐 Público |
@@ -106,12 +105,13 @@ status: vigente
 ¿Es arquitectura del ecosistema?      → yggdrasil-dew/ECOSYSTEM-ARCHITECTURE.md
 ¿Es conocimiento / second brain?      → yggdrasil-wiki/
 ¿Es una tarea pendiente global?       → yggdrasil-dew/MASTER-PENDIENTES.md
+¿Es diario de sesión técnica?         → yggdrasil-dew/docs/diarios/YYYY-MM-DD.md
 ¿Es diario personal / reflexión?      → yggdrasil-tracking/diarios/
 ¿Son metas, filosofía, yo?            → yggdrasil-tracking/ (metas/, reflexiones/, filosofia/, yo/)
 ¿Es curiosidad o contenido?           → yggdrasil-tracking/04_curiosidad/ o 05_contenido/
 ¿Es config del servidor Madre?        → madre-config/
 ¿Es un hallazgo de seguridad?         → yggdrasil-secops/hallazgos/HAL-XXX
-¿Es un apunte técnico?                → formacion-tech/<área>/
+¿Es un apunte técnico / curso?        → yggdrasil-formacion/<área>/
 ¿Es un experimento IA?                → investigacion-ia/
 ¿Es config del Acer?                  → acer-config/
 ¿Es un script de mantenimiento?       → yggdrasil-scripts/
@@ -127,7 +127,7 @@ status: vigente
 |---|---|
 | `capa:cerebro` | yggdrasil-dew, yggdrasil-wiki, arquitectura global |
 | `capa:tracking` | yggdrasil-tracking, vida personal |
-| `capa:formacion` | formacion-tech, investigacion-ia |
+| `capa:formacion` | yggdrasil-formacion, investigacion-ia |
 | `capa:infra` | madre-config, acer-config |
 | `capa:ia-local` | ollama-stack, local-brain |
 | `capa:thdora` | THDORA-PERSONAL |
@@ -159,7 +159,7 @@ status: vigente
 ```
 NIVEL 0 — ECOSISTEMA
 └── ECOSYSTEM-ARCHITECTURE.md  ← ley máxima (este archivo)
-└── CONVENCIONES.md            ← normas de commits y naming
+└── NORMAS.md                  ← normas operativas canónicas
 
     NIVEL 1 — REPOS
     └── <repo>/README.md       ← qué es este repo y cómo funciona
@@ -205,17 +205,17 @@ NIVEL 3 — BOT (THDORA)       → THDORA-PERSONAL, memoria + IA + interfaz Tele
 
 | Repo | Estado | Última actividad |
 |---|---|---|
-| `yggdrasil-dew` | ✅ Activo | 2026-07-13 |
+| `yggdrasil-dew` | ✅ Activo | 2026-07-16 |
 | `yggdrasil-wiki` | ✅ Activo | 2026-07-13 |
-| `yggdrasil-tracking` | ✅ Activo (nuevo) | 2026-07-13 |
-| `yggdrasil-scripts` | ✅ Activo (nuevo) | 2026-07-13 |
+| `yggdrasil-tracking` | ✅ Activo | 2026-07-13 |
+| `yggdrasil-scripts` | ✅ Activo | 2026-07-13 |
 | `yggdrasil-secops` | ✅ Activo | 2026-07-12 |
 | `madre-config` | ✅ Activo | 2026-07-05 |
+| `yggdrasil-formacion` | ✅ Activo | 2026-07-13 |
 | `local-brain` | ✅ Activo | 2026-06-24 |
 | `ollama-stack` | ✅ Activo | 2026-06-24 |
 | `THDORA-PERSONAL` | 🟡 Mantenimiento | 2026-07-03 |
-| `yggdrasil-formacion-` | ⛔ DEPRECADO | 2026-07-13 → migrado |
 
 ---
 
-_Actualizado: 2026-07-13 18:15 CEST · Perplexity-MCP_
+_Actualizado: 2026-07-16 14:35 CEST · fix #65 consistencia nombres · Perplexity MCP_
