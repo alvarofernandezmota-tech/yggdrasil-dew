@@ -1,88 +1,99 @@
 ---
-tipo: sesion
-author: Alvaro Fernandez Mota
-actualizado: 2026-07-13T15:45 CEST
-ruta: docs/sesiones/PROXIMA-SESION.md
-tags: [sesion, proxima, plan, martes]
-status: vigente
+fecha-actualizacion: 2026-07-16
+sesion-origen: 2026-07-16-cierre-sesion
 ---
 
-# Próxima sesión — Martes 2026-07-14
+# PRÓXIMA SESIÓN — briefing de arranque
 
-> Archivo SSOT de dónde lo dejamos. Leer esto al inicio de cada sesión antes de cualquier otra cosa.
-> Última actualización: **2026-07-13 15:45 CEST** (cierre sesión completa 12-13 julio)
+> Este archivo es el **primer archivo a leer** al inicio de cada sesión.
+> Se actualiza en cada cierre. No contiene historial — solo el estado actual y los próximos pasos.
 
 ---
 
-## Estado al cierre
+## 📍 Contexto al momento de este cierre
 
-- ✅ Tridente DEW ↔ Wiki ↔ VIDAPERSONAL alineado al 100%
-- ✅ 7 issues cerrados hoy: #38 #39 #41 #42 #44 #45 #46
-- ✅ ADR 001–010 creados y consolidados
-- ✅ 25 islas Wiki verificadas
-- ✅ DRP, secrets.md, inventario-madre.md como nuevas fuentes de verdad
-- ✅ 4 zombis raíz eliminados
-- ⚠️ Posibles duplicados a revisar: `ECOSYSTEM-ARCHITECTURE.md` vs `ARQUITECTURA-C4.md` · `NORMAS.md` vs `CONVENCIONES.md`
+**Fecha:** 2026-07-16 ~18:45 CEST  
+**Última sesión:** tarde del 2026-07-16  
+**Foco de la sesión:** diagnóstico estructural — plantillas, orquestador, backlog
 
 ---
 
-## Plan martes 14 julio — por bloques
+## 🎯 BLOQUE 0 — Ejecutar PRIMERO (aprobado, listo para MCP)
 
-### Bloque 0 — Contexto (5 min)
-```
-1. Leer este archivo
-2. git log --oneline -5 en DEW
-3. Leer DASHBOARD.md
-```
+> La purga de wiki fue **aprobada explícitamente** el 2026-07-16. Ejecutar sin confirmar de nuevo.
 
-### Bloque 1 — Terminal Madre (30 min) 🔴 PRIMERO
-Issue [#36](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/36) · [#49](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/49) · [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31)
-```bash
-ssh varopc@varpc.taileb8343.ts.net
-# 1. local_tripwire healthy?
-docker ps | grep -E 'tripwire|guardian'
-# 2. Cerrar puerto 21
-sudo ufw deny 21 && sudo ufw status
-# 3. HDD check
-sudo smartctl -a /dev/sda | grep -E 'Power_On|Reallocated|Pending|Uncorrectable|Temp'
-# 4. Puerto 21 desde red externa (no Tailscale)
-nmap -p 21 <IP-PUBLICA-MADRE>
-```
+### Borrar (3 archivos deprecados)
+- [ ] `wiki/islas/VIDAPERSONAL.md` — deprecado, solo tiene redirect
+- [ ] `wiki/islas/cerebro.md` — archivado, absorbido por `ia-local.md`
+- [ ] `wiki/islas/labs.md` — archivado, absorbido por `dev-labs.md`
 
-### Bloque 2 — Duplicados DEW (15 min)
-- Leer `ECOSYSTEM-ARCHITECTURE.md` vs `docs/canon/ARQUITECTURA-C4.md` — decidir cuál es SSOT
-- Leer `NORMAS.md` vs `CONVENCIONES.md` + `CONVENCIONES-SEGURIDAD.md` — fusionar o eliminar
-
-### Bloque 3 — AUDIT-002 DEW (20 min)
-Issue [#35](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/35)
-- Auditoría completa de DEW: estructura, archivos huérfanos, canon vs operativo
-
-### Bloque 4 — Gobernanza (20 min)
-Issue [#18](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/18)
-- Labels estándar + issue templates GitHub en DEW
-
-### Bloque 5 — VIDAPERSONAL (15 min)
-- Actualizar `00_yo/` con hitos de julio
-- Actualizar `00_sistema/CONTEXT-PERPLEXITY.md`
-- Pendiente git mv local: Issue [#14](https://github.com/alvarofernandezmota-tech/VIDAPERSONAL/issues/14)
+### Actualizar (3 mapas desalineados)
+- [ ] `wiki/00-mapa.md` — corregir nombres de repos (yggdrasil-wiki→WIKI---PERSONAL, etc.) + fecha
+- [ ] `wiki/mapa-islas.md` — eliminar fila `agentes.md` (no existe), añadir islas reales, corregir repo thdora
+- [ ] `wiki/islas/INDEX.md` — eliminar filas de los 3 borrados, actualizar conteo 26→23
 
 ---
 
-## NO tocar el martes
+## 🎯 BLOQUE 1 — Plantillas canónicas (decisión tomada el 2026-07-16)
 
-- Issue #43 (IaC docker-compose) — requiere sesión dedicada con terminal
-- Issues #19 (Wazuh + Suricata) — proyecto mayor
-- Issue #56 (islas formacion + impresion3d) — requiere input Álvaro
-- Issue #50 (GOB-001 filosofía) — requiere input Álvaro
+> `AGENT.md` y `CONTEXT.md` son **plantillas instanciables**. Cada repo deriva su versión de estas.
+
+- [ ] Crear `wiki/plantillas/AGENT-template.md` — variables: `{{REPO_NAME}}`, `{{REPO_PURPOSE}}`, `{{PROTOCOLO_INICIO}}`, `{{PROTOCOLO_CIERRE}}`
+- [ ] Crear `wiki/plantillas/CONTEXT-template.md` — variables: `{{ECOSISTEMA}}`, `{{ISLA_PRINCIPAL}}`, `{{REPOS_RELACIONADOS}}`
+- [ ] Crear `wiki/plantillas/README.md` — explica el sistema de plantillas
+- [ ] Verificar que `yggdrasil-dew/AGENT.md` y `yggdrasil-wiki/AGENT.md` existen y están alineados con la plantilla
 
 ---
 
-## Prompt de arranque
+## 🎯 BLOQUE 2 — Isla Orquestador (nueva — decisión tomada el 2026-07-16)
 
-```
-Contexto: Estoy en sesión con yggdrasil-dew. Ayer cerramos 7 issues (#38 #39 #41 #42 #44 #45 #46),
-creamos ADR 001-010, alineamos el tridente al 100% y eliminamos 4 zombis de raíz.
-Lee PROXIMA-SESION.md y DASHBOARD.md antes de cualquier acción. Empezamos por Bloque 1 (terminal).
-```
+> El orquestador define el **protocolo de inicio y cierre de sesión** para cualquier agente en el ecosistema.
 
-_Actualizado: 2026-07-13 15:45 CEST · Perplexity-MCP_
+- [ ] Crear `wiki/islas/orquestador.md` con:
+  - Protocolo de inicio de sesión (pasos 1-N que todo agente debe ejecutar)
+  - Protocolo de cierre de sesión (pasos 1-N)
+  - Mapa de archivos clave por repo
+  - Referencias a plantillas del Bloque 1
+
+---
+
+## 🎯 BLOQUE 3 — Issues críticos de infra (requieren SSH Madre)
+
+> Ejecutar en orden — hay dependencias.
+
+1. **#45 PRIMERO** — Rotar secretos: Telegram BotFather + n8n + LiteLLM + code-server
+2. **#70** — Identificar qué ocupa puerto 3000: `sudo ss -tlnp | grep :3000` → cambiar puerto yggdrasil-mcp
+3. **#71** — Fix Qdrant: añadir `QDRANT__TELEMETRY_DISABLED=true` en compose → recrear contenedor
+4. **#46** — Tras cerrar #45: restart log_guardian_bot + local_tripwire
+
+---
+
+## 🎯 BLOQUE 4 — Ejecutables MCP puros (sin SSH, cuando haya energía)
+
+- [ ] ADR-012: `local-brain` como orquestador RAG — issue #67
+- [ ] GitHub Action detector nombres inconsistentes — issue #66
+- [ ] `filosofia.md` Bloques 1 y 3 (el 2 requiere input tuyo) — issue #57
+
+---
+
+## ⚠️ Lo que NO hacer al arrancar
+
+- ❌ No empezar con auditorías de baja prioridad (#51-#56) sin cerrar los bloques 0-2
+- ❌ No tocar #46 sin haber cerrado #45 antes
+- ❌ No crear más archivos sueltos sin plantilla de origen
+
+---
+
+## 📊 Backlog actual
+
+| Estado | Cantidad |
+|---|---|
+| Issues abiertos DEW | 25 |
+| Críticos bloqueantes | 4 (#45, #70, #71, #46) |
+| Ejecutables MCP | 6 |
+| Requieren SSH | 6 |
+| Baja prioridad / input tuyo | 9 |
+
+---
+
+_Actualizado: 2026-07-16 18:45 CEST · Perplexity-MCP_
