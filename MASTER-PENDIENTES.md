@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-06
-actualizado: 2026-07-16 19:15 CEST
+actualizado: 2026-07-18 00:29 CEST
 ruta: MASTER-PENDIENTES.md
 tags: [pendientes, fases, alineacion, roadmap]
 status: vigente
@@ -10,7 +10,7 @@ status: vigente
 
 # MASTER-PENDIENTES — Ecosistema Yggdrasil
 
-> Estado real al 2026-07-16 19:15 CEST.
+> Estado real al 2026-07-18 00:29 CEST.
 > Actualizar al inicio y cierre de cada sesion.
 
 ---
@@ -47,6 +47,7 @@ status: vigente
 | **F17** | Protocolos emergentes + auditoria | 🔵 EN PROGRESO | EMERGENCIA + RITUAL-SEMANAL + RENOMBRAR-REPO creados. Pendiente: NUEVO-DIARIO-TRACKING (#69) |
 | **F18** | Auditoria Madre completa | ✅ CERRADA | SSH + 23 contenedores + islas actualizadas 2026-07-16 tarde |
 | **F19** | Auditoria canon + AGENT.md ecosistema | ✅ CERRADA | PROTOCOLO-ALINEACION v2 + INICIO v5 + CIERRE v2 + tracking/THDORA operativos 2026-07-16 noche |
+| **F20** | Documentar hardware Madre (CPU/placa) | ⚪ PENDIENTE TERMINAL | Gap detectado 2026-07-18 — requiere dmidecode en Madre |
 
 ---
 
@@ -57,7 +58,7 @@ status: vigente
 | Protocolo | Estado |
 |---|---|
 | APERTURA-SESION | ✅ v2.0 |
-| CIERRE-SESION | ✅ v2.0 → v2 actualizado 2026-07-16 |
+| CIERRE-SESION | ✅ v3.0 |
 | CONTEXTO-ECOSISTEMA | ✅ v1.0 |
 | ACTUALIZACION-ECOSISTEMA | ✅ v1.0 |
 | SINCRONIZACION-ECOSISTEMA | ✅ v1.0 |
@@ -179,7 +180,8 @@ status: vigente
 | Auditoria ecosistema completa | Primer domingo agosto 2026 |
 | Renombrar WIKI---PERSONAL -> yggdrasil-wiki en GitHub | PROTOCOLO-RENOMBRAR-REPO listo |
 | AGENT.md en madre-config, secops, ollama-stack | Verificar y crear si no existen |
+| Documentar CPU/placa Madre (F20) | Requiere terminal — dmidecode |
 
 ---
 
-_Actualizado: 2026-07-16 19:15 CEST — F19 CERRADA — 45 protocolos — tracking+THDORA operativos — issues #72-75 creados — Perplexity MCP_
+_Actualizado: 2026-07-18 00:29 CEST — F20 añadida (hardware Madre) — cierre sesion 2026-07-18 — Perplexity MCP_

@@ -2,13 +2,26 @@
 tipo: estado
 author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
 creado: 2026-07-05 12:00 CEST
-actualizado: 2026-07-17 23:05 CEST
+actualizado: 2026-07-18 00:29 CEST
 ruta: ESTADO-SISTEMA.md
 tags: [estado, sistema, operativo]
 status: vigente
 ---
 
-# 📊 ESTADO DEL SISTEMA — 2026-07-17 23:05 CEST
+# 📊 ESTADO DEL SISTEMA — 2026-07-18 00:29 CEST
+
+---
+
+## ⛳ Checkpoint sesión 2026-07-18 madrugada (00:29)
+
+**Qué se hizo en esta sesión:**
+- ✅ **Investigación hardware Madre** — Intel Core i9-13900K como candidato upgrade
+- ✅ **Gap documentado** — CPU y placa base de Madre no estaban en ningún archivo
+- ✅ **docs/inventario-madre.md actualizado** — sección CPU/placa añadida con TODO terminal
+- ✅ **F20 creada en MASTER-PENDIENTES** — documentar hardware Madre pendiente terminal
+- ✅ **Diario sesión** `docs/sesiones/2026-07-18-diario.md` creado
+- ⚠️ **Investigación i9-13900K aparcada** — requiere conocer socket actual de Madre
+- ⚠️ **Sin acceso a Madre** en esta sesión
 
 ---
 
@@ -49,7 +62,7 @@ status: vigente
 
 | Repo | Visibilidad | Estado | Último cambio |
 |---|---|---|---|
-| `yggdrasil-dew` | 🟢 Público | ✅ 14 ADRs · 49 protocolos · INDEX v7.0 · auditoría activa #77 | 2026-07-17 |
+| `yggdrasil-dew` | 🟢 Público | ✅ 14 ADRs · 49 protocolos · INDEX v7.0 · F20 hardware Madre | 2026-07-18 |
 | `yggdrasil-orquestador` | 🟢 Público | ✅ BOOTSTRAP.md v1 · boot.md v1.1 · 15 archivos | 2026-07-17 |
 | `WIKI---PERSONAL` | 🔒 Privado | ✅ 25 islas · GRAFO-ECOSISTEMA · branch protection | 2026-07-13 |
 | `yggdrasil-secops` | 🔒 Privado | ✅ Privado · auditoría fase 1 pendiente (#37) | 2026-07-13 |
@@ -71,7 +84,7 @@ status: vigente
 
 | Servicio | Estado |
 |---|---|
-| Madre (Torre Debian 12) | ✅ Operativa · IP Tailscale `100.91.112.32` |
+| Madre (Torre) | ✅ Operativa · IP Tailscale `100.91.112.32` · CPU/placa ❓ pendiente documentar |
 | Acer (Arch Linux + Hyprland) | ✅ Operativo · IP Tailscale `100.86.119.102` |
 | iPhone 11 (Blink) | ✅ Perplexity MCP activo · SSH Madre vía Tailscale |
 | Xiaomi | ✅ IP Tailscale `100.106.133.70` |
@@ -139,6 +152,7 @@ status: vigente
 | F5 | CI enforcement (IPv4 + emails) | ⏳ Pendiente |
 | F6 | Ritual semanal verificación repos | 🔄 Permanente |
 | F7 | GitOps Real + Runbooks + Healthchecks | 🟡 Runbooks creados · healthchecks pendiente |
+| F20 | Documentar hardware Madre (CPU/placa) | ⚪ Pendiente terminal |
 | F22 | Crear repo yggdrasil-orquestador | ✅ Creado 2026-07-17 · BOOTSTRAP.md v1 |
 
 ---
@@ -157,14 +171,16 @@ status: vigente
 
 **Orden recomendado:**
 1. `docker ps` — snapshot estado real
-2. Fix qdrant (#71) — `QDRANT__TELEMETRY_DISABLED=true` + recrear
-3. Fix yggdrasil-mcp (#75) — puerto + `docker compose up -d`
-4. Renovar token THDORA (#74)
-5. `sudo smartctl -a /dev/sda` — salud HDD (#31)
-6. Borrar redirects zombie en docs/canon/ (issue #77)
-7. Renombrar `docs/inventario-madre.md` → `INVENTARIO-MADRE.md`
-8. Mover `docs/ADR-002-alineacion-tridente.md` → `docs/adr/`
-9. Cerrar puerto 21 en router (#15)
+2. `cat /proc/cpuinfo | grep "model name" | head -1` — identificar CPU (F20)
+3. `sudo dmidecode -t baseboard | grep -E "Manufacturer|Product"` — identificar placa (F20)
+4. Fix qdrant (#71) — `QDRANT__TELEMETRY_DISABLED=true` + recrear
+5. Fix yggdrasil-mcp (#75) — puerto + `docker compose up -d`
+6. Renovar token THDORA (#74)
+7. `sudo smartctl -a /dev/sda` — salud HDD (#31)
+8. Borrar redirects zombie en docs/canon/ (issue #77)
+9. Renombrar `docs/inventario-madre.md` → `INVENTARIO-MADRE.md`
+10. Mover `docs/ADR-002-alineacion-tridente.md` → `docs/adr/`
+11. Cerrar puerto 21 en router (#15)
 
 ---
 
@@ -182,4 +198,4 @@ status: vigente
 
 ---
 
-_Actualizado: 2026-07-17 23:05 CEST · Perplexity-MCP · sesión noche · sin terminal · ADR-014 creado · 14 ADRs_
+_Actualizado: 2026-07-18 00:29 CEST · Perplexity-MCP · sesión madrugada · sin terminal · F20 hardware Madre · cierre sesión_

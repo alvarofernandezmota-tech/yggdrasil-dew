@@ -2,7 +2,7 @@
 tipo: referencia
 author: Alvaro Fernandez Mota
 creado: 2026-07-13 14:15 CEST
-actualizado: 2026-07-16 16:06 CEST
+actualizado: 2026-07-18 00:29 CEST
 ruta: docs/inventario-madre.md
 tags: [madre, docker, inventario, infraestructura]
 status: vigente
@@ -27,7 +27,16 @@ status: vigente
 | Proyectos | `/home/varopc/Projects/` |
 | RAM total | 15 Gi |
 | Swap total | 19 Gi |
+| **CPU** | ❓ Sin documentar — pendiente terminal |
+| **Placa base / Socket** | ❓ Sin documentar — pendiente terminal |
 | SMART /dev/sda | PASSED (2026-07-16) |
+
+> ⚠️ **TODO hardware**: ejecutar en Madre para completar:
+> ```bash
+> cat /proc/cpuinfo | grep "model name" | head -1
+> sudo dmidecode -t baseboard | grep -E "Manufacturer|Product"
+> ```
+> Necesario para evaluar compatibilidad con i9-13900K (LGA-1700) — investigación aparcada 2026-07-18.
 
 ## Acceso SSH canónico
 
@@ -109,6 +118,8 @@ docker logs --tail 30 thdora-bot
 
 ## 📋 Pendiente documentar (#43)
 
+- [ ] **CPU y placa base** — ejecutar `dmidecode` + `/proc/cpuinfo` con terminal
+- [ ] Evaluar upgrade a Intel Core i9-13900K (LGA-1700) — aparcado 2026-07-18
 - [ ] Rutas reales de todos los stacks (n8n, Portainer, Grafana, Prometheus, etc.)
 - [ ] Versionar todos los `docker-compose.yml` en `madre-config`
 - [ ] Versionar todos los `.env.template` (sin secretos) en `madre-config`
@@ -118,4 +129,4 @@ docker logs --tail 30 thdora-bot
 
 ---
 
-_Actualizado: 2026-07-16 16:06 CEST · Auditoría SSH directa · docker ps verificado · Perplexity MCP_
+_Actualizado: 2026-07-18 00:29 CEST · Sesión hardware investigación · gap CPU/placa documentado · Perplexity MCP_
