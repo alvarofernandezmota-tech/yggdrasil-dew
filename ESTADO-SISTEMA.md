@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-06
-actualizado: 2026-07-18 01:45 CEST
+actualizado: 2026-07-18 01:52 CEST
 ruta: ESTADO-SISTEMA.md
 tags: [estado, sistema, canon, sincronizacion]
 status: vigente
@@ -10,7 +10,7 @@ status: vigente
 
 # ESTADO DEL SISTEMA — Ecosistema Yggdrasil
 
-> Última sincronización: **2026-07-18 01:45 CEST** · commit `aa3cb08c`
+> Última sincronización: **2026-07-18 01:52 CEST** · commit `12938f10`
 > Actualizar al inicio y cierre de cada sesión.
 
 ---
@@ -19,15 +19,16 @@ status: vigente
 
 | Métrica | Valor |
 |---|---|
-| Fases cerradas | F1–F19 + F21+F22+F23 + **F24+F24b+F25+F27** = **26 fases** |
+| Fases cerradas | F1–F19 + F21+F22+F23 + F24+F24b+F25+F27 + **F28** = **27 fases** |
 | Fases parciales | F0, F7 |
-| Fases pendientes terminal | F20, F26 (ADR-014) |
-| Islas wiki | **16** |
+| Fases pendientes terminal | F20, F26 (ADR-015 local-brain) |
+| Islas wiki — activas | **16** |
+| Islas wiki — redirects | **6** |
 | Repos con AGENT.md | **10/10** ✅ |
 | Issues críticos abiertos | 6 (todos requieren terminal) |
 | Runbooks disponibles | 4 |
 | BOOTSTRAP.md | ✅ v2 operativo |
-| MAPA-CONEXIONES.md | ✅ creado |
+| ecosistema.md | ✅ actualizado F28 — estado real |
 
 ---
 
@@ -72,15 +73,37 @@ status: vigente
 
 ## 📚 Wiki
 
-| Métrica | Valor |
+### Islas activas (contenido real)
+
+| Isla | Status | Notas |
+|---|---|---|
+| ecosistema.md | ✅ | Actualizado F28 — mapa completo |
+| infra.md | ✅ | Fusionada F21 — Madre + Acer |
+| ia-local.md | ✅ | Fusionada F21 — Ollama + RAG |
+| orquestador.md | ✅ | Actualizado F24 |
+| thdora.md | ✅ | Creada F24b |
+| seguridad.md | ✅ | Auditada |
+| mcp.md | ✅ | Completo |
+| tracking.md | ✅ | Completo |
+| acer.md | ✅ | Completo |
+| formacion.md | 🟡 | Parcial — pendiente completar |
+| filosofia.md | 🟡 | Parcial — requiere input Álvaro |
+| impresion3d.md | 🟡 | Parcial |
+| conocimiento.md | 🟡 | Parcial |
+| dev-labs.md | 🟡 | Parcial |
+| scripts.md | 🟡 | Parcial |
+| vida.md | 🟡 | Parcial |
+
+### Islas redirect (fusionadas/eliminadas)
+
+| Isla | Redirige a |
 |---|---|
-| Islas totales | **16** |
-| Islas ✅ completas | 8 |
-| Islas 🟡 parciales | 6 |
-| Islas 🔴 con problema | 2 |
-| `orquestador.md` | ✅ corregida F24 — THDORA separada |
-| `thdora.md` | ✅ isla independiente creada F24b |
-| `agentes-personales.md` | ✅ convertida en redirect a thdora.md |
+| agentes-personales.md | thdora.md |
+| madre.md | infra.md |
+| investigacion-ia.md | ia-local.md |
+| ollama-stack.md | ia-local.md |
+| osint.md | seguridad.md |
+| thea.md | thdora.md (agentes-personales) |
 
 ---
 
@@ -105,6 +128,7 @@ status: vigente
 
 | Fecha | Commit | Qué se hizo |
 |---|---|---|
+| 2026-07-18 01:52 | `12938f10` | F28 — auditoría completa islas, ecosistema.md actualizado |
 | 2026-07-18 01:45 | `aa3cb08c` | F24+F24b+F25+F27 + cierre sesión madrugada |
 | 2026-07-18 01:20 | `241d3500` | F21 fusiones wiki + F22 runbooks + F23 diario |
 | 2026-07-18 00:52 | `821bfab3` | F17+F18+F19 cerradas |
@@ -113,4 +137,4 @@ status: vigente
 
 ---
 
-_Actualizado: 2026-07-18 01:45 CEST · Cierre sesión madrugada · Perplexity-MCP_
+_Actualizado: 2026-07-18 01:52 CEST · F28 auditoría completa · Perplexity-MCP_
