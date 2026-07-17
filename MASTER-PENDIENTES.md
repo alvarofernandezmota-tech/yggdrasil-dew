@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-06
-actualizado: 2026-07-18 00:52 CEST
+actualizado: 2026-07-18 01:20 CEST
 ruta: MASTER-PENDIENTES.md
 tags: [pendientes, fases, alineacion, roadmap]
 status: vigente
@@ -10,7 +10,7 @@ status: vigente
 
 # MASTER-PENDIENTES — Ecosistema Yggdrasil
 
-> Estado real al 2026-07-18 00:52 CEST.
+> Estado real al 2026-07-18 01:20 CEST.
 > Actualizar al inicio y cierre de cada sesion.
 
 ---
@@ -48,6 +48,9 @@ status: vigente
 | **F18** | BOOTSTRAP.md orquestador | ✅ CERRADA | BOOTSTRAP.md v1.1 completo 2026-07-18 |
 | **F19** | AGENT.md repos secundarios | ✅ CERRADA | yggdrasil-scripts + acer-config creados 2026-07-18 |
 | **F20** | Hardware Madre documentar | ⚪ PENDIENTE | dmidecode CPU/placa pendiente terminal |
+| **F21** | Fusion islas WIKI (21 → 16) | ✅ CERRADA | 5 fusiones: ia-local, agentes-personales, seguridad+osint, infra+madre · 2026-07-18 |
+| **F22** | Runbooks terminal | ✅ CERRADA | RUNBOOK-THDORA, RUNBOOK-MCP, RUNBOOK-CRITICOS · 2026-07-18 |
+| **F23** | Diario sesion 2026-07-18 | ✅ CERRADA | docs/sesiones/2026-07-18.md · 2026-07-18 |
 
 ---
 
@@ -55,15 +58,15 @@ status: vigente
 
 ### Requieren TERMINAL (no MCP)
 
-| Issue | Descripcion | Prioridad |
-|---|---|---|
-| #15 | Puerto 21 FTP router | 🔴 Critico |
-| #31 | HDD 28k+ horas | ⚠️ Hardware |
-| #71 | Qdrant unhealthy | ⚠️ Infra |
-| #74 | Token THDORA caducado | 🔴 Critico |
-| #75 | yggdrasil-mcp caido | 🔴 Critico |
-| #77 | Auditoria completa ADR-002 suelto | 🟡 Canon |
-| F20 | dmidecode hardware | 🟡 Infra |
+| Issue | Descripcion | Prioridad | Runbook |
+|---|---|---|---|
+| #74 | Token THDORA caducado | 🔴 Critico | RUNBOOK-THDORA-TOKEN.md |
+| #75 | yggdrasil-mcp caido | 🔴 Critico | RUNBOOK-MCP-ARRANQUE.md |
+| #15 | Puerto 21 FTP router | 🔴 Critico | RUNBOOK-CRITICOS-TERMINAL.md |
+| #71 | Qdrant unhealthy | ⚠️ Infra | RUNBOOK-CRITICOS-TERMINAL.md |
+| #31 | HDD 28k+ horas | ⚠️ Hardware | RUNBOOK-CRITICOS-TERMINAL.md |
+| #77 | Auditoria ADR-002 suelto | 🟡 Canon | — |
+| F20 | dmidecode hardware | 🟡 Infra | RUNBOOK-CRITICOS-TERMINAL.md |
 
 ### Requieren sesion dedicada con Alvaro
 
@@ -75,10 +78,15 @@ status: vigente
 
 ## Proxima sesion recomendada
 
-1. 🔴 Arreglar #75 yggdrasil-mcp (puerto 3001) — terminal
-2. 🔴 Renovar token THDORA #74 — terminal
-3. ⚠️ Verificar Qdrant #71 — terminal
-4. 🟡 Ejecutar dmidecode F20 — terminal
-5. 🟡 Auditoria #77: mover ADR-002, renombrar inventario-madre.md — terminal
+> Ver `docs/runbooks/RUNBOOK-CRITICOS-TERMINAL.md` para orden exacto y comandos.
 
-_Al finalizar terminal: actualizar ESTADO-SISTEMA.md con datos reales de hardware y servicios._
+1. 🔴 #74 — Token THDORA (5 min)
+2. 🔴 #75 — yggdrasil-mcp (5-10 min)
+3. ⚠️ #71 — Qdrant verificar (2 min)
+4. 🔴 #15 — FTP puerto 21 cerrar (3 min)
+5. 🟡 F20 — dmidecode (3 min)
+6. ⚠️ #31 — S.M.A.R.T. HDD (5 min)
+
+**Total estimado: ~30 minutos de terminal.**
+
+_Actualizado: 2026-07-18 01:20 CEST · Cierre sesión · Perplexity-MCP_
