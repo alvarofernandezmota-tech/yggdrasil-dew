@@ -1,40 +1,46 @@
 ---
-tipo: canon
-author: Alvaro Fernandez Mota <alvarofernandezmota@gmail.com>
-creado: 2026-07-06
-actualizado: 2026-07-13
+tipo: indice
+author: Alvaro Fernandez Mota
+creado: 2026-07-05
+actualizado: 2026-07-17
 ruta: docs/adr/INDEX.md
 tags: [adr, indice, canon]
 status: vigente
+version: 8
 ---
 
-# 📐 Índice ADRs — Architecture Decision Records
+# Índice ADRs — Architecture Decision Records
 
-> Toda decisión de arquitectura tiene un ADR.
-> Si una decisión no está aquí, no es oficial.
-> Cómo crear un ADR: `docs/canon/PROTOCOLO-ADR.md`
+> Registro de todas las decisiones de arquitectura del ecosistema Yggdrasil.
+> Ordenados cronológicamente. Una decisión por ADR. Status: `aceptado` | `deprecado` | `supersedido`.
 
 ---
 
-| # | Título | Estado | Fecha |
+## ADRs activos
+
+| ADR | Título | Status | Fecha |
 |---|---|---|---|
-| [ADR-001](ADR-001-estructura-ecosistema.md) | Estructura del ecosistema Yggdrasil | ✅ Vigente | 2026-07-06 |
-| [ADR-002](ADR-002-triangulo-dew-wiki-vida.md) | El triángulo DEW + WIKI + vida personal | ✅ Vigente (actualizado ADR-011) | 2026-07-06 |
-| [ADR-003](ADR-003-convencion-islas.md) | Convención de islas en la wiki | ✅ Vigente | 2026-07-06 |
-| [ADR-004](ADR-004-mcp-como-capa-infraestructura.md) | MCP como capa de infraestructura | ✅ Vigente | 2026-07-06 |
-| [ADR-005](ADR-005-normas-tridente-dew-wiki-vidapersonal.md) | Normas del Tridente | ✅ Vigente (actualizado ADR-011) | 2026-07-06 |
-| [ADR-006](ADR-006-sesion-log-como-artefacto.md) | Sesión-log como artefacto | ✅ Vigente | 2026-07-06 |
-| [ADR-007](ADR-007-isla-mcp-propia.md) | Isla MCP propia en la wiki | ✅ Vigente | 2026-07-06 |
-| [ADR-008](ADR-008-adr-obligatorio-por-decision.md) | ADR obligatorio por decisión | ✅ Vigente | 2026-07-06 |
-| [ADR-009](ADR-009-repo-scripts-separado.md) | Repo scripts separado | ✅ Vigente | 2026-07-13 |
-| [ADR-010](ADR-010-evaluacion-arquitectura-post-plan.md) | Evaluación arquitectura post-plan | ✅ Vigente | 2026-07-13 |
-| [ADR-011](ADR-011-separacion-tracking-formacion.md) | Separación VIDAPERSONAL en tracking + formacion | ✅ Vigente | 2026-07-13 |
-| [ADR-012](ADR-012-protocolo-cierre-sesion.md) | Protocolo formal de cierre de sesión | ✅ Vigente | 2026-07-13 |
+| [ADR-001](ADR-001-estructura-ecosistema.md) | Estructura del ecosistema multi-repo | aceptado | 2026-07-05 |
+| [ADR-002](ADR-002-triangulo-dew-wiki-vida.md) | Triángulo dew-wiki-vida personal | aceptado | 2026-07-05 |
+| [ADR-003](ADR-003-convencion-islas.md) | Convención de islas | aceptado | 2026-07-05 |
+| [ADR-004](ADR-004-mcp-como-capa-infraestructura.md) | MCP como capa de infraestructura | aceptado | 2026-07-07 |
+| [ADR-005](ADR-005-normas-tridente-dew-wiki-vidapersonal.md) | Normas Tridente dew-wiki-vidapersonal | aceptado | 2026-07-08 |
+| [ADR-006](ADR-006-sesion-log-como-artefacto.md) | Sesión-log como artefacto de primera clase | aceptado | 2026-07-08 |
+| [ADR-007](ADR-007-isla-mcp-propia.md) | Isla MCP propia | aceptado | 2026-07-09 |
+| [ADR-008](ADR-008-adr-obligatorio-por-decision.md) | ADR obligatorio por decisión | aceptado | 2026-07-10 |
+| [ADR-009](ADR-009-repo-scripts-separado.md) | Repo scripts separado | aceptado | 2026-07-10 |
+| [ADR-010](ADR-010-evaluacion-arquitectura-post-plan.md) | Evaluación arquitectura post-plan | aceptado | 2026-07-11 |
+| [ADR-011](ADR-011-separacion-tracking-formacion.md) | Separación tracking-formación | aceptado | 2026-07-12 |
+| [ADR-012](ADR-012-protocolo-cierre-sesion.md) | Protocolo cierre de sesión | aceptado | 2026-07-13 |
+| [ADR-013](ADR-013-sistema-plantillas-protocolo-actualizacion.md) | Sistema plantillas y protocolo actualización | aceptado | 2026-07-16 |
+| [ADR-014](ADR-014-repo-orquestador.md) | Repo yggdrasil-orquestador como contexto cross-repo | aceptado | 2026-07-17 |
 
 ---
 
-## Próximo ADR libre: ADR-013
+## Próximo ADR
+
+`ADR-015` — pendiente determinar
 
 ---
 
-_Actualizado: 2026-07-13 · 12 ADRs vigentes · Perplexity MCP_
+_v8 · 2026-07-17 · Añadido ADR-014 orquestador · Perplexity MCP_
