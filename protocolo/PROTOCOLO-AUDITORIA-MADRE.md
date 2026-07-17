@@ -2,14 +2,14 @@
 tipo: protocolo
 author: Alvaro Fernandez Mota
 creado: 2026-07-16
-actualizado: 2026-07-16 16:24 CEST
+actualizado: 2026-07-17 15:24 CEST
 ruta: protocolo/PROTOCOLO-AUDITORIA-MADRE.md
 tags: [protocolo, auditoria, madre, docker, infra, ssh]
 status: vigente
-version: 1.0
+version: 1.1
 ---
 
-# PROTOCOLO-AUDITORIA-MADRE v1.0
+# PROTOCOLO-AUDITORIA-MADRE v1.1
 
 > Ejecutar periodicamente (semanal en RITUAL-SEMANAL, o ante sospecha de problemas).
 > Tiempo estimado: 5-10 min con terminal abierta en Madre.
@@ -18,8 +18,6 @@ version: 1.0
 ---
 
 ## Fase 1: Bloque de auditoria rapida
-
-Copiar y ejecutar en un solo bloque:
 
 ```bash
 echo "=== HOSTNAME ==="
@@ -61,11 +59,12 @@ docker inspect NOMBRE | grep -E '"Status"|"Error"|"ExitCode"'
 | Patron en logs | Diagnostico | Accion |
 |---|---|---|
 | `telemetry_reporting: Failed` | Qdrant falso positivo | Ignorar o QDRANT__TELEMETRY_DISABLED=true |
-| `Bind for X.X.X.X:PUERTO failed: port is already allocated` | Conflicto de puerto | `docker ps --format "table {{.Names}}\t{{.Ports}}" \| grep PUERTO` |
+| `Bind for X.X.X.X:PUERTO failed` | Conflicto de puerto | `docker ps --format table` para identificar quien lo usa |
 | `CORS_ALLOW_ORIGIN IS SET TO '*'` | Open-WebUI advertencia | Aceptable en red privada |
-| `UNEXPECTED: embeddings.position_ids` | Modelo embedding cargado desde arch diferente | Ignorar si funciona |
+| `UNEXPECTED: embeddings.position_ids` | Modelo cargado desde arch diferente | Ignorar si funciona |
 | `health: starting` tras reinicio | Normal hasta 5-10 min | Esperar y volver a verificar |
 | `ExitCode: 128` | Container no arranco | Ver campo `Error` en docker inspect |
+| Logs vacios (Python) | PYTHONUNBUFFERED no seteado | Anadir `PYTHONUNBUFFERED=1` al env |
 
 ---
 
@@ -73,24 +72,25 @@ docker inspect NOMBRE | grep -E '"Status"|"Error"|"ExitCode"'
 
 ```bash
 # Buscar todos los composes disponibles
-find /home/varopc -name "docker-compose*" 2>/dev/null | grep -v nvim
+find /srv /home/varopc -name "docker-compose*" 2>/dev/null | grep -v nvim
 
-# Ver cual compose gestiona un contenedor (buscar por nombre de servicio)
-grep -rl "nombre-servicio" /home/varopc --include="docker-compose*" 2>/dev/null
+# Ver cual compose gestiona un contenedor
+grep -rl "nombre-servicio" /srv /home/varopc --include="docker-compose*" 2>/dev/null
 ```
 
 ---
 
-## Fase 5: Mapa de puertos criticos — referencia rapida
+## Fase 5: Mapa de puertos criticos
 
 | Puerto | Servicio | Contenedor | Notas |
 |---|---|---|---|
 | 22 | SSH Madre | sshd (host) | Acceso principal |
 | 2222 | Gitea SSH | gitea | |
-| 3000 | Grafana | grafana | Ocupado - yggdrasil-mcp usa 3001 (pendiente fix) |
+| 3000 | Grafana | grafana | |
+| 3001 | yggdrasil-mcp | yggdrasil-mcp | MCP server — stdio, no HTTP |
 | 3003 | Gitea Web | gitea | |
-| 8080 | Open-WebUI | open-webui | Verificar |
-| 6333 | Qdrant API | qdrant | Verificar |
+| 6333 | Qdrant API | qdrant | |
+| 8080 | Open-WebUI | open-webui | |
 | 11434 | Ollama API | ollama | |
 
 > Actualizar esta tabla cuando cambien asignaciones de puertos.
@@ -110,13 +110,13 @@ grep -rl "nombre-servicio" /home/varopc --include="docker-compose*" 2>/dev/null
 
 ## Issues conocidos — referencia rapida
 
-| Issue | Problema | Fix |
+| Issue | Problema | Estado |
 |---|---|---|
-| [#70](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/70) | yggdrasil-mcp: puerto 3000 ocupado por grafana | Cambiar a 3001 en su compose |
-| [#71](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/71) | qdrant telemetria | QDRANT__TELEMETRY_DISABLED=true |
+| [#70](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/70) | yggdrasil-mcp: conflicto puerto 3000 con grafana | Resuelto — puerto 3001 |
+| [#71](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/71) | qdrant telemetria | Pendiente: QDRANT__TELEMETRY_DISABLED=true |
 | [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) | HDD /dev/sda ~28.000h | SMART PASSED 2026-07-16, monitorizar |
 | [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) | Puerto 21 FTP | En router Digi, no en Madre |
 
 ---
 
-_Creado: 2026-07-16 v1.0 · basado en auditoria SSH real sesion 2026-07-16 · Perplexity MCP_
+_Actualizado: 2026-07-17 v1.1 · fix puerto mcp 3001 confirmado + patrón PYTHONUNBUFFERED · Perplexity MCP_

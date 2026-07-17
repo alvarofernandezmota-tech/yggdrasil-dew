@@ -2,14 +2,14 @@
 tipo: protocolo
 author: Alvaro Fernandez Mota
 creado: 2026-07-13
-actualizado: 2026-07-16
+actualizado: 2026-07-17 15:24 CEST
 ruta: protocolo/PROTOCOLO-APERTURA-SESION.md
 tags: [protocolo, apertura, sesion, global]
 status: vigente
-version: 2.0
+version: 3.0
 ---
 
-# PROTOCOLO-APERTURA-SESION v2.0
+# PROTOCOLO-APERTURA-SESION v3.0
 
 > Ejecutar SIEMPRE al inicio de cada sesion.
 > Sustituye a: docs/canon/PROTOCOLO-INICIO-SESION.md v1.0 (legacy).
@@ -30,14 +30,15 @@ version: 2.0
 ## Fase 2: Identificar repos afectados y cargar su contexto
 
 ```
-[ ] Sesion afecta a TODO el ecosistema -> ejecutar PROTOCOLO-CONTEXTO-ECOSISTEMA.md
-[ ] Sesion afecta solo a DEW           -> ejecutar PROTOCOLO-CONTEXTO-DEW.md
-[ ] Sesion afecta solo a WIKI          -> ejecutar PROTOCOLO-CONTEXTO-WIKI.md
-[ ] Sesion afecta solo a TRACKING      -> ejecutar PROTOCOLO-CONTEXTO-TRACKING.md
-[ ] Sesion afecta solo a FORMACION     -> ejecutar PROTOCOLO-CONTEXTO-FORMACION.md
+[ ] Sesion afecta a TODO el ecosistema  -> ejecutar PROTOCOLO-CONTEXTO-ECOSISTEMA
+[ ] Sesion afecta solo a DEW            -> ejecutar PROTOCOLO-CONTEXTO-DEW
+[ ] Sesion afecta solo a WIKI           -> ejecutar PROTOCOLO-CONTEXTO-WIKI
+[ ] Sesion afecta solo a TRACKING       -> ejecutar PROTOCOLO-CONTEXTO-TRACKING
+[ ] Sesion afecta solo a FORMACION      -> ejecutar PROTOCOLO-CONTEXTO-FORMACION
+[ ] Sesion afecta a Madre / infra       -> ejecutar PROTOCOLO-APERTURA-MADRE
 ```
 
-> Se pueden combinar: sesion en DEW + WIKI = ejecutar ambos contextos.
+> Se pueden combinar: sesion en DEW + Madre = ejecutar ambos contextos.
 
 ---
 
@@ -49,7 +50,7 @@ version: 2.0
     - sin guion final / sin 'formacion-tech' / sin 'WIKI---PERSONAL'
 [ ] Separacion: tecnicos en DEW/FORMACION / personales en TRACKING / mapa en WIKI
 [ ] Ningun secreto/token/IP en ningun .md
-[ ] Ningun archivo nuevo sin plantilla canonica de docs/canon/
+[ ] Ningun archivo nuevo sin frontmatter canonico
 ```
 
 ---
@@ -66,8 +67,8 @@ version: 2.0
 
 ## Al cerrar
 
-> Ejecutar PROTOCOLO-CIERRE-SESION.md
+> Ejecutar PROTOCOLO-CIERRE-SESION
 
 ---
 
-_Actualizado: 2026-07-16 v2.0 F15 Perplexity MCP_
+_Actualizado: 2026-07-17 v3.0 · anadir rama Madre/infra en Fase 2 · Perplexity MCP_

@@ -2,14 +2,14 @@
 tipo: protocolo
 author: Alvaro Fernandez Mota
 creado: 2026-07-13
-actualizado: 2026-07-16
+actualizado: 2026-07-17 15:24 CEST
 ruta: protocolo/PROTOCOLO-CIERRE-SESION.md
 tags: [protocolo, cierre, sesion, sincronizacion, global]
 status: vigente
-version: 2.0
+version: 3.0
 ---
 
-# PROTOCOLO-CIERRE-SESION v2.0
+# PROTOCOLO-CIERRE-SESION v3.0
 
 > Ejecutar SIEMPRE al finalizar cada sesion con cambios.
 > El cierre garantiza que el ecosistema queda sincronizado y que la proxima sesion
@@ -32,8 +32,6 @@ version: 2.0
 
 ## Fase 2: Sincronizacion minima obligatoria
 
-> Ejecutar siempre. No es opcional.
-
 ```
 [ ] MASTER-PENDIENTES.md:
     - marcar fases cerradas como CERRADAS
@@ -49,10 +47,11 @@ version: 2.0
 ## Fase 3: Sincronizacion por repo (solo los repos tocados)
 
 ```
-[ ] Si se tocou DEW      -> ejecutar PROTOCOLO-SINCRONIZACION-DEW.md (fases 1-2 minimo)
-[ ] Si se tocou WIKI     -> ejecutar PROTOCOLO-SINCRONIZACION-WIKI.md (fases 1-2 minimo)
-[ ] Si se tocou TRACKING -> ejecutar PROTOCOLO-SINCRONIZACION-TRACKING.md (fases 1-2 minimo)
-[ ] Si se tocou FORMACION-> ejecutar PROTOCOLO-SINCRONIZACION-FORMACION.md (fases 1-2 minimo)
+[ ] Si se toco DEW       -> ejecutar PROTOCOLO-SINCRONIZACION-DEW (fases 1-2 minimo)
+[ ] Si se toco WIKI      -> ejecutar PROTOCOLO-SINCRONIZACION-WIKI (fases 1-2 minimo)
+[ ] Si se toco TRACKING  -> ejecutar PROTOCOLO-SINCRONIZACION-TRACKING (fases 1-2 minimo)
+[ ] Si se toco FORMACION -> ejecutar PROTOCOLO-SINCRONIZACION-FORMACION (fases 1-2 minimo)
+[ ] Si se toco Madre     -> ejecutar PROTOCOLO-ACTUALIZACION-MADRE (paso final: documentar)
 ```
 
 ---
@@ -60,10 +59,11 @@ version: 2.0
 ## Fase 4: Sincronizacion de indices
 
 ```
-[ ] Si se crearon ADRs nuevos         -> verificar INDEX-ADR.md
-[ ] Si se crearon protocolos nuevos   -> verificar protocolo/INDEX.md
-[ ] Si se crearon/modificaron islas   -> verificar wiki/islas/INDEX.md
-[ ] Si se crearon plantillas nuevas   -> verificar MASTER-PENDIENTES canon plantillas
+[ ] Si se crearon ADRs nuevos            -> verificar INDEX-ADR.md
+[ ] Si se crearon protocolos nuevos      -> verificar protocolo/INDEX.md
+[ ] Si se crearon/modificaron islas      -> verificar wiki/islas/INDEX.md
+[ ] Si se desplegaron contenedores       -> verificar docs/inventario-madre.md
+[ ] Si cambiaron puertos                 -> verificar tabla PROTOCOLO-AUDITORIA-MADRE
 ```
 
 ---
@@ -72,11 +72,11 @@ version: 2.0
 
 ```
 [ ] Verificar que no hay archivos sin frontmatter creados en esta sesion
-[ ] Verificar que no hay secretos/tokens en ningun archivo tocado esta sesion
+[ ] Verificar que no hay secretos/tokens en ningun archivo tocado
 [ ] Commit final si hay cambios pendientes (mensaje: 'chore: cierre sesion YYYY-MM-DD')
 [ ] Cerrar issues que se resolvieron en esta sesion
 ```
 
 ---
 
-_Actualizado: 2026-07-16 v2.0 F15 Perplexity MCP_
+_Actualizado: 2026-07-17 v3.0 · anadir rama Madre en Fase 3 + indices infra en Fase 4 · Perplexity MCP_
