@@ -2,91 +2,114 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-06
-actualizado: 2026-07-18 01:20 CEST
+actualizado: 2026-07-18 01:45 CEST
 ruta: MASTER-PENDIENTES.md
-tags: [pendientes, fases, alineacion, roadmap]
+tags: [pendientes, fases, canon]
 status: vigente
 ---
 
 # MASTER-PENDIENTES — Ecosistema Yggdrasil
 
-> Estado real al 2026-07-18 01:20 CEST.
-> Actualizar al inicio y cierre de cada sesion.
+> Última actualización: **2026-07-18 01:45 CEST**
+> Fuente de verdad de todas las fases activas y cerradas.
 
 ---
 
-## Regla canon DEW / Tracking
+## ✅ Fases cerradas
 
-> - `yggdrasil-dew/docs/sesiones/` -> diarios de **trabajo tecnico**
-> - `yggdrasil-tracking/diarios/` -> diarios **personales**
-> - Ningun agente viola esta separacion.
-
----
-
-## Estado de Fases
-
-| Fase | Descripcion | Estado | Notas |
-|---|---|---|---|
-| **F0** | Seguridad repos | ⚪ Parcial | SSH/puerto21 pendiente terminal |
-| **F1** | Canon ADRs (001-013) | ✅ CERRADA | 13 ADRs + INDEX correcto |
-| **F2** | Unificar indices WIKI | ✅ CERRADA | README + HOME + INDEX.md OK |
-| **F3** | Purga WIKI | ⚪ PENDIENTE | Sesion dedicada con Alvaro — issue #59 |
-| **F4** | Consolidar MCP | ✅ CERRADA | wiki/islas/mcp.md verificado |
-| **F5** | CI enforcement | ✅ CERRADA | gitleaks + validate-canon + markdownlint |
-| **F6** | Ritual semanal | ✅ CERRADA | PROTOCOLO-RITUAL-SEMANAL v1.0 |
-| **F7** | GitOps/Observabilidad | 🔵 PARCIAL | healthchecks docker + Loki pendientes terminal |
-| **F8** | VIDAPERSONAL a tracking | ✅ CERRADA | ADR-011 + #48 cerrado |
-| **F9** | Protocolo cierre/inicio/ADR | ✅ CERRADA | Protocolos canon vigentes |
-| **F10** | Protocolo naming + borrado | ✅ CERRADA | PROTOCOLO-NOMBRES v2.0 + PROTOCOLO-BORRADO v1.0 |
-| **F11** | Separacion DEW/tracking diarios | ✅ CERRADA | Regla canon desde 2026-07-15 |
-| **F12** | fix consistencia nombres repos | ✅ CERRADA | DEW (10 archivos) + WIKI (3 islas) 2026-07-16 |
-| **F13** | Protocolos contexto x4 repos | ✅ CERRADA | CONTEXTO-DEW/WIKI/TRACKING/FORMACION 2026-07-16 |
-| **F14** | Protocolos auditoria x4 repos | ✅ CERRADA | AUDITORIA-DEW/WIKI/TRACKING/FORMACION 2026-07-16 |
-| **F15** | AGENT.md + CONTEXT.md x4 repos tridente | ✅ CERRADA | dew/wiki/tracking/formacion 2026-07-16 |
-| **F16** | Protocolos Madre x3 | ✅ CERRADA | madre-config/secops/ollama-stack 2026-07-16 |
-| **F17** | PROTOCOLO-NUEVO-DIARIO-TRACKING | ✅ CERRADA | Protocolo verificado + issue #69 cerrado 2026-07-18 |
-| **F18** | BOOTSTRAP.md orquestador | ✅ CERRADA | BOOTSTRAP.md v1.1 completo 2026-07-18 |
-| **F19** | AGENT.md repos secundarios | ✅ CERRADA | yggdrasil-scripts + acer-config creados 2026-07-18 |
-| **F20** | Hardware Madre documentar | ⚪ PENDIENTE | dmidecode CPU/placa pendiente terminal |
-| **F21** | Fusion islas WIKI (21 → 16) | ✅ CERRADA | 5 fusiones: ia-local, agentes-personales, seguridad+osint, infra+madre · 2026-07-18 |
-| **F22** | Runbooks terminal | ✅ CERRADA | RUNBOOK-THDORA, RUNBOOK-MCP, RUNBOOK-CRITICOS · 2026-07-18 |
-| **F23** | Diario sesion 2026-07-18 | ✅ CERRADA | docs/sesiones/2026-07-18.md · 2026-07-18 |
+| Fase | Descripción | Fecha |
+|---|---|---|
+| F1 | Estructura base DEW + ADRs 001–007 | 2026-07-06 |
+| F2 | AGENT.md + CONTEXT.md en todos los repos | 2026-07-08 |
+| F3 | Wiki islas estructura base | 2026-07-09 |
+| F4 | Consolidar wiki/islas/mcp.md | 2026-07-09 |
+| F5 | Auditoría repo madre-config | 2026-07-09 |
+| F6 | ADR-008 a ADR-011 | 2026-07-10 |
+| F7 | GitOps + runbooks (parcial) | 2026-07-12 |
+| F8 | Inventario servicios Madre | 2026-07-12 |
+| F9 | Plan Maestro 2026-07 formalizado | 2026-07-13 |
+| F10 | INDEX islas wiki v4 | 2026-07-13 |
+| F11 | Regla canon DEW/tracking separados | 2026-07-15 |
+| F12 | ADR-012 local-brain como orquestador RAG | 2026-07-16 |
+| F13 | Ownership matrix + CONTEXT.md Madre | 2026-07-16 |
+| F14 | Runbooks críticos: THDORA + MCP + CRITICOS | 2026-07-16 |
+| F15 | THDORA-PERSONAL AGENT.md | 2026-07-16 |
+| F16 | Protocolos canon 45 completos + INDEX v5 | 2026-07-17 |
+| F17 | Correcciones menores DEW | 2026-07-18 |
+| F18 | CONTEXT.md orquestador actualizado | 2026-07-18 |
+| F19 | Diario sesión 2026-07-18 mañana | 2026-07-18 |
+| F21 | Fusiones wiki 21←16 islas + INDEX v6 | 2026-07-18 |
+| F22 | Runbook sesiones-IA creado | 2026-07-18 |
+| F23 | Diario sesión 2026-07-18 noche | 2026-07-18 |
+| F24 | orquestador.md corregida — THDORA separada | 2026-07-18 |
+| F24b | thdora.md isla independiente + redirect agentes | 2026-07-18 |
+| F25 | MAPA-CONEXIONES.md creado en DEW | 2026-07-18 |
+| F27 | BOOTSTRAP.md v2 actualizado en orquestador | 2026-07-18 |
 
 ---
 
-## Issues pendientes por tipo
+## 🟡 Fases en curso / parciales
 
-### Requieren TERMINAL (no MCP)
-
-| Issue | Descripcion | Prioridad | Runbook |
-|---|---|---|---|
-| #74 | Token THDORA caducado | 🔴 Critico | RUNBOOK-THDORA-TOKEN.md |
-| #75 | yggdrasil-mcp caido | 🔴 Critico | RUNBOOK-MCP-ARRANQUE.md |
-| #15 | Puerto 21 FTP router | 🔴 Critico | RUNBOOK-CRITICOS-TERMINAL.md |
-| #71 | Qdrant unhealthy | ⚠️ Infra | RUNBOOK-CRITICOS-TERMINAL.md |
-| #31 | HDD 28k+ horas | ⚠️ Hardware | RUNBOOK-CRITICOS-TERMINAL.md |
-| #77 | Auditoria ADR-002 suelto | 🟡 Canon | — |
-| F20 | dmidecode hardware | 🟡 Infra | RUNBOOK-CRITICOS-TERMINAL.md |
-
-### Requieren sesion dedicada con Alvaro
-
-| Issue | Descripcion |
-|---|---|
-| #59/#3 | Purga WIKI — F3 |
+| Fase | Descripción | Bloqueado por |
+|---|---|---|
+| F0 | Hardware: dmidecode + SSD inventory Madre | Terminal SSH |
+| F7 | GitOps: .env.template + env-checker.sh + healthchecks | Terminal SSH |
+| F26 | ADR-014 local-brain como motor RAG (formalizar) | Revisar cómo lo ve Álvaro |
 
 ---
 
-## Proxima sesion recomendada
+## 🔴 Pendientes críticos (requieren terminal)
 
-> Ver `docs/runbooks/RUNBOOK-CRITICOS-TERMINAL.md` para orden exacto y comandos.
+| ID | Descripción | Issue |
+|---|---|---|
+| HAL-P0 | FTP puerto 21 EXPUESTO | [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) |
+| HAL-P1 | THDORA token caducado | [#74](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/74) |
+| HAL-P2 | yggdrasil-mcp caído puerto 3000/3001 | [#70](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/70) |
+| HAL-P3 | Qdrant unhealthy falso positivo | [#71](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/71) |
+| HAL-P4 | log_guardian_bot crash loop #971 | [#46](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/46) |
+| HAL-P5 | HDD 28k+ horas — planificar sustitución | [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) |
+| HAL-P6 | SSH passwords habilitados | [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) |
+| HAL-P7 | IaC docker-compose no versionado | [#43](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/43) |
 
-1. 🔴 #74 — Token THDORA (5 min)
-2. 🔴 #75 — yggdrasil-mcp (5-10 min)
-3. ⚠️ #71 — Qdrant verificar (2 min)
-4. 🔴 #15 — FTP puerto 21 cerrar (3 min)
-5. 🟡 F20 — dmidecode (3 min)
-6. ⚠️ #31 — S.M.A.R.T. HDD (5 min)
+---
 
-**Total estimado: ~30 minutos de terminal.**
+## 🟡 Pendientes documentales (MCP puede ejecutar)
 
-_Actualizado: 2026-07-18 01:20 CEST · Cierre sesión · Perplexity-MCP_
+| ID | Descripción | Issue |
+|---|---|---|
+| DOC-01 | ADR-014 formalizar local-brain como RAG | [#67](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/67) |
+| DOC-02 | Isla filosofia.md — bloque 2 (requiere input Álvaro) | [#57](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/57) |
+| DOC-03 | WIKI purga 279←80 archivos | [#59](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/59) |
+| DOC-04 | Completar formacion.md + impresion3d.md | [#56](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/56) |
+| DOC-05 | Auditoría isla Orquestador — verificar ciérre post-F24 | [#49](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/49) |
+| DOC-06 | Auditoría isla IA local | [#55](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/55) |
+| DOC-07 | Ownership matrix completar cobertura total | [#40](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/40) |
+| DOC-08 | BOOTSTRAP.md — cerrar issue #79 | [#79](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/79) |
+
+---
+
+## ⚪ Pendientes bajos / requieren input Álvaro
+
+| ID | Descripción | Issue |
+|---|---|---|
+| LOW-01 | Isla Thea (iPhone) | [#52](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/52) |
+| LOW-02 | Isla Acer | [#51](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/51) |
+| LOW-03 | Filosofia.md bloque personal | [#57](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/57) |
+| LOW-04 | Refactor diarios VIDAPERSONAL | [#61](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/61) |
+| LOW-05 | GitHub Action detector nombres | [#66](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/66) |
+| LOW-06 | GOB-001 principios filosofia | [#50](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/50) |
+
+---
+
+## 📋 Últimas fases ejecutadas
+
+**Sesión 2026-07-18 madrugada (01:00–02:00 CEST)**
+- F24: `orquestador.md` corregida — THDORA ya NO es componente del orquestador
+- F24b: `thdora.md` creada como isla personal independiente + redirect de `agentes-personales.md`
+- F25: `docs/MAPA-CONEXIONES.md` creado en DEW con grafo completo del ecosistema
+- F27: `BOOTSTRAP.md` actualizado a v2 con estado real y reglas claras para agentes
+- Cierre canónico: ESTADO-SISTEMA + MASTER-PENDIENTES + diario técnico
+
+---
+
+_Actualizado: 2026-07-18 01:45 CEST · Cierre sesión madrugada · Perplexity-MCP_

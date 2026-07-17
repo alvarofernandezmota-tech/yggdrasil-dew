@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-06
-actualizado: 2026-07-18 01:20 CEST
+actualizado: 2026-07-18 01:45 CEST
 ruta: ESTADO-SISTEMA.md
 tags: [estado, sistema, canon, sincronizacion]
 status: vigente
@@ -10,7 +10,7 @@ status: vigente
 
 # ESTADO DEL SISTEMA — Ecosistema Yggdrasil
 
-> Última sincronización: **2026-07-18 01:20 CEST** · commit `241d3500`
+> Última sincronización: **2026-07-18 01:45 CEST** · commit `aa3cb08c`
 > Actualizar al inicio y cierre de cada sesión.
 
 ---
@@ -19,13 +19,15 @@ status: vigente
 
 | Métrica | Valor |
 |---|---|
-| Fases cerradas | F1–F19 + F21+F22+F23 = **22 fases** |
+| Fases cerradas | F1–F19 + F21+F22+F23 + **F24+F24b+F25+F27** = **26 fases** |
 | Fases parciales | F0, F7 |
-| Fases pendientes terminal | F20 |
-| Islas wiki | **16** (fusionadas desde 21 — F21) |
+| Fases pendientes terminal | F20, F26 (ADR-014) |
+| Islas wiki | **16** |
 | Repos con AGENT.md | **10/10** ✅ |
 | Issues críticos abiertos | 6 (todos requieren terminal) |
-| Runbooks disponibles | 3 |
+| Runbooks disponibles | 4 |
+| BOOTSTRAP.md | ✅ v2 operativo |
+| MAPA-CONEXIONES.md | ✅ creado |
 
 ---
 
@@ -36,7 +38,7 @@ status: vigente
 | **Madre** | ✅ Online 24/7 | `100.91.112.32` | Arch Linux (Omarchy) |
 | **Acer** | ✅ Activo | `100.86.119.102` | Arch Linux + Hyprland |
 
-### Servicios Docker Madre (Batcueva)
+### Servicios Docker Madre
 
 | Servicio | Estado | Issue |
 |---|---|---|
@@ -76,7 +78,9 @@ status: vigente
 | Islas ✅ completas | 8 |
 | Islas 🟡 parciales | 6 |
 | Islas 🔴 con problema | 2 |
-| Última fusión (F21) | 2026-07-18 — 21 → 16 islas |
+| `orquestador.md` | ✅ corregida F24 — THDORA separada |
+| `thdora.md` | ✅ isla independiente creada F24b |
+| `agentes-personales.md` | ✅ convertida en redirect a thdora.md |
 
 ---
 
@@ -101,6 +105,7 @@ status: vigente
 
 | Fecha | Commit | Qué se hizo |
 |---|---|---|
+| 2026-07-18 01:45 | `aa3cb08c` | F24+F24b+F25+F27 + cierre sesión madrugada |
 | 2026-07-18 01:20 | `241d3500` | F21 fusiones wiki + F22 runbooks + F23 diario |
 | 2026-07-18 00:52 | `821bfab3` | F17+F18+F19 cerradas |
 | 2026-07-16 19:00 | — | F12–F16 cerradas, 21 islas auditadas |
@@ -108,4 +113,4 @@ status: vigente
 
 ---
 
-_Actualizado: 2026-07-18 01:20 CEST · Cierre sesión · Perplexity-MCP_
+_Actualizado: 2026-07-18 01:45 CEST · Cierre sesión madrugada · Perplexity-MCP_
