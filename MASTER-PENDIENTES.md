@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-06
-actualizado: 2026-07-18 00:29 CEST
+actualizado: 2026-07-18 00:52 CEST
 ruta: MASTER-PENDIENTES.md
 tags: [pendientes, fases, alineacion, roadmap]
 status: vigente
@@ -10,7 +10,7 @@ status: vigente
 
 # MASTER-PENDIENTES — Ecosistema Yggdrasil
 
-> Estado real al 2026-07-18 00:29 CEST.
+> Estado real al 2026-07-18 00:52 CEST.
 > Actualizar al inicio y cierre de cada sesion.
 
 ---
@@ -42,146 +42,43 @@ status: vigente
 | **F12** | fix consistencia nombres repos | ✅ CERRADA | DEW (10 archivos) + WIKI (3 islas) 2026-07-16 |
 | **F13** | Protocolos contexto x4 repos | ✅ CERRADA | CONTEXTO-DEW/WIKI/TRACKING/FORMACION 2026-07-16 |
 | **F14** | Protocolos auditoria x4 repos | ✅ CERRADA | AUDITORIA-DEW/WIKI/TRACKING/FORMACION 2026-07-16 |
-| **F15** | Sistema completo de protocolos | ✅ CERRADA | 36 protocolos + INDEX v4.0 + 5 atomos + ACTUALIZACION x4 + DOCUMENTACION 2026-07-16 |
-| **F16** | Islas de contenido personal | ⚪ CONCEPTUAL | Hip Hop / Whisky / Vida |
-| **F17** | Protocolos emergentes + auditoria | 🔵 EN PROGRESO | EMERGENCIA + RITUAL-SEMANAL + RENOMBRAR-REPO creados. Pendiente: NUEVO-DIARIO-TRACKING (#69) |
-| **F18** | Auditoria Madre completa | ✅ CERRADA | SSH + 23 contenedores + islas actualizadas 2026-07-16 tarde |
-| **F19** | Auditoria canon + AGENT.md ecosistema | ✅ CERRADA | PROTOCOLO-ALINEACION v2 + INICIO v5 + CIERRE v2 + tracking/THDORA operativos 2026-07-16 noche |
-| **F20** | Documentar hardware Madre (CPU/placa) | ⚪ PENDIENTE TERMINAL | Gap detectado 2026-07-18 — requiere dmidecode en Madre |
+| **F15** | AGENT.md + CONTEXT.md x4 repos tridente | ✅ CERRADA | dew/wiki/tracking/formacion 2026-07-16 |
+| **F16** | Protocolos Madre x3 | ✅ CERRADA | madre-config/secops/ollama-stack 2026-07-16 |
+| **F17** | PROTOCOLO-NUEVO-DIARIO-TRACKING | ✅ CERRADA | Protocolo verificado + issue #69 cerrado 2026-07-18 |
+| **F18** | BOOTSTRAP.md orquestador | ✅ CERRADA | BOOTSTRAP.md v1.1 completo 2026-07-18 |
+| **F19** | AGENT.md repos secundarios | ✅ CERRADA | yggdrasil-scripts + acer-config creados 2026-07-18 |
+| **F20** | Hardware Madre documentar | ⚪ PENDIENTE | dmidecode CPU/placa pendiente terminal |
 
 ---
 
-## Canon de protocolos — estado real 2026-07-16
+## Issues pendientes por tipo
 
-### NIVEL 1 — Globales (14)
-
-| Protocolo | Estado |
-|---|---|
-| APERTURA-SESION | ✅ v2.0 |
-| CIERRE-SESION | ✅ v3.0 |
-| CONTEXTO-ECOSISTEMA | ✅ v1.0 |
-| ACTUALIZACION-ECOSISTEMA | ✅ v1.0 |
-| SINCRONIZACION-ECOSISTEMA | ✅ v1.0 |
-| AUDITORIA-ECOSISTEMA | ✅ v1.0 |
-| RITUAL-SEMANAL | ✅ v1.0 (F17) |
-| NOMBRES | ✅ v2.0 |
-| BORRADO | ✅ v1.0 |
-| DEPRECAR-ARCHIVO | ✅ v1.0 |
-| SECRETOS | ✅ v1.0 |
-| DOCUMENTACION-ECOSISTEMA | ✅ v1.0 |
-| EMERGENCIA | ✅ v1.0 (F17) |
-| RENOMBRAR-REPO | ✅ v1.0 (F17) |
-| VERIFICACION-COMMITS | ✅ v1.0 nuevo 2026-07-16 |
-| INICIO-SESION | ✅ v5 actualizado 2026-07-16 |
-| ALINEACION | ✅ v2 corregido 2026-07-16 |
-
-### NIVEL 2 — Por repo (20)
-
-| Protocolo | Estado |
-|---|---|
-| APERTURA x4 (DEW/WIKI/TRACKING/FORMACION) | ✅ v1.0 |
-| CONTEXTO x4 | ✅ v1.0 |
-| SINCRONIZACION x4 | ✅ v1.0 |
-| AUDITORIA x4 | ✅ v1.0 |
-| ACTUALIZACION x4 | ✅ v1.0 |
-
-### NIVEL 3 — Atomos (9)
-
-| Protocolo | Estado |
-|---|---|
-| NUEVO-ADR / NUEVA-ISLA / NUEVO-REPO | ✅ v1.0 |
-| NUEVO-APUNTE / NUEVO-SCRIPT / NUEVO-DIARIO-DEW | ✅ v1.0 |
-| NUEVO-PROTOCOLO / ENTRADA-TRACKING / DEPRECAR-ARCHIVO | ✅ v1.0 |
-| NUEVO-DIARIO-TRACKING | ⚪ Pendiente F17 — issue #69 |
-
-**TOTAL: 45 protocolos + INDEX v5.0**
-
----
-
-## AGENT.md + CONTEXT.md por repo — estado real 2026-07-16
-
-| Repo | AGENT.md | CONTEXT.md |
-|---|---|---|
-| `yggdrasil-dew` | ✅ | ✅ |
-| `yggdrasil-wiki` | ✅ | ✅ |
-| `yggdrasil-tracking` | ✅ 2026-07-16 | ✅ 2026-07-16 |
-| `THDORA-PERSONAL` | ✅ 2026-07-16 | ✅ 2026-07-16 |
-| `madre-config` | ❓ sin verificar | ❓ sin verificar |
-| `yggdrasil-secops` | ❓ sin verificar | ❓ sin verificar |
-| `ollama-stack` | ❓ sin verificar | ❓ sin verificar |
-
----
-
-## Canon de plantillas — 2026-07-16
-
-| Plantilla | Estado |
-|---|---|
-| PLANTILLA-DIARIO-DEW | ✅ v1.0 |
-| PLANTILLA-DIARIO-TRACKING | ✅ v1.0 |
-| PLANTILLA-ISLA-WIKI | ✅ v1.0 |
-| PLANTILLA-APUNTE-FORMACION | ✅ v1.0 |
-| PLANTILLA-ADR | ✅ v1.0 |
-| PLANTILLA-PROTOCOLO | ✅ v1.0 |
-| PLANTILLA-ESTADO-ISLA | ✅ v1.0 |
-| PLANTILLA-WHISKY | ⚪ F16 |
-| PLANTILLA-HIPHOP | ⚪ F16 |
-| PLANTILLA-VIDA | ⚪ F16 |
-
----
-
-## Bloqueantes criticos (requieren terminal)
-
-| Issue | Titulo | Urgencia | Nota |
-|---|---|---|---|
-| [#74](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/74) | HAL-008 Token Telegram THDORA | 🔴 Alta | Runbook listo en issue |
-| [#75](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/75) | HAL-006 puerto 3000 yggdrasil-mcp | 🔴 Alta | Runbook listo en issue |
-| [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) | HAL-005 HDD Madre 28.000h | 🟡 Media | SMART PASSED — monitorizar |
-| [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) | Puerto 21 FTP abierto | 🟡 Media | Es router Digi, no Madre |
-
----
-
-## Pendiente MCP
+### Requieren TERMINAL (no MCP)
 
 | Issue | Descripcion | Prioridad |
 |---|---|---|
-| [#69](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/69) | F17 NUEVO-DIARIO-TRACKING protocolo | 🟡 Media |
-| [#59](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/59) | F3 purga WIKI archivos deprecados | 🟡 Media |
-| [#73](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/73) | Renombrar ownership-matrix.md | 🟡 Menor |
-| [#71](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/71) | qdrant telemetria falso positivo | 🟡 Baja |
-| [#60](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/60) | F7 healthchecks + Loki | 🔵 Baja |
+| #15 | Puerto 21 FTP router | 🔴 Critico |
+| #31 | HDD 28k+ horas | ⚠️ Hardware |
+| #71 | Qdrant unhealthy | ⚠️ Infra |
+| #74 | Token THDORA caducado | 🔴 Critico |
+| #75 | yggdrasil-mcp caido | 🔴 Critico |
+| #77 | Auditoria completa ADR-002 suelto | 🟡 Canon |
+| F20 | dmidecode hardware | 🟡 Infra |
 
----
+### Requieren sesion dedicada con Alvaro
 
-## Diarios personales pendientes (TRACKING)
-
-| Fecha | Estado |
+| Issue | Descripcion |
 |---|---|
-| 2026-07-13 al 2026-07-16 | ⚠️ Completar en proxima sesion tracking |
+| #59/#3 | Purga WIKI — F3 |
 
 ---
 
-## F16 — Islas de contenido personal (conceptual)
+## Proxima sesion recomendada
 
-| Isla | Repo propuesto | Estado |
-|---|---|---|
-| Hip Hop / Rap | yggdrasil-hiphop | ⚪ Conceptual |
-| Whisky | yggdrasil-whisky | ⚪ Conceptual |
-| Vida personal | yggdrasil-tracking | ⚪ Conceptual |
+1. 🔴 Arreglar #75 yggdrasil-mcp (puerto 3001) — terminal
+2. 🔴 Renovar token THDORA #74 — terminal
+3. ⚠️ Verificar Qdrant #71 — terminal
+4. 🟡 Ejecutar dmidecode F20 — terminal
+5. 🟡 Auditoria #77: mover ADR-002, renombrar inventario-madre.md — terminal
 
----
-
-## Largo plazo
-
-| Tarea | Notas |
-|---|---|
-| RAG sobre canon (Ollama + Qdrant) | Cuando canon este estable |
-| THDORA ejecutando protocolos | Cuando RAG este operativo + token resuelto |
-| check-nombres.sh | Automatizar PROTOCOLO-NOMBRES |
-| Auditoria ecosistema completa | Primer domingo agosto 2026 |
-| Renombrar WIKI---PERSONAL -> yggdrasil-wiki en GitHub | PROTOCOLO-RENOMBRAR-REPO listo |
-| AGENT.md en madre-config, secops, ollama-stack | Verificar y crear si no existen |
-| Documentar CPU/placa Madre (F20) | Requiere terminal — dmidecode |
-
----
-
-_Actualizado: 2026-07-18 00:29 CEST — F20 añadida (hardware Madre) — cierre sesion 2026-07-18 — Perplexity MCP_
+_Al finalizar terminal: actualizar ESTADO-SISTEMA.md con datos reales de hardware y servicios._
