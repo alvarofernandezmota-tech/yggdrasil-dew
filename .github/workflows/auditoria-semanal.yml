@@ -1,0 +1,123 @@
+name: 🔬 Auditoría Semanal Yggdrasil
+
+on:
+  schedule:
+    - cron: '0 7 * * MON'  # Lunes 07:00 UTC (09:00 CEST)
+  workflow_dispatch:        # Disparo manual desde GitHub Actions
+    inputs:
+      modo:
+        description: 'Modo de auditoría'
+        required: false
+        default: 'express'
+        type: choice
+        options:
+          - express
+          - completa
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  auditoria-issues:
+    name: FASE 1 — Auditoría Issues DEW
+    runs-on: ubuntu-latest
+    outputs:
+      issues_abiertos: ${{ steps.count.outputs.total }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Verificar protocolos existen
+        id: protocolos
+        run: |
+          echo "## Verificación de protocolos" >> $GITHUB_STEP_SUMMARY
+          PROTOCOLOS=(
+            "docs/canon/protocolos/PROTOCOLO-INICIO-SESION.md"
+            "docs/canon/protocolos/PROTOCOLO-CIERRE-SESION.md"
+            "docs/canon/protocolos/PROTOCOLO-AUDITORIA-COMPLETA.md"
+            "docs/canon/protocolos/PROTOCOLO-REVISION-SALUD.md"
+            "docs/canon/protocolos/PROTOCOLO-NUEVO-REPO.md"
+          )
+          TODOS_OK=true
+          for PROTOCOLO in "${PROTOCOLOS[@]}"; do
+            if [ -f "$PROTOCOLO" ]; then
+              echo "✅ $PROTOCOLO" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "❌ FALTA: $PROTOCOLO" >> $GITHUB_STEP_SUMMARY
+              TODOS_OK=false
+            fi
+          done
+          echo "protocolos_ok=$TODOS_OK" >> $GITHUB_OUTPUT
+
+      - name: Contar issues abiertos via GitHub API
+        id: count
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TOTAL=$(gh issue list --state open --limit 100 --json number | jq length)
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
+          echo "## Issues abiertos: $TOTAL" >> $GITHUB_STEP_SUMMARY
+
+      - name: Detectar issues sin label
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "## Issues sin label" >> $GITHUB_STEP_SUMMARY
+          gh issue list --state open --limit 100 --json number,title,labels \
+            | jq -r '.[] | select(.labels | length == 0) | "- #\(.number) \(.title)"' \
+            >> $GITHUB_STEP_SUMMARY || echo "_Todos tienen label ✅_" >> $GITHUB_STEP_SUMMARY
+
+      - name: Verificar ADRs en docs/adr
+        run: |
+          echo "## ADRs detectadas" >> $GITHUB_STEP_SUMMARY
+          if [ -d "docs/adr" ]; then
+            COUNT=$(find docs/adr -name "*.md" | wc -l)
+            echo "Total ADRs: $COUNT" >> $GITHUB_STEP_SUMMARY
+            find docs/adr -name "*.md" | sort | while read f; do
+              echo "- $f" >> $GITHUB_STEP_SUMMARY
+            done
+          else
+            echo "⚠️ Carpeta docs/adr no encontrada" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Verificar ESTADO-SISTEMA.md existe
+        run: |
+          echo "## Archivos canon críticos" >> $GITHUB_STEP_SUMMARY
+          CANON_FILES=(
+            "ESTADO-SISTEMA.md"
+            "MASTER-PENDIENTES.md"
+            "docs/canon/OWNERSHIP-MATRIX.md"
+          )
+          for F in "${CANON_FILES[@]}"; do
+            if [ -f "$F" ]; then
+              DAYS=$(( ( $(date +%s) - $(git log -1 --format=%ct -- "$F") ) / 86400 ))
+              echo "✅ $F — modificado hace $DAYS días" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "❌ FALTA: $F" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+      - name: Abrir issue si hay protocolos rotos
+        if: steps.protocolos.outputs.protocolos_ok == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE=$(date '+%Y-%m-%d')
+          gh issue create \
+            --title "[AUTO] Protocolos rotos detectados — $DATE" \
+            --body "La auditoría automática detectó protocolos referenciados en BOOTSTRAP.md que no existen en el repo. Ver detalles en el workflow: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --label "bug,canon"
+
+      - name: Resumen final
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "## 📊 Resumen auditoría $(date '+%Y-%m-%d %H:%M CEST')" >> $GITHUB_STEP_SUMMARY
+          echo "- Issues abiertos: ${{ steps.count.outputs.issues_abiertos }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Protocolos OK: ${{ steps.protocolos.outputs.protocolos_ok }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Modo: ${{ inputs.modo || 'schedule' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Próxima ejecución: Lunes 09:00 CEST" >> $GITHUB_STEP_SUMMARY

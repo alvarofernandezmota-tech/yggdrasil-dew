@@ -1,0 +1,64 @@
+name: ✅ Verificar Protocolos en Push
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/canon/**'
+      - '.github/workflows/**'
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  verificar:
+    name: Verificar integridad de protocolos
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verificar protocolos obligatorios
+        id: check
+        run: |
+          FAILED=false
+          PROTOCOLOS=(
+            "docs/canon/protocolos/PROTOCOLO-INICIO-SESION.md"
+            "docs/canon/protocolos/PROTOCOLO-CIERRE-SESION.md"
+            "docs/canon/protocolos/PROTOCOLO-AUDITORIA-COMPLETA.md"
+            "docs/canon/protocolos/PROTOCOLO-REVISION-SALUD.md"
+            "docs/canon/protocolos/PROTOCOLO-NUEVO-REPO.md"
+          )
+          echo "## Verificación protocolos" >> $GITHUB_STEP_SUMMARY
+          for P in "${PROTOCOLOS[@]}"; do
+            if [ -f "$P" ]; then
+              SIZE=$(wc -c < "$P")
+              if [ "$SIZE" -lt 500 ]; then
+                echo "⚠️ $P — muy corto ($SIZE bytes), posiblemente vacío" >> $GITHUB_STEP_SUMMARY
+                FAILED=true
+              else
+                echo "✅ $P ($SIZE bytes)" >> $GITHUB_STEP_SUMMARY
+              fi
+            else
+              echo "❌ FALTA $P" >> $GITHUB_STEP_SUMMARY
+              FAILED=true
+            fi
+          done
+          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+
+      - name: Verificar que BOOTSTRAP referencia los protocolos
+        run: |
+          echo "## Referencias en BOOTSTRAP" >> $GITHUB_STEP_SUMMARY
+          # Solo podemos checkear el repo actual (DEW)
+          # BOOTSTRAP vive en orquestador — se verifica manualmente
+          echo "ℹ️ BOOTSTRAP.md vive en yggdrasil-orquestador — verificación manual" >> $GITHUB_STEP_SUMMARY
+
+      - name: Fallo si hay protocolos rotos
+        if: steps.check.outputs.failed == 'true'
+        run: |
+          echo "❌ Hay protocolos faltantes o vacíos. Revisar el summary."
+          exit 1
