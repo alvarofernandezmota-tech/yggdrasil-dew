@@ -1,3 +1,11 @@
+---
+tipo: protocolo
+status: activo
+actualizado: 2026-07-18
+nivel: 2
+version: "1.0"
+---
+
 # PROTOCOLO-AUDITORIA-COMPLETA
 
 > **Versión:** 1.0 · **Creado:** 2026-07-18 · **Autor:** Perplexity-MCP  
@@ -65,7 +73,7 @@ Output: lista de gaps con issues creados.
 
 ## FASE 2 — AGENTE-WIKI (10-15 min)
 
-Repo objetivo: `WIKI---PERSONAL` (o `yggdrasil-wiki`)
+Repo objetivo: `WIKI---PERSONAL`
 
 ```
 □ Contar archivos .md activos (objetivo: <80)
@@ -84,7 +92,7 @@ Output: lista de islas vacías, archivos a archivar, contenido a mover.
 
 ## FASE 3 — AGENTE-TRACKING (5-10 min)
 
-Repo objetivo: `yggdrasil-tracking` (o `VIDAPERSONAL`)
+Repo objetivo: `yggdrasil-tracking`
 
 ```
 □ Verificar estructura canónica de diarios: YYYY-MM/YYYY-MM-DD.md

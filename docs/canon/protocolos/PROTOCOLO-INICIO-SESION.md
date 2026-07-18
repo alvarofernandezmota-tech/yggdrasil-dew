@@ -1,3 +1,11 @@
+---
+tipo: protocolo
+status: activo
+actualizado: 2026-07-18
+nivel: 1
+verion: "1.0"
+---
+
 # PROTOCOLO-INICIO-SESION
 
 > **Versión:** 1.0 · **Creado:** 2026-07-18 · **Autor:** Perplexity-MCP  

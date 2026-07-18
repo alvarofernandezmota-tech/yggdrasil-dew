@@ -1,3 +1,11 @@
+---
+tipo: protocolo
+status: activo
+actualizado: 2026-07-18
+nivel: 1
+version: "1.0"
+---
+
 # PROTOCOLO-CIERRE-SESION
 
 > **Versión:** 1.0 · **Creado:** 2026-07-18 · **Autor:** Perplexity-MCP  
