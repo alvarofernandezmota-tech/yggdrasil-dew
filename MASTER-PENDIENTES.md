@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-06
-actualizado: 2026-07-18 01:45 CEST
+actualizado: 2026-07-18 02:00 CEST
 ruta: MASTER-PENDIENTES.md
 tags: [pendientes, fases, canon]
 status: vigente
@@ -10,7 +10,7 @@ status: vigente
 
 # MASTER-PENDIENTES — Ecosistema Yggdrasil
 
-> Última actualización: **2026-07-18 01:45 CEST**
+> Última actualización: **2026-07-18 02:00 CEST**
 > Fuente de verdad de todas las fases activas y cerradas.
 
 ---
@@ -34,17 +34,18 @@ status: vigente
 | F13 | Ownership matrix + CONTEXT.md Madre | 2026-07-16 |
 | F14 | Runbooks críticos: THDORA + MCP + CRITICOS | 2026-07-16 |
 | F15 | THDORA-PERSONAL AGENT.md | 2026-07-16 |
-| F16 | Protocolos canon 45 completos + INDEX v5 | 2026-07-17 |
+| F16 | Protocolos canon completos + INDEX v5 | 2026-07-17 |
 | F17 | Correcciones menores DEW | 2026-07-18 |
 | F18 | CONTEXT.md orquestador actualizado | 2026-07-18 |
 | F19 | Diario sesión 2026-07-18 mañana | 2026-07-18 |
-| F21 | Fusiones wiki 21←16 islas + INDEX v6 | 2026-07-18 |
+| F21 | Fusiones wiki 22→16 islas + INDEX v6 | 2026-07-18 |
 | F22 | Runbook sesiones-IA creado | 2026-07-18 |
 | F23 | Diario sesión 2026-07-18 noche | 2026-07-18 |
 | F24 | orquestador.md corregida — THDORA separada | 2026-07-18 |
 | F24b | thdora.md isla independiente + redirect agentes | 2026-07-18 |
 | F25 | MAPA-CONEXIONES.md creado en DEW | 2026-07-18 |
 | F27 | BOOTSTRAP.md v2 actualizado en orquestador | 2026-07-18 |
+| F28 | Auditoría completa 22 islas + ecosistema.md actualizado | 2026-07-18 |
 
 ---
 
@@ -54,7 +55,7 @@ status: vigente
 |---|---|---|
 | F0 | Hardware: dmidecode + SSD inventory Madre | Terminal SSH |
 | F7 | GitOps: .env.template + env-checker.sh + healthchecks | Terminal SSH |
-| F26 | ADR-014 local-brain como motor RAG (formalizar) | Revisar cómo lo ve Álvaro |
+| F26 | ADR-015 local-brain como motor RAG (formalizar) | Revisar cómo lo ve Álvaro |
 
 ---
 
@@ -64,9 +65,9 @@ status: vigente
 |---|---|---|
 | HAL-P0 | FTP puerto 21 EXPUESTO | [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) |
 | HAL-P1 | THDORA token caducado | [#74](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/74) |
-| HAL-P2 | yggdrasil-mcp caído puerto 3000/3001 | [#70](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/70) |
+| HAL-P2 | yggdrasil-mcp caído puerto 3000/3001 | [#75](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/75) |
 | HAL-P3 | Qdrant unhealthy falso positivo | [#71](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/71) |
-| HAL-P4 | log_guardian_bot crash loop #971 | [#46](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/46) |
+| HAL-P4 | log_guardian_bot crash loop | [#46](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/46) |
 | HAL-P5 | HDD 28k+ horas — planificar sustitución | [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) |
 | HAL-P6 | SSH passwords habilitados | [#15](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/15) |
 | HAL-P7 | IaC docker-compose no versionado | [#43](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/43) |
@@ -77,14 +78,15 @@ status: vigente
 
 | ID | Descripción | Issue |
 |---|---|---|
-| DOC-01 | ADR-014 formalizar local-brain como RAG | [#67](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/67) |
+| DOC-01 | ADR-015 formalizar local-brain como RAG | [#67](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/67) |
 | DOC-02 | Isla filosofia.md — bloque 2 (requiere input Álvaro) | [#57](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/57) |
-| DOC-03 | WIKI purga 279←80 archivos | [#59](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/59) |
+| DOC-03 | WIKI purga archivos obsoletos | [#59](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/59) |
 | DOC-04 | Completar formacion.md + impresion3d.md | [#56](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/56) |
-| DOC-05 | Auditoría isla Orquestador — verificar ciérre post-F24 | [#49](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/49) |
-| DOC-06 | Auditoría isla IA local | [#55](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/55) |
-| DOC-07 | Ownership matrix completar cobertura total | [#40](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/40) |
-| DOC-08 | BOOTSTRAP.md — cerrar issue #79 | [#79](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/79) |
+| DOC-05 | Ownership matrix completar cobertura total | [#40](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/40) |
+| DOC-06 | BOOTSTRAP.md — cerrar issue #79 | [#79](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/79) |
+| **DOC-07** | **F29 — Protocolo maestro auditoría + agente por dominio** | [**#80**](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/80) |
+| DOC-08 | PROTOCOLO-INICIO-SESION.md (referenciado en BOOTSTRAP, no existe) | — |
+| DOC-09 | PROTOCOLO-CIERRE-SESION.md (referenciado en BOOTSTRAP, no existe) | — |
 
 ---
 
@@ -101,15 +103,15 @@ status: vigente
 
 ---
 
-## 📋 Últimas fases ejecutadas
+## 📋 Sesión 2026-07-18 madrugada (01:00–02:00 CEST)
 
-**Sesión 2026-07-18 madrugada (01:00–02:00 CEST)**
-- F24: `orquestador.md` corregida — THDORA ya NO es componente del orquestador
-- F24b: `thdora.md` creada como isla personal independiente + redirect de `agentes-personales.md`
-- F25: `docs/MAPA-CONEXIONES.md` creado en DEW con grafo completo del ecosistema
-- F27: `BOOTSTRAP.md` actualizado a v2 con estado real y reglas claras para agentes
-- Cierre canónico: ESTADO-SISTEMA + MASTER-PENDIENTES + diario técnico
+- F24: `orquestador.md` corregida — THDORA separado del orquestador
+- F24b: `thdora.md` isla independiente + redirect `agentes-personales.md`
+- F25: `MAPA-CONEXIONES.md` creado en DEW
+- F27: `BOOTSTRAP.md` v2 actualizado en orquestador
+- F28: Auditoría completa 22 islas wiki — `ecosistema.md` actualizado al estado real F28
+- F29: Issue [#80](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/80) — protocolo maestro + agentes por dominio planificado
 
 ---
 
-_Actualizado: 2026-07-18 01:45 CEST · Cierre sesión madrugada · Perplexity-MCP_
+_Actualizado: 2026-07-18 02:00 CEST · Cierre sesión F28+F29 · Perplexity-MCP_
