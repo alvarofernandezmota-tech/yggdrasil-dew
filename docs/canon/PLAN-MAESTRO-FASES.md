@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-09
-actualizado: 2026-07-13T10:13:00+02:00
+actualizado: 2026-07-18T03:15:00+02:00
 ruta: docs/canon/PLAN-MAESTRO-FASES.md
 tags: [canon, plan, fases, roadmap, estado]
 status: vigente
@@ -16,24 +16,65 @@ status: vigente
 
 ---
 
-## Estado global — 2026-07-13 (actualizado 10:13 CEST)
+## Estado global — 2026-07-18 (actualizado 03:15 CEST)
 
 | Bloque | Estado | Issues |
 |--------|--------|--------|
 | 🔴 **BLOQUEANTES** | Pendiente terminal | #44 #45 #46 #31 #15 |
 | ✅ **F0 — Repos privados** | Completado | — |
 | ✅ **F1 — ADRs indexados** | Completado | ADR-001…ADR-010 |
+| ✅ **F2 — Índices WIKI** | Completado 2026-07-13 | README+HOME → punteros a INDEX.md |
 | ✅ **F4 — Gobernanza C4** | Completado 2026-07-13 | #40 #41 ✅ |
 | ✅ **F5 — CI completo** | Completado 2026-07-13 | #38 #39 ✅ |
 | ✅ **AUDIT-005 MCP** | Completado 2026-07-13 | #42 ✅ |
 | ✅ **Auditoría 19 repos** | Completado 2026-07-13 | issues en todos |
 | ✅ **Wiki 25 islas** | Completado 2026-07-13 | INDEX.md actualizado |
-| 🟡 **F2 — Auditoría Madre** | Bloqueado por #44 #45 | #31 #32 #34 #43 |
+| ✅ **Protocolos sesión** | Completado 2026-07-18 | docs/canon/ — INICIO, CIERRE, AUDITORIA, INTER-REPOS |
 | 🟡 **F3 — Purga WIKI** | Solapamientos detectados | labs≡dev-labs, cerebro≈ia-local |
 | 🟡 **F6 — Islas** | 11 completas, 11 parciales, 3 stubs | #56 |
+| 🟡 **F-DEW — Consolidar docs/canon** | Detectado 2026-07-18 — sin fase asignada aún | 25 archivos → 6 fusionados |
 | ⚪ **F7 — Seguridad blue team** | Bloqueado por #44 #45 | #15 #19 #37 |
 | ⚪ **F8 — IaC Madre** | Pendiente terminal | #13 #43 |
 | ⚪ **F9 — VIDAPERSONAL** | Parcial | #48 |
+
+---
+
+## LOG DE SESIÓN — 2026-07-18 (madrugada, ~01:00–03:15 CEST)
+
+### Commits por Perplexity-MCP
+
+| Hora aprox | Repo | Qué |
+|---|---|---|
+| ~01:00 | yggdrasil-dew | Auditoría repos — detección de paja y duplicidades |
+| ~01:30 | yggdrasil-dew | PROTOCOLO-INTER-REPOS.md creado en docs/canon/ |
+| ~01:30 | yggdrasil-dew | AUDITORIA-GAPS-REPOS.md creado en docs/canon/ |
+| ~01:30 | yggdrasil-dew | HERRAMIENTAS-ECOSISTEMA.md creado en docs/canon/ |
+| ~02:00 | yggdrasil-dew | Sesión 2026-07-18-sesion-madrugada-F29.md en docs/sesiones/ |
+| 03:15 | yggdrasil-dew | PLAN-MAESTRO-FASES.md — F2 marcada completada, sesión registrada |
+
+### Verificaciones realizadas esta sesión
+
+| Qué | Resultado |
+|---|---|
+| WIKI README.md — F2 | ✅ Ya tenía puntero a INDEX.md — F2 completada desde 2026-07-13 |
+| WIKI HOME.md — F2 | ✅ Ídem — limpio y correcto |
+| DEW raíz — estructura | ⚠️ 10 archivos .md — 5 son duplicidades (NORMAS, CONVENCIONES, ECOSYSTEM-ARCHITECTURE, MASTER-PENDIENTES, DASHBOARD) |
+| DEW docs/canon/ | ⚠️ 25 archivos — muchos solapan temática (protocolos, plantillas mezcladas) |
+| Plan vs realidad | ⚠️ F2 figuraba como pendiente pero ya estaba hecha — corregido ahora |
+
+### Decisiones tomadas
+
+- F2 WIKI marcada ✅ — estaba hecha, el plan no lo reflejaba
+- Detectada necesidad de **F-DEW**: consolidar docs/canon/ de 25 → 6 archivos fusionados
+- Principio acordado: **1 tema = 1 archivo = 1 fuente de verdad**
+- No se ejecutó fusión DEW esta sesión — son las 03:15, requiere cabeza fresca
+
+### Pendiente inmediato (próxima sesión)
+
+- [ ] Crear issue formal para F-DEW (consolidar docs/canon/)
+- [ ] Ejecutar Bloque 3 WIKI: fusionar labs.md + dev-labs.md, cerebro.md + ia-local.md
+- [ ] Revisar solapamientos DEW raíz (NORMAS, CONVENCIONES, ECOSYSTEM-ARCHITECTURE duplicados)
+- [ ] Actualizar ESTADO-SISTEMA.md con estado real post-sesión
 
 ---
 
@@ -207,4 +248,5 @@ madre-config/docker/
 
 ---
 
+_Actualizado: 2026-07-18 03:15 CEST · Perplexity-MCP · Sesión madrugada — F2 marcada ✅, sesión registrada_
 _Actualizado: 2026-07-13 10:13 CEST · Perplexity-MCP · Sesión matinal completa_
