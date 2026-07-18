@@ -2,7 +2,7 @@
 tipo: canon
 author: Alvaro Fernandez Mota
 creado: 2026-07-06
-actualizado: 2026-07-18 01:52 CEST
+actualizado: 2026-07-18 03:03 CEST
 ruta: ESTADO-SISTEMA.md
 tags: [estado, sistema, canon, sincronizacion]
 status: vigente
@@ -10,7 +10,7 @@ status: vigente
 
 # ESTADO DEL SISTEMA — Ecosistema Yggdrasil
 
-> Última sincronización: **2026-07-18 01:52 CEST** · commit `12938f10`
+> Última sincronización: **2026-07-18 03:03 CEST** · F29 cierre sesión madrugada
 > Actualizar al inicio y cierre de cada sesión.
 
 ---
@@ -19,25 +19,27 @@ status: vigente
 
 | Métrica | Valor |
 |---|---|
-| Fases cerradas | F1–F19 + F21+F22+F23 + F24+F24b+F25+F27 + **F28** = **27 fases** |
+| Fases cerradas | F1–F19 + F21–F29 = **28 fases** |
 | Fases parciales | F0, F7 |
 | Fases pendientes terminal | F20, F26 (ADR-015 local-brain) |
 | Islas wiki — activas | **16** |
 | Islas wiki — redirects | **6** |
 | Repos con AGENT.md | **10/10** ✅ |
-| Issues críticos abiertos | 6 (todos requieren terminal) |
+| Issues críticos abiertos | **6** (todos requieren terminal SSH Madre) |
 | Runbooks disponibles | 4 |
 | BOOTSTRAP.md | ✅ v2 operativo |
-| ecosistema.md | ✅ actualizado F28 — estado real |
+| Scripts disponibles | `env-checker.sh` ✅ · `ygg-madre.sh` ✅ |
 
 ---
 
 ## 🖥️ Infraestructura
 
-| Máquina | Estado | IP Tailscale | OS |
-|---|---|---|---|
-| **Madre** | ✅ Online 24/7 | `100.91.112.32` | Arch Linux (Omarchy) |
-| **Acer** | ✅ Activo | `100.86.119.102` | Arch Linux + Hyprland |
+| Máquina | Estado | IP Tailscale | OS | SSH |
+|---|---|---|---|---|
+| **Madre** | ✅ Online 24/7 | `100.91.112.32` | Arch Linux (Omarchy) | `varopc@100.91.112.32` |
+| **Acer** | ✅ Activo | `100.86.119.102` | Arch Linux + Hyprland | — |
+
+> 🔑 Acceso SSH Madre desde Terminus: `ssh varopc@100.91.112.32` (solo clave pública)
 
 ### Servicios Docker Madre
 
@@ -53,31 +55,56 @@ status: vigente
 | nftables firewall | ✅ | — |
 | yggdrasil-mcp | 🔴 Caído | [#75](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/75) |
 | THDORA (bot+api) | 🔴 Caído | [#74](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/74) |
-| Qdrant | 🟡 Falso positivo | [#71](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/71) |
+| Qdrant | 🟡 Falso positivo telemetría | [#71](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/71) |
+| log_guardian_bot | 🔴 Crash loop #971 | [#46](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/46) |
+| local_tripwire | 🔴 Crash loop #486 | [#46](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/46) |
 | Wazuh SIEM | 🟡 En progreso | Fase 3 |
 | Suricata IDS | 🟡 En progreso | Fase 4 |
 
 ---
 
-## 🔴 Alertas activas
+## 🔴 Alertas activas — Orden de prioridad
 
-| Prioridad | Alerta | Acción | Runbook |
+| Pri | Alerta | Acción | Dónde |
 |---|---|---|---|
-| 🔴 P0 | FTP puerto 21 EXPUESTO router Digi | `http://192.168.1.1` desactivar | RUNBOOK-CRITICOS-TERMINAL |
-| 🔴 P1 | THDORA caído — token caducado | BotFather + .env + restart | RUNBOOK-THDORA-TOKEN |
-| 🔴 P2 | yggdrasil-mcp caído | Puerto 3000/3001 verificar | RUNBOOK-MCP-ARRANQUE |
-| ⚠️ | HDD 28k+ horas | S.M.A.R.T. → planificar sustitución | RUNBOOK-CRITICOS-TERMINAL |
-| ⚠️ | SSH passwords | `PasswordAuthentication no` | Manual |
+| 🔴 P0 | **FTP puerto 21 EXPUESTO** router Digi | Panel router → cerrar port 21 | `http://192.168.1.1` |
+| 🔴 P1 | **THDORA caído** — token Telegram caducado | BotFather → revocar → nuevo token → .env Madre → restart | [#74](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/74) |
+| 🔴 P2 | **yggdrasil-mcp caído** — conflicto puerto 3000/3001 | Editar compose → puerto 3001 → restart | [#75](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/75) |
+| 🔴 P3 | **log_guardian + tripwire** crash loop | Dependiente de P1 (token) | [#46](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/46) |
+| ⚠️ P4 | **HDD Madre 28k+ horas** | `smartctl -a /dev/sda` → decisión | [#31](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/31) |
+| ⚠️ P5 | **Qdrant unhealthy** (falso positivo) | Añadir `QDRANT__TELEMETRY_DISABLED=true` | [#71](https://github.com/alvarofernandezmota-tech/yggdrasil-dew/issues/71) |
+
+> Todos requieren terminal SSH a Madre. Comando: `ssh varopc@100.91.112.32`
 
 ---
 
-## 📚 Wiki
+## 🛠️ Scripts disponibles
 
-### Islas activas (contenido real)
+| Script | Repo | Uso |
+|---|---|---|
+| `env-checker.sh` | yggdrasil-dew/scripts/ | Valida `.env` contra `.env.template` antes de deploy |
+| `ygg-madre.sh` | yggdrasil-dew/scripts/ | Maestro Terminus→Madre: setup SSH, check, connect, audit, health, logs |
+
+```bash
+# Uso rápido desde Terminus:
+curl -O https://raw.githubusercontent.com/alvarofernandezmota-tech/yggdrasil-dew/main/scripts/ygg-madre.sh
+chmod +x ygg-madre.sh
+./ygg-madre.sh setup   # configura alias SSH madre
+./ygg-madre.sh check   # verifica conectividad
+./ygg-madre.sh connect # conecta shell interactiva
+./ygg-madre.sh audit   # auditoría FASE 4 remota
+./ygg-madre.sh health  # health-check Docker rápido
+```
+
+---
+
+## 📚 Wiki — Islas
+
+### Activas (contenido real)
 
 | Isla | Status | Notas |
 |---|---|---|
-| ecosistema.md | ✅ | Actualizado F28 — mapa completo |
+| ecosistema.md | ✅ | Actualizado F28 |
 | infra.md | ✅ | Fusionada F21 — Madre + Acer |
 | ia-local.md | ✅ | Fusionada F21 — Ollama + RAG |
 | orquestador.md | ✅ | Actualizado F24 |
@@ -86,15 +113,15 @@ status: vigente
 | mcp.md | ✅ | Completo |
 | tracking.md | ✅ | Completo |
 | acer.md | ✅ | Completo |
-| formacion.md | 🟡 | Parcial — pendiente completar |
-| filosofia.md | 🟡 | Parcial — requiere input Álvaro |
-| impresion3d.md | 🟡 | Parcial |
+| formacion.md | 🟡 | Parcial — input Álvaro |
+| filosofia.md | 🟡 | Parcial — input Álvaro (Bloque 2) |
+| impresion3d.md | 🟡 | Parcial — input Álvaro |
 | conocimiento.md | 🟡 | Parcial |
 | dev-labs.md | 🟡 | Parcial |
 | scripts.md | 🟡 | Parcial |
 | vida.md | 🟡 | Parcial |
 
-### Islas redirect (fusionadas/eliminadas)
+### Redirects (fusionadas)
 
 | Isla | Redirige a |
 |---|---|
@@ -103,7 +130,7 @@ status: vigente
 | investigacion-ia.md | ia-local.md |
 | ollama-stack.md | ia-local.md |
 | osint.md | seguridad.md |
-| thea.md | thdora.md (agentes-personales) |
+| thea.md | thdora.md |
 
 ---
 
@@ -122,19 +149,30 @@ status: vigente
 | `yggdrasil-scripts` | Scripts | ✅ | ✅ |
 | `acer-config` | Workstation | ✅ | ✅ |
 
+### Consolidación pendiente (plan aprobado sesión 2026-07-18)
+
+| Fusión | Estado |
+|---|---|
+| `ollama-stack` absorbe `local-brain` | 🟡 Pendiente |
+| `yggdrasil-dew` wiki absorbe `WIKI---PERSONAL` duplicidad | 🟡 Pendiente |
+| `yggdrasil-secops` absorbe `osint-stack` | 🟡 Pendiente |
+| `ai-toolkit` absorbe `investigacion-ia` | 🟡 Pendiente |
+| Archivar `dev-labs` → `yggdrasil-scripts` | 🟡 Pendiente |
+
 ---
 
 ## 📅 Historial de sincronizaciones
 
-| Fecha | Commit | Qué se hizo |
+| Fecha | Fase | Qué se hizo |
 |---|---|---|
-| 2026-07-18 01:52 | `12938f10` | F28 — auditoría completa islas, ecosistema.md actualizado |
-| 2026-07-18 01:45 | `aa3cb08c` | F24+F24b+F25+F27 + cierre sesión madrugada |
-| 2026-07-18 01:20 | `241d3500` | F21 fusiones wiki + F22 runbooks + F23 diario |
-| 2026-07-18 00:52 | `821bfab3` | F17+F18+F19 cerradas |
-| 2026-07-16 19:00 | — | F12–F16 cerradas, 21 islas auditadas |
-| 2026-07-15 | — | F11 — regla canon DEW/tracking |
+| 2026-07-18 03:03 | **F29** | Sesión madrugada: ygg-madre.sh, SSH Terminus setup, plan consolidación repos, estado alineado |
+| 2026-07-18 01:52 | F28 | Auditoría completa islas, ecosistema.md actualizado |
+| 2026-07-18 01:45 | F24–F27 | Cierre sesión madrugada anterior |
+| 2026-07-18 01:20 | F21–F23 | Fusiones wiki + runbooks + diario |
+| 2026-07-18 00:52 | F17–F19 | Fases cerradas |
+| 2026-07-16 19:00 | F12–F16 | 21 islas auditadas |
+| 2026-07-15 | F11 | Regla canon DEW/tracking |
 
 ---
 
-_Actualizado: 2026-07-18 01:52 CEST · F28 auditoría completa · Perplexity-MCP_
+_Actualizado: 2026-07-18 03:03 CEST · F29 cierre sesión madrugada · Perplexity-MCP_
