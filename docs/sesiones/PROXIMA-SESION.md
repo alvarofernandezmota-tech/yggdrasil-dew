@@ -1,61 +1,61 @@
----
-tipo: sesion
-author: Alvaro Fernandez Mota
-creado: 2026-07-18
-actualizado: 2026-07-18T03:29:00+02:00
-ruta: docs/sesiones/PROXIMA-SESION.md
-tags: [sesion, proxima, prioridades]
-status: vigente
+# PRÓXIMA SESIÓN — Prompt de arranque
+
+**Última actualización:** 2026-07-18 04:34 CEST  
+**Sesión anterior:** F30 — Auditoría Madre + diagnóstico docker + propuesta consolidación repos
+
 ---
 
-# PRÓXIMA SESIÓN — Post 2026-07-18
+## Estado actual del sistema
 
-## Contexto
+- **Madre:** Operativa, uptime estable
+- **Docker:** 23 contenedores activos, 3 con problemas conocidos
+- **thdora-bot:** En crash loop (restartCount=106) — pendiente fix
+- **open-webui / qdrant:** unhealthy por healthcheck mal configurado (no fallo real)
+- **local_tripwire:** Completando baseline al cierre de sesión
+- **Disco:** 43% uso, ~20 GB reclamables en Docker
 
-Sesión de esta noche (2026-07-18) completó la alineación documental completa del ecosistema.
-Lo que queda es **exclusivamente trabajo de terminal** en Madre.
+---
 
-## 🔴 Prioridad 1 — Terminal Madre (en orden)
+## Tareas prioritarias — siguiente sesión
 
-```bash
-# 1. Verificar .env Docker (issue #44)
-cat ~/yggdrasil/.env
-docker compose config
+### URGENTE
+1. **Fix thdora-bot crash loop**
+   - Revisar .env en `~/Projects/thdora/`
+   - Verificar token Telegram vigente
+   - `docker compose up -d --force-recreate thdora-bot`
 
-# 2. Arrancar Qdrant
-docker compose up -d qdrant
-docker ps | grep qdrant
+2. **Fix healthchecks open-webui + qdrant**
+   - open-webui: ajustar healthcheck en compose
+   - qdrant: deshabilitar telemetría externa (`QDRANT__TELEMETRY_DISABLED=true`)
 
-# 3. Verificar yggdrasil-mcp
-cd ~/yggdrasil-mcp && npm start
-# o el comando que uses para arrancarlo
+### IMPORTANTE
+3. **Limpieza Docker** (~20 GB reclamables)
+   ```bash
+   docker image prune -a
+   docker builder prune
+   ```
 
-# 4. Token Telegram THDORA (issue #45)
-# Añadir TELEGRAM_TOKEN al .env y reiniciar THDORA
+4. **Limpieza ~/Downloads e ~/isos** (27 GB combinados)
 
-# 5. HDD SMART check (issue #31)
-sudo smartctl -a /dev/sdX
-```
+5. **Iniciar consolidación repos** (plan F30):
+   - Paso 1: `ollama-stack` absorbe `local-brain`
+   - Paso 2: `yggdrasil-secops` absorbe `osint-stack`
+   - Paso 3: archivar `dev-labs`
 
-## 🟡 Prioridad 2 — Cuando terminal esté OK
+---
 
-- Crear `BOOTSTRAP.md` en `yggdrasil-orquestador` (punto de entrada único para IAs)
-- Verificar CI en `yggdrasil-scripts`
-- Auditoría `yggdrasil-secops` post-OSINT merge
-
-## ✅ NO hace falta hacer
-
-- WIKI → ya limpia (22→16 islas, punteros correctos)
-- Canon DEW → ya consolidado (11 archivos)
-- Raíz DEW → ya limpia (7 archivos)
-- Protocolos y plantillas → ya completos
-
-## Comando de inicio rápido para próxima sesión IA
+## Prompt de arranque para próxima sesión
 
 ```
-Lee en orden:
-1. ESTADO-SISTEMA.md (raíz yggdrasil-dew)
-2. MASTER-PENDIENTES.md
-3. docs/canon/PLAN-MAESTRO-FASES.md
-Luego ejecuta solo lo que esté en MASTER-PENDIENTES con status: pendiente
+Continuamos ecosistema Yggdrasil desde sesión F30 (2026-07-18 madrugada).
+Estado: thdora-bot en crash loop, open-webui/qdrant con healthcheck malo, tripwire completando baseline.
+Foco hoy:
+1. Fix thdora-bot — revisar .env y token Telegram
+2. Fix healthchecks open-webui + qdrant
+3. Limpieza Docker (~20 GB reclamables)
+Arranca con: cd ~/yggdrasil-dew && git pull
 ```
+
+---
+
+*Actualizado en sesión F30 — 2026-07-18 04:34 CEST*
