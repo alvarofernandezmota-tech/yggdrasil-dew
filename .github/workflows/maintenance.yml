@@ -1,0 +1,12 @@
+name: maintenance
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'docs/**'
+      - 'scripts/**'
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "maintenance workflow"

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ============================================================
 # OBSIDIAN — nunca al repo
 # ============================================================
@@ -50,3 +51,15 @@ Thumbs.db
 .smart-connections/
 .env
 logs/
+=======
+# env
+.env
+.env.*
+
+# system
+.DS_Store
+Thumbs.db
+
+# generated
+output/
+>>>>>>> 7295bed (docs: add professional ecosystem structure and agent stack)
