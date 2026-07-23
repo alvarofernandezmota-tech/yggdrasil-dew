@@ -1,0 +1,26 @@
+name: Feature request
+description: Propón una mejora o nueva capacidad
+title: "[FEAT] "
+labels: ["feat"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Resumen
+      description: Qué quieres añadir y por qué.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Alcance
+      description: Qué entra y qué no entra.
+    validations:
+      required: true
+  - type: textarea
+    id: success
+    attributes:
+      label: Criterio de éxito
+      description: Cómo sabremos que funciona.
+    validations:
+      required: true
