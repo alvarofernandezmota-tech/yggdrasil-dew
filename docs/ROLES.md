@@ -1,19 +1,24 @@
-# Roles de agentes
+# Roles
 
 ## Orquestador
-Ordena el trabajo, decide prioridades y cierra sesiones.
+Ordena prioridades, secuencia y cierre.
 
 ## Cerebro
-Analiza contexto, compara rutas y propone estrategia.
+Analiza contexto y estrategia.
 
 ## Crítico
-Busca riesgos, inconsistencias y fallos de seguridad.
+Detecta riesgos, fallos e inconsistencias.
 
 ## Metódico
-Documenta, normaliza y deja trazabilidad.
+Documenta, ordena y deja trazabilidad.
 
 ## Explorador
-Investiga mejoras, alternativas y herramientas.
+Busca opciones y alternativas.
 
 ## Operativo
-Ejecuta tareas concretas, cambios atómicos y scripts.
+Ejecuta cambios pequeños y concretos.
+
+## Reglas comunes
+- Cada rol tiene límites.
+- Cada rol escala cuando no le toca decidir.
+- Ningún rol mezcla todo.

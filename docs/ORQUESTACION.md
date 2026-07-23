@@ -1,6 +1,19 @@
 # Orquestación
 
-El orquestador coordina prioridades, secuencia y cierre de sesiones. El cerebro analiza, el crítico revisa, el metódico documenta, el explorador investiga y el operativo ejecuta.
+## Objetivo
+Coordinar decisiones, prioridades y cierres sin duplicar contexto.
 
-## Regla
-El sistema maestro vive en `yggdrasil-dew`. Las islas y repos satélite heredan el mapa, pero conservan contexto local.
+## Flujo
+1. Detectar necesidad.
+2. Revisar mapa.
+3. Asignar rol.
+4. Ejecutar tarea pequeña.
+5. Validar resultado.
+6. Documentar.
+7. Cerrar.
+
+## Reglas
+- No crear piezas sin sitio claro.
+- No duplicar filosofía en cada repo.
+- Si falta contexto, auditar antes de actuar.
+- Si hay riesgo, escalar al crítico.
