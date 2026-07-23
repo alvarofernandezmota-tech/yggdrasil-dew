@@ -1,16 +1,7 @@
 # Mapa del ecosistema
 
-## Núcleo
-- `yggdrasil-dew`: filosofía, orquestación, roles, prompts, estado.
-
-## Bootstrap
-- `yggdrasil-setup`: instalación, pruebas, arranque.
-
-## Piloto
-- `thdora`: primer repo de validación real.
-
-## Islas
-- Repos de dominio con contexto propio.
-
-## Wiki
-- Capa conceptual, visión de alto nivel y enlaces.
+- WIKI: mapa conceptual.
+- dew: canon técnico y operación.
+- islas: repos funcionales.
+- MCP: capa de herramientas.
+- Orquestador: coordinación.
