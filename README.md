@@ -13,11 +13,15 @@ Centralizar la estructura, documentación y operación común.
 - Estado.
 
 ## Estructura
-- docs/
-- scripts/
-- .github/
+- `docs/` documentación viva.
+- `docs/PROMPTS/` prompts por rol.
+- `docs/STATE/` snapshots y cierres.
+- `scripts/maintenance/` utilidades operativas.
+- `.github/` plantillas y automatización.
 
 ## Uso
+```bash
 bash scripts/maintenance/agent-health.sh
 bash scripts/maintenance/repo-snapshot.sh "$PWD"
 bash scripts/maintenance/agent-audit.sh
+```

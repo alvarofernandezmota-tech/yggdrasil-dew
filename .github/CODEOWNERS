@@ -1,21 +1,5 @@
-# CODEOWNERS — yggdrasil-dew
-# Propietario explicito por ruta. El propietario mas especifico tiene precedencia.
-# Cualquier PR que toque estas rutas requiere revision del propietario.
-
-# Global — cualquier ruta no cubierta por regla especifica
 * @alvarofernandezmota-tech
-
-# Canon — ADRs, normas, indices. Cambios requieren revision explicita
-docs/canon/ @alvarofernandezmota-tech
-
-# Hallazgos de seguridad — inmutables sin revision
-docs/hallazgos/ @alvarofernandezmota-tech
-
-# CI/CD — cualquier cambio en workflows requiere revision
-.github/ @alvarofernandezmota-tech
-
-# Diarios — fuente de verdad de sesiones
-docs/diarios/ @alvarofernandezmota-tech
-
-# Auditorias — documentos de estado del ecosistema
-docs/auditorias/ @alvarofernandezmota-tech
+/docs/ @alvarofernandezmota-tech
+/docs/PROMPTS/ @alvarofernandezmota-tech
+/.github/ @alvarofernandezmota-tech
+/scripts/ @alvarofernandezmota-tech

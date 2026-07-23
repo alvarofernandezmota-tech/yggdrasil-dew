@@ -7,14 +7,12 @@ body:
     id: summary
     attributes:
       label: Resumen
-      description: Qué falla y dónde.
     validations:
       required: true
   - type: textarea
     id: steps
     attributes:
       label: Pasos para reproducir
-      description: Lista los pasos.
     validations:
       required: true
   - type: textarea
