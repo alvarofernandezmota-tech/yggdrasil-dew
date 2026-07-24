@@ -1,11 +1,12 @@
 # Yggdrasil DEW
 
-Árbol principal del ecosistema IA local.
+Árbol canónico del ecosistema IA local.
 
-## Secciones
+## Estructura
 - docs/adr: decisiones arquitectónicas.
-- docs/infra: inventario Docker, estado y servicios de madre.
+- docs/infra: Docker, estado y servicios.
 - docs/mcp: referencias externas MCP.
-- docs/tailscale: acceso remoto a madre.
-- docs/wiki: wiki, sesiones y diarios.
+- docs/tailscale: acceso remoto y DNS.
+- docs/wiki: sesiones, diario y legacy.
+- docs/islands: piezas del ecosistema.
 - docs/archive: material obsoleto o cerrado.

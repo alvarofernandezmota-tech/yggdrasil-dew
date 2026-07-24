@@ -4,13 +4,12 @@
 Accepted
 
 ## Context
-Estamos reorganizando el ecosistema de IAs y la infraestructura local dentro del árbol principal de DEW.
+Estamos reorganizando el ecosistema IA local y la infraestructura alrededor de DEW como árbol canónico.
 
 ## Decision
-Tailscale se mantiene como acceso core. La documentación y el ecosistema se centralizan en DEW. El resto del Docker y el wiki viejo se documentan, revisan y archivan por fases.
+DEW será la fuente de verdad. Tailscale se mantiene para acceso, y la documentación del ecosistema se centraliza en este árbol. El wiki antiguo se revisa y se separa por contexto. Lo viejo se archiva antes de eliminarse.
 
 ## Consequences
-- Se mantiene acceso remoto operativo.
-- Se conserva la historia de decisiones.
-- Se permite limpiar madre sin perder contexto.
-- El ecosistema IA podrá levantarse sobre una base ordenada.
+- Se mantiene trazabilidad de decisiones.
+- Se puede limpiar madre con seguridad.
+- El ecosistema IA se puede construir sobre una base ordenada.

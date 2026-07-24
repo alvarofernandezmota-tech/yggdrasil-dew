@@ -3,8 +3,8 @@ open-webui           Up 3 hours (healthy)              ghcr.io/open-webui/open-w
 ollama               Up 3 hours                        ollama/ollama:latest
 qdrant               Up 3 hours (unhealthy)            qdrant/qdrant:latest
 ollama-embeddings    Up 3 hours (healthy)              ollama/ollama:latest
-thdora-bot           Restarting (1) 58 seconds ago     thdora-bot
-local_tripwire       Up 4 minutes (health: starting)   yggdrasil-secops-local_tripwire
+thdora-bot           Up 5 seconds (health: starting)   thdora-bot
+local_tripwire       Up 8 seconds (health: starting)   yggdrasil-secops-local_tripwire
 radar_backup         Up 3 hours                        alpine:latest
 guardian_bot         Up 3 hours (healthy)              yggdrasil-secops-guardian_bot
 yggdrasil_watchdog   Up 3 hours (healthy)              yggdrasil-secops-yggdrasil_watchdog
