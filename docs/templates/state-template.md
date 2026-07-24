@@ -1,0 +1,13 @@
+# Estado YYYY-MM-DD
+
+## Infra
+...
+
+## Docker
+...
+
+## Tailscale
+...
+
+## Notes
+...

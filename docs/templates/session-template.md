@@ -1,0 +1,13 @@
+# Sesión YYYY-MM-DD
+
+## Objetivo
+...
+
+## Hecho
+...
+
+## Pendiente
+...
+
+## Decisiones
+...
