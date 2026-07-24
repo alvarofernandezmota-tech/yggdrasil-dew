@@ -1,26 +1,26 @@
-NAMES                STATUS                             IMAGE
-open-webui           Up 2 hours (healthy)               ghcr.io/open-webui/open-webui:main
-ollama               Up 2 hours                         ollama/ollama:latest
-qdrant               Up 2 hours (unhealthy)             qdrant/qdrant:latest
-ollama-embeddings    Up 2 hours (healthy)               ollama/ollama:latest
-thdora-bot           Restarting (1) 2 seconds ago       thdora-bot
-local_tripwire       Up 15 seconds (health: starting)   yggdrasil-secops-local_tripwire
-radar_backup         Up 2 hours                         alpine:latest
-guardian_bot         Up 2 hours (healthy)               yggdrasil-secops-guardian_bot
-yggdrasil_watchdog   Up 2 hours (healthy)               yggdrasil-secops-yggdrasil_watchdog
-network_radar        Up 2 hours (healthy)               yggdrasil-secops-network_radar
-log_guardian_bot     Up 2 hours (healthy)               yggdrasil-secops-log_guardian
-tailscale_monitor    Up 2 hours (healthy)               yggdrasil-secops-tailscale_monitor
-grafana              Exited (0) 29 hours ago            grafana/grafana:10.4.2
-prometheus           Exited (0) 29 hours ago            prom/prometheus:v2.51.2
-thdora               Exited (0) 29 hours ago            thdora-thdora
-kali-pentest         Exited (0) 29 hours ago            kasmweb/kali-rolling-desktop:1.16.0
-spiderfoot           Exited (137) 29 hours ago          spiderfoot
-code-server          Up 2 hours                         lscr.io/linuxserver/code-server:latest
-n8n                  Up 2 hours                         n8nio/n8n:latest
-gitea                Up 2 hours                         gitea/gitea:latest
-uptime-kuma          Up 2 hours (healthy)               louislam/uptime-kuma:1
-portainer            Up 2 hours                         portainer/portainer-ce:latest
+NAMES                STATUS                            IMAGE
+open-webui           Up 3 hours (healthy)              ghcr.io/open-webui/open-webui:main
+ollama               Up 3 hours                        ollama/ollama:latest
+qdrant               Up 3 hours (unhealthy)            qdrant/qdrant:latest
+ollama-embeddings    Up 3 hours (healthy)              ollama/ollama:latest
+thdora-bot           Restarting (1) 58 seconds ago     thdora-bot
+local_tripwire       Up 4 minutes (health: starting)   yggdrasil-secops-local_tripwire
+radar_backup         Up 3 hours                        alpine:latest
+guardian_bot         Up 3 hours (healthy)              yggdrasil-secops-guardian_bot
+yggdrasil_watchdog   Up 3 hours (healthy)              yggdrasil-secops-yggdrasil_watchdog
+network_radar        Up 3 hours (healthy)              yggdrasil-secops-network_radar
+log_guardian_bot     Up 3 hours (healthy)              yggdrasil-secops-log_guardian
+tailscale_monitor    Up 3 hours (healthy)              yggdrasil-secops-tailscale_monitor
+grafana              Exited (0) 29 hours ago           grafana/grafana:10.4.2
+prometheus           Exited (0) 29 hours ago           prom/prometheus:v2.51.2
+thdora               Exited (0) 29 hours ago           thdora-thdora
+kali-pentest         Exited (0) 29 hours ago           kasmweb/kali-rolling-desktop:1.16.0
+spiderfoot           Exited (137) 29 hours ago         spiderfoot
+code-server          Up 3 hours                        lscr.io/linuxserver/code-server:latest
+n8n                  Up 3 hours                        n8nio/n8n:latest
+gitea                Up 3 hours                        gitea/gitea:latest
+uptime-kuma          Up 3 hours (healthy)              louislam/uptime-kuma:1
+portainer            Up 3 hours                        portainer/portainer-ce:latest
 DRIVER    VOLUME NAME
 local     local_tripwire_tripwire_data
 local     network_radar_radar_backups
@@ -80,8 +80,8 @@ netdata/netdata                       latest        2330e67d4543   1.15GB
 ghcr.io/berriai/litellm               main-latest   f792e404f0db   1.53GB
 traefik                               latest        e4d98158c01a   245MB
 gitea/gitea                           latest        8e25c717b8f7   247MB
-thdora-bot                            latest        594bf3d3c62f   531MB
 thdora-thdora                         latest        4dfe64f19f2c   531MB
+thdora-bot                            latest        594bf3d3c62f   531MB
 aquasec/trivy                         latest        f5d0e600ecda   255MB
 n8nio/n8n                             latest        a772d24e6b4f   2.39GB
 headscale/headscale                   latest        8453e47ea6bf   113MB

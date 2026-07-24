@@ -7,11 +7,10 @@ Accepted
 Estamos reorganizando el ecosistema de IAs y la infraestructura local dentro del árbol principal de DEW.
 
 ## Decision
-Tailscale y GitHub MCP se mantienen como piezas core.
-El resto del ecosistema Docker se documenta y queda en revisión.
+Tailscale se mantiene como acceso core. La documentación y el ecosistema se centralizan en DEW. El resto del Docker y el wiki viejo se documentan, revisan y archivan por fases.
 
 ## Consequences
 - Se mantiene acceso remoto operativo.
-- Se mantiene integración con GitHub.
-- El resto de contenedores no se borra todavía.
-- La revisión será gradual y documentada.
+- Se conserva la historia de decisiones.
+- Se permite limpiar madre sin perder contexto.
+- El ecosistema IA podrá levantarse sobre una base ordenada.
