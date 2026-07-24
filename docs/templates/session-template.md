@@ -1,13 +1,8 @@
-# Sesión YYYY-MM-DD
+# Session Template
 
+## Fecha
 ## Objetivo
-...
-
-## Hecho
-...
-
-## Pendiente
-...
-
+## Qué se hizo
+## Qué quedó pendiente
 ## Decisiones
-...
+## Próximo paso
